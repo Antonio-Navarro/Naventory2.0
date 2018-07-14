@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Custom Project</title>
+
+	<!-- CSS Styles -->
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="custom.css" />
+	<h:outputStylesheet library="css" name="site.css" />
+
+	<!-- X-CSRF-TOKEN -->
+	<meta name="_csrf" content="${_csrf.token}" />
+	<meta name="_csrf_header" content="${_csrf.headerName}" />
+</h:head>
+
+<h:body styleClass="login">
+	<div>
+		<a class="hiddenanchor" id="signup"></a><a class="hiddenanchor"
+			id="signin"></a>
+		<div class="login_wrapper">
+			<div class="animate form login_form">
+				<section class="login_content">
+					<p:focus for="loginForm" />
+					<h:form id="loginForm">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+
+						<p:growl autoUpdate="true" escape="false" />
+
+						<p:ajaxStatus onstart="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide()" />
+						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+							closable="false" resizable="false" showHeader="false"
+							style="z-index: 1002;">
+							<p:graphicImage library="images" name="loading.gif" width="65" />
+						</p:dialog>
+
+						<h1>
+							<h:outputText value="#{msg['login.loginTitle']}" />
+						</h1>
+						<div>
+							<p:inputText value="#{loginBean.username}"
+								styleClass="form-control" placeholder="#{msg['login.username']}"
+								required="true"
+								requiredMessage="#{msg['login.username.required']}"
+								maxlength="255"></p:inputText>
+						</div>
+						<div>
+							<p:password styleClass="form-control"
+								value="#{loginBean.password}" maxlength="255"
+								placeholder="#{msg['login.password']}" required="true"
+								requiredMessage="#{msg['login.password.required']}" />
+						</div>
+
+						<div>
+							<p:commandButton icon="fa fa-sign-in"
+								value="#{msg['login.button.login']}" action="#{loginBean.login}" />
+						</div>
+						<div class="clearfix"></div>
+						<div class="separator">
+							<div>
+								<h1>
+									<i class="fa fa-pencil-square-o"></i> &#160;
+									<h:outputText value="#{msg['aplicacion.nombre']}" />
+									&#160;
+									<h:outputText value="#{msg['aplicacion.version']}" />
+								</h1>
+								<p>
+									&#169;
+									<h:outputText value="#{msg['login.right.reserved']}" />
+								</p>
+							</div>
+						</div>
+					</h:form>
+				</section>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

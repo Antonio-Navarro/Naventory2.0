@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<p:dialog id="userDetailsModal" widgetVar="userDetailsDialog"
+		responsive="true" closable="true" resizable="false"
+		maximizable="false" width="600" dynamic="true" focus="loginInput">
+		<f:facet name="header">
+			<h:outputText rendered="#{usuarioBean.selectedUser.id ne null}"
+				value="#{usuarioBean.selectedUser.apellido1} #{usuarioBean.selectedUser.apellido2}, #{usuarioBean.selectedUser.nombre}" />
+			<h:outputText rendered="#{usuarioBean.selectedUser.id eq null}"
+				value="#{msg['users.dialog.newUser']}"></h:outputText>
+		</f:facet>
+		<p:messages id="messages" autoUpdate="true" escape="false"
+			closable="true" showSummary="true" showDetail="false"
+			globalOnly="true" />
+
+		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
+			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
+			<p:outputLabel for="loginInput" styleClass="required"
+				value="#{msg['users.datatable.header.login']}" />
+			<p:inputText id="loginInput"
+				value="#{usuarioBean.selectedUser.login}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				placeholder="#{msg['users.datatable.header.login']}" />
+
+			<p:outputLabel for="nombreInput" styleClass="required"
+				value="#{msg['users.datatable.header.name']}" />
+			<p:inputText id="nombreInput"
+				value="#{usuarioBean.selectedUser.nombre}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				placeholder="#{msg['users.datatable.header.name']}" />
+
+			<p:outputLabel for="apellido1Input" styleClass="required"
+				value="#{msg['users.datatable.header.firstlastname']}" />
+			<p:inputText id="apellido1Input"
+				value="#{usuarioBean.selectedUser.apellido1}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				placeholder="#{msg['users.datatable.header.firstlastname']}" />
+
+			<p:outputLabel for="apellido2Input" styleClass="required"
+				value="#{msg['users.datatable.header.secondlastname']}" />
+			<p:inputText id="apellido2Input"
+				value="#{usuarioBean.selectedUser.apellido2}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				placeholder="#{msg['users.datatable.header.secondlastname']}" />
+
+			<p:outputLabel for="passwordInput" styleClass="required"
+				value="#{msg['users.datatable.header.password']}"
+				rendered="#{not usuarioBean.editing}" />
+			<p:outputLabel for="passwordInput"
+				value="#{msg['users.datatable.header.password']}"
+				rendered="#{usuarioBean.editing}" />
+			<p:password id="passwordInput"
+				value="#{usuarioBean.selectedUser.clave}" feedback="true"
+				promptLabel="#{msg['users.datatable.password.promptLabel']}"
+				weakLabel="#{msg['users.datatable.password.weakLabel']}"
+				goodLabel="#{msg['users.datatable.password.goodLabel']}"
+				strongLabel="#{msg['users.datatable.password.strongLabel']}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				placeholder="#{msg['users.datatable.header.password']}" />
+
+			<p:outputLabel for="roleSelectOneMenu" styleClass="required"
+				value="#{msg['users.datatable.header.role']}" />
+
+			<p:pickList id="roleSelectOneMenu"
+				value="#{usuarioBean.rolesPickList}" var="role"
+				itemLabel="#{role.descripcion}" itemValue="#{role}"
+				converter="#{roleConverter}" responsive="true" />
+		</p:panelGrid>
+
+		<f:facet name="footer">
+			<h:panelGroup style="float: right;">
+				<p:commandButton icon="fa fa-user-times" title="#{msg['delete']}"
+					value="#{msg['delete']}"
+					disabled="#{not usuarioBean.canDelete(usuarioBean.selectedUser) or not usuarioBean.editing}"
+					actionListener="#{usuarioBean.delete(usuarioBean.selectedUser)}"
+					update="userTable">
+					<p:confirm header="#{msg['needConfirmation']}"
+						message="#{msg['areyousure']}" icon="fa fa-warning" />
+				</p:commandButton>
+				<p:commandButton icon="fa fa-save" title="#{msg['save']}"
+					value="#{msg['save']}" actionListener="#{usuarioBean.saveUser}"
+					update="userTable" />
+				<p:commandButton type="button" icon="fa fa-ban"
+					title="#{msg['cancel']}" value="#{msg['cancel']}"
+					onclick="PF('userDetailsDialog').hide();" />
+			</h:panelGroup>
+		</f:facet>
+	</p:dialog>
+
+</ui:composition>
