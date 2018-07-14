@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 	<groupId>com.antoniojnavarro</groupId>
-	<artifactId>naventory</artifactId> 
+	<artifactId>naventory</artifactId>
 	<version>0.0.1</version>
 	</parent>
 	<artifactId>naventory-dao</artifactId>
