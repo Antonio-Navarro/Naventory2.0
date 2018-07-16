@@ -367,8 +367,8 @@
 
 .nav_menu {
 	float: left;
-	background: #EDEDED;
-	border-bottom: 1px solid #D9DEE4;
+	background: #E6E6E6;
+	border-bottom: 1px solid #e7e7e7;
 	margin-bottom: 10px;
 	width: 100%;
 	position: relative;
@@ -396,7 +396,7 @@
 }
 
 body .container.body .right_col {
-	background: #F7F7F7;
+	background: #FFF;
 }
 
 .nav-md .container.body .right_col {
@@ -409,7 +409,7 @@ body .container.body .right_col {
 	float: left;
 	background: #2A3F54;
 	border-radius: 0;
-	height: 57px;
+	height: 60px;
 }
 
 @media ( max-width : 991px) {
@@ -2701,14 +2701,23 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
 }
 
 .btn-success {
-	background: #26B99A;
-	border: 1px solid #169F85;
+  color: #fff !important;
+  background-color: #5cb85c !important;
+  border-color: #4cae4c !important;
+}
+.btn-success:focus,
+.btn-success.focus {
+  color: #fff;
+  background-color: #449d44 !important;
+  border-color: #255625 !important;
+}
+.btn-success:hover {
+  color: #fff;
+  background-color: #449d44 !important;
+  border-color: #398439 !important;
 }
 
-.btn-success:hover, .btn-success:focus, .btn-success:active,
-	.btn-success.active, .open .dropdown-toggle.btn-success {
-	background: #169F85;
-}
+
 
 .btn-dark {
 	color: #E9EDEF;
@@ -4890,4 +4899,75 @@ ul.notifications {
 /** /Dropzone.js **/
 .menu_section {
 	margin-top: 25%;
+}
+
+.logon{
+
+	width: 230px;
+	height: 150px;
+	margin-bottom: 40px;
+}
+.page-header {
+    padding-bottom: 9px;
+    border-bottom: 1px solid rgb(238, 238, 238);
+    margin: 10px 0px 20px;
+    color:black !important;
+    }
+.huge {
+    font-size: 40px;
+}
+
+.panel {
+    margin-bottom: 25% !important;
+}
+.panel-green {
+    border-color: #5cb85c ;
+}
+.panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+.panel-green a {
+    color: #5cb85c;
+}
+
+.panel-green a:hover {
+    color: #3d8b3d;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.panel-red a {
+    color: #d9534f;
+}
+
+.panel-red a:hover {
+    color: #b52b27;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.panel-yellow a {
+    color: #f0ad4e;
+}
+
+.panel-yellow a:hover {
+    color: #df8a13;
 }

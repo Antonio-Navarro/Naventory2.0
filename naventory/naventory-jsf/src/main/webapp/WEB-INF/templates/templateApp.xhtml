@@ -17,6 +17,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Naventory | Gestión de inventarios</title>
+	<link rel="icon" type="image/x-icon"
+		href="#{request.contextPath}/resources/images/favicon.jpg" />
 
 	<!-- CSS Styles -->
 	<h:outputStylesheet library="css" name="bootstrap.css" />
@@ -55,7 +57,7 @@
 								styleClass="img-circle profile_img" />
 						</div>
 						<div class="profile_info">
-							<span><h:outputText value="#{msg['welcome']}" />,</span>
+							<span><h:outputText value="#{msg['welcome']}" /></span>
 							<h2>
 								<h:outputText value="#{homeBean.usuarioAutenticado.nombre}" />
 							</h2>
@@ -69,15 +71,46 @@
 						<hr />
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_ADMIN')}">
-									<li><a><i class="fa fa-cogs"></i> <h:outputText
-												value="#{msg['sidebar.menu.admin']}" /> <span
+								<h:panelGroup>
+									<li><a href="#{request.contextPath}/private/home.xhtml"><i
+											class="fa fa-dashboard"></i> <h:outputText
+												value="#{msg['sidebar.menu.dashboard']}" /></a></li>
+
+									<li><a><i class="fa fa-cart-plus"></i> <h:outputText
+												value="#{msg['sidebar.menu.compras']}" /> </a></li>
+
+									<li><a><i class="fa fa-cart-arrow-down"></i> <h:outputText
+												value="#{msg['sidebar.menu.ventas']}" /></a></li>
+
+									<li><a><i class="fa fa-server "></i> <h:outputText
+												value="#{msg['sidebar.menu.productos']}" /> <span
 											class="fa fa-chevron-down"></span></a>
 										<ul class="nav child_menu">
 											<li><a
 												href="#{request.contextPath}/private/users/users.xhtml"><h:outputText
-														value="#{msg['sidebar.menu.admin.users']}" /></a></li>
+														value="Ver #{msg['sidebar.menu.productos']}" /></a></li>
+											<li><a
+												href="#{request.contextPath}/private/users/users.xhtml"><h:outputText
+														value="Ver #{msg['sidebar.menu.categorias']}" /></a></li>
 										</ul></li>
+
+									<li><a><i class="fa fa-street-view"></i> <h:outputText
+												value="#{msg['sidebar.menu.clientes']}" /></a></li>
+
+									<li><a><i class="fa fa-truck"></i> <h:outputText
+												value="#{msg['sidebar.menu.proveedores']}" /></a></li>
+
+									<li><a><i class="fa fa-bar-chart"></i> <h:outputText
+												value="#{msg['sidebar.menu.stock']}" /> </a></li>
+
+
+									<li><a><i class="fa fa-file-pdf-o"></i> <h:outputText
+												value="#{msg['sidebar.menu.informes']}" /> </a></li>
+
+
+
+									<li><a><i class="fa fa-file-excel-o"></i> <h:outputText
+												value="#{msg['sidebar.menu.tratDatos']}" /> </a></li>
 								</h:panelGroup>
 							</ul>
 						</div>
@@ -89,19 +122,18 @@
 			<div class="top_nav">
 				<div class="nav_menu">
 					<nav>
-
 						<div class="nav toggle">
 							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 						</div>
 
 						<ul class="nav navbar-nav navbar-right">
+
+
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"
-								style="color: #4d647b !important; font-weight: bold;"> <p:graphicImage
-										library="images" name="user.png"></p:graphicImage> <h:outputText
-										value="#{homeBean.usuarioAutenticado.nombre} #{homeBean.usuarioAutenticado.apellido1} #{homeBean.usuarioAutenticado.apellido2}" />&#160;<span
-									class=" fa fa-angle-down"></span>
+								style="color: #4d647b !important; font-weight: bold;"> <i
+									class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"><i
@@ -119,70 +151,99 @@
 											<h:outputText value="#{msg['navbar.logout']}" />
 										</p:commandLink></li>
 								</ul></li>
+
+							<li class="dropdown "><a class="dropdown-toggle"
+								data-toggle="modal" data-target="#mensaje" href="#"> <i
+									class="fa fa-send fa-fw"></i>
+							</a></li>
+
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="dropdown" href="#"> <i
+									class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+
+							</a></li>
+
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="modal" data-target="#mensaje" href="#"> <i
+									class="fa fa-send fa-fw"></i>
+							</a></li>
 						</ul>
 					</nav>
 				</div>
-
-			</div>
-			<!-- /top navigation -->
-
-			<!-- page content -->
-			<div class="page-content right_col" role="main">
-				<div class="">
-					<h:form id="formApp">
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
-
-						<!-- Growl Messages -->
-						<p:growl autoUpdate="true" escape="false" />
-						<!-- Ajax Status -->
-						<p:ajaxStatus onstart="PF('statusDialog').show()"
-							onsuccess="PF('statusDialog').hide()" />
-						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-							closable="false" resizable="false" showHeader="false">
-							<p:graphicImage library="images" name="loading.gif" width="65" />
-						</p:dialog>
-
-						<!-- General Focusme -->
-						<p:focus context="#{focusme}" rendered="#{focusRendered}" />
-						<!-- General Default Command -->
-						<p:defaultCommand target="#{targetDefaultCommand}"
-							rendered="#{defaultCommandRendered}" />
-
-						<ui:insert name="body" />
-
-						<!-- General Confirm Dialog -->
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="#{msg['yes']}" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check-circle" />
-							<p:commandButton value="#{msg['no']}" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-times-circle" />
-						</p:confirmDialog>
-					</h:form>
+				<div id="mensaje" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">Close</button>
+								<h4 class="modal-title">Nuevo mensaje</h4>
+							</div>
+							<div class="modal-body">
+							sdfasd
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
-			<!-- /page content -->
-			<!-- footer content -->
-			<footer>
-				<div class="pull-right">
-					<h:outputText value="#{msg['aplicacion.nombre']}" />
-					&#160;
-					<h:outputText value="#{msg['aplicacion.version']}" />
-				</div>
-				<div class="pull-right" style="margin-right: 6px;">
-					<h:form id="formThemeSwitcher">
-						<p:themeSwitcher id="basic" style="width:165px">
-							<f:selectItem itemLabel="#{msg['themeswitcher.choose']}"
-								itemValue="" noSelectionOption="true" />
-							<f:selectItems value="#{themeSwitcherBean.themes}" var="theme"
-								itemLabel="#{theme}" itemValue="#{theme}" />
-						</p:themeSwitcher>
-					</h:form>
-				</div>
-				<div class="clearfix"></div>
-			</footer>
-			<!-- /footer content -->
 		</div>
+		<!-- /top navigation -->
+
+		<!-- page content -->
+		<div class="page-content right_col" role="main">
+			<div class="">
+				<h:form id="formApp">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+
+					<!-- Growl Messages -->
+					<p:growl autoUpdate="true" escape="false" />
+					<!-- Ajax Status -->
+					<p:ajaxStatus onstart="PF('statusDialog').show()"
+						onsuccess="PF('statusDialog').hide()" />
+					<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+						closable="false" resizable="false" showHeader="false">
+						<p:graphicImage library="images" name="loading.gif" width="65" />
+					</p:dialog>
+
+					<!-- General Focusme -->
+					<p:focus context="#{focusme}" rendered="#{focusRendered}" />
+					<!-- General Default Command -->
+					<p:defaultCommand target="#{targetDefaultCommand}"
+						rendered="#{defaultCommandRendered}" />
+
+					<ui:insert name="body" />
+
+					<!-- General Confirm Dialog -->
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="#{msg['yes']}" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check-circle" />
+						<p:commandButton value="#{msg['no']}" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-times-circle" />
+					</p:confirmDialog>
+				</h:form>
+			</div>
+		</div>
+		<!-- /page content -->
+		<!-- footer content -->
+		<footer>
+			<div class="pull-right">
+				<h:outputText value="#{msg['aplicacion.nombre']}" />
+				&#160;
+				<h:outputText value="#{msg['aplicacion.version']}" />
+			</div>
+			<div class="pull-right" style="margin-right: 6px;">
+				<h:form id="formThemeSwitcher">
+					<p:themeSwitcher id="basic" style="width:165px">
+						<f:selectItem itemLabel="#{msg['themeswitcher.choose']}"
+							itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{themeSwitcherBean.themes}" var="theme"
+							itemLabel="#{theme}" itemValue="#{theme}" />
+					</p:themeSwitcher>
+				</h:form>
+			</div>
+			<div class="clearfix"></div>
+		</footer>
+		<!-- /footer content -->
+	</div>
 	</div>
 </h:body>
 </html>

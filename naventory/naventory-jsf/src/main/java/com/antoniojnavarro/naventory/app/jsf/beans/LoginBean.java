@@ -26,43 +26,36 @@ public class LoginBean extends MasterBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
+
+	// CAMPOS
 	private String username;
 	private String password;
-
+	// ENTITIES
 	private Usuario usuario;
+
+	// LISTAS
+
+	// SERVICIOS
+	
+//	private serviciousu
 	
 	@PostConstruct
 	public void init() {
-		Usuario u = new Usuario();
-		u.setEmail("anavarro");
-		System.out.println( u.getEmail());
 
 		logger.info("LoginBean.init()");
 	}
 
 	public String login() {
-		System.out.println("holi");
-		try {
-			Authentication auth = new UsernamePasswordAuthenticationToken(this.username, password);
-			Authentication result = this.authenticationManager.authenticate(auth);
-			SecurityContextHolder.getContext().setAuthentication(result);
-			return Constantes.GO_TO_HOME;
-		} catch (AuthenticationException e) {
-			logger.info(e.getMessage(), e);
-			super.addWarning("login.userOrPasswordIncorrect");
-			// Nunca se debe retornar "null". Si se retorna "null" la vista no
-			// se actualiza
-			return new String();
-		}
+
+		return Constantes.GO_TO_HOME;
+
 	}
 
 	public String logout() {
 		SecurityContextHolder.clearContext();
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return Constantes.GO_TO_LOGIN; 
+		return Constantes.GO_TO_LOGIN;
 	}
 
 	public String getUsername() {
