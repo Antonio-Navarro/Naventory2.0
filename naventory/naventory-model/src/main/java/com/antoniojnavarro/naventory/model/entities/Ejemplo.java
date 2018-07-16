@@ -17,7 +17,7 @@ import com.antoniojnavarro.naventory.model.commons.GenericEntity;
 import com.antoniojnavarro.naventory.model.entities.enums.EnumEjemplo;
 
 @Entity
-@Table(name = "EJEMPLO")
+@Table(name = "ejemplo")
 public class Ejemplo implements GenericEntity {
 
 	private static final long serialVersionUID = 1L;

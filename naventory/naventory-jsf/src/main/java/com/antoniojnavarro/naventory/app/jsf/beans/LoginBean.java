@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.util.Constantes;
+import com.antoniojnavarro.naventory.model.entities.Usuario;
 
 @Named("loginBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -31,12 +32,19 @@ public class LoginBean extends MasterBean {
 	private String username;
 	private String password;
 
+	private Usuario usuario;
+	
 	@PostConstruct
 	public void init() {
+		Usuario u = new Usuario();
+		u.setEmail("anavarro");
+		System.out.println( u.getEmail());
+
 		logger.info("LoginBean.init()");
 	}
 
 	public String login() {
+		System.out.println("holi");
 		try {
 			Authentication auth = new UsernamePasswordAuthenticationToken(this.username, password);
 			Authentication result = this.authenticationManager.authenticate(auth);
@@ -49,7 +57,6 @@ public class LoginBean extends MasterBean {
 			// se actualiza
 			return new String();
 		}
-
 	}
 
 	public String logout() {
