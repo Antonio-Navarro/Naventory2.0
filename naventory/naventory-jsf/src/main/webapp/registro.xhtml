@@ -10,7 +10,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Naventory | Iniciar Sesión</title>
+	<title>Naventory | Registrarse</title>
 	<link rel="icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/images/favicon.jpg" />
 	<!-- CSS Styles -->
@@ -52,40 +52,73 @@
 							<p:graphicImage library="images" name="loading.gif" width="65" />
 						</p:dialog>
 
-						<p:panel id="basic" header="#{msg['login.loginTitle']}"
+						<p:panel id="basic" header="#{msg['register.title']}"
 							style="margin-bottom:20px">
 
-
+							<div class="ui-inputgroup inputUser">
+								<p:inputText value="#{registroBean.usuario.email}"
+									styleClass="form-control"
+									placeholder="&#xF0e0; #{msg['register.email']}"
+									style="font-family:Arial, FontAwesome; text-align:center"
+									required="true" requiredMessage="#{msg['register.email.req']}"
+									maxlength="255"></p:inputText>
+							</div>
 
 							<div class="ui-inputgroup inputUser">
-								<span class="ui-inputgroup-addon"></span><p:outputLabel>#{msg['login.username']}</p:outputLabel>
-								<p:inputText value="#{loginBean.username}"
+								<p:inputText value="#{registroBean.usuario.nombre}"
 									styleClass="form-control"
-									placeholder="&#xF007;" style="font-family:Arial, FontAwesome; text-align:center"									
-									 required="true"
-									requiredMessage="#{msg['login.username.required']}"
+									placeholder="&#xf007; #{msg['register.nombre']}"
+									style="font-family:Arial, FontAwesome; text-align:center"
+									required="true" requiredMessage="#{msg['register.nombre.req']}"
+									maxlength="255"></p:inputText>
+							</div>
+							<div class="ui-inputgroup inputUser">
+								<p:inputText value="#{registroBean.usuario.apellido}"
+									styleClass="form-control"
+									placeholder="&#xf0c0; #{msg['register.apellidos']}"
+									style="font-family:Arial, FontAwesome; text-align:center"
+									required="true"
+									requiredMessage="#{msg['register.apellidos.req']}"
+									maxlength="255"></p:inputText>
+							</div>
+							<div class="ui-inputgroup inputUser">
+								<p:inputText value="#{registroBean.usuario.empresa}"
+									styleClass="form-control"
+									placeholder="&#xf1ad; #{msg['register.nombreEmpresa']}"
+									style="font-family:Arial, FontAwesome; text-align:center"
+
 									maxlength="255"></p:inputText>
 							</div>
 							<div>
 								<div class="ui-inputgroup inputUser">
-									<span class="ui-inputgroup-addon"><p:outputLabel>#{msg['login.password']}</p:outputLabel></span>
 									<p:password styleClass="form-control"
-										value="#{loginBean.password}" maxlength="255"
-										placeholder="&#xF084;" style="font-family:Arial, FontAwesome; text-align:center"
+										value="#{registroBean.usuario.password}" maxlength="255"
+										placeholder="&#xF084;  #{msg['register.password']}"
+										style="font-family:Arial, FontAwesome; text-align:center"
 										required="true"
-										requiredMessage="#{msg['login.password.required']}" />
+										requiredMessage="#{msg['register.password.req']}" />
+								</div>
+							</div>
+							<div>
+								<div class="ui-inputgroup inputUser">
+									<p:password styleClass="form-control"
+										value="#{registroBean.confPassword}" maxlength="255"
+										placeholder="&#xF084;  #{msg['register.repeatPassword']}"
+										style="font-family:Arial, FontAwesome; text-align:center"
+										required="true"
+										requiredMessage="#{msg['register.repeatPassword.req']}" />
 								</div>
 							</div>
 
 							<div>
-								<p:commandButton icon="fa fa-sign-in"
-									value="#{msg['login.button.login']}" style="width:100%"
-									styleClass="btn btn-success" action="#{loginBean.login}" />
+								<p:commandButton icon="fa fa-check"
+									value="#{msg['register.registarme.button']}" style="width:100%"
+									styleClass="btn btn-success" action="#{registroBean.register}" />
 							</div>
-								<div>
-								<p:commandButton icon="fa fa-share-alt" immediate="true"
-									value="#{msg['login.button.registrar']}" style="width:100%"
-									 action="#{loginBean.irARegistro}" />
+							<div>
+								<p:commandButton icon="fa fa-sign-in" immediate="true"
+									value="#{msg['login.loginTitle']}" style="width:100%"
+									action="#{registroBean.volverInicioSesion}" />
 							</div>
 						</p:panel>
 						<div class="clearfix"></div>

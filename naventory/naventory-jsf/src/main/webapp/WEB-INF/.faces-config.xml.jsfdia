@@ -17,4 +17,13 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#private#home.xhtml"
   PATH="/private/home.xhtml" SHAPE="448,17,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="gotoregister::#registro.xhtml" NAME="output"
+    PATH="/registro.xhtml" TARGET="rules:#registro.xhtml"
+    TITLE="gotoregister" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#registro.xhtml" PATH="/registro.xhtml"
+  SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

@@ -23,7 +23,7 @@ public class Usuario implements GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "email", length = 255)
+	@Column(name = "email", length = 255, nullable = false)
 	private String email;
 
 	@Column(name = "password", length = 255, nullable = false)
@@ -39,7 +39,7 @@ public class Usuario implements GenericEntity {
 	private String empresa;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "fecha_alta")
+	@Column(name = "fecha_alta", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable=false)
 	private Date fecha_alta;
 
 	@Column(name = "foto_perf", length = 255)

@@ -8,5 +8,6 @@ public class Constantes {
 	// Navigation JSF
 	public static final String GO_TO_HOME = "gotohome";
 	public static final String GO_TO_LOGIN = "gotologin";
+	public static final String GO_TO_REGISTER = "gotoregister";
 
 }

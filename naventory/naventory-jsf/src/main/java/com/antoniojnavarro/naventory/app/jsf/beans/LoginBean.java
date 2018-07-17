@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
+import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 
 @Named("loginBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -37,8 +38,8 @@ public class LoginBean extends MasterBean {
 	// LISTAS
 
 	// SERVICIOS
-	
-//	private serviciousu
+	@Autowired
+	private ServicioUsuario srvUsuario;
 	
 	@PostConstruct
 	public void init() {
@@ -51,7 +52,12 @@ public class LoginBean extends MasterBean {
 		return Constantes.GO_TO_HOME;
 
 	}
-
+	public String irARegistro() {
+		Usuario u = srvUsuario.findUsuarioByEmail("antonio-navarro19@hotmail.com");
+		System.out.println(u.getEmpresa());
+		return Constantes.GO_TO_REGISTER;
+	}
+	
 	public String logout() {
 		SecurityContextHolder.clearContext();
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
