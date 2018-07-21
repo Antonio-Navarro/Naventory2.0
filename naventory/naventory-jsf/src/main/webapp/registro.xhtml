@@ -61,7 +61,12 @@
 									placeholder="&#xF0e0; #{msg['register.email']}"
 									style="font-family:Arial, FontAwesome; text-align:center"
 									required="true" requiredMessage="#{msg['register.email.req']}"
-									maxlength="255"></p:inputText>
+									maxlength="255"
+									validatorMessage="#{msg['register.email.error']}"
+									>
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</p:inputText>
 							</div>
 
 							<div class="ui-inputgroup inputUser">
@@ -86,7 +91,8 @@
 									styleClass="form-control"
 									placeholder="&#xf1ad; #{msg['register.nombreEmpresa']}"
 									style="font-family:Arial, FontAwesome; text-align:center"
-
+									required="true"
+									requiredMessage="#{msg['register.nombreEmpresa.req']}"
 									maxlength="255"></p:inputText>
 							</div>
 							<div>
@@ -113,7 +119,8 @@
 							<div>
 								<p:commandButton icon="fa fa-check"
 									value="#{msg['register.registarme.button']}" style="width:100%"
-									styleClass="btn btn-success" action="#{registroBean.register}" />
+									styleClass="btn btn-success"
+									actionListener="#{registroBean.register}" update="@form" />
 							</div>
 							<div>
 								<p:commandButton icon="fa fa-sign-in" immediate="true"

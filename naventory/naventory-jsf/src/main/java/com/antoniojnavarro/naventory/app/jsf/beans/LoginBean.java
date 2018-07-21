@@ -53,8 +53,6 @@ public class LoginBean extends MasterBean {
 
 	}
 	public String irARegistro() {
-		Usuario u = srvUsuario.findUsuarioByEmail("antonio-navarro19@hotmail.com");
-		System.out.println(u.getEmpresa());
 		return Constantes.GO_TO_REGISTER;
 	}
 	

@@ -2,19 +2,20 @@ package com.antoniojnavarro.naventory.model.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.util.List;
 
 import com.antoniojnavarro.naventory.model.commons.GenericEntity;
-import com.antoniojnavarro.naventory.model.entities.enums.EnumEjemplo;
+
 
 @Entity
 @Table(name = "usuario")
@@ -56,6 +57,9 @@ public class Usuario implements GenericEntity {
 	
 	@Column(name = "token_pass", length = 255)
 	private String tokenPass;
+//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JoinColumn(name="user_id")
+//	private List<Role> roles;
 
 	public String getEmail() {
 		return email;
@@ -144,6 +148,14 @@ public class Usuario implements GenericEntity {
 	public void setTokenPass(String tokenPass) {
 		this.tokenPass = tokenPass;
 	}
+
+//	public List<Role> getRoles() {
+//		return roles;
+//	}
+//
+//	public void setRoles(List<Role> roles) {
+//		this.roles = roles;
+//	}
 
 	@Override
 	public int hashCode() {

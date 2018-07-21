@@ -79,7 +79,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public Usuario save(Usuario entity) throws ServicioException {
 		validate(entity);
-		
+
 		return this.usuarioDao.save(entity);
 	}
 
@@ -96,7 +96,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public void delete(Usuario entity) throws ServicioException {
 		this.usuarioDao.delete(entity);
-		
+
 	}
 
 	@Override
@@ -108,12 +108,12 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public void deleteById(String id) throws ServicioException {
 		this.usuarioDao.delete(id);
-		
+
 	}
 
 	@Override
 	public Usuario findUsuarioByEmail(String email) throws ServicioException {
-		return this.usuarioDao.findUsuarioByEmail(email); 
+		return this.usuarioDao.findUsuarioByEmail(email);
 	}
 
 	@Override
@@ -127,17 +127,18 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	}
 
 	@Override
-	public Usuario findUsuarioByEmailAndPassword(String email, String pass) throws ServicioException  {
+	public Usuario findUsuarioByEmailAndPassword(String email, String pass) throws ServicioException {
 
-		return this.usuarioDao.findUsuarioByEmailAndPassword(email, Sha2Crypt.sha512Crypt(pass.getBytes(),"naventory")) ;
+		return this.usuarioDao.findUsuarioByEmailAndPassword(email,
+				Sha2Crypt.sha512Crypt(pass.getBytes(), "naventory"));
 	}
 
 	@Override
 	public Usuario registerUsuario(Usuario entity) throws ServicioException {
-		
-		Usuario usuario = entity;
-		usuario.setPassword(Sha2Crypt.sha512Crypt(entity.getPassword().getBytes(),"naventory"));
-		return this.saveOrUpdate(usuario, true);
-		
+		validate(entity);		
+		this.srvValidacion.existUser(entity.getEmail());
+		return this.save(entity);
+
 	}
+
 }
