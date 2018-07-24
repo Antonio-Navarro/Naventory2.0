@@ -9,7 +9,7 @@ public class CifrarClave {
 		if(password==null) {
 			return null;
 		}		
-		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(11);		
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(12);
 		return bcrypt.encode(password);
 	}
 	
@@ -17,7 +17,7 @@ public class CifrarClave {
 		if(userPassword==null || encodedPassword==null ) {
 			return false;
 		}		
-		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(11);		
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(12);		
 		return bcrypt.matches(userPassword, encodedPassword);
 	}
 	

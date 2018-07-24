@@ -25,10 +25,4 @@ public class ServicioValidacionImpl implements ServicioValidacion {
 			throw new ServicioException(srvMensajes.getMensajeI18n("nulo", fieldLabel));
 		}
 	}
-	@Override
-	public void existUser(String id) {
-		if (srvUsuario.existsById(id)) {
-			throw new ServicioException("El usuario ya existe");
-		}
-	}
 }

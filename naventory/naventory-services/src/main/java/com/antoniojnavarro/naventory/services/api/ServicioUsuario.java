@@ -13,5 +13,5 @@ public interface ServicioUsuario extends ServicioCrud<Usuario, UsuarioSearchFilt
 
 	Usuario findUsuarioByEmailAndPassword(String email, String pass) throws ServicioException;
 	
-	Usuario registerUsuario(Usuario entity) throws ServicioException;
+	void validateEmail(String email) throws ServicioException;
 }

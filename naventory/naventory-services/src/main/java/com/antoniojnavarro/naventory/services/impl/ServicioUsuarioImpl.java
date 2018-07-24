@@ -2,7 +2,6 @@ package com.antoniojnavarro.naventory.services.impl;
 
 import java.util.List;
 
-import org.apache.commons.codec.digest.Sha2Crypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +12,7 @@ import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.UsuarioSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
+import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
 
 @Service
@@ -22,6 +22,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	@Autowired
 	private ServicioValidacion srvValidacion;
+
+	@Autowired
+	private ServicioMensajesI18n srvMensajes;
+
 
 	@Autowired
 	private UsuarioDao usuarioDao;
@@ -78,20 +82,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	@Override
 	public Usuario save(Usuario entity) throws ServicioException {
-		validate(entity);
-
 		return this.usuarioDao.save(entity);
 	}
 
-	@Override
-	public void validate(Usuario entity) throws ServicioException {
-		this.srvValidacion.isNull("Usuario", entity);
-		this.srvValidacion.isNull("Nombre", entity.getNombre());
-		this.srvValidacion.isNull("Apellidos", entity.getApellido());
-		this.srvValidacion.isNull("Email", entity.getEmail());
-		this.srvValidacion.isNull("Contraseña", entity.getPassword());
-		this.srvValidacion.isNull("Empresa", entity.getEmpresa());
-	}
 
 	@Override
 	public void delete(Usuario entity) throws ServicioException {
@@ -120,25 +113,37 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public boolean existsUsuarioByEmail(String email) throws ServicioException {
 		return this.usuarioDao.existsUsuarioByEmail(email);
 	}
+	
+	@Override
+	public void validate(Usuario entity) throws ServicioException {
+		this.srvValidacion.isNull("Usuario", entity);
+		this.srvValidacion.isNull("Nombre", entity.getNombre());
+		this.srvValidacion.isNull("Apellidos", entity.getApellido());
+		this.srvValidacion.isNull("Email", entity.getEmail());
+		this.srvValidacion.isNull("Contraseña", entity.getPassword());
+		this.srvValidacion.isNull("Empresa", entity.getEmpresa());
+		validateEmail(entity.getEmail());
+	}
 
 	@Override
 	public Usuario saveOrUpdate(Usuario entity, boolean validate) throws ServicioException {
-		return this.saveOrUpdate(entity, validate);
+		if(validate) {
+			validate(entity);
+		}
+		return this.save(entity);
 	}
 
 	@Override
 	public Usuario findUsuarioByEmailAndPassword(String email, String pass) throws ServicioException {
 
-		return this.usuarioDao.findUsuarioByEmailAndPassword(email,
-				Sha2Crypt.sha512Crypt(pass.getBytes(), "naventory"));
+		return this.usuarioDao.findUsuarioByEmailAndPassword(email,pass);
 	}
-
 	@Override
-	public Usuario registerUsuario(Usuario entity) throws ServicioException {
-		validate(entity);		
-		this.srvValidacion.existUser(entity.getEmail());
-		return this.save(entity);
-
+	public void validateEmail(String email)  throws ServicioException {
+		if(existsUsuarioByEmail(email)){			
+			throw new ServicioException(srvMensajes.getMensajeI18n("register.email.exist"));			
+		}
 	}
+
 
 }

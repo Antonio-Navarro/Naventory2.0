@@ -2,17 +2,12 @@ package com.antoniojnavarro.naventory.model.entities;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.util.List;
 
 import com.antoniojnavarro.naventory.model.commons.GenericEntity;
 
@@ -27,7 +22,7 @@ public class Usuario implements GenericEntity {
 	@Column(name = "email", length = 255, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 255, nullable = false)
+	@Column(name = "password", length = 255, nullable = false)	
 	private String password;
 	
 	@Column(name = "nombre", length = 255)

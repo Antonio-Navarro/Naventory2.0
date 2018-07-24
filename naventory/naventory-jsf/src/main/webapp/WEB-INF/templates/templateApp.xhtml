@@ -59,7 +59,7 @@
 						<div class="profile_info">
 							<span><h:outputText value="#{msg['welcome']}" /></span>
 							<h2>
-								<h:outputText value="#{homeBean.usuarioAutenticado.nombre}" />
+								<h:outputText value="#{homeBean.usuarioAutenticado.usuario.nombre}" />
 							</h2>
 						</div>
 					</div>
@@ -139,9 +139,9 @@
 									<li><a href="javascript:;"><i
 											class="fa fa-user pull-right"></i> <h:outputText
 												value="#{msg['navbar.profile']}" /> </a></li>
-									<li><a href="javascript:;"><i
+									<li><a href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
 											class="fa fa-wrench pull-right"></i> <h:outputText
-												value="#{msg['navbar.settings']}" /></a></li>
+												value="#{msg['navbar.administrator']}" /></a></li>
 									<li><a href="javascript:;"><i
 											class="fa fa-question-circle pull-right"></i> <h:outputText
 												value="#{msg['navbar.help']}" /></a></li>
