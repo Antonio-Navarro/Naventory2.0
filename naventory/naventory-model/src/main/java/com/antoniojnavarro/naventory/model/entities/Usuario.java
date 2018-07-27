@@ -41,21 +41,18 @@ public class Usuario implements GenericEntity {
 	@Column(name = "foto_perf", length = 255)
 	private String fotoPerf;
 	
-	@Column(name = "activo", length = 1)
-	private Character activo;
+	@Column(name = "activo", length = 1, columnDefinition="VARCHAR(1) DEFAULT Y" )
+	private String activo;
 	
-	@Column(name = "admin", length = 1)
-	private Character admin;
+	@Column(name = "admin", length = 1,  columnDefinition="VARCHAR(1) DEFAULT N" )
+	private String admin;
 	
 	@Column(name = "token", length = 255)
 	private String token;
 	
 	@Column(name = "token_pass", length = 255)
 	private String tokenPass;
-//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@JoinColumn(name="user_id")
-//	private List<Role> roles;
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -112,19 +109,19 @@ public class Usuario implements GenericEntity {
 		this.fotoPerf = fotoPerf;
 	}
 
-	public Character getActivo() {
+	public String getActivo() {
 		return activo;
 	}
 
-	public void setActivo(Character activo) {
+	public void setActivo(String activo) {
 		this.activo = activo;
 	}
 
-	public Character getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Character admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
 
@@ -144,13 +141,9 @@ public class Usuario implements GenericEntity {
 		this.tokenPass = tokenPass;
 	}
 
-//	public List<Role> getRoles() {
-//		return roles;
-//	}
-//
-//	public void setRoles(List<Role> roles) {
-//		this.roles = roles;
-//	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public int hashCode() {
@@ -236,7 +229,7 @@ public class Usuario implements GenericEntity {
 			return false;
 		return true;
 	}
-	
+
 	
 	
 	

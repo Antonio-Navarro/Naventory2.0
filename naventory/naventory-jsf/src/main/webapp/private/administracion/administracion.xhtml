@@ -45,9 +45,9 @@
 				<div class="row" style="margin-top: 1%;">
 					<div class="col-md-12">
 						<p:dataTable id="userTable" var="user"
-							value="#{administracionBean.usuarios}" paginator="true"  
-							rows="#{defaultPaginatorRows}" reflow="true"
-							paginatorPosition="bottom" lazy="true"
+							value="#{administracionBean.usuarios}" paginator="true"
+							rows="#{defaultPaginatorRows}" reflow="true" rowIndexVar="cont"
+							paginatorPosition="bottom" lazy="true" resizableColumns="true"
 							rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 							emptyMessage="#{msg['noresult']}">
 
@@ -58,32 +58,37 @@
 									</h:outputFormat>
 								</div>
 							</f:facet>
-<!-- 							<p:column sortBy="#{user.cont}" headerText="#{msg['users.datatable.header.login']}" -->
-<!-- 								width="10%"> -->
-<!-- 								<h:outputText value="#{user.cont}" /> -->
-<!-- 							</p:column> -->
-							<p:column sortBy="#{user.nombre}" headerText="#{msg['users.datatable.header.login']}">
+							<p:column sortBy="#{cont+1}" headerText="" style="width:5%">
+								<h:outputText value="#{cont}" />
+							</p:column>
+							<p:column sortBy="#{user.nombre}"
+								headerText="#{msg['users.datatable.header.nombre']}">
 								<h:outputText value="#{user.nombre}" />
 							</p:column>
-								<p:column sortBy="#{user.apellidos}"
-								headerText="#{msg['users.datatable.header.secondAndFirstName']}"
-								width="40%">
-								<h:outputText
-									value="#{user.apellido}" />
+							<p:column sortBy="#{user.apellidos}"
+								headerText="#{msg['users.datatable.header.apellidos']}">
+								<h:outputText value="#{user.apellido}" />
 							</p:column>
-							<p:column sortBy="#{user.email}" headerText="#{msg['users.datatable.header.login']}"
-								width="10%">
+							<p:column sortBy="#{user.email}"
+								headerText="#{msg['users.datatable.header.email']}">
 								<h:outputText value="#{user.email}" />
 							</p:column>
-						
-<!-- 							<p:column headerText="#{msg['users.datatable.header.role']}"> -->
-<!-- 								<p:dataList value="#{user.roles}" var="role" -->
-<!-- 									emptyMessage="#{msg['users.noroles']}" -->
-<!-- 									styleClass="datalist-no-border"> -->
-<!-- 									<h:outputText value="#{role.descripcion}" /> -->
-<!-- 								</p:dataList> -->
-<!-- 							</p:column> -->
-							<p:column width="8%">
+							<p:column sortBy="#{user.activo}" style="width:10%"
+								headerText="#{msg['users.datatable.header.activo']}">
+								<p:outputLabel value="Sí" rendered="#{user.activo eq 'Y'}"></p:outputLabel>
+								<p:outputLabel value="No"
+									rendered="#{user.activo == 'N' || user.activo eq null }"></p:outputLabel>
+							</p:column>
+							<p:column sortBy="#{user.admin}" style="width:10%"
+								headerText="#{msg['users.datatable.header.administrador']}">
+								<p:outputLabel value="Sí" rendered="#{user.admin eq 'Y'}"></p:outputLabel>
+								<p:outputLabel value="No"
+									rendered="#{user.admin == 'N' || user.admin eq null }"></p:outputLabel>
+
+							</p:column>
+
+							<p:column width="8%"
+								headerText="#{msg['users.datatable.header.opciones']}">
 								<p:commandButton title="#{msg['edit']}" global="false"
 									icon="fa fa-pencil-square-o"
 									actionListener="#{usuarioBean.editUser(user)}"
