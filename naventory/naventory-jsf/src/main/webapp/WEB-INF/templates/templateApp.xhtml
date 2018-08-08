@@ -7,8 +7,8 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 <!-- Constants -->
-<ui:param name="defaultPaginatorRows" value="20" />
-<ui:param name="defaultRowsPerTemplate" value="5,10,20,50,100" />
+<ui:param name="defaultPaginatorRows" value="15" />
+<ui:param name="defaultRowsPerTemplate" value="5,10,15,20,50,100" />
 <ui:param name="defaultMaxLengthDataBaseVarchar" value="255" />
 
 <h:head>
@@ -59,7 +59,7 @@
 						<div class="profile_info">
 							<span><h:outputText value="#{msg['welcome']}" /></span>
 							<h2>
-								<h:outputText value="#{homeBean.usuarioAutenticado.usuario.nombre}" />
+								<h:outputText value="#{homeBean.usuarioAuteticado.usuario.nombre}" />
 							</h2>
 						</div>
 					</div>
@@ -139,13 +139,11 @@
 									<li><a href="javascript:;"><i
 											class="fa fa-user pull-right"></i> <h:outputText
 												value="#{msg['navbar.profile']}" /> </a></li>
+									<h:panelGroup rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
 									<li><a href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
-											class="fa fa-wrench pull-right"></i> <h:outputText
-												value="#{msg['navbar.administrator']}" /></a></li>
-									<li><a href="javascript:;"><i
-											class="fa fa-question-circle pull-right"></i> <h:outputText
-												value="#{msg['navbar.help']}" /></a></li>
-									<li><h:form><p:commandLink action="#{loginBean.logout}"
+											class="fa fa-cogs pull-right"></i> <h:outputText
+												value="#{msg['navbar.administrator']}" /></a></li></h:panelGroup>
+									<li><h:form id="formLogout" style="width:90%"><p:commandLink action="#{loginBean.logout}"
 											global="false">
 											<i class="fa fa-sign-out pull-right"></i>
 											<h:outputText value="#{msg['navbar.logout']}" />
@@ -204,20 +202,20 @@
 						<p:graphicImage library="images" name="loading.gif" width="65" />
 					</p:dialog>
 
-					<!-- General Focusme -->
-					<p:focus context="#{focusme}" rendered="#{focusRendered}" />
-					<!-- General Default Command -->
-					<p:defaultCommand target="#{targetDefaultCommand}"
-						rendered="#{defaultCommandRendered}" />
+<!-- 					General Focusme -->
+<!-- 					<p:focus context="#{focusme}" rendered="#{focusRendered}" /> -->
+<!-- 					General Default Command -->
+<!-- 					<p:defaultCommand target="#{targetDefaultCommand}" -->
+<!-- 						rendered="#{defaultCommandRendered}" /> -->
 
 					<ui:insert name="body" />
 
 					<!-- General Confirm Dialog -->
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="text-align:center">
 						<p:commandButton value="#{msg['yes']}" type="button"
-							styleClass="ui-confirmdialog-yes" icon="fa fa-check-circle" />
+							styleClass="ui-confirmdialog-yes btn-success" icon="fa fa-check-circle" />
 						<p:commandButton value="#{msg['no']}" type="button"
-							styleClass="ui-confirmdialog-no" icon="fa fa-times-circle" />
+							styleClass="ui-confirmdialog-no btn-danger" icon="fa fa-times-circle" />
 					</p:confirmDialog>
 				</h:form>
 			</div>

@@ -9,10 +9,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 import com.antoniojnavarro.naventory.model.commons.GenericEntity;
 
 
 @Entity
+@DynamicInsert
 @Table(name = "usuario")
 public class Usuario implements GenericEntity {
 
@@ -35,17 +39,18 @@ public class Usuario implements GenericEntity {
 	private String empresa;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "fecha_alta", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable=false)
+	@Column(name = "fecha_alta", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable=false)
 	private Date fecha_alta;
 
 	@Column(name = "foto_perf", length = 255)
 	private String fotoPerf;
 	
-	@Column(name = "activo", length = 1, columnDefinition="VARCHAR(1) DEFAULT Y" )
+	@ColumnDefault("Y")
+	@Column(name = "activo", length = 1)
 	private String activo;
-	
-	@Column(name = "admin", length = 1,  columnDefinition="VARCHAR(1) DEFAULT N" )
-	private String admin;
+	@ColumnDefault("N")
+	@Column(name = "administrador", length = 1)
+	private String administrador;
 	
 	@Column(name = "token", length = 255)
 	private String token;
@@ -117,12 +122,14 @@ public class Usuario implements GenericEntity {
 		this.activo = activo;
 	}
 
-	public String getAdmin() {
-		return admin;
+
+
+	public String getAdministrador() {
+		return administrador;
 	}
 
-	public void setAdmin(String admin) {
-		this.admin = admin;
+	public void setAdministrador(String administrador) {
+		this.administrador = administrador;
 	}
 
 	public String getToken() {
@@ -150,7 +157,7 @@ public class Usuario implements GenericEntity {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((activo == null) ? 0 : activo.hashCode());
-		result = prime * result + ((admin == null) ? 0 : admin.hashCode());
+		result = prime * result + ((administrador == null) ? 0 : administrador.hashCode());
 		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((empresa == null) ? 0 : empresa.hashCode());
@@ -177,10 +184,10 @@ public class Usuario implements GenericEntity {
 				return false;
 		} else if (!activo.equals(other.activo))
 			return false;
-		if (admin == null) {
-			if (other.admin != null)
+		if (administrador == null) {
+			if (other.administrador != null)
 				return false;
-		} else if (!admin.equals(other.admin))
+		} else if (!administrador.equals(other.administrador))
 			return false;
 		if (apellido == null) {
 			if (other.apellido != null)
@@ -229,7 +236,6 @@ public class Usuario implements GenericEntity {
 			return false;
 		return true;
 	}
-
 	
 	
 	

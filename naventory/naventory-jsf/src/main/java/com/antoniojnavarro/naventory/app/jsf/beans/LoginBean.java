@@ -37,7 +37,7 @@ public class LoginBean extends MasterBean {
 	// SERVICIOS
 	@Autowired
 	private ServicioUsuario srvUsuario;
-
+	
 	@PostConstruct
 	public void init() {
 
@@ -47,7 +47,7 @@ public class LoginBean extends MasterBean {
 	public String login() {
 
 		usuario = srvUsuario.findUsuarioByEmail(email);
-		if (usuario != null && CifrarClave.correctEncoder(password, usuario.getPassword())) {
+		if (usuario != null && CifrarClave.correctEncoder(password, usuario.getPassword()) && "Y".equals(usuario.getActivo())) {
 			usuarioAutenticado.setUsuario(usuario);
 			return Constantes.GO_TO_HOME;
 		} else {

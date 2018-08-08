@@ -8,14 +8,6 @@
 	xmlns:sec="http://www.springframework.org/security/tags"
 	template="../../WEB-INF/templates/templateApp.xhtml">
 
-
-	<ui:param name="focusme" value="filterInput" />
-	<ui:param name="focusRendered" value="true" />
-
-
-	<ui:param name="targetDefaultCommand" value="filterButton" />
-	<ui:param name="defaultCommandRendered" value="true" />
-
 	<ui:define name="body">
 		<div class="row">
 			<div class="col-md-12">
@@ -30,83 +22,143 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<ui:include src="../usersFilter.xhtml" />
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div class="text-left">
-							<p:commandButton value="#{msg['newEntity']}" global="false"
-								icon="fa fa-user-plus" actionListener="#{usuarioBean.newUser}"
-								oncomplete="PF('userDetailsDialog').show();"
-								update="userDetailsModal" />
-						</div>
+					<div class="col-md-12">
+
+						<p:accordionPanel activeIndex="2" style="width:100%">
+							<p:tab title="Mostrar gráfica de crecimiento de usuarios"
+								style="width:100%">
+								<h:panelGrid style="width:100%">
+									<p:chart type="line"
+										model="#{administracionBean.graficaCrecimiento}"
+										style="height:300px;" />
+								</h:panelGrid>
+							</p:tab>
+						</p:accordionPanel>
+
 					</div>
 				</div>
 				<div class="row" style="margin-top: 1%;">
 					<div class="col-md-12">
 						<p:dataTable id="userTable" var="user"
 							value="#{administracionBean.usuarios}" paginator="true"
-							rows="#{defaultPaginatorRows}" reflow="true" rowIndexVar="cont"
-							paginatorPosition="bottom" lazy="true" resizableColumns="true"
+							rowHover="true" rows="#{defaultPaginatorRows}" reflow="true"
+							rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
+							resizableColumns="true"
 							rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 							emptyMessage="#{msg['noresult']}">
 
 							<f:facet name="footer">
 								<div class="text-left">
 									<h:outputFormat value="#{msg['numResult']}">
-										<f:param value="5"></f:param>
+										<f:param value="#{fn:length(administracionBean.usuarios)}"></f:param>
 									</h:outputFormat>
 								</div>
 							</f:facet>
-							<p:column sortBy="#{cont+1}" headerText="" style="width:5%">
+							<p:column headerText="" style="width:5%;text-align:center">
 								<h:outputText value="#{cont}" />
 							</p:column>
-							<p:column sortBy="#{user.nombre}"
+							<p:column sortBy="#{user.nombre}" filterBy="#{user.nombre}"
+								style="width:12%" filterMatchMode="contains"
 								headerText="#{msg['users.datatable.header.nombre']}">
 								<h:outputText value="#{user.nombre}" />
 							</p:column>
-							<p:column sortBy="#{user.apellidos}"
+							<p:column sortBy="#{user.apellido}" filterBy="#{user.apellido}"
+								filterMatchMode="contains" style="width:16%"
 								headerText="#{msg['users.datatable.header.apellidos']}">
 								<h:outputText value="#{user.apellido}" />
 							</p:column>
-							<p:column sortBy="#{user.email}"
+							<p:column sortBy="#{user.email}" filterBy="#{user.email}"
+								filterMatchMode="contains" style="width:20%"
 								headerText="#{msg['users.datatable.header.email']}">
 								<h:outputText value="#{user.email}" />
 							</p:column>
-							<p:column sortBy="#{user.activo}" style="width:10%"
+							<p:column sortBy="#{user.activo}"
+								style="width:10%;text-align:center"
 								headerText="#{msg['users.datatable.header.activo']}">
 								<p:outputLabel value="Sí" rendered="#{user.activo eq 'Y'}"></p:outputLabel>
 								<p:outputLabel value="No"
-									rendered="#{user.activo == 'N' || user.activo eq null }"></p:outputLabel>
+									rendered="#{user.activo eq 'N' || user.activo eq null }"></p:outputLabel>
 							</p:column>
-							<p:column sortBy="#{user.admin}" style="width:10%"
+							<p:column sortBy="#{user.administrador}"
+								style="width:10%;text-align:center"
 								headerText="#{msg['users.datatable.header.administrador']}">
-								<p:outputLabel value="Sí" rendered="#{user.admin eq 'Y'}"></p:outputLabel>
+								<p:outputLabel value="Sí"
+									rendered="#{user.administrador eq 'Y'}"></p:outputLabel>
 								<p:outputLabel value="No"
-									rendered="#{user.admin == 'N' || user.admin eq null }"></p:outputLabel>
+									rendered="#{user.administrador == 'N' || user.administrador eq null }"></p:outputLabel>
 
 							</p:column>
 
-							<p:column width="8%"
+							<p:column width="15%" style="text-align:center"
 								headerText="#{msg['users.datatable.header.opciones']}">
-								<p:commandButton title="#{msg['edit']}" global="false"
-									icon="fa fa-pencil-square-o"
-									actionListener="#{usuarioBean.editUser(user)}"
-									oncomplete="PF('userDetailsDialog').show();"
-									update="formApp:userDetailsModal" />
-								<p:commandButton icon="fa fa-user-times"
-									title="#{msg['delete']}"
-									disabled="#{not usuarioBean.canDelete(user)}"
-									actionListener="#{usuarioBean.delete(user)}" update="userTable">
+								<p:commandLink title="Bloquear" styleClass="bloquear"
+									id="fadeBloquear"
+									actionListener="#{administracionBean.cambiarEstadoActivo(user)}"
+									update="userTable" rendered="#{user.activo eq 'Y'}">
+									<i class="fa fa-unlock fa-fw " style="color: grey;"></i>
+									<p:tooltip id="toolTipFade" for="fadeBloquear"
+										value="Bloquear usuario" position="top" />
+								</p:commandLink>
+								<p:commandLink title="Bloquear" styleClass="bloquear"
+									actionListener="#{administracionBean.cambiarEstadoActivo(user)}"
+									id="fadeDesbloquear" update="userTable"
+									rendered="#{user.activo eq 'N' || user.activo eq null}">
+									<i class="fa fa-lock fa-fw " style="color: grey;"></i>
+									<p:tooltip id="toolTipFade2" for="fadeDesbloquear"
+										value="Desbloquear usuario" position="top" />
+								</p:commandLink>
+
+								<p:commandLink styleClass="bloquear" id="fadeAdmin"
+									actionListener="#{administracionBean.cambiarEstadoAdmin(user)}"
+									update="userTable" rendered="#{user.administrador eq 'Y'}">
+									<i class="fa fa-user-secret fa-fw " style="color: blue;"></i>
+									<p:tooltip id="toolTipFade3" for="fadeAdmin"
+										value="Quitar permisos de administrador" position="left" />
+								</p:commandLink>
+
+								<p:commandLink class="bloquear"
+									actionListener="#{administracionBean.cambiarEstadoAdmin(user)}"
+									id="fadeAdmin2" update="userTable"
+									rendered="#{user.administrador eq 'N' || user.administrador eq null}">
+									<i class="fa fa-user fa-fw " style="color: #5CB85C;"></i>
+									<p:tooltip id="toolTipFade4" for="fadeAdmin2"
+										value="Dar permisos de administrador" position="left" />
+								</p:commandLink>
+
+								<p:commandLink styleClass="bloquear" id="fadeBorrar"
+									actionListener="#{administracionBean.borrarUsuario(user)}"
+									update="userTable">
 									<p:confirm header="#{msg['needConfirmation']}"
 										message="#{msg['areyousure']}" icon="fa fa-warning" />
-								</p:commandButton>
+									<i class="fa fa-trash fa-fw " style="color: red;"></i>
+									<p:tooltip id="toolTipFade5" for="fadeBorrar"
+										value="Borrar usuario" position="top" />
+								</p:commandLink>
+
+								<!-- 								<p:commandButton title="#{msg['edit']}" global="false" -->
+								<!-- 									icon="fa fa-pencil-square-o" -->
+								<!-- 									actionListener="#{usuarioBean.editUser(user)}" -->
+								<!-- 									oncomplete="PF('userDetailsDialog').show();" -->
+								<!-- 									update="formApp:userDetailsModal" /> -->
+								<!-- 								<p:commandButton icon="fa fa-user-times" -->
+								<!-- 									title="#{msg['delete']}" -->
+								<!-- 									disabled="#{not usuarioBean.canDelete(user)}" -->
+								<!-- 									actionListener="#{usuarioBean.delete(user)}" update="userTable"> -->
+								<!-- 									<p:confirm header="#{msg['needConfirmation']}" -->
+								<!-- 										message="#{msg['areyousure']}" icon="fa fa-warning" /> -->
+								<!-- 								</p:commandButton> -->
+								<!-- 								<p:commandButton icon="fa fa-lock" title="#{msg['delete']}" -->
+								<!-- 									disabled="#{not usuarioBean.canDelete(user)}" -->
+								<!-- 									actionListener="#{usuarioBean.delete(user)}" update="userTable"> -->
+								<!-- 									<p:confirm header="#{msg['needConfirmation']}" -->
+								<!-- 										message="#{msg['areyousure']}" icon="fa fa-warning" /> -->
+								<!-- 								</p:commandButton> -->
 							</p:column>
 						</p:dataTable>
 					</div>
 				</div>
 			</div>
 		</div>
-		<ui:include src="../usersDetails.xhtml" />
+		<!-- 		<ui:include src="../usersDetails.xhtml" /> -->
 	</ui:define>
 </ui:composition>

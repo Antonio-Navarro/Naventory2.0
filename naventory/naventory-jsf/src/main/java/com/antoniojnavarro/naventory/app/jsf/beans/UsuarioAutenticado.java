@@ -1,6 +1,10 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -10,7 +14,7 @@ import org.springframework.context.annotation.Scope;
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 
-@Named("usuarioAutenticado")
+@Named("usuarioAutenticadoBean")
 @Scope(value = PFScope.SESSION_SCOPED)
 public class UsuarioAutenticado extends MasterBean {
 
@@ -30,7 +34,6 @@ public class UsuarioAutenticado extends MasterBean {
 	
 	@PostConstruct
 	public void init() {
-
 		logger.info("UsuarioAutenticado.init()");
 	}
 
@@ -42,5 +45,16 @@ public class UsuarioAutenticado extends MasterBean {
 		this.usuario = usuario;
 	}
 
-
+	public void isLoged() {
+		if (getUsuario() == null) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			try {
+				externalContext.redirect(externalContext.getRequestContextPath()+"/login.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -1,6 +1,7 @@
 package com.antoniojnavarro.naventory.services.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -137,6 +138,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public Usuario findUsuarioByEmailAndPassword(String email, String pass) throws ServicioException {
 
 		return this.usuarioDao.findUsuarioByEmailAndPassword(email,pass);
+	}
+	
+	public Object[]findUsersGrafica(){
+		return this.usuarioDao.findUsersGrafica();
 	}
 	@Override
 	public void validateEmail(String email)  throws ServicioException {

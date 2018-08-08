@@ -2719,6 +2719,26 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
 	border-color: #398439 !important;
 }
 
+.btn-danger {
+	color: #fff !important;
+	background-color: #d9534f !important;
+	border-color: #d43f3a !important;
+}
+
+.btn-danger:focus, .btn-success.focus {
+	color: #fff;
+	background-color: #c9302c !important;
+	border-color: #761c19 !important;
+}
+
+.btn-danger:hover {
+	color: #fff;
+	background-color: #c9302c !important;
+	border-color: #ac2925 !important;
+}
+
+
+
 .btn-dark {
 	color: #E9EDEF;
 	background-color: #4B5F71;
@@ -4980,4 +5000,11 @@ ul.notifications {
 
 .panel-yellow a:hover {
 	color: #df8a13;
+}
+.ui-tooltip { pointer-events: none; }
+.bloquear:hover{
+	color:red;
+}
+.ui-dialog .ui-dialog-buttonpane{
+	text-align:center !important;
 }

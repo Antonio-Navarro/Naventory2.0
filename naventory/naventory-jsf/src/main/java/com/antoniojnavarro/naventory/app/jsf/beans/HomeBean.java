@@ -1,10 +1,6 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
-import java.io.IOException;
-
 import javax.annotation.PostConstruct;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -20,31 +16,17 @@ public class HomeBean extends MasterBean {
 	private static final Logger logger = LoggerFactory.getLogger(HomeBean.class);
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private UsuarioAutenticado usuarioAutenticado;
 	private String nombre = "Antonio Javier";
+	@Autowired
+	private UsuarioAutenticado usuarioAuteticado;
 
+	
 	@PostConstruct
-	private void init() {
-		if (usuarioAutenticado.getUsuario() == null) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = facesContext.getExternalContext();
-			try {
-				externalContext.redirect("../login.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	public void init() {
+		logger.debug("Pasando por el init de home");
+		this.usuarioAuteticado.isLoged();
 	}
 
-	public UsuarioAutenticado getUsuarioAutenticado() {
-		return usuarioAutenticado;
-	}
-
-	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
-		this.usuarioAutenticado = usuarioAutenticado;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -53,4 +35,16 @@ public class HomeBean extends MasterBean {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+
+	public UsuarioAutenticado getUsuarioAuteticado() {
+		return usuarioAuteticado;
+	}
+
+
+	public void setUsuarioAuteticado(UsuarioAutenticado usuarioAuteticado) {
+		this.usuarioAuteticado = usuarioAuteticado;
+	}
+	
+	
 }
