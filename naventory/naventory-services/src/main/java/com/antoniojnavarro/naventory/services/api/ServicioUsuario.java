@@ -1,7 +1,5 @@
 package com.antoniojnavarro.naventory.services.api;
 
-import java.util.Map;
-
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.UsuarioSearchFilter;
 import com.antoniojnavarro.naventory.services.commons.ServicioCrud;

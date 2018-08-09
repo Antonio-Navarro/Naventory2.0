@@ -90,7 +90,7 @@
 												href="#{request.contextPath}/private/users/users.xhtml"><h:outputText
 														value="Ver #{msg['sidebar.menu.productos']}" /></a></li>
 											<li><a
-												href="#{request.contextPath}/private/users/users.xhtml"><h:outputText
+												href="#{request.contextPath}/private/categorias/categorias.xhtml"><h:outputText
 														value="Ver #{msg['sidebar.menu.categorias']}" /></a></li>
 										</ul></li>
 
@@ -211,7 +211,7 @@
 					<ui:insert name="body" />
 
 					<!-- General Confirm Dialog -->
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="text-align:center">
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="text-align:center" width="600px">
 						<p:commandButton value="#{msg['yes']}" type="button"
 							styleClass="ui-confirmdialog-yes btn-success" icon="fa fa-check-circle" />
 						<p:commandButton value="#{msg['no']}" type="button"
