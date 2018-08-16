@@ -106,7 +106,11 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 	@Override
 	public void validate(Categoria entity) throws ServicioException {
 		this.srvValidacion.isNull("Categoria", entity);
-		this.srvUsuario.validateEmail(entity.getUsuario().getEmail());
+		this.srvValidacion.isNull("Nombre", entity.getNomCat());
+		if(!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+
+		}
 		
 	}
 	@Override
@@ -140,6 +144,6 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 	@Override
 	public List<Categoria> findCategoriasByUsuario(Usuario user) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.categoriaDao.findCategoriasByUsuario(user);
+		return this.categoriaDao.findCategoriasByUsuario(user); 
 	}
 }

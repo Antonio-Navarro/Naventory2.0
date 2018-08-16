@@ -30,8 +30,8 @@
 	<h:outputScript library="js" name="custom.js" />
 
 	<!-- X-CSRF-TOKEN -->
-<!-- 	<meta name="_csrf" content="${_csrf.token}" /> -->
-<!-- 	<meta name="_csrf_header" content="${_csrf.headerName}" /> -->
+	<!-- 	<meta name="_csrf" content="${_csrf.token}" /> -->
+	<!-- 	<meta name="_csrf_header" content="${_csrf.headerName}" /> -->
 
 	<ui:insert name="head" />
 </h:head>
@@ -59,7 +59,8 @@
 						<div class="profile_info">
 							<span><h:outputText value="#{msg['welcome']}" /></span>
 							<h2>
-								<h:outputText value="#{homeBean.usuarioAuteticado.usuario.nombre}" />
+								<h:outputText
+									value="#{homeBean.usuarioAuteticado.usuario.nombre}" />
 							</h2>
 						</div>
 					</div>
@@ -87,17 +88,19 @@
 											class="fa fa-chevron-down"></span></a>
 										<ul class="nav child_menu">
 											<li><a
-												href="#{request.contextPath}/private/users/users.xhtml"><h:outputText
+												href="#{request.contextPath}/private/productos/productos.xhtml"><h:outputText
 														value="Ver #{msg['sidebar.menu.productos']}" /></a></li>
 											<li><a
 												href="#{request.contextPath}/private/categorias/categorias.xhtml"><h:outputText
 														value="Ver #{msg['sidebar.menu.categorias']}" /></a></li>
 										</ul></li>
 
-									<li><a><i class="fa fa-street-view"></i> <h:outputText
+									<li><a href="#{request.contextPath}/private/clientes/clientes.xhtml"><i class="fa fa-street-view"></i> <h:outputText
 												value="#{msg['sidebar.menu.clientes']}" /></a></li>
 
-									<li><a><i class="fa fa-truck"></i> <h:outputText
+									<li><a
+										href="#{request.contextPath}/private/proveedores/proveedores.xhtml"><i
+											class="fa fa-truck"></i> <h:outputText
 												value="#{msg['sidebar.menu.proveedores']}" /></a></li>
 
 									<li><a><i class="fa fa-bar-chart"></i> <h:outputText
@@ -139,15 +142,19 @@
 									<li><a href="javascript:;"><i
 											class="fa fa-user pull-right"></i> <h:outputText
 												value="#{msg['navbar.profile']}" /> </a></li>
-									<h:panelGroup rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
-									<li><a href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
-											class="fa fa-cogs pull-right"></i> <h:outputText
-												value="#{msg['navbar.administrator']}" /></a></li></h:panelGroup>
-									<li><h:form id="formLogout" style="width:90%"><p:commandLink action="#{loginBean.logout}"
-											global="false">
-											<i class="fa fa-sign-out pull-right"></i>
-											<h:outputText value="#{msg['navbar.logout']}" />
-										</p:commandLink></h:form></li>
+									<h:panelGroup
+										rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
+										<li><a
+											href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
+												class="fa fa-cogs pull-right"></i> <h:outputText
+													value="#{msg['navbar.administrator']}" /></a></li>
+									</h:panelGroup>
+									<li><h:form id="formLogout" style="width:90%">
+											<p:commandLink action="#{loginBean.logout}" global="false">
+												<i class="fa fa-sign-out pull-right"></i>
+												<h:outputText value="#{msg['navbar.logout']}" />
+											</p:commandLink>
+										</h:form></li>
 								</ul></li>
 
 							<li class="dropdown "><a class="dropdown-toggle"
@@ -176,72 +183,64 @@
 								<button type="button" class="close" data-dismiss="modal">Close</button>
 								<h4 class="modal-title">Nuevo mensaje</h4>
 							</div>
-							<div class="modal-body">
-							sdfasd
-							</div>
+							<div class="modal-body">sdfasd</div>
 						</div>
 					</div>
 				</div>
+			</div>
+			<!-- /top navigation -->
+
+			<!-- page content -->
+			<div class="page-content right_col" role="main">
+				<div class="">
+					<h:form id="formApp">
+						<!-- Growl Messages -->
+						<p:growl autoUpdate="true" escape="false" />
+						<!-- Ajax Status -->
+						<p:ajaxStatus onstart="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide()" />
+						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+							closable="false" resizable="false" showHeader="false">
+							<p:graphicImage library="images" name="loading.gif" width="65" />
+						</p:dialog>
+
+						<ui:insert name="body" />
+
+						<!-- General Confirm Dialog -->
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+							style="text-align:center" width="600px">
+							<p:commandButton value="#{msg['yes']}" type="button"
+								styleClass="ui-confirmdialog-yes btn-success"
+								icon="fa fa-check-circle" />
+							<p:commandButton value="#{msg['no']}" type="button"
+								styleClass="ui-confirmdialog-no btn-danger"
+								icon="fa fa-times-circle" />
+						</p:confirmDialog>
+					</h:form>
+				</div>
+			</div>
+			<!-- /page content -->
+			<!-- footer content -->
+			<footer>
+				<div class="pull-right">
+					<h:outputText value="#{msg['aplicacion.nombre']}" />
+					&#160;
+					<h:outputText value="#{msg['aplicacion.version']}" />
+				</div>
+				<div class="pull-right" style="margin-right: 6px;">
+					<h:form id="formThemeSwitcher">
+						<p:themeSwitcher id="basic" style="width:165px">
+							<f:selectItem itemLabel="#{msg['themeswitcher.choose']}"
+								itemValue="" noSelectionOption="true" />
+							<f:selectItems value="#{themeSwitcherBean.themes}" var="theme"
+								itemLabel="#{theme}" itemValue="#{theme}" />
+						</p:themeSwitcher>
+					</h:form>
+				</div>
+				<div class="clearfix"></div>
+			</footer>
+			<!-- /footer content -->
 		</div>
-		<!-- /top navigation -->
-
-		<!-- page content -->
-		<div class="page-content right_col" role="main">
-			<div class="">
-				<h:form id="formApp">
-<!-- 					<input type="hidden" name="${_csrf.parameterName}" -->
-<!-- 						value="${_csrf.token}" /> -->
-
-					<!-- Growl Messages -->
-					<p:growl autoUpdate="true" escape="false" />
-					<!-- Ajax Status -->
-					<p:ajaxStatus onstart="PF('statusDialog').show()"
-						onsuccess="PF('statusDialog').hide()" />
-					<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-						closable="false" resizable="false" showHeader="false">
-						<p:graphicImage library="images" name="loading.gif" width="65" />
-					</p:dialog>
-
-<!-- 					General Focusme -->
-<!-- 					<p:focus context="#{focusme}" rendered="#{focusRendered}" /> -->
-<!-- 					General Default Command -->
-<!-- 					<p:defaultCommand target="#{targetDefaultCommand}" -->
-<!-- 						rendered="#{defaultCommandRendered}" /> -->
-
-					<ui:insert name="body" />
-
-					<!-- General Confirm Dialog -->
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" style="text-align:center" width="600px">
-						<p:commandButton value="#{msg['yes']}" type="button"
-							styleClass="ui-confirmdialog-yes btn-success" icon="fa fa-check-circle" />
-						<p:commandButton value="#{msg['no']}" type="button"
-							styleClass="ui-confirmdialog-no btn-danger" icon="fa fa-times-circle" />
-					</p:confirmDialog>
-				</h:form>
-			</div>
-		</div>
-		<!-- /page content -->
-		<!-- footer content -->
-		<footer>
-			<div class="pull-right">
-				<h:outputText value="#{msg['aplicacion.nombre']}" />
-				&#160;
-				<h:outputText value="#{msg['aplicacion.version']}" />
-			</div>
-			<div class="pull-right" style="margin-right: 6px;">
-				<h:form id="formThemeSwitcher">
-					<p:themeSwitcher id="basic" style="width:165px">
-						<f:selectItem itemLabel="#{msg['themeswitcher.choose']}"
-							itemValue="" noSelectionOption="true" />
-						<f:selectItems value="#{themeSwitcherBean.themes}" var="theme"
-							itemLabel="#{theme}" itemValue="#{theme}" />
-					</p:themeSwitcher>
-				</h:form>
-			</div>
-			<div class="clearfix"></div>
-		</footer>
-		<!-- /footer content -->
-	</div>
 	</div>
 </h:body>
 </html>

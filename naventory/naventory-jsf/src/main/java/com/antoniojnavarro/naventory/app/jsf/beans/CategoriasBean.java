@@ -58,10 +58,13 @@ public class CategoriasBean extends MasterBean {
 		this.selectedCategoria = new Categoria();
 	}
 	public void editarCategoria (Categoria categoria) {
-		this.selectedCategoria = categoria;
+		this.selectedCategoria = null;
+		this.selectedCategoria =categoria;
 		this.editing = true;
 	}
-	
+	public void iniciarSelectedCategoria() {
+		this.selectedCategoria = null;
+	}
 	public void cargarCategorias() {
 		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
 	}
@@ -70,13 +73,20 @@ public class CategoriasBean extends MasterBean {
 
 		srvCategoria.delete(categoria);
 		this.categorias.remove(categoria);
-		addInfo("users.succesDelete");
+		addInfo("categorias.succesDelete");
+		this.editing =false;
 	}
 
 	public void guardarCategoria() {
+		
+		selectedCategoria.setUsuario(usuarioAutenticado.getUsuario());
 		srvCategoria.saveOrUpdate(this.selectedCategoria, true);
+		if(!editing) {
+			this.categorias.add(selectedCategoria);
+		}
+		super.closeDialog("categoriaDetailsDialog");
 		addInfo("categorias.succesNew");
-
+		editing=false;
 	}
 
 	public Categoria getCategoria() {

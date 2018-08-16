@@ -33,10 +33,10 @@ public class Categoria implements GenericEntity {
 	@Column(name = "nomcat", length = 255)
 	private String nomCat;
 
-	@Column(name = "desc",length = 255)
+	@Column(name = "descripcion",length = 255,nullable = true)
 	private String desc;
 
-	@Column(name = "obser",length = 255)
+	@Column(name = "obser",length = 255,nullable = true)
 	private String obser;
 
 	public Integer getIdCat() {

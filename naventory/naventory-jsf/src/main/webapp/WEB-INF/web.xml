@@ -18,7 +18,10 @@
 		<error-code>404</error-code>
 		<location>/404.xhtml</location>
 	</error-page>
-
+	<error-page>
+		<error-code>500</error-code>
+		<location>/errorPage.xhtml</location>
+	</error-page>
 	<!-- Spring Configuration -->
 	<context-param>
 		<param-name>contextClass</param-name>

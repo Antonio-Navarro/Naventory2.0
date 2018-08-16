@@ -12,6 +12,6 @@ import com.antoniojnavarro.naventory.model.filters.CategoriaSearchFilter;
 public interface CategoriaDao extends Dao<Categoria, CategoriaSearchFilter, Integer> {
 
 	@Query("SELECT c FROM Categoria c WHERE c.usuario = ?1")
-	List<Categoria> findCategoriasByUsuario(Usuario user);
+	List<Categoria> findCategoriasByUsuario(Usuario user); 
 
 }

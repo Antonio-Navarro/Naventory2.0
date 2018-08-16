@@ -5,7 +5,7 @@ import com.antoniojnavarro.naventory.model.commons.filters.annotations.EntityFil
 import com.antoniojnavarro.naventory.model.entities.Categoria;;
 
 @EntityFilter(entity = Categoria.class, abbr = "c")
-public class CategoriaSearchFilter implements SearchFilter {
+public class ProveedorSearchFilter implements SearchFilter {
 
 	private static final long serialVersionUID = 1L;
 
