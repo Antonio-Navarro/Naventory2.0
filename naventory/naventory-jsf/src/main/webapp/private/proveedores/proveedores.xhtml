@@ -24,8 +24,7 @@
 					styleClass="btn btn-lg btn-success"
 					actionListener="#{proveedoresBean.newProveedor}"
 					oncomplete="PF('proveedorDetailsDialog').show();"
-					update="proveedorDetailsModal" 
-					/>
+					update="proveedorDetailsModal" />
 			</div>
 		</div>
 		<p:separator></p:separator>
@@ -38,7 +37,11 @@
 					resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{proveedoresBean.filteredProveedores}">
+					filteredValue="#{proveedoresBean.filteredProveedores}"
+					selectionMode="single" selection="#{proveedoresBean.proveedor}"
+					rowKey="#{proveedor.idProv}">
+					<p:ajax event="rowSelect" listener="#{proveedoresBean.onRowSelect}" />
+
 					<f:facet name="header">
 						<div class="text-left">
 							<p:commandButton id="toggler" type="button" value="Columnas"
@@ -100,7 +103,12 @@
 
 					<p:column width="15%" style="text-align:center"
 						headerText="#{msg['users.datatable.header.opciones']}">
-
+						<p:commandLink id="fadeVer"
+							action="#{proveedoresBean.irADetalle(proveedor)}">
+							<i class="fa fa-search-plus fa-fw " style="color: green;"></i>
+							<p:tooltip id="toolTipFadeVer" for="fadeVer" value="Ver más"
+								position="top" />
+						</p:commandLink>
 						<p:commandLink id="fadeEditar" global="false"
 							actionListener="#{proveedoresBean.editarProveedor(proveedor)}"
 							oncomplete="PF('proveedorDetailsDialog').show();"

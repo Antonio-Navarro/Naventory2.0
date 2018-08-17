@@ -9,5 +9,8 @@ public class Constantes {
 	public static final String GO_TO_HOME = "gotohome";
 	public static final String GO_TO_LOGIN = "gotologin";
 	public static final String GO_TO_REGISTER = "gotoregister";
+	public static final String GO_TO_CLIENTE_DETAILS = "gotoclientedetails";
+	public static final String GO_TO_PROVEEDOR_DETAILS ="gotoproveedordetails";
+	
 
 }

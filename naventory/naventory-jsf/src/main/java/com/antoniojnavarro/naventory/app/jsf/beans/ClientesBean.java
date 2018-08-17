@@ -1,16 +1,20 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 
@@ -25,7 +29,8 @@ public class ClientesBean extends MasterBean {
 	// CAMPOS
 	private boolean editing;
 	// ENTITIES
-
+	@Autowired
+	ParamBean paramBean;
 	private Cliente cliente;
 
 	private Cliente selectedCliente;
@@ -47,6 +52,11 @@ public class ClientesBean extends MasterBean {
 
 	}
 
+	public String cargar() {
+		System.out.println("ok");
+		return "antonio";
+	}
+
 	public void inicilizarAtributos() {
 		this.clientes = null;
 		this.editing = false;
@@ -63,6 +73,26 @@ public class ClientesBean extends MasterBean {
 		this.selectedCliente = null;
 		this.selectedCliente = cliente;
 		this.editing = true;
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		this.cliente = (Cliente) event.getObject();
+		paramBean.setParam(this.cliente);
+		  try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("clienteDetails.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
+	public String irADetalle(Cliente cliente) {
+		this.cliente = cliente;
+		if(this.cliente !=null) {
+			paramBean.setParam(this.cliente);
+			return Constantes.GO_TO_CLIENTE_DETAILS;
+		}else
+			return null;
 	}
 
 	public void iniciarSelectedCliente() {

@@ -24,21 +24,23 @@
 					styleClass="btn btn-lg btn-success"
 					actionListener="#{clientesBean.newCliente}"
 					oncomplete="PF('clienteDetailsDialog').show();"
-					update="clienteDetailsModal" 
-					/>
+					update="clienteDetailsModal" />
 			</div>
 		</div>
 		<p:separator></p:separator>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
-				<p:dataTable id="clienteTable" var="cliente"
-					widgetVar="clientesWV" value="#{clientesBean.clientes}"
-					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
-					rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
-					resizableColumns="true"
+				<p:dataTable id="clienteTable" var="cliente" widgetVar="clientesWV"
+					value="#{clientesBean.clientes}" paginator="true" rowHover="true"
+					rows="#{defaultPaginatorRows}" rowIndexVar="cont"
+					paginatorPosition="bottom" lazy="false" resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{clientesBean.filteredClientes}">
+					filteredValue="#{clientesBean.filteredClientes}"
+					selectionMode="single" selection="#{clientesBean.cliente}"
+					rowKey="#{cliente.idCliente}">
+					<p:ajax event="rowSelect" listener="#{clientesBean.onRowSelect}" />
+
 					<f:facet name="header">
 						<div class="text-left">
 							<p:commandButton id="toggler" type="button" value="Columnas"
@@ -71,9 +73,8 @@
 						headerText="#{msg['clientes.table.id']}">
 						<h:outputText value="#{cliente.idCliente}" />
 					</p:column>
-					<p:column sortBy="#{cliente.nombre}"
-						filterBy="#{cliente.nombre}" style="width:12%"
-						filterMatchMode="contains"
+					<p:column sortBy="#{cliente.nombre}" filterBy="#{cliente.nombre}"
+						style="width:12%" filterMatchMode="contains"
 						headerText="#{msg['users.datatable.header.nombre']}">
 						<h:outputText value="#{cliente.nombre}" />
 					</p:column>
@@ -85,12 +86,12 @@
 						sortBy="#{cliente.ciudad}">
 						<h:outputText value="#{cliente.ciudad}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.cp']}"
-						styleClass="tdNumber" sortBy="#{cliente.cp}">
+					<p:column headerText="#{msg['clientes.cp']}" styleClass="tdNumber"
+						sortBy="#{cliente.cp}">
 						<h:outputText value="#{cliente.cp}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.tel']}"
-						styleClass="tdNumber" sortBy="#{cliente.tel1}">
+					<p:column headerText="#{msg['clientes.tel']}" styleClass="tdNumber"
+						sortBy="#{cliente.tel1}">
 						<h:outputText value="#{cliente.tel1}" />
 					</p:column>
 					<p:column headerText="#{msg['clientes.correo']}"
@@ -100,6 +101,13 @@
 
 					<p:column width="15%" style="text-align:center"
 						headerText="#{msg['users.datatable.header.opciones']}">
+
+						<p:commandLink id="fadeVer"
+							action="#{clientesBean.irADetalle(cliente)}">
+							<i class="fa fa-search-plus fa-fw " style="color: green;"></i>
+							<p:tooltip id="toolTipFadeVer" for="fadeVer" value="Ver más"
+								position="top" />
+						</p:commandLink>
 
 						<p:commandLink id="fadeEditar" global="false"
 							actionListener="#{clientesBean.editarCliente(cliente)}"

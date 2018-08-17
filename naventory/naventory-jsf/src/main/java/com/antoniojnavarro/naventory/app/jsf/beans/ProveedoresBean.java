@@ -1,16 +1,20 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
 
@@ -25,7 +29,8 @@ public class ProveedoresBean extends MasterBean {
 	// CAMPOS
 	private boolean editing;
 	// ENTITIES
-
+	@Autowired
+	ParamBean paramBean;
 	private Proveedor proveedor;
 
 	private Proveedor selectedProveedor;
@@ -53,18 +58,42 @@ public class ProveedoresBean extends MasterBean {
 		this.selectedProveedor = new Proveedor();
 		this.proveedor = new Proveedor();
 	}
+
 	public void newProveedor() {
 		this.editing = false;
 		this.selectedProveedor = new Proveedor();
 	}
-	public void editarProveedor (Proveedor proveedor) {
+
+	public void editarProveedor(Proveedor proveedor) {
 		this.selectedProveedor = null;
-		this.selectedProveedor =proveedor;
+		this.selectedProveedor = proveedor;
 		this.editing = true;
 	}
+
+	public void onRowSelect(SelectEvent event) {
+		this.proveedor = (Proveedor) event.getObject();
+		paramBean.setParam(this.proveedor);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("proveedorDetails.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public String irADetalle(Proveedor proveedor) {
+		this.proveedor = proveedor;
+		if (this.proveedor != null) {
+			paramBean.setParam(proveedor);
+			return Constantes.GO_TO_PROVEEDOR_DETAILS;
+		} else
+			return null;
+	}
+
 	public void iniciarSelectedProveedor() {
 		this.selectedProveedor = null;
 	}
+
 	public void cargarProveedores() {
 		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
 	}
@@ -74,19 +103,19 @@ public class ProveedoresBean extends MasterBean {
 		srvProveedor.delete(proveedor);
 		this.proveedores.remove(proveedor);
 		addInfo("proveedores.succesDelete");
-		this.editing =false;
+		this.editing = false;
 	}
 
 	public void guardarProveedor() {
-		
+
 		selectedProveedor.setUsuario(usuarioAutenticado.getUsuario());
 		srvProveedor.saveOrUpdate(this.selectedProveedor, true);
-		if(!editing) {
+		if (!editing) {
 			this.proveedores.add(selectedProveedor);
 		}
 		super.closeDialog("proveedorDetailsDialog");
 		addInfo("proveedores.succesNew");
-		editing=false;
+		editing = false;
 	}
 
 	public Proveedor getProveedor() {

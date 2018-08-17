@@ -7,46 +7,46 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="http://www.springframework.org/security/tags">
 
-	<p:dialog id="categoriaDetailsModal" widgetVar="categoriaDetailsDialog"
+	<p:dialog id="productoDetailsModal" widgetVar="productoDetailsDialog"
 		 responsive="true"
 		closable="true" resizable="false" modal="true" maximizable="false"
-		width="600" focus="nomCatInput">
+		width="600" focus="">
 		<f:facet name="header">
-			<h:outputText rendered="#{categoriasBean.editing}"
-				value="#{msg['categoria.editarCategoria']}"></h:outputText>
-			<h:outputText rendered="#{!categoriasBean.editing}"
-				value="#{msg['categoria.titleNuevaCategoria']}"></h:outputText>
+			<h:outputText rendered="#{productosBean.editing}"
+				value="#{msg['producto.editarProducto']}"></h:outputText>
+			<h:outputText rendered="#{!productosBean.editing}"
+				value="#{msg['producto.titleNuevaProducto']}"></h:outputText>
 
 		</f:facet>
-<!-- 		<p:messages id="messages" autoUpdate="true" escape="false" -->
-<!-- 			closable="true" showSummary="true" showDetail="false" -->
-<!-- 			globalOnly="true" /> -->
+		<p:messages id="messages" autoUpdate="true" escape="false"
+			closable="true" showSummary="true" showDetail="false"
+			globalOnly="true" />
 
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
-			<p:outputLabel for="nomCatInput" styleClass="required"
-				value="#{msg['categorias.nombreCategoria']}" />
-			<p:inputText id="nomCatInput"
-				requiredMessage="#{msg['register.nombre.req']}"
-				value="#{categoriasBean.selectedCategoria.nomCat}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="&#xF007;"
-				style="font-family:Arial, FontAwesome; text-align:center" />
+<!-- 			<p:outputLabel for="nomCatInput" styleClass="required" -->
+<!-- 				value="#{msg['productos.nombreProducto']}" /> -->
+<!-- 			<p:inputText id="nomCatInput" -->
+<!-- 				requiredMessage="#{msg['register.nombre.req']}" -->
+<!-- 				value="#{productosBean.selectedProducto.nomCat}" -->
+<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" -->
+<!-- 				placeholder="&#xF007;" -->
+<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
 
-			<p:outputLabel for="descInput" value="#{msg['categorias.desc']}" />
-			<p:inputText id="descInput"
-				value="#{categoriasBean.selectedCategoria.desc}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="&#xf075;"
-				style="font-family:Arial, FontAwesome; text-align:center" />
+<!-- 			<p:outputLabel for="descInput" value="#{msg['productos.desc']}" /> -->
+<!-- 			<p:inputText id="descInput" -->
+<!-- 				value="#{productosBean.selectedProducto.desc}" -->
+<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" -->
+<!-- 				placeholder="&#xf075;" -->
+<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
 
-			<p:outputLabel for="descInput" value="#{msg['categorias.obser']}" />
-			<p:inputTextarea id="obserInput"
-				value="#{categoriasBean.selectedCategoria.obser}" rows="3"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="&#xF129;"
-				style="width:100%;font-family:Arial, FontAwesome; text-align:center" />
+<!-- 			<p:outputLabel for="descInput" value="#{msg['productos.obser']}" /> -->
+<!-- 			<p:inputTextarea id="obserInput" -->
+<!-- 				value="#{productosBean.selectedProducto.obser}" rows="3" -->
+<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" -->
+<!-- 				placeholder="&#xF129;" -->
+<!-- 				style="width:100%;font-family:Arial, FontAwesome; text-align:center" /> -->
 
 		</p:panelGrid>
 		<f:facet name="footer">
@@ -54,9 +54,9 @@
 				<div class="col-md-12 text-right margin-10">
 					<p:commandButton icon="fa fa-save"
 						styleClass="btn btn-lg btn-success btnAction"
-						title="#{msg['save']}" value="#{msg['categorias.crearCategoria']}"
-						actionListener="#{categoriasBean.guardarCategoria}"
-						update="categoriaTable" />
+						title="#{msg['save']}" value="#{msg['productos.crearProducto']}"
+						actionListener="#{productosBean.guardarProducto}"
+						update="productoTable" />
 				</div>
 			</p:row>
 		</f:facet>

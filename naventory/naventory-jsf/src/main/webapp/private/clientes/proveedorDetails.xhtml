@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="body">
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					<h:outputText value="#{clienteDetailsBean.cliente.nombre}" />
+				</h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="separator"></div>
+		<div class="row">
+			<div class="col-md-12 text-left">
+				<p:breadCrumb>
+					<p:menuitem value="Dashboard" url="../home.xhtml" />
+					<p:menuitem value="Clientes" url="clientes.xhtml" />
+					<p:menuitem value="#{clienteDetailsBean.cliente.nombre}" url="#" />
+				</p:breadCrumb>
+			</div>
+		</div>
+		<p:separator></p:separator>
+		<div class="row" style="margin-top: 1%;">
+			<div class="col-md-12">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#home" data-toggle="tab">Datos
+							básicos</a></li>
+					<li><a href="#profile" data-toggle="tab">Datos Dirección</a></li>
+					<li><a href="#messages" data-toggle="tab">Datos Contacto</a></li>
+					<li><a href="#settings" data-toggle="tab">Otros</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content" style="color:#333">
+					<div class="tab-pane fade in active" id="home">
+						<h4>Datos básicos</h4>
+						<br />
+						<p>
+							<strong>ID del cliente:</strong> #{clienteDetailsBean.cliente.idCliente}
+						</p>
+						<p>
+							<strong>Nombre comercial:</strong> #{clienteDetailsBean.cliente.nombreCom}
+						</p>
+						<p>
+							<strong>Nombre:</strong> #{clienteDetailsBean.cliente.nombre}
+						</p>
+						<p>
+							<strong>Número de identifiación fiscal:</strong>
+							#{clienteDetailsBean.cliente.nif}
+						</p>
+					</div>
+					<div class="tab-pane fade" id="profile">
+						<h4>Datos dirección</h4>
+						<br />
+						<p>
+							<strong>Dirección:</strong> #{clienteDetailsBean.cliente.direccion}
+						</p>
+						<p>
+							<strong>Ciudad:</strong> #{clienteDetailsBean.cliente.ciudad}
+						</p>
+						<p>
+							<strong>Provincia:</strong> #{clienteDetailsBean.cliente.provincia}
+						</p>
+						<p>
+							<strong>Código postal:</strong> #{clienteDetailsBean.cliente.cp}
+						</p>
+						<p>
+							<strong>País:</strong> #{clienteDetailsBean.cliente.pais}
+						</p>
+					</div>
+					<div class="tab-pane fade" id="messages">
+						<h4>Datos Contacto</h4>
+						<br />
+						<p>
+							<strong>Teléfono 1:</strong>#{clienteDetailsBean.cliente.tel1}
+						</p>
+						<p>
+							<strong>Teléfono 2:</strong>#{clienteDetailsBean.cliente.tel2}
+						</p>
+						<p>
+							<strong>Correo electrónico:</strong> #{clienteDetailsBean.cliente.correo}
+						</p>
+					</div>
+					<div class="tab-pane fade" id="settings">
+						<h4>Otros datos</h4>
+						<br />
+						<p>
+							<strong>Observaciones: </strong> #{clienteDetailsBean.cliente.observaciones}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

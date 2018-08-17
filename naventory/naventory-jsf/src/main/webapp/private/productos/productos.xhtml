@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h1>
-					<h:outputText value="#{msg['categorias.title']}" />
+					<h:outputText value="#{msg['productos.title']}" />
 				</h1>
 			</div>
 		</div>
@@ -19,35 +19,35 @@
 		<div class="separator"></div>
 		<div class="row">
 			<div class="col-md-6 text-left">
-				<p:commandButton value="#{msg['categorias.nuevaCategoria']}"
+				<p:commandButton value="#{msg['productos.nuevaProducto']}"
 					style="heig" icon="fa fa-archive fa-fw"
 					styleClass="btn btn-lg btn-success"
-					actionListener="#{productosBean.newCategoria}"
-					oncomplete="PF('categoriaDetailsDialog').show();"
-					update="categoriaDetailsModal" />
+					actionListener="#{productosBean.newProducto}"
+					oncomplete="PF('productoDetailsDialog').show();"
+					update="productoDetailsModal" />
 			</div>
 		</div>
 		<p:separator></p:separator>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
-				<p:dataTable id="categoriaTable" var="categoria"
-					widgetVar="categoriasWV" value="#{productosBean.productos}"
+				<p:dataTable id="productoTable" var="producto"
+					widgetVar="productosWV" value="#{productosBean.productos}"
 					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
 					rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
 					resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{productosBean.filteredCategorias}">
+					filteredValue="#{productosBean.filteredProductos}">
 					<f:facet name="header">
 						<div class="text-left">
 							<p:commandButton id="toggler" type="button" value="Columnas"
 								style="float:left" icon="ui-icon-calculator" />
-							<p:columnToggler datasource="categoriaTable" trigger="toggler" />
+							<p:columnToggler datasource="productoTable" trigger="toggler" />
 						</div>
 						<div class="text-right">
 							<p:outputPanel>
 								<p:inputText id="globalFilter"
-									onkeyup="PF('categoriasWV').filter()" style="width:150px"
+									onkeyup="PF('productosWV').filter()" style="width:150px"
 									placeholder="#{msg['buscarTabla']}" />
 							</p:outputPanel>
 						</div>
@@ -57,59 +57,76 @@
 
 						<div class="text-left">
 							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{fn:length(categoriasBean.categorias)}"></f:param>
+								<f:param value="#{fn:length(productosBean.productos)}"></f:param>
 							</h:outputFormat>
 						</div>
 					</f:facet>
 					<p:column headerText="" style="width:5%;text-align:center">
 						<h:outputText value="#{(cont+1)}" />
 					</p:column>
-					<p:column sortBy="#{productoidCat}" filterBy="#{productoidCat}"
-						styleClass="tdNumber" style="width:12%" filterMatchMode="contains"
-						headerText="#{msg['categorias.table.id']}">
-						<h:outputText value="#{productoidCat}" />
+					<p:column sortBy="#{producto.sku}" filterBy="#{producto.sku}"
+						style="width:12%" filterMatchMode="contains"
+						headerText="#{msg['productos.table.id']}">
+						<h:outputText value="#{producto.sku}" />
 					</p:column>
-					<p:column sortBy="#{productonomCat}"
-						filterBy="#{productonomCat}" style="width:12%"
+					<p:column sortBy="#{producto.nombre}"
+						filterBy="#{producto.nombre}" style="width:12%"
 						filterMatchMode="contains"
 						headerText="#{msg['users.datatable.header.nombre']}">
-						<h:outputText value="#{productonomCat}" />
+						<h:outputText value="#{producto.nombre}" />
 					</p:column>
-					<p:column headerText="#{msg['categorias.desc']}"
-						sortBy="#{productodesc}">
-						<h:outputText value="#{productodesc}" />
+					<p:column sortBy="#{producto.categoria.nomCat}"
+						filterBy="#{producto.categoria.nomCat}" style="width:12%"
+						filterMatchMode="contains"
+						headerText="#{msg['categoria']}">
+						<h:outputText value="#{producto.categoria.nomCat}" />
 					</p:column>
-					<p:column headerText="#{msg['categorias.obser']}"
-						sortBy="#{productoobser}">
-						<h:outputText value="#{productoobser}" />
+					<p:column sortBy="#{producto.proveedor.nombre}"
+						filterBy="#{producto.proveedor.nombre}" style="width:12%"
+						filterMatchMode="contains"
+						headerText="#{msg['proveedor']}">
+						<h:outputText value="#{producto.proveedor.nombre}" />
 					</p:column>
+					<p:column sortBy="#{producto.coste}"
+						filterBy="#{producto.coste}" style="width:12%"
+						filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.coste.table']}">
+						<h:outputText value="#{producto.coste} €" />
+					</p:column>
+						<p:column sortBy="#{producto.precio}"
+						filterBy="#{producto.precio}" style="width:12%"
+						filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.precio.table']}">
+						<h:outputText value="#{producto.precio} €" />
+					</p:column>
+					
 					<p:column width="15%" style="text-align:center"
 						headerText="#{msg['users.datatable.header.opciones']}">
 
 
 						<p:commandLink id="fadeEditar" global="false"
-							actionListener="#{productosBean.editarCategoria(categoria)}"
-							oncomplete="PF('categoriaDetailsDialog').show();"
-							update="formApp:categoriaDetailsModal">
+							actionListener="#{productosBean.editarProducto(producto)}"
+							oncomplete="PF('productoDetailsDialog').show();"
+							update="formApp:productoDetailsModal">
 							<i class="fa fa-edit fa-fw " style="color: #337ab7;"></i>
 							<p:tooltip id="toolTipFade4" for="fadeEditar"
-								value="Editar categoría" position="top" />
+								value="Editar producto" position="top" />
 						</p:commandLink>
 
 						<p:commandLink id="fadeBorrar"
-							actionListener="#{productosBean.borrarCategoria(categoria)}"
-							update="categoriaTable">
+							actionListener="#{productosBean.borrarProducto(producto)}"
+							update="productoTable">
 							<p:confirm header="#{msg['needConfirmation']}"
 								message="#{msg['areyousure']}" icon="fa fa-warning" />
 							<i class="fa fa-trash fa-fw " style="color: red;"></i>
 							<p:tooltip id="toolTipFade5" for="fadeBorrar"
-								value="Borrar categoría" position="top" />
+								value="Borrar producto" position="top" />
 						</p:commandLink>
 
 					</p:column>
 				</p:dataTable>
 			</div>
 		</div>
-		<ui:include src="categoriasForm.xhtml" />
+		<ui:include src="productosForm.xhtml" />
 	</ui:define>
 </ui:composition>

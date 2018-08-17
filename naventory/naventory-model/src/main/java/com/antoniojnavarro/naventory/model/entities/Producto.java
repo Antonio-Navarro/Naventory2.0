@@ -27,11 +27,11 @@ public class Producto implements GenericEntity {
 	@JoinColumn(name = "email")
 	private Usuario usuario;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_cat")
 	private Categoria categoria;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_proveedor")
 	private Proveedor proveedor;
 	
