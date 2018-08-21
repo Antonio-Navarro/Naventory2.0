@@ -32,7 +32,8 @@
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
 			<p:outputLabel for="categoriaSelect" value="#{msg['categoria']}" />
-			<p:selectOneMenu id="categoriaSelect" filter="true" required="true" converter="#{categoriasConverter}"
+			<p:selectOneMenu id="categoriaSelect" filter="true" required="true"
+				converter="#{categoriasConverter}"
 				requiredMessage="#{msg['productos.categoria.required']}"
 				value="#{productosBean.selectedProducto.categoria}"
 				style="min-width:100% !important;">
@@ -42,7 +43,8 @@
 			</p:selectOneMenu>
 
 			<p:outputLabel for="proveedorSelect" value="#{msg['proveedor']}" />
-			<p:selectOneMenu id="proveedorSelect" filter="true" required="true" converter="#{proveedorConverter}"
+			<p:selectOneMenu id="proveedorSelect" filter="true" required="true"
+				converter="#{proveedorConverter}"
 				requiredMessage="#{msg['productos.proveedor.required']}"
 				value="#{productosBean.selectedProducto.proveedor}"
 				style="min-width:100% !important;">
@@ -54,7 +56,7 @@
 			<p:outputLabel for="nombreInput"
 				value="#{msg['productos.nombreProducto']}" />
 			<p:inputText id="nombreInput" required="true"
-				requiredMessage="#{msg['productos.nombre.required']}"
+				requiredMessage="#{msg['productos.nombre.required']}"  
 				value="#{productosBean.selectedProducto.nombre}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
@@ -65,21 +67,22 @@
 				value="#{productosBean.selectedProducto.descripcion}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
+				
 
-			<p:outputLabel for="costeInput" value="#{msg['productos.coste']}" />
-			<p:inputText id="costeInput" required="true"
-				requiredMessage="#{msg['productos.coste.required']}"
-				value="#{productosBean.selectedProducto.coste}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
-				style="font-family:Arial, FontAwesome; text-align:center" />
+				<p:outputLabel for="costeInput" value="#{msg['productos.coste']}" />
+				<p:inputText id="costeInput" required="true"
+					requiredMessage="#{msg['productos.coste.required']}"
+					value="#{productosBean.selectedProducto.coste}"
+					maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+					style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="precioInput" value="#{msg['productos.precio']}" />
-			<p:inputText id="precioInput" required="true"
-				requiredMessage="#{msg['productos.precio.required']}"
-				value="#{productosBean.selectedProducto.precio}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
-				style="font-family:Arial, FontAwesome; text-align:center" />
-
+				<p:outputLabel for="precioInput" value="#{msg['productos.precio']}" />
+				<p:inputText id="precioInput" required="true"
+					requiredMessage="#{msg['productos.precio.required']}"
+					value="#{productosBean.selectedProducto.precio}"
+					maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+					style="font-family:Arial, FontAwesome; text-align:center" />
+			
 			<p:outputLabel for="stockInput"
 				value="#{msg['productos.stockActual']}" />
 			<p:inputText id="stockInput" required="true"

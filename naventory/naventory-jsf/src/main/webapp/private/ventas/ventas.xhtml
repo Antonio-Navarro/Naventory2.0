@@ -1,0 +1,144 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="body">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>
+					<h:outputText value="#{msg['ventas.title']}" />
+				</h1>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="separator"></div>
+		<div class="row">
+			<div class="col-md-6 text-left">
+				<p:commandButton value="#{msg['ventas.nuevaVenta']}" style="heig"
+					icon="fa fa-archive fa-fw" process="@this"
+					styleClass="btn btn-lg btn-success"
+					actionListener="#{ventasBean.newVenta}"
+					oncomplete="PF('ventaDetailsDialog').show();"
+					update="ventaDetailsModal" />
+			</div>
+		</div>
+		<p:separator></p:separator>
+		<div class="row" style="margin-top: 1%;">
+			<div class="col-md-12">
+				<p:dataTable id="ventaTable" var="venta" widgetVar="ventasWV"
+					value="#{ventasBean.ventas}" paginator="true" rowHover="true"
+					rows="#{defaultPaginatorRows}" rowIndexVar="cont"
+					paginatorPosition="bottom" lazy="false" resizableColumns="true"
+					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
+					emptyMessage="#{msg['noresult']}"
+					filteredValue="#{ventasBean.filteredVentas}">
+					<f:facet name="header">
+						<div class="text-left">
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								style="float:left" icon="ui-icon-calculator" />
+							<p:columnToggler datasource="ventaTable" trigger="toggler" />
+						</div>
+						<div class="text-right">
+							<p:outputPanel>
+								<p:inputText id="globalFilter" onkeyup="PF('ventasWV').filter()"
+									style="width:150px" placeholder="#{msg['buscarTabla']}" />
+							</p:outputPanel>
+						</div>
+
+					</f:facet>
+					<f:facet name="footer">
+
+						<div class="text-left">
+							<h:outputFormat value="#{msg['numResult']}">
+								<f:param value="#{fn:length(ventasBean.ventas)}"></f:param>
+							</h:outputFormat>
+						</div>
+					</f:facet>
+					<p:column sortBy="#{venta.cliente.nombre}"
+						filterBy="#{venta.cliente.nombre}" style="width:12%"
+						filterMatchMode="contains" headerText="#{msg['cliente']}">
+						<h:outputText value="#{venta.cliente.nombre}" />
+					</p:column>
+					<p:column sortBy="#{venta.producto.nombre}"
+						filterBy="#{venta.producto.nombre}" style="width:12%"
+						filterMatchMode="contains" headerText="#{msg['producto']}">
+						<h:outputText value="#{venta.producto.nombre}" />
+					</p:column>
+					<p:column sortBy="#{venta.fecha}" filterBy="#{venta.fecha}"
+						styleClass="tdNumber" style="width:12%" filterMatchMode="contains"
+						headerText="#{msg['categoria']}">
+						<h:outputText value="#{venta.fecha}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column sortBy="#{venta.cantidad}" filterBy="#{venta.cantidad}"
+						style="width:12%" styleClass="tdNumber" filterMatchMode="contains"
+						headerText="#{msg['ventas.cantidad']}">
+						<h:outputText value="#{venta.cantidad} #{venta.producto.unidad} " />
+					</p:column>
+					<p:column sortBy="#{venta.precio}" filterBy="#{venta.precio}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['ventas.precio.table']}">
+						<h:outputText value="#{venta.producto.precio} €" />
+					</p:column>
+
+					<p:column sortBy="#{venta.iva}" filterBy="#{venta.iva}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['iva']}">
+						<h:outputText value="#{venta.iva} %" />
+					</p:column>
+					<p:column sortBy="#{venta.descuento}" filterBy="#{venta.descuento}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['ventas.descuento']}">
+						<h:outputText value="#{venta.descuento} %" />
+					</p:column>
+					<p:column sortBy="#{venta.formaPago.nombre}"
+						filterBy="#{venta.formaPago.nombre}" style="width:12%"
+						filterMatchMode="contains"
+						headerText="#{msg['formapago']}">
+						<h:outputText value="#{venta.formaPago.nombre}" />
+					</p:column>
+
+					<p:column style="width:12%"
+						sortBy="#{venta.cantidad * venta.producto.precio}"
+						filterBy="#{venta.cantidad * venta.producto.precio}"
+						filterMatchMode="start" styleClass="tdNumber"
+						headerText="#{msg['total']}">
+						<h:outputText value="#{venta.cantidad * venta.producto.precio} €">
+						</h:outputText>
+					</p:column>
+					<p:column width="15%" style="text-align:center"
+						headerText="#{msg['users.datatable.header.opciones']}">
+
+
+						<p:commandLink id="fadeEditar" global="false" process="@this"
+							actionListener="#{ventasBean.editarVenta(venta)}"
+							oncomplete="PF('ventaDetailsDialog').show();"
+							update="formApp:ventaDetailsModal">
+							<i class="fa fa-edit fa-fw " style="color: #337ab7;"></i>
+							<p:tooltip id="toolTipFade4" for="fadeEditar"
+								value="Editar venta" position="top" />
+						</p:commandLink>
+
+						<p:commandLink id="fadeBorrar" process="@this"
+							actionListener="#{ventasBean.borrarVenta(venta)}"
+							update="ventaTable">
+							<p:confirm header="#{msg['needConfirmation']}"
+								message="#{msg['areyousure']}" icon="fa fa-warning" />
+							<i class="fa fa-trash fa-fw " style="color: red;"></i>
+							<p:tooltip id="toolTipFade5" for="fadeBorrar"
+								value="Borrar venta" position="top" />
+						</p:commandLink>
+
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+		<ui:include src="ventasForm.xhtml" />
+	</ui:define>
+</ui:composition>

@@ -13,7 +13,7 @@
 				<h1>
 					<h:outputText value="#{msg['stock.title']}" />
 				</h1>
-			</div> 
+			</div>
 		</div>
 		<div class="clearfix"></div>
 		<div class="separator"></div>
@@ -25,7 +25,11 @@
 						total del inventario</div>
 					<div class="panel-body">
 						<div class="text" style="text-align: center">
-							<label class="text-muted" style="font-size: 22px !important;">${productosBean.totalInventario} € </label>
+							<h:outputLabel class="text-muted"
+								style="font-size: 22px !important;"
+								value="${productosBean.totalInventario} € ">
+								<f:convertNumber pattern="#0.000" locale="pt_BR" />
+							</h:outputLabel>
 						</div>
 					</div>
 
@@ -107,12 +111,12 @@
 						headerText="#{msg['productos.stockMin']}">
 						<h:outputText value="#{producto.stock} #{producto.unidad}" />
 					</p:column>
-					
-					<p:column  style="width:12%" sortBy="#{producto.stockMin}"
-						filterBy="#{producto.stockMin}"
-						filterMatchMode="start" styleClass="tdNumber"
-						headerText="#{msg['stock.total']}">
-						<h:outputText value="#{producto.stock * producto.coste} €" />
+
+					<p:column style="width:12%" sortBy="#{producto.stock * producto.coste}"
+						filterBy="#{producto.stock * producto.coste}" filterMatchMode="start"
+						styleClass="tdNumber" headerText="#{msg['stock.total']}">
+						<h:outputText value="#{producto.stock * producto.coste} €">
+						</h:outputText>
 					</p:column>
 				</p:dataTable>
 			</div>
