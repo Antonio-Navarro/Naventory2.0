@@ -4944,9 +4944,9 @@ ul.notifications {
 	font-size: 40px;
 }
 
-.panel {
-	margin-bottom: 25% !important;
-}
+/* .panel { */
+/* 	margin-bottom: 25% !important; */
+/* } */
 
 .panel-green {
 	border-color: #5cb85c;
@@ -5024,4 +5024,10 @@ ul.notifications {
 }
 .tdNumber{
 	text-align:right;
+}
+.ui-selectonemenu-trigger.ui-state-default.ui-corner-right {
+    width: 25px !important;
+}
+.ui-selectonemenu-panel .ui-selectonemenu-filter-container {
+    width: 100%;
 }

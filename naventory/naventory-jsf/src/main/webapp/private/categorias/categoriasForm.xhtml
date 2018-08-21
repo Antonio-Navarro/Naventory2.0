@@ -1,3 +1,4 @@
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
@@ -41,7 +42,7 @@
 				placeholder="&#xf075;"
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="descInput" value="#{msg['categorias.obser']}" />
+			<p:outputLabel for="obserInput" value="#{msg['categorias.obser']}" />
 			<p:inputTextarea id="obserInput"
 				value="#{categoriasBean.selectedCategoria.obser}" rows="3"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"

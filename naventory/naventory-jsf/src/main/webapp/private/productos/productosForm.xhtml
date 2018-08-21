@@ -8,14 +8,13 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 	<p:dialog id="productoDetailsModal" widgetVar="productoDetailsDialog"
-		 responsive="true"
-		closable="true" resizable="false" modal="true" maximizable="false"
-		width="600" focus="">
+		responsive="true" closable="true" resizable="false" modal="true"
+		maximizable="false" width="600" focus="">
 		<f:facet name="header">
 			<h:outputText rendered="#{productosBean.editing}"
-				value="#{msg['producto.editarProducto']}"></h:outputText>
+				value="#{msg['productos.editarProducto']}"></h:outputText>
 			<h:outputText rendered="#{!productosBean.editing}"
-				value="#{msg['producto.titleNuevaProducto']}"></h:outputText>
+				value="#{msg['productos.titleNuevaProducto']}"></h:outputText>
 
 		</f:facet>
 		<p:messages id="messages" autoUpdate="true" escape="false"
@@ -25,28 +24,91 @@
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
-<!-- 			<p:outputLabel for="nomCatInput" styleClass="required" -->
-<!-- 				value="#{msg['productos.nombreProducto']}" /> -->
-<!-- 			<p:inputText id="nomCatInput" -->
-<!-- 				requiredMessage="#{msg['register.nombre.req']}" -->
-<!-- 				value="#{productosBean.selectedProducto.nomCat}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" -->
-<!-- 				placeholder="&#xF007;" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
+			<p:outputLabel for="skuInput" value="#{msg['productos.skuRef']}" />
+			<p:inputText id="skuInput" required="true"
+				requiredMessage="#{msg['productos.sku.required']}"
+				value="#{productosBean.selectedProducto.sku}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
 
-<!-- 			<p:outputLabel for="descInput" value="#{msg['productos.desc']}" /> -->
-<!-- 			<p:inputText id="descInput" -->
-<!-- 				value="#{productosBean.selectedProducto.desc}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" -->
-<!-- 				placeholder="&#xf075;" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
+			<p:outputLabel for="categoriaSelect" value="#{msg['categoria']}" />
+			<p:selectOneMenu id="categoriaSelect" filter="true" required="true" converter="#{categoriasConverter}"
+				requiredMessage="#{msg['productos.categoria.required']}"
+				value="#{productosBean.selectedProducto.categoria}"
+				style="min-width:100% !important;">
+				<f:selectItem itemLabel="Elige una categoría..." itemValue="#{null}" />
+				<f:selectItems value="#{productosBean.categorias}" var="categoria"
+					itemLabel="#{categoria.nomCat}" itemValue="#{categoria}" />
+			</p:selectOneMenu>
 
-<!-- 			<p:outputLabel for="descInput" value="#{msg['productos.obser']}" /> -->
-<!-- 			<p:inputTextarea id="obserInput" -->
-<!-- 				value="#{productosBean.selectedProducto.obser}" rows="3" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" -->
-<!-- 				placeholder="&#xF129;" -->
-<!-- 				style="width:100%;font-family:Arial, FontAwesome; text-align:center" /> -->
+			<p:outputLabel for="proveedorSelect" value="#{msg['proveedor']}" />
+			<p:selectOneMenu id="proveedorSelect" filter="true" required="true" converter="#{proveedorConverter}"
+				requiredMessage="#{msg['productos.proveedor.required']}"
+				value="#{productosBean.selectedProducto.proveedor}"
+				style="min-width:100% !important;">
+				<f:selectItem itemLabel="Elige un proveedor..." itemValue="#{null}" />
+				<f:selectItems value="#{productosBean.proveedores}" var="proveedor"
+					itemLabel="#{proveedor.nombre}" itemValue="#{proveedor}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel for="nombreInput"
+				value="#{msg['productos.nombreProducto']}" />
+			<p:inputText id="nombreInput" required="true"
+				requiredMessage="#{msg['productos.nombre.required']}"
+				value="#{productosBean.selectedProducto.nombre}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="descInput" value="#{msg['productos.desc']}" />
+			<p:inputText id="descInput" required="true"
+				requiredMessage="#{msg['productos.desc.required']}"
+				value="#{productosBean.selectedProducto.descripcion}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="costeInput" value="#{msg['productos.coste']}" />
+			<p:inputText id="costeInput" required="true"
+				requiredMessage="#{msg['productos.coste.required']}"
+				value="#{productosBean.selectedProducto.coste}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="precioInput" value="#{msg['productos.precio']}" />
+			<p:inputText id="precioInput" required="true"
+				requiredMessage="#{msg['productos.precio.required']}"
+				value="#{productosBean.selectedProducto.precio}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="stockInput"
+				value="#{msg['productos.stockActual']}" />
+			<p:inputText id="stockInput" required="true"
+				requiredMessage="#{msg['productos.stock.required']}"
+				value="#{productosBean.selectedProducto.stock}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="stockMinInput"
+				value="#{msg['productos.stockMin']}" />
+			<p:inputText id="stockMinInput" required="true"
+				requiredMessage="#{msg['productos.stockMin.required']}"
+				value="#{productosBean.selectedProducto.stockMin}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="unidadInput" value="#{msg['productos.unidad']}" />
+			<p:inputText id="unidadInput" required="true"
+				requiredMessage="#{msg['productos.unidad.required']}"
+				value="#{productosBean.selectedProducto.unidad}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="obserInput" value="#{msg['productos.obser']}" />
+			<p:inputTextarea id="obserInput"
+				value="#{productosBean.selectedProducto.observaciones}" rows="3"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				placeholder="&#xF129;"
+				style="width:100%;font-family:Arial, FontAwesome; text-align:center" />
 
 		</p:panelGrid>
 		<f:facet name="footer">

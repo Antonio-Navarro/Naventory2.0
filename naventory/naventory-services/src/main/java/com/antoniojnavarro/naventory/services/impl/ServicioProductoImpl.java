@@ -81,7 +81,7 @@ public class ServicioProductoImpl implements ServicioProducto {
 	@Override
 	public boolean existsById(String id) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.existsById(id);
+		return productoDao.exists(id);
 	}
 
 	@Override
@@ -139,10 +139,21 @@ public class ServicioProductoImpl implements ServicioProducto {
 		this.productoDao.delete(id);
 
 	}
+	@Override
+	public void validateSKU(String sku)  throws ServicioException {
+		if(existsById(sku)){			
+			throw new ServicioException(srvMensajes.getMensajeI18n("productos.exist"));			
+		}
+	}
 
 	@Override
 	public List<Producto> findProductosByUsuario(Usuario user) throws ServicioException {
 		// TODO Auto-generated method stub
 		return this.productoDao.findProductosByUsuario(user);
+	}
+
+	@Override
+	public Float getTotalInventario() throws ServicioException {
+		return this.productoDao.getTotalInventario();
 	}
 }

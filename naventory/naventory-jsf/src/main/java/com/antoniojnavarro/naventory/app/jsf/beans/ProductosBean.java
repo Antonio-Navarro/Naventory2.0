@@ -15,8 +15,12 @@ import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.util.Constantes;
+import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Producto;
+import com.antoniojnavarro.naventory.model.entities.Proveedor;
+import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
+import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
 
 @Named("productosBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -28,10 +32,11 @@ public class ProductosBean extends MasterBean {
 
 	// CAMPOS
 	private boolean editing;
+	private Float totalInventario;
 	// ENTITIES
 	@Autowired
 	ParamBean paramBean;
-	private Producto producto;
+	private Producto producto; 
 
 	private Producto selectedProducto;
 	@Autowired
@@ -39,9 +44,16 @@ public class ProductosBean extends MasterBean {
 	// LISTAS
 	private List<Producto> productos;
 	private List<Producto> filteredProductos;
+	private List<Categoria> categorias;
+	private List<Proveedor> proveedores;
+
 	// SERVICIOS
 	@Autowired
 	private ServicioProducto srvProducto;
+	@Autowired
+	private ServicioCategoria srvCategoria;
+	@Autowired
+	private ServicioProveedor srvProveedor;
 
 	@PostConstruct
 	public void init() {
@@ -49,7 +61,9 @@ public class ProductosBean extends MasterBean {
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
 		cargarProductos();
-
+		cargarCategorias();
+		cargarProveedores();
+		cargarTotalInventario();
 	}
 
 	public void inicilizarAtributos() {
@@ -85,7 +99,7 @@ public class ProductosBean extends MasterBean {
 		this.producto = producto;
 		if (this.producto != null) {
 			paramBean.setParam(producto);
-			return Constantes.GO_TO_PROVEEDOR_DETAILS;
+			return Constantes.GO_TO_PRODUCTO_DETAILS;
 		} else
 			return null;
 	}
@@ -94,14 +108,27 @@ public class ProductosBean extends MasterBean {
 		this.selectedProducto = null;
 	}
 
+	public void cargarTotalInventario() {
+		this.totalInventario = srvProducto.getTotalInventario();
+	}
+	
 	public void cargarProductos() {
 		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
+	}
+
+	public void cargarCategorias() {
+		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
+	}
+
+	public void cargarProveedores() {
+		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
 	}
 
 	public void borrarProducto(Producto producto) {
 
 		srvProducto.delete(producto);
 		this.productos.remove(producto);
+		cargarTotalInventario();
 		addInfo("productos.succesDelete");
 		this.editing = false;
 	}
@@ -109,15 +136,21 @@ public class ProductosBean extends MasterBean {
 	public void guardarProducto() {
 
 		selectedProducto.setUsuario(usuarioAutenticado.getUsuario());
+		if(!editing) {
+			srvProducto.validateSKU(selectedProducto.getSku());
+		}
 		srvProducto.saveOrUpdate(this.selectedProducto, true);
 		if (!editing) {
 			this.productos.add(selectedProducto);
 		}
+		cargarTotalInventario();
 		super.closeDialog("productoDetailsDialog");
 		addInfo("productos.succesNew");
 		editing = false;
 	}
 
+	
+	
 	public Producto getProducto() {
 		return producto;
 	}
@@ -156,6 +189,30 @@ public class ProductosBean extends MasterBean {
 
 	public void setFilteredProductos(List<Producto> filteredProductos) {
 		this.filteredProductos = filteredProductos;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public List<Proveedor> getProveedores() {
+		return proveedores;
+	}
+
+	public void setProveedores(List<Proveedor> proveedores) {
+		this.proveedores = proveedores;
+	}
+
+	public Float getTotalInventario() {
+		return totalInventario;
+	}
+
+	public void setTotalInventario(Float totalInventario) {
+		this.totalInventario = totalInventario;
 	}
 
 }

@@ -11,6 +11,7 @@ public class Constantes {
 	public static final String GO_TO_REGISTER = "gotoregister";
 	public static final String GO_TO_CLIENTE_DETAILS = "gotoclientedetails";
 	public static final String GO_TO_PROVEEDOR_DETAILS ="gotoproveedordetails";
+	public static final String GO_TO_PRODUCTO_DETAILS = "gotoproductodetails";
 	
 
 }
