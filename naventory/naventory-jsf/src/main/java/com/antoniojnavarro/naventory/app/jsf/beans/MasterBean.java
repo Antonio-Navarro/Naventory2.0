@@ -8,8 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
-
-public abstract class MasterBean implements Serializable {
+public class MasterBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -98,4 +97,8 @@ public abstract class MasterBean implements Serializable {
 	public void updateComponent(String... component) {
 		RequestContext.getCurrentInstance().update(Arrays.asList(component));
 	}
+	
+
+
+	
 }

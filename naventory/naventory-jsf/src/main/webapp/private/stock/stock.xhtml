@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="body">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>
+					<h:outputText value="#{msg['stock.title']}" />
+				</h1>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="separator"></div>
+		<div class="row">
+			<div class="col-md-4 text-left">
+				<div class="panel panel-primary">
+					<div class="panel-heading"
+						style="text-align: center; color: white; font-size: 22px;">Valor
+						total del inventario</div>
+					<div class="panel-body">
+						<div class="text" style="text-align: center">
+							<label class="text-muted" style="font-size: 22px !important;">${productosBean.totalInventario}</label>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<p:separator></p:separator>
+		<div class="row" style="margin-top: 1%;">
+			<div class="col-md-12">
+				<p:dataTable id="productoTable" var="producto"
+					widgetVar="productosWV" value="#{productosBean.productos}"
+					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
+					rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
+					resizableColumns="true"
+					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
+					emptyMessage="#{msg['noresult']}"
+					filteredValue="#{productosBean.filteredProductos}">
+					<f:facet name="header">
+						<div class="text-left">
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								style="float:left" icon="ui-icon-calculator" />
+							<p:columnToggler datasource="productoTable" trigger="toggler" />
+						</div>
+						<div class="text-right">
+							<p:outputPanel>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('productosWV').filter()" style="width:150px"
+									placeholder="#{msg['buscarTabla']}" />
+							</p:outputPanel>
+						</div>
+
+					</f:facet>
+					<f:facet name="footer">
+
+						<div class="text-left">
+							<h:outputFormat value="#{msg['numResult']}">
+								<f:param value="#{fn:length(productosBean.productos)}"></f:param>
+							</h:outputFormat>
+						</div>
+					</f:facet>
+					<p:column sortBy="#{producto.sku}" filterBy="#{producto.sku}"
+						style="width:12%" filterMatchMode="contains"
+						headerText="#{msg['productos.sku']}">
+						<h:outputText value="#{producto.sku}" />
+					</p:column>
+					<p:column sortBy="#{producto.nombre}" filterBy="#{producto.nombre}"
+						style="width:12%" filterMatchMode="contains"
+						headerText="#{msg['users.datatable.header.nombre']}">
+						<h:outputText value="#{producto.nombre}" />
+					</p:column>
+					<p:column sortBy="#{producto.categoria.nomCat}"
+						filterBy="#{producto.categoria.nomCat}" style="width:12%"
+						filterMatchMode="contains" headerText="#{msg['categoria']}">
+						<h:outputText value="#{producto.categoria.nomCat}" />
+					</p:column>
+					<p:column sortBy="#{producto.proveedor.nombre}"
+						filterBy="#{producto.proveedor.nombre}" style="width:12%"
+						filterMatchMode="contains" headerText="#{msg['proveedor']}">
+						<h:outputText value="#{producto.proveedor.nombre}" />
+					</p:column>
+					<p:column sortBy="#{producto.coste}" filterBy="#{producto.coste}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.coste.table']}">
+						<h:outputText value="#{producto.coste} €" />
+					</p:column>
+					<p:column sortBy="#{producto.precio}" filterBy="#{producto.precio}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.precio.table']}">
+						<h:outputText value="#{producto.precio} €" />
+					</p:column>
+					<p:column sortBy="#{producto.stock}" filterBy="#{producto.stock}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.stockActual']}">
+						<h:outputText value="#{producto.stock} #{producto.unidad}" />
+					</p:column>
+					<p:column sortBy="#{producto.stockMin}"
+						filterBy="#{producto.stockMin}" style="width:12%"
+						filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.stockMin']}">
+						<h:outputText value="#{producto.stock} #{producto.unidad}" />
+					</p:column>
+					
+					<p:column  style="width:12%" sortBy="#{producto.stockMin}"
+						filterBy="#{producto.stockMin}"
+						filterMatchMode="start" styleClass="tdNumber"
+						headerText="#{msg['stock.total']}">
+						<h:outputText value="#{producto.stock * producto.coste} €" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -33,8 +33,8 @@ public class NaventoryServicesConfig {
 		return new ModelMapper();
 	}
 
-	@Bean(name = "packageModelJPACustomProject")
-	public List<String> packageModelJPACustomProject() {
+	@Bean(name = "packageModelJPANaventory")
+	public List<String> packageModelJPANaventory() {
 		return Collections.singletonList("com.antoniojnavarro.naventory.model.entities");
 	}
 }

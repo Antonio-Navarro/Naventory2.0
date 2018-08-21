@@ -7,8 +7,8 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 <!-- Constants -->
-<ui:param name="defaultPaginatorRows" value="20" />
-<ui:param name="defaultRowsPerTemplate" value="5,10,20,50,100" />
+<ui:param name="defaultPaginatorRows" value="15" />
+<ui:param name="defaultRowsPerTemplate" value="5,10,15,20,50,100" />
 <ui:param name="defaultMaxLengthDataBaseVarchar" value="255" />
 
 <h:head>
@@ -17,6 +17,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Naventory | Gestión de inventarios</title>
+	<link rel="icon" type="image/x-icon"
+		href="#{request.contextPath}/resources/images/favicon.jpg" />
 
 	<!-- CSS Styles -->
 	<h:outputStylesheet library="css" name="bootstrap.css" />
@@ -28,8 +30,8 @@
 	<h:outputScript library="js" name="custom.js" />
 
 	<!-- X-CSRF-TOKEN -->
-	<meta name="_csrf" content="${_csrf.token}" />
-	<meta name="_csrf_header" content="${_csrf.headerName}" />
+	<!-- 	<meta name="_csrf" content="${_csrf.token}" /> -->
+	<!-- 	<meta name="_csrf_header" content="${_csrf.headerName}" /> -->
 
 	<ui:insert name="head" />
 </h:head>
@@ -55,9 +57,10 @@
 								styleClass="img-circle profile_img" />
 						</div>
 						<div class="profile_info">
-							<span><h:outputText value="#{msg['welcome']}" />,</span>
+							<span><h:outputText value="#{msg['welcome']}" /></span>
 							<h2>
-								<h:outputText value="#{homeBean.usuarioAutenticado.nombre}" />
+								<h:outputText
+									value="#{homeBean.usuarioAuteticado.usuario.nombre}" />
 							</h2>
 						</div>
 					</div>
@@ -69,15 +72,48 @@
 						<hr />
 						<div class="menu_section">
 							<ul class="nav side-menu">
-								<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_ADMIN')}">
-									<li><a><i class="fa fa-cogs"></i> <h:outputText
-												value="#{msg['sidebar.menu.admin']}" /> <span
+								<h:panelGroup>
+									<li><a href="#{request.contextPath}/private/home.xhtml"><i
+											class="fa fa-dashboard"></i> <h:outputText
+												value="#{msg['sidebar.menu.dashboard']}" /></a></li>
+
+									<li><a><i class="fa fa-cart-plus"></i> <h:outputText
+												value="#{msg['sidebar.menu.compras']}" /> </a></li>
+
+									<li><a><i class="fa fa-cart-arrow-down"></i> <h:outputText
+												value="#{msg['sidebar.menu.ventas']}" /></a></li>
+
+									<li><a><i class="fa fa-server "></i> <h:outputText
+												value="#{msg['sidebar.menu.productos']}" /> <span
 											class="fa fa-chevron-down"></span></a>
 										<ul class="nav child_menu">
 											<li><a
-												href="#{request.contextPath}/private/users/users.xhtml"><h:outputText
-														value="#{msg['sidebar.menu.admin.users']}" /></a></li>
+												href="#{request.contextPath}/private/productos/productos.xhtml"><h:outputText
+														value="Ver #{msg['sidebar.menu.productos']}" /></a></li>
+											<li><a
+												href="#{request.contextPath}/private/categorias/categorias.xhtml"><h:outputText
+														value="Ver #{msg['sidebar.menu.categorias']}" /></a></li>
 										</ul></li>
+
+									<li><a href="#{request.contextPath}/private/clientes/clientes.xhtml"><i class="fa fa-street-view"></i> <h:outputText
+												value="#{msg['sidebar.menu.clientes']}" /></a></li>
+
+									<li><a
+										href="#{request.contextPath}/private/proveedores/proveedores.xhtml"><i
+											class="fa fa-truck"></i> <h:outputText
+												value="#{msg['sidebar.menu.proveedores']}" /></a></li>
+
+									<li><a href="#{request.contextPath}/private/stock/stock.xhtml"><i class="fa fa-bar-chart"></i> <h:outputText
+												value="#{msg['sidebar.menu.stock']}" /> </a></li>
+
+
+									<li><a><i class="fa fa-file-pdf-o"></i> <h:outputText
+												value="#{msg['sidebar.menu.informes']}" /> </a></li>
+
+
+
+									<li><a><i class="fa fa-file-excel-o"></i> <h:outputText
+												value="#{msg['sidebar.menu.tratDatos']}" /> </a></li>
 								</h:panelGroup>
 							</ul>
 						</div>
@@ -89,40 +125,72 @@
 			<div class="top_nav">
 				<div class="nav_menu">
 					<nav>
-
 						<div class="nav toggle">
 							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+							
 						</div>
+							<ul class="nav navbar-nav navbar-left">
+							<li><h4 style="margin-top: 20px;">#{homeBean.usuarioAuteticado.usuario.empresa}</h4></li>
+							</ul>
 
 						<ul class="nav navbar-nav navbar-right">
+
+
 							<li class=""><a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
 								aria-expanded="false"
-								style="color: #4d647b !important; font-weight: bold;"> <p:graphicImage
-										library="images" name="user.png"></p:graphicImage> <h:outputText
-										value="#{homeBean.usuarioAutenticado.nombre} #{homeBean.usuarioAutenticado.apellido1} #{homeBean.usuarioAutenticado.apellido2}" />&#160;<span
-									class=" fa fa-angle-down"></span>
+								style="color: #4d647b !important; font-weight: bold;"> <i
+									class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
 							</a>
 								<ul class="dropdown-menu dropdown-usermenu pull-right">
 									<li><a href="javascript:;"><i
 											class="fa fa-user pull-right"></i> <h:outputText
 												value="#{msg['navbar.profile']}" /> </a></li>
-									<li><a href="javascript:;"><i
-											class="fa fa-wrench pull-right"></i> <h:outputText
-												value="#{msg['navbar.settings']}" /></a></li>
-									<li><a href="javascript:;"><i
-											class="fa fa-question-circle pull-right"></i> <h:outputText
-												value="#{msg['navbar.help']}" /></a></li>
-									<li><p:commandLink action="#{loginBean.logout}"
-											global="false">
-											<i class="fa fa-sign-out pull-right"></i>
-											<h:outputText value="#{msg['navbar.logout']}" />
-										</p:commandLink></li>
+									<h:panelGroup
+										rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
+										<li><a
+											href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
+												class="fa fa-cogs pull-right"></i> <h:outputText
+													value="#{msg['navbar.administrator']}" /></a></li>
+									</h:panelGroup>
+									<li><h:form id="formLogout" style="width:90%">
+											<p:commandLink action="#{loginBean.logout}" global="false">
+												<i class="fa fa-sign-out pull-right"></i>
+												<h:outputText value="#{msg['navbar.logout']}" />
+											</p:commandLink>
+										</h:form></li>
 								</ul></li>
+
+							<li class="dropdown "><a class="dropdown-toggle"
+								data-toggle="modal" data-target="#mensaje" href="#"> <i
+									class="fa fa-send fa-fw"></i>
+							</a></li>
+
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="dropdown" href="#"> <i
+									class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+
+							</a></li>
+
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="modal" data-target="#mensaje" href="#"> <i
+									class="fa fa-send fa-fw"></i>
+							</a></li>
 						</ul>
 					</nav>
 				</div>
-
+				<div id="mensaje" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">Close</button>
+								<h4 class="modal-title">Nuevo mensaje</h4>
+							</div>
+							<div class="modal-body">sdfasd</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- /top navigation -->
 
@@ -130,9 +198,6 @@
 			<div class="page-content right_col" role="main">
 				<div class="">
 					<h:form id="formApp">
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
-
 						<!-- Growl Messages -->
 						<p:growl autoUpdate="true" escape="false" />
 						<!-- Ajax Status -->
@@ -143,20 +208,17 @@
 							<p:graphicImage library="images" name="loading.gif" width="65" />
 						</p:dialog>
 
-						<!-- General Focusme -->
-						<p:focus context="#{focusme}" rendered="#{focusRendered}" />
-						<!-- General Default Command -->
-						<p:defaultCommand target="#{targetDefaultCommand}"
-							rendered="#{defaultCommandRendered}" />
-
 						<ui:insert name="body" />
 
 						<!-- General Confirm Dialog -->
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+							style="text-align:center" width="600px">
 							<p:commandButton value="#{msg['yes']}" type="button"
-								styleClass="ui-confirmdialog-yes" icon="fa fa-check-circle" />
+								styleClass="ui-confirmdialog-yes btn-success"
+								icon="fa fa-check-circle" />
 							<p:commandButton value="#{msg['no']}" type="button"
-								styleClass="ui-confirmdialog-no" icon="fa fa-times-circle" />
+								styleClass="ui-confirmdialog-no btn-danger"
+								icon="fa fa-times-circle" />
 						</p:confirmDialog>
 					</h:form>
 				</div>

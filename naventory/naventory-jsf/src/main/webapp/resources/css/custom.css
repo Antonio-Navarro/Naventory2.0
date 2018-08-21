@@ -357,7 +357,8 @@
 	margin: 0;
 }
 
-.nav-sm .left_col span.fa, .nav-sm .nav_menu span.fa, .nav-sm .menu_section h3 {
+.nav-sm .left_col span.fa, .nav-sm .nav_menu span.fa, .nav-sm .menu_section h3
+	{
 	display: none;
 }
 
@@ -367,8 +368,8 @@
 
 .nav_menu {
 	float: left;
-	background: #EDEDED;
-	border-bottom: 1px solid #D9DEE4;
+	background: #E6E6E6;
+	border-bottom: 1px solid #e7e7e7;
 	margin-bottom: 10px;
 	width: 100%;
 	position: relative;
@@ -396,7 +397,7 @@
 }
 
 body .container.body .right_col {
-	background: #F7F7F7;
+	background: #FFF;
 }
 
 .nav-md .container.body .right_col {
@@ -409,7 +410,7 @@ body .container.body .right_col {
 	float: left;
 	background: #2A3F54;
 	border-radius: 0;
-	height: 57px;
+	height: 60px;
 }
 
 @media ( max-width : 991px) {
@@ -991,9 +992,9 @@ a:hover, a:focus {
 }
 
 footer {
-	background: rgb(231, 231, 231) ;
-	padding-top: 10px; 
-	padding-bottom : 10px;
+	background: rgb(231, 231, 231);
+	padding-top: 10px;
+	padding-bottom: 10px;
 	display: block;
 	padding-bottom: 10px;
 }
@@ -2701,14 +2702,42 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
 }
 
 .btn-success {
-	background: #26B99A;
-	border: 1px solid #169F85;
+	color: #fff !important;
+	background-color: #5cb85c !important;
+	border-color: #4cae4c !important;
 }
 
-.btn-success:hover, .btn-success:focus, .btn-success:active,
-	.btn-success.active, .open .dropdown-toggle.btn-success {
-	background: #169F85;
+.btn-success:focus, .btn-success.focus {
+	color: #fff;
+	background-color: #449d44 !important;
+	border-color: #255625 !important;
 }
+
+.btn-success:hover {
+	color: #fff;
+	background-color: #449d44 !important;
+	border-color: #398439 !important;
+}
+
+.btn-danger {
+	color: #fff !important;
+	background-color: #d9534f !important;
+	border-color: #d43f3a !important;
+}
+
+.btn-danger:focus, .btn-danger.focus {
+	color: #fff;
+	background-color: #c9302c !important;
+	border-color: #761c19 !important;
+}
+
+.btn-danger:hover {
+	color: #fff;
+	background-color: #c9302c !important;
+	border-color: #ac2925 !important;
+}
+
+
 
 .btn-dark {
 	color: #E9EDEF;
@@ -3950,7 +3979,12 @@ ul.project_files li a i {
 /* *********  /ecommerce  **************************** */
 /** login **/
 .login {
-	background: #F7F7F7;
+	background: url("/naventory/resources/images/bg.jpg") no-repeat
+		center center fixed;
+	background-size: cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+	-o-background-size: cover;		
 }
 
 .login .fa-paw {
@@ -4111,6 +4145,7 @@ a.hiddenanchor {
 .login_content form {
 	margin: 20px 0;
 	position: relative;
+	background: #F7F7F7;
 }
 
 .login_content form input[type="text"], .login_content form input[type="email"],
@@ -4890,4 +4925,109 @@ ul.notifications {
 /** /Dropzone.js **/
 .menu_section {
 	margin-top: 25%;
+}
+
+.logon {
+	width: 230px;
+	height: 150px;
+	margin-bottom: 40px;
+}
+
+.page-header {
+	padding-bottom: 9px;
+	border-bottom: 1px solid rgb(238, 238, 238);
+	margin: 10px 0px 20px;
+	color: black !important;
+}
+
+.huge {
+	font-size: 40px;
+}
+
+/* .panel { */
+/* 	margin-bottom: 25% !important; */
+/* } */
+
+.panel-green {
+	border-color: #5cb85c;
+}
+
+.panel-green .panel-heading {
+	border-color: #5cb85c;
+	color: #fff;
+	background-color: #5cb85c;
+}
+
+.panel-green a {
+	color: #5cb85c;
+}
+
+.panel-green a:hover {
+	color: #3d8b3d;
+}
+
+.panel-red {
+	border-color: #d9534f;
+}
+
+.panel-red .panel-heading {
+	border-color: #d9534f;
+	color: #fff;
+	background-color: #d9534f;
+}
+
+.panel-red a {
+	color: #d9534f;
+}
+
+.panel-red a:hover {
+	color: #b52b27;
+}
+
+.panel-yellow {
+	border-color: #f0ad4e;
+}
+
+.panel-yellow .panel-heading {
+	border-color: #f0ad4e;
+	color: #fff;
+	background-color: #f0ad4e;
+}
+
+.panel-yellow a {
+	color: #f0ad4e;
+}
+
+.panel-yellow a:hover {
+	color: #df8a13;
+}
+.ui-tooltip { pointer-events: none; }
+.bloquear:hover{
+	color:red;
+}
+.ui-dialog .ui-dialog-buttonpane{
+	text-align:center !important;
+}
+.ui-button,.ui-button span,button.ui-button.ui-state-default span,.ui-button.ui-state-default span {
+    font-weight: normal !important; 
+}
+.btnAction{
+	   font-size: 16px !important;
+	   width: 100%;
+}
+.bottom-20{
+	margin-bottom:20px;
+}
+.margin-10 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.tdNumber{
+	text-align:right;
+}
+.ui-selectonemenu-trigger.ui-state-default.ui-corner-right {
+    width: 25px !important;
+}
+.ui-selectonemenu-panel .ui-selectonemenu-filter-container {
+    width: 100%;
 }

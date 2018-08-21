@@ -10,8 +10,9 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Custom Project</title>
-
+	<title>Naventory | Iniciar Sesión</title>
+	<link rel="icon" type="image/x-icon"
+		href="#{request.contextPath}/resources/images/favicon.jpg" />
 	<!-- CSS Styles -->
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="custom.css" />
@@ -28,7 +29,13 @@
 			id="signin"></a>
 		<div class="login_wrapper">
 			<div class="animate form login_form">
+
+
 				<section class="login_content">
+					<div class="row">
+						<p:graphicImage library="images" name="logofinal.jpg"
+							styleClass="logon" />
+					</div>
 					<p:focus for="loginForm" />
 					<h:form id="loginForm">
 						<input type="hidden" name="${_csrf.parameterName}"
@@ -38,33 +45,49 @@
 
 						<p:ajaxStatus onstart="PF('statusDialog').show()"
 							onsuccess="PF('statusDialog').hide()" />
+
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 							closable="false" resizable="false" showHeader="false"
 							style="z-index: 1002;">
 							<p:graphicImage library="images" name="loading.gif" width="65" />
 						</p:dialog>
 
-						<h1>
-							<h:outputText value="#{msg['login.loginTitle']}" />
-						</h1>
-						<div>
-							<p:inputText value="#{loginBean.username}"
-								styleClass="form-control" placeholder="#{msg['login.username']}"
-								required="true"
-								requiredMessage="#{msg['login.username.required']}"
-								maxlength="255"></p:inputText>
-						</div>
-						<div>
-							<p:password styleClass="form-control"
-								value="#{loginBean.password}" maxlength="255"
-								placeholder="#{msg['login.password']}" required="true"
-								requiredMessage="#{msg['login.password.required']}" />
-						</div>
+						<p:panel id="basic" header="#{msg['login.loginTitle']}"
+							style="margin-bottom:20px">
 
-						<div>
-							<p:commandButton icon="fa fa-sign-in"
-								value="#{msg['login.button.login']}" action="#{loginBean.login}" />
-						</div>
+
+
+							<div class="ui-inputgroup inputUser">
+								<span class="ui-inputgroup-addon"></span><p:outputLabel>#{msg['login.username']}</p:outputLabel>
+								<p:inputText value="#{loginBean.email}"
+									styleClass="form-control"
+									placeholder="&#xF007;" style="font-family:Arial, FontAwesome; text-align:center"									
+									 required="true"
+									requiredMessage="#{msg['login.username.required']}"
+									maxlength="255"></p:inputText>
+							</div>
+							<div>
+								<div class="ui-inputgroup inputUser">
+									<span class="ui-inputgroup-addon"><p:outputLabel>#{msg['login.password']}</p:outputLabel></span>
+									<p:password styleClass="form-control"
+										value="#{loginBean.password}" maxlength="255"
+										placeholder="&#xF084;" style="font-family:Arial, FontAwesome; text-align:center"
+										required="true"
+										requiredMessage="#{msg['login.password.required']}" />
+								</div>
+							</div>
+
+							<div>
+								<p:commandButton icon="fa fa-sign-in"
+									value="#{msg['login.button.login']}" style="width:100%"
+									styleClass="btn btn-success" action="#{loginBean.login}" />
+							</div>
+								<div>
+								<p:commandButton icon="fa fa-share-alt" immediate="true"
+									value="#{msg['login.button.registrar']}" style="width:100%"
+									 action="#{loginBean.irARegistro}" />
+							</div>
+						</p:panel>
 						<div class="clearfix"></div>
 						<div class="separator">
 							<div>

@@ -1,0 +1,132 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="body">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>
+					<h:outputText value="#{msg['productos.title']}" />
+				</h1>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="separator"></div>
+		<div class="row">
+			<div class="col-md-6 text-left">
+				<p:commandButton value="#{msg['productos.nuevaProducto']}"
+					style="heig" icon="fa fa-archive fa-fw" process="@this"
+					styleClass="btn btn-lg btn-success"
+					actionListener="#{productosBean.newProducto}"
+					oncomplete="PF('productoDetailsDialog').show();"
+					update="productoDetailsModal" />
+			</div>
+		</div>
+		<p:separator></p:separator>
+		<div class="row" style="margin-top: 1%;">
+			<div class="col-md-12">
+				<p:dataTable id="productoTable" var="producto"
+					widgetVar="productosWV" value="#{productosBean.productos}"
+					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
+					rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
+					resizableColumns="true"
+					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
+					emptyMessage="#{msg['noresult']}"
+					filteredValue="#{productosBean.filteredProductos}">
+					<f:facet name="header">
+						<div class="text-left">
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								style="float:left" icon="ui-icon-calculator" />
+							<p:columnToggler datasource="productoTable" trigger="toggler" />
+						</div>
+						<div class="text-right">
+							<p:outputPanel>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('productosWV').filter()" style="width:150px"
+									placeholder="#{msg['buscarTabla']}" />
+							</p:outputPanel>
+						</div>
+
+					</f:facet>
+					<f:facet name="footer">
+
+						<div class="text-left">
+							<h:outputFormat value="#{msg['numResult']}">
+								<f:param value="#{fn:length(productosBean.productos)}"></f:param>
+							</h:outputFormat>
+						</div>
+					</f:facet>
+					<p:column headerText="" style="width:5%;text-align:center">
+						<h:outputText value="#{(cont+1)}" />
+					</p:column>
+					<p:column sortBy="#{producto.sku}" filterBy="#{producto.sku}"
+						style="width:12%" filterMatchMode="contains"
+						headerText="#{msg['productos.table.id']}">
+						<h:outputText value="#{producto.sku}" />
+					</p:column>
+					<p:column sortBy="#{producto.nombre}"
+						filterBy="#{producto.nombre}" style="width:12%"
+						filterMatchMode="contains"
+						headerText="#{msg['users.datatable.header.nombre']}">
+						<h:outputText value="#{producto.nombre}" />
+					</p:column>
+					<p:column sortBy="#{producto.categoria.nomCat}"
+						filterBy="#{producto.categoria.nomCat}" style="width:12%"
+						filterMatchMode="contains"
+						headerText="#{msg['categoria']}">
+						<h:outputText value="#{producto.categoria.nomCat}" />
+					</p:column>
+					<p:column sortBy="#{producto.proveedor.nombre}"
+						filterBy="#{producto.proveedor.nombre}" style="width:12%"
+						filterMatchMode="contains"
+						headerText="#{msg['proveedor']}">
+						<h:outputText value="#{producto.proveedor.nombre}" />
+					</p:column>
+					<p:column sortBy="#{producto.coste}"
+						filterBy="#{producto.coste}" style="width:12%"
+						filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.coste.table']}">
+						<h:outputText value="#{producto.coste} €" />
+					</p:column>
+						<p:column sortBy="#{producto.precio}"
+						filterBy="#{producto.precio}" style="width:12%"
+						filterMatchMode="contains" styleClass="tdNumber"
+						headerText="#{msg['productos.precio.table']}">
+						<h:outputText value="#{producto.precio} €" />
+					</p:column>
+					
+					<p:column width="15%" style="text-align:center"
+						headerText="#{msg['users.datatable.header.opciones']}">
+
+
+						<p:commandLink id="fadeEditar" global="false" process="@this"
+							actionListener="#{productosBean.editarProducto(producto)}"
+							oncomplete="PF('productoDetailsDialog').show();"
+							update="formApp:productoDetailsModal">
+							<i class="fa fa-edit fa-fw " style="color: #337ab7;"></i>
+							<p:tooltip id="toolTipFade4" for="fadeEditar"
+								value="Editar producto" position="top" />
+						</p:commandLink>
+
+						<p:commandLink id="fadeBorrar" process="@this"
+							actionListener="#{productosBean.borrarProducto(producto)}"
+							update="productoTable">
+							<p:confirm header="#{msg['needConfirmation']}"
+								message="#{msg['areyousure']}" icon="fa fa-warning" />
+							<i class="fa fa-trash fa-fw " style="color: red;"></i>
+							<p:tooltip id="toolTipFade5" for="fadeBorrar"
+								value="Borrar producto" position="top" />
+						</p:commandLink>
+
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+		<ui:include src="productosForm.xhtml" />
+	</ui:define>
+</ui:composition>

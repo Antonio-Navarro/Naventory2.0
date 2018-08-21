@@ -1,0 +1,114 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="body">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>
+					<h:outputText value="#{msg['categorias.title']}" />
+				</h1>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="separator"></div>
+		<div class="row">
+			<div class="col-md-6 text-left">
+				<p:commandButton value="#{msg['categorias.nuevaCategoria']}" style="heig"
+					icon="fa fa-archive fa-fw" styleClass="btn btn-lg btn-success"
+					actionListener="#{categoriasBean.newCategoria}" process="@this"
+					oncomplete="PF('categoriaDetailsDialog').show();"
+					update="categoriaDetailsModal" />
+			</div>
+		</div>
+		<p:separator></p:separator>
+		<div class="row" style="margin-top: 1%;">
+			<div class="col-md-12">
+				<p:dataTable id="categoriaTable" var="categoria" 
+					widgetVar="categoriasWV" value="#{categoriasBean.categorias}"
+					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
+					rowIndexVar="cont" paginatorPosition="bottom"
+					lazy="false" resizableColumns="true"
+					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
+					emptyMessage="#{msg['noresult']}"
+					filteredValue="#{categoriasBean.filteredCategorias}">
+					<f:facet name="header">				
+						<div class="text-left">
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								style="float:left" icon="ui-icon-calculator" />
+							<p:columnToggler datasource="categoriaTable" trigger="toggler" />
+						</div>
+						<div class="text-right">
+							<p:outputPanel>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('categoriasWV').filter()" style="width:150px"
+									placeholder="#{msg['buscarTabla']}" />
+							</p:outputPanel>
+						</div>
+
+					</f:facet>
+					<f:facet name="footer">
+
+						<div class="text-left">
+							<h:outputFormat value="#{msg['numResult']}">
+								<f:param value="#{fn:length(categoriasBean.categorias)}"></f:param>
+							</h:outputFormat>
+						</div>
+					</f:facet>
+					<p:column headerText="" style="width:5%;text-align:center">
+						<h:outputText value="#{(cont+1)}" />
+					</p:column>
+					<p:column sortBy="#{categoria.idCat}" filterBy="#{categoria.idCat}" styleClass="tdNumber"
+						style="width:12%" filterMatchMode="contains"
+						headerText="#{msg['categorias.table.id']}">
+						<h:outputText value="#{categoria.idCat}" />
+					</p:column>
+					<p:column sortBy="#{categoria.nomCat}"
+						filterBy="#{categoria.nomCat}" style="width:12%"
+						filterMatchMode="contains"
+						headerText="#{msg['users.datatable.header.nombre']}">
+						<h:outputText value="#{categoria.nomCat}" />
+					</p:column>
+					<p:column headerText="#{msg['categorias.desc']}" filterBy="#{categoria.desc}"
+						sortBy="#{categoria.desc}">
+						<h:outputText value="#{categoria.desc}" />
+					</p:column>
+					<p:column headerText="#{msg['categorias.obser']}" filterBy="#{categoria.obser}"
+						sortBy="#{categoria.obser}">
+						<h:outputText value="#{categoria.obser}" />
+					</p:column>
+					<p:column width="15%" style="text-align:center"
+						headerText="#{msg['users.datatable.header.opciones']}">
+
+
+						<p:commandLink id="fadeEditar" global="false"
+							actionListener="#{categoriasBean.editarCategoria(categoria)}"
+							oncomplete="PF('categoriaDetailsDialog').show();" process="@this"
+							update="formApp:categoriaDetailsModal">
+							<i class="fa fa-edit fa-fw " style="color: #337ab7;"></i>
+							<p:tooltip id="toolTipFade4" for="fadeEditar"
+								value="Editar categoría" position="top" />
+						</p:commandLink>
+
+						<p:commandLink id="fadeBorrar" process="@this"
+							actionListener="#{categoriasBean.borrarCategoria(categoria)}"
+							update="categoriaTable">
+							<p:confirm header="#{msg['needConfirmation']}"
+								message="#{msg['areyousure']}" icon="fa fa-warning" />
+							<i class="fa fa-trash fa-fw " style="color: red;"></i>
+							<p:tooltip id="toolTipFade5" for="fadeBorrar"
+								value="Borrar categoría" position="top" />
+						</p:commandLink>
+
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+		<ui:include src="categoriasForm.xhtml" />
+	</ui:define>
+</ui:composition>
