@@ -1,7 +1,5 @@
 package com.antoniojnavarro.naventory.dao.repositories;
 
-import java.util.Map;
-
 import org.springframework.data.jpa.repository.Query;
 
 import com.antoniojnavarro.naventory.dao.commons.api.Dao;

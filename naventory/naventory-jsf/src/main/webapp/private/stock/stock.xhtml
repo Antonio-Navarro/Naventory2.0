@@ -25,7 +25,12 @@
 						total del inventario</div>
 					<div class="panel-body">
 						<div class="text" style="text-align: center">
-							<label class="text-muted" style="font-size: 22px !important;">${productosBean.totalInventario} €</label>
+							<h:outputLabel class="text-muted"
+								style="font-size: 22px !important;"
+								value="${productosBean.totalInventario}">
+								<f:convertNumber type="currency" currencySymbol="€" locale="es"
+									minIntegerDigits="2" />
+							</h:outputLabel>
 						</div>
 					</div>
 
@@ -89,12 +94,18 @@
 					<p:column sortBy="#{producto.coste}" filterBy="#{producto.coste}"
 						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['productos.coste.table']}">
-						<h:outputText value="#{producto.coste} €" />
+						<h:outputText value="#{producto.coste}">
+							<f:convertNumber type="currency" currencySymbol="€" locale="es"
+								minIntegerDigits="2" />
+						</h:outputText>
 					</p:column>
 					<p:column sortBy="#{producto.precio}" filterBy="#{producto.precio}"
 						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['productos.precio.table']}">
-						<h:outputText value="#{producto.precio} €" />
+						<h:outputText value="#{producto.precio}">
+							<f:convertNumber type="currency" currencySymbol="€" locale="es"
+								minIntegerDigits="2" />
+						</h:outputText>
 					</p:column>
 					<p:column sortBy="#{producto.stock}" filterBy="#{producto.stock}"
 						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
@@ -105,14 +116,18 @@
 						filterBy="#{producto.stockMin}" style="width:12%"
 						filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['productos.stockMin']}">
-						<h:outputText value="#{producto.stock} #{producto.unidad}" />
+						<h:outputText value="#{producto.stockMin} #{producto.unidad}" />
 					</p:column>
-					
-					<p:column  style="width:12%" sortBy="#{producto.stockMin}"
-						filterBy="#{producto.stockMin}"
+
+					<p:column style="width:12%"
+						sortBy="#{producto.stock * producto.coste}"
+						filterBy="#{producto.stock * producto.coste}"
 						filterMatchMode="start" styleClass="tdNumber"
 						headerText="#{msg['stock.total']}">
-						<h:outputText value="#{producto.stock * producto.coste} €" />
+						<h:outputText value="#{producto.stock * producto.coste}">
+							<f:convertNumber type="currency" currencySymbol="€" locale="es"
+								minIntegerDigits="2" />
+						</h:outputText>
 					</p:column>
 				</p:dataTable>
 			</div>

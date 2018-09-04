@@ -77,13 +77,13 @@
 											class="fa fa-dashboard"></i> <h:outputText
 												value="#{msg['sidebar.menu.dashboard']}" /></a></li>
 
-									<li><a><i class="fa fa-cart-plus"></i> <h:outputText
+									<li><a href="#{request.contextPath}/private/compras/compras.xhtml"><i class="fa fa-cart-plus"></i> <h:outputText
 												value="#{msg['sidebar.menu.compras']}" /> </a></li>
 
-									<li><a><i class="fa fa-cart-arrow-down"></i> <h:outputText
+									<li><a href="#{request.contextPath}/private/ventas/ventas.xhtml"><i class="fa fa-cart-arrow-down"></i> <h:outputText
 												value="#{msg['sidebar.menu.ventas']}" /></a></li>
 
-									<li><a><i class="fa fa-server "></i> <h:outputText
+									<li><a ><i class="fa fa-server "></i> <h:outputText
 												value="#{msg['sidebar.menu.productos']}" /> <span
 											class="fa fa-chevron-down"></span></a>
 										<ul class="nav child_menu">

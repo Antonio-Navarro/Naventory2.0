@@ -48,6 +48,7 @@ public class Usuario implements GenericEntity {
 	@ColumnDefault("Y")
 	@Column(name = "activo", length = 1)
 	private String activo;
+	
 	@ColumnDefault("N")
 	@Column(name = "administrador", length = 1)
 	private String administrador;

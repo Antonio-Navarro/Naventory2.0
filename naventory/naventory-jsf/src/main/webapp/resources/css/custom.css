@@ -1,3 +1,7 @@
+.ui-datatable .ui-column-filter {
+    margin-top:5px;
+    }
+
 .daterangepicker .ranges li {
 	color: #73879C;
 }
