@@ -69,41 +69,39 @@
 						headerText="#{msg['productos.table.id']}">
 						<h:outputText value="#{producto.sku}" />
 					</p:column>
-					<p:column sortBy="#{producto.nombre}"
-						filterBy="#{producto.nombre}" style="width:12%"
-						filterMatchMode="contains"
+					<p:column sortBy="#{producto.nombre}" filterBy="#{producto.nombre}"
+						style="width:12%" filterMatchMode="contains"
 						headerText="#{msg['users.datatable.header.nombre']}">
 						<h:outputText value="#{producto.nombre}" />
 					</p:column>
 					<p:column sortBy="#{producto.categoria.nomCat}"
 						filterBy="#{producto.categoria.nomCat}" style="width:12%"
-						filterMatchMode="contains"
-						headerText="#{msg['categoria']}">
+						filterMatchMode="contains" headerText="#{msg['categoria']}">
 						<h:outputText value="#{producto.categoria.nomCat}" />
 					</p:column>
 					<p:column sortBy="#{producto.proveedor.nombre}"
 						filterBy="#{producto.proveedor.nombre}" style="width:12%"
-						filterMatchMode="contains"
-						headerText="#{msg['proveedor']}">
+						filterMatchMode="contains" headerText="#{msg['proveedor']}">
 						<h:outputText value="#{producto.proveedor.nombre}" />
 					</p:column>
-					<p:column sortBy="#{producto.coste}"
-						filterBy="#{producto.coste}" style="width:12%"
-						filterMatchMode="contains" styleClass="tdNumber"
+					<p:column sortBy="#{producto.coste}" filterBy="#{producto.coste}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['productos.coste.table']}">
-						<h:outputText value="#{producto.coste} €" />
+						<h:outputText value="#{producto.coste}">
+							<f:convertNumber type="currency" currencySymbol="€" locale="es"
+								minIntegerDigits="2" />
+						</h:outputText>
 					</p:column>
-						<p:column sortBy="#{producto.precio}"
-						filterBy="#{producto.precio}" style="width:12%"
-						filterMatchMode="contains" styleClass="tdNumber"
+					<p:column sortBy="#{producto.precio}" filterBy="#{producto.precio}"
+						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['productos.precio.table']}">
-						<h:outputText value="#{producto.precio} €" />
+						<h:outputText value="#{producto.precio}">
+							<f:convertNumber type="currency" currencySymbol="€" locale="es"
+								minIntegerDigits="2" />
+						</h:outputText>
 					</p:column>
-					
 					<p:column width="15%" style="text-align:center"
 						headerText="#{msg['users.datatable.header.opciones']}">
-
-
 						<p:commandLink id="fadeEditar" global="false" process="@this"
 							actionListener="#{productosBean.editarProducto(producto)}"
 							oncomplete="PF('productoDetailsDialog').show();"
@@ -129,4 +127,6 @@
 		</div>
 		<ui:include src="productosForm.xhtml" />
 	</ui:define>
+
+
 </ui:composition>

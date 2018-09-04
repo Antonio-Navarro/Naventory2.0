@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
 import com.antoniojnavarro.naventory.dao.repositories.VentaDao;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.entities.Venta;
@@ -30,6 +31,11 @@ public class ServicioVentaImpl implements ServicioVenta {
 
 	@Autowired
 	private VentaDao ventaDao;
+	@Autowired
+	private ProductoDao productoDao;
+	
+	
+	
 
 	@Override
 	public Venta findById(Integer id) throws ServicioException {
@@ -43,8 +49,8 @@ public class ServicioVentaImpl implements ServicioVenta {
 	}
 
 	@Override
-	public List<Venta> findBySearchFilter(VentaSearchFilter searchFilter, String sortField,
-			SortOrderEnum sortOrder) throws ServicioException {
+	public List<Venta> findBySearchFilter(VentaSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
+			throws ServicioException {
 		// TODO Auto-generated method stub
 		return this.ventaDao.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
@@ -73,7 +79,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 		if (entity == null) {
 			throw new IllegalArgumentException("Entity no puede ser un nulo");
 		}
-		if (entity.getIdVenta()== null)
+		if (entity.getIdVenta() == null)
 			return false;
 		return existsById(entity.getIdVenta());
 	}
@@ -102,30 +108,35 @@ public class ServicioVentaImpl implements ServicioVenta {
 		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
 			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
 		}
+		
 		validarStock(entity);
-		comprobarAlerta(entity);
 	}
+
 	@Override
-	public void validarStock(Venta entity) throws ServicioException  {
-		if(entity.getCantidad()>entity.getProducto().getStock()) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("venta.noStock",entity.getProducto().getUnidad(), entity.getProducto().getNombre()));	
+	public void validarStock(Venta entity) throws ServicioException {
+		if (entity.getCantidad() > entity.getProducto().getStock()) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("venta.noStock", entity.getProducto().getUnidad(),
+					entity.getProducto().getNombre()));
 		}
 	}
-	
+
 	@Override
-	public void comprobarAlerta(Venta entity) throws ServicioException  {		
-		if(entity.getProducto().getStock()<=entity.getProducto().getStockMin()) {
-			//guardar en alertas_stock
-			//TODO
-			throw new ServicioException(srvMensajes.getMensajeI18n("venta.stockBajo", entity.getProducto().getNombre(),  entity.getProducto().getStock().toString(), entity.getProducto().getUnidad()));	
+	public void comprobarAlerta(Venta entity) throws ServicioException {
+		if (entity.getProducto().getStock() <= entity.getProducto().getStockMin()) {
+			// guardar en alertas_stock
+			// TODO
+			throw new ServicioException(srvMensajes.getMensajeI18n("venta.stockBajo", entity.getProducto().getNombre(),
+					entity.getProducto().getStock().toString(), entity.getProducto().getUnidad()));
 		}
 	}
-	
+
 	@Override
 	public Venta saveOrUpdate(Venta entity, boolean validate) throws ServicioException {
 		if (validate) {
 			validate(entity);
 		}
+		entity.getProducto().setStock(entity.getProducto().getStock()-entity.getCantidad());
+		productoDao.save(entity.getProducto());
 		return this.save(entity);
 	}
 
@@ -151,5 +162,24 @@ public class ServicioVentaImpl implements ServicioVenta {
 		// TODO Auto-generated method stub
 		return this.ventaDao.findVentasByUsuario(user);
 	}
-
+	@Override
+	public Venta calcularVenta(Venta entity) {
+		entity.setNombrePod(entity.getProducto().getNombre());
+		entity.setUnidad(entity.getProducto().getUnidad());
+		entity.setPrecio(entity.getProducto().getPrecio());
+		entity.setTotal(entity.getPrecio() * entity.getCantidad());
+		if (entity.getDescuento() != null && entity.getDescuento() > 0) {
+			entity.setTotal(entity.getTotal() - (entity.getTotal() * (entity.getDescuento() / 100)));	
+		}else {
+			entity.setDescuento(0f);
+		}
+		if (entity.getIva() != null && entity.getIva() > 0) {
+			entity.setTotal(entity.getTotal() + (entity.getTotal() * (entity.getIva() / 100)));
+		} else {
+			entity.setTotal(entity.getTotal() + (entity.getTotal() * (0.21f)));
+			entity.setIva(21f);
+		}
+		
+		return entity;
+	}
 }

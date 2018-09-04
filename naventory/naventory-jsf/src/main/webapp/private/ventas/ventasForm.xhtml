@@ -24,91 +24,62 @@
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
-<!-- 			<p:outputLabel for="skuInput" value="#{msg['ventas.skuRef']}" /> -->
-<!-- 			<p:inputText id="skuInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.sku.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.sku}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
 
-<!-- 			<p:outputLabel for="categoriaSelect" value="#{msg['categoria']}" /> -->
-<!-- 			<p:selectOneMenu id="categoriaSelect" filter="true" required="true" converter="#{categoriasConverter}" -->
-<!-- 				requiredMessage="#{msg['ventas.categoria.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.categoria}" -->
-<!-- 				style="min-width:100% !important;"> -->
-<!-- 				<f:selectItem itemLabel="Elige una categoría..." itemValue="#{null}" /> -->
-<!-- 				<f:selectItems value="#{ventasBean.categorias}" var="categoria" -->
-<!-- 					itemLabel="#{categoria.nomCat}" itemValue="#{categoria}" /> -->
-<!-- 			</p:selectOneMenu> -->
+			<p:outputLabel for="clienteSelect" value="#{msg['cliente']}" />
+			<p:selectOneMenu id="clienteSelect" filter="true" required="true"
+				converter="#{clienteConverter}"
+				requiredMessage="#{msg['ventas.cliente.required']}"
+				value="#{ventasBean.selectedVenta.cliente}"
+				style="min-width:100% !important;">
+				<f:selectItem itemLabel="Elige un cliente..." itemValue="#{null}" />
+				<f:selectItems value="#{ventasBean.clientes}" var="cliente"
+					itemLabel="#{cliente.nombre}" itemValue="#{cliente}" />
+			</p:selectOneMenu>
 
-<!-- 			<p:outputLabel for="proveedorSelect" value="#{msg['proveedor']}" /> -->
-<!-- 			<p:selectOneMenu id="proveedorSelect" filter="true" required="true" converter="#{proveedorConverter}" -->
-<!-- 				requiredMessage="#{msg['ventas.proveedor.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.proveedor}" -->
-<!-- 				style="min-width:100% !important;"> -->
-<!-- 				<f:selectItem itemLabel="Elige un proveedor..." itemValue="#{null}" /> -->
-<!-- 				<f:selectItems value="#{ventasBean.proveedores}" var="proveedor" -->
-<!-- 					itemLabel="#{proveedor.nombre}" itemValue="#{proveedor}" /> -->
-<!-- 			</p:selectOneMenu> -->
+			<p:outputLabel for="productoSelect" value="#{msg['producto']}" />
+			<p:selectOneMenu id="productoSelect" filter="true" required="true"
+				converter="#{productoConverter}"
+				requiredMessage="#{msg['ventas.producto.required']}"
+				value="#{ventasBean.selectedVenta.producto}"
+				style="min-width:100% !important;">
+				<f:selectItem itemLabel="Elige un producto..." itemValue="#{null}" />
+				<f:selectItems value="#{ventasBean.productos}" var="producto"
+					itemLabel="#{producto.nombre}" itemValue="#{producto}" />
+			</p:selectOneMenu>
 
-<!-- 			<p:outputLabel for="nombreInput" -->
-<!-- 				value="#{msg['ventas.nombreVenta']}" /> -->
-<!-- 			<p:inputText id="nombreInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.nombre.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.nombre}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
+			<p:outputLabel for="cantidadInput" value="#{msg['ventas.cantidad']}" />
+			<p:inputText id="cantidadInput" required="true"
+				requiredMessage="#{msg['ventas.cantidad.required']}"
+				value="#{ventasBean.selectedVenta.cantidad}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center"></p:inputText>
 
-<!-- 			<p:outputLabel for="descInput" value="#{msg['ventas.desc']}" /> -->
-<!-- 			<p:inputText id="descInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.desc.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.descripcion}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
+			<p:outputLabel for="ivaInput" value="#{msg['iva']}" />
+			<p:inputText id="ivaInput" value="#{ventasBean.selectedVenta.iva}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				style="font-family:Arial, FontAwesome; text-align:center">
+				<p:watermark for="ivaInput" value="Por defecto se aplica el 21 %"
+					id="watermark" />
+			</p:inputText>
 
-<!-- 			<p:outputLabel for="costeInput" value="#{msg['ventas.coste']}" /> -->
-<!-- 			<p:inputText id="costeInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.coste.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.coste}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
 
-<!-- 			<p:outputLabel for="precioInput" value="#{msg['ventas.precio']}" /> -->
-<!-- 			<p:inputText id="precioInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.precio.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.precio}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
+			<p:outputLabel for="descInput" value="#{msg['ventas.desc']}" />
+			<p:inputText id="descInput"
+				value="#{ventasBean.selectedVenta.descripcion}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
 
-<!-- 			<p:outputLabel for="stockInput" -->
-<!-- 				value="#{msg['ventas.stockActual']}" /> -->
-<!-- 			<p:inputText id="stockInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.stock.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.stock}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
-
-<!-- 			<p:outputLabel for="stockMinInput" -->
-<!-- 				value="#{msg['ventas.stockMin']}" /> -->
-<!-- 			<p:inputText id="stockMinInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.stockMin.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.stockMin}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
-
-<!-- 			<p:outputLabel for="unidadInput" value="#{msg['ventas.unidad']}" /> -->
-<!-- 			<p:inputText id="unidadInput" required="true" -->
-<!-- 				requiredMessage="#{msg['ventas.unidad.required']}" -->
-<!-- 				value="#{ventasBean.selectedVenta.unidad}" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder="" -->
-<!-- 				style="font-family:Arial, FontAwesome; text-align:center" /> -->
-
-<!-- 			<p:outputLabel for="obserInput" value="#{msg['ventas.obser']}" /> -->
-<!-- 			<p:inputTextarea id="obserInput" -->
-<!-- 				value="#{ventasBean.selectedVenta.observaciones}" rows="3" -->
-<!-- 				maxlength="#{defaultMaxLengthDataBaseVarchar}" -->
-<!-- 				placeholder="&#xF129;" -->
-<!-- 				style="width:100%;font-family:Arial, FontAwesome; text-align:center" /> -->
+			<p:outputLabel for="descuentoInput"
+				value="#{msg['ventas.descuento']}" />
+			<p:inputText id="descuentoInput"
+				value="#{ventasBean.selectedVenta.descuento}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+				placeholder="Por defecto no se aplica ningún descuento. El descuento se realiza en porcentaje"
+				style="font-family:Arial, FontAwesome; text-align:center">
+				<p:watermark for="descuentoInput" style="font-size:10px"
+					value="El descuento se realiza en porcentaje"
+					id="watermark2" />
+			</p:inputText>
 
 		</p:panelGrid>
 		<f:facet name="footer">
@@ -117,8 +88,7 @@
 					<p:commandButton icon="fa fa-save"
 						styleClass="btn btn-lg btn-success btnAction"
 						title="#{msg['save']}" value="#{msg['ventas.crearVenta']}"
-						actionListener="#{ventasBean.guardarVenta}"
-						update="ventaTable" />
+						actionListener="#{ventasBean.guardarVenta}" update="ventaTable" />
 				</div>
 			</p:row>
 		</f:facet>

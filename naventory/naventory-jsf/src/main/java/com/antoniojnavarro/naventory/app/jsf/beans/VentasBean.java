@@ -31,7 +31,7 @@ public class VentasBean extends MasterBean {
 	// ENTITIES
 	@Autowired
 	ParamBean paramBean;
-	private Venta venta; 
+	private Venta venta;
 
 	private Venta selectedVenta;
 	@Autowired
@@ -78,11 +78,9 @@ public class VentasBean extends MasterBean {
 		this.editing = true;
 	}
 
-
 	public void iniciarSelectedVenta() {
 		this.selectedVenta = null;
 	}
-
 
 	public void cargarVentas() {
 		this.ventas = srvVenta.findVentasByUsuario(this.usuarioAutenticado.getUsuario());
@@ -97,7 +95,11 @@ public class VentasBean extends MasterBean {
 	}
 
 	public void borrarVenta(Venta venta) {
-
+		if (venta.getIdVenta() != null && venta.getIdVenta() > 0) {
+			Producto p = srvVenta.findById(venta.getIdVenta()).getProducto();
+			p.setStock(p.getStock() + venta.getCantidad());
+			srvProducto.saveOrUpdate(p, true);
+		}
 		srvVenta.delete(venta);
 		this.ventas.remove(venta);
 		addInfo("ventas.succesDelete");
@@ -107,12 +109,20 @@ public class VentasBean extends MasterBean {
 	public void guardarVenta() {
 
 		selectedVenta.setUsuario(usuarioAutenticado.getUsuario());
-		srvVenta.saveOrUpdate(this.selectedVenta, true);
+		if (editing && selectedVenta.getIdVenta() != null && selectedVenta.getIdVenta() > 0) {
+			Venta v = srvVenta.findById(selectedVenta.getIdVenta());
+			selectedVenta.getProducto().setStock(selectedVenta.getProducto().getStock() + v.getCantidad());
+			srvProducto.saveOrUpdate(selectedVenta.getProducto(), true);
+		}
+		selectedVenta = srvVenta.calcularVenta(selectedVenta);
+		selectedVenta = srvVenta.saveOrUpdate(selectedVenta, true);
+		selectedVenta = srvVenta.findById(selectedVenta.getIdVenta());
 		if (!editing) {
 			this.ventas.add(selectedVenta);
 		}
 		super.closeDialog("ventaDetailsDialog");
 		addInfo("ventas.succesNew");
+		srvVenta.comprobarAlerta(selectedVenta);
 		editing = false;
 	}
 
@@ -179,7 +189,5 @@ public class VentasBean extends MasterBean {
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
-
-	
 
 }

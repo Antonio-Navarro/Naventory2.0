@@ -23,7 +23,7 @@ public class Producto implements GenericEntity {
 	@Column(name = "sku")
 	private String sku;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "email")
 	private Usuario usuario;
 
@@ -166,8 +166,6 @@ public class Producto implements GenericEntity {
 		result = prime * result + ((observaciones == null) ? 0 : observaciones.hashCode());
 		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
 		result = prime * result + ((sku == null) ? 0 : sku.hashCode());
-		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
-		result = prime * result + ((stockMin == null) ? 0 : stockMin.hashCode());
 		result = prime * result + ((unidad == null) ? 0 : unidad.hashCode());
 		return result;
 	}
@@ -211,16 +209,6 @@ public class Producto implements GenericEntity {
 				return false;
 		} else if (!sku.equals(other.sku))
 			return false;
-		if (stock == null) {
-			if (other.stock != null)
-				return false;
-		} else if (!stock.equals(other.stock))
-			return false;
-		if (stockMin == null) {
-			if (other.stockMin != null)
-				return false;
-		} else if (!stockMin.equals(other.stockMin))
-			return false;
 		if (unidad == null) {
 			if (other.unidad != null)
 				return false;
@@ -228,6 +216,9 @@ public class Producto implements GenericEntity {
 			return false;
 		return true;
 	}
+
+
+
 
 
 	

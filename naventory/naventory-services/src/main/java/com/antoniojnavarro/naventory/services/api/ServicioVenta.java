@@ -15,4 +15,6 @@ public interface ServicioVenta extends ServicioCrud<Venta, VentaSearchFilter, In
 	void validarStock(Venta entity) throws ServicioException;
 
 	void comprobarAlerta(Venta entity) throws ServicioException;
+
+	Venta calcularVenta(Venta entity) throws ServicioException;
 }

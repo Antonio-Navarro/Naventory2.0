@@ -71,7 +71,7 @@
 					</p:column>
 					<p:column sortBy="#{venta.fecha}" filterBy="#{venta.fecha}"
 						styleClass="tdNumber" style="width:12%" filterMatchMode="contains"
-						headerText="#{msg['categoria']}">
+						headerText="#{msg['fecha']}">
 						<h:outputText value="#{venta.fecha}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -84,23 +84,30 @@
 					<p:column sortBy="#{venta.precio}" filterBy="#{venta.precio}"
 						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['ventas.precio.table']}">
-						<h:outputText value="#{venta.producto.precio} €" />
+						<h:outputText value="#{venta.producto.precio}">
+							<f:convertNumber type="currency" currencySymbol="€" locale="es"
+								minIntegerDigits="2" />
+						</h:outputText>
 					</p:column>
 
 					<p:column sortBy="#{venta.iva}" filterBy="#{venta.iva}"
 						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['iva']}">
-						<h:outputText value="#{venta.iva} %" />
+						<h:outputText value="#{venta.iva}">
+							<f:convertNumber type="currency" currencySymbol="%"/>
+						</h:outputText>
 					</p:column>
 					<p:column sortBy="#{venta.descuento}" filterBy="#{venta.descuento}"
 						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['ventas.descuento']}">
-						<h:outputText value="#{venta.descuento} %" />
+						<h:outputText value="#{venta.descuento}">
+							<f:convertNumber type="currency" currencySymbol="%"/>
+						</h:outputText>
+
 					</p:column>
 					<p:column sortBy="#{venta.formaPago.nombre}"
 						filterBy="#{venta.formaPago.nombre}" style="width:12%"
-						filterMatchMode="contains"
-						headerText="#{msg['formapago']}">
+						filterMatchMode="contains" headerText="#{msg['formapago']}">
 						<h:outputText value="#{venta.formaPago.nombre}" />
 					</p:column>
 
@@ -109,12 +116,14 @@
 						filterBy="#{venta.cantidad * venta.producto.precio}"
 						filterMatchMode="start" styleClass="tdNumber"
 						headerText="#{msg['total']}">
-						<h:outputText value="#{venta.cantidad * venta.producto.precio} €">
+						<h:outputText value="#{venta.total}">
+							<f:convertNumber type="currency" currencySymbol="€" locale="es"
+								minIntegerDigits="2" />
 						</h:outputText>
 					</p:column>
+
 					<p:column width="15%" style="text-align:center"
 						headerText="#{msg['users.datatable.header.opciones']}">
-
 
 						<p:commandLink id="fadeEditar" global="false" process="@this"
 							actionListener="#{ventasBean.editarVenta(venta)}"

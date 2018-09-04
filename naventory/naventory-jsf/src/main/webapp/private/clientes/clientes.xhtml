@@ -32,7 +32,7 @@
 			<div class="col-md-12">
 				<p:dataTable id="clienteTable" var="cliente" widgetVar="clientesWV"
 					value="#{clientesBean.clientes}" paginator="true" rowHover="true"
-					rows="#{defaultPaginatorRows}" rowIndexVar="cont"
+					rows="#{defaultPaginatorRows}" rowIndexVar="cont" 
 					paginatorPosition="bottom" lazy="false" resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}"
@@ -64,12 +64,12 @@
 							</h:outputFormat>
 						</div>
 					</f:facet>
-					<p:column headerText="" style="width:5%;text-align:center">
+					<p:column headerText="" styleClass="tdNumber" style="width:5%;text-align:center">
 						<h:outputText value="#{(cont+1)}" />
 					</p:column>
 					<p:column sortBy="#{cliente.idCliente}"
 						filterBy="#{cliente.idCliente}" styleClass="tdNumber"
-						style="width:12%" filterMatchMode="contains"
+						style="width:5%" filterMatchMode="contains"
 						headerText="#{msg['clientes.table.id']}">
 						<h:outputText value="#{cliente.idCliente}" />
 					</p:column>
@@ -82,15 +82,15 @@
 						sortBy="#{cliente.direccion}">
 						<h:outputText value="#{cliente.direccion}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.ciudad']}"
+					<p:column headerText="#{msg['clientes.ciudad']}" style="width:8%"
 						sortBy="#{cliente.ciudad}">
 						<h:outputText value="#{cliente.ciudad}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.cp']}" styleClass="tdNumber"
+					<p:column headerText="#{msg['clientes.cp']}" style="width:11%" styleClass="tdNumber"
 						sortBy="#{cliente.cp}">
 						<h:outputText value="#{cliente.cp}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.tel']}" styleClass="tdNumber"
+					<p:column headerText="#{msg['clientes.tel']}" styleClass="tdNumber" style="width:11%"
 						sortBy="#{cliente.tel1}">
 						<h:outputText value="#{cliente.tel1}" />
 					</p:column>

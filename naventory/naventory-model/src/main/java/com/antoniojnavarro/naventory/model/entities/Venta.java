@@ -30,17 +30,20 @@ public class Venta implements GenericEntity {
 	@Column(name = "id_vent")
 	private Integer idVenta;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "email")
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_prod")
 	private Producto producto;
+	
+	@Column(name = "nombre_prod",length = 255,nullable = true)
+	private String nombrePod;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_cliente")
-	private Proveedor cliente;
+	private Cliente cliente;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable=false)
@@ -60,7 +63,13 @@ public class Venta implements GenericEntity {
 	private Float descuento;
 	
 	@Column(name = "iva",length = 11)
-	private Integer iva;
+	private Float iva;
+	
+	@Column(name = "unidad",length = 255)
+	private String unidad;
+	
+	@Column(name = "precio")
+	private Float precio;
 	
 	@Column(name = "total")
 	private Float total;
@@ -89,13 +98,6 @@ public class Venta implements GenericEntity {
 		this.producto = producto;
 	}
 
-	public Proveedor getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Proveedor cliente) {
-		this.cliente = cliente;
-	}
 
 	public Date getFecha_alta() {
 		return fecha;
@@ -137,11 +139,11 @@ public class Venta implements GenericEntity {
 		this.descuento = descuento;
 	}
 
-	public Integer getIva() {
+	public Float getIva() {
 		return iva;
 	}
 
-	public void setIva(Integer iva) {
+	public void setIva(Float iva) {
 		this.iva = iva;
 	}
 
@@ -153,6 +155,46 @@ public class Venta implements GenericEntity {
 		this.total = total;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getNombrePod() {
+		return nombrePod;
+	}
+
+	public void setNombrePod(String nombrePod) {
+		this.nombrePod = nombrePod;
+	}
+
+	public String getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(String unidad) {
+		this.unidad = unidad;
+	}
+
+	public Float getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Float precio) {
+		this.precio = precio;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -161,9 +203,14 @@ public class Venta implements GenericEntity {
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((descuento == null) ? 0 : descuento.hashCode());
 		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
+		result = prime * result + ((formaPago == null) ? 0 : formaPago.hashCode());
 		result = prime * result + ((idVenta == null) ? 0 : idVenta.hashCode());
 		result = prime * result + ((iva == null) ? 0 : iva.hashCode());
+		result = prime * result + ((nombrePod == null) ? 0 : nombrePod.hashCode());
+		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
+		result = prime * result + ((producto == null) ? 0 : producto.hashCode());
 		result = prime * result + ((total == null) ? 0 : total.hashCode());
+		result = prime * result + ((unidad == null) ? 0 : unidad.hashCode());
 		return result;
 	}
 
@@ -196,6 +243,11 @@ public class Venta implements GenericEntity {
 				return false;
 		} else if (!fecha.equals(other.fecha))
 			return false;
+		if (formaPago == null) {
+			if (other.formaPago != null)
+				return false;
+		} else if (!formaPago.equals(other.formaPago))
+			return false;
 		if (idVenta == null) {
 			if (other.idVenta != null)
 				return false;
@@ -206,12 +258,34 @@ public class Venta implements GenericEntity {
 				return false;
 		} else if (!iva.equals(other.iva))
 			return false;
+		if (nombrePod == null) {
+			if (other.nombrePod != null)
+				return false;
+		} else if (!nombrePod.equals(other.nombrePod))
+			return false;
+		if (precio == null) {
+			if (other.precio != null)
+				return false;
+		} else if (!precio.equals(other.precio))
+			return false;
+		if (producto == null) {
+			if (other.producto != null)
+				return false;
+		} else if (!producto.equals(other.producto))
+			return false;
 		if (total == null) {
 			if (other.total != null)
 				return false;
 		} else if (!total.equals(other.total))
 			return false;
+		if (unidad == null) {
+			if (other.unidad != null)
+				return false;
+		} else if (!unidad.equals(other.unidad))
+			return false;
 		return true;
 	}
-	
+
+
+
 }
