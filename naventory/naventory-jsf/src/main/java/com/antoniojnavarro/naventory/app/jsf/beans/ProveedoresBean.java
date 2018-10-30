@@ -1,12 +1,17 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.awt.Color;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.component.export.ExcelOptions;
+import org.primefaces.component.export.PDFOptions;
 import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +22,13 @@ import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
 
 @Named("proveedoresBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -28,6 +40,8 @@ public class ProveedoresBean extends MasterBean {
 
 	// CAMPOS
 	private boolean editing;
+	private ExcelOptions excelOpt;
+	private PDFOptions pdfOpt;
 	// ENTITIES
 	@Autowired
 	ParamBean paramBean;
@@ -49,7 +63,7 @@ public class ProveedoresBean extends MasterBean {
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
 		cargarProveedores();
-
+		customizationOptions();
 	}
 
 	public void inicilizarAtributos() {
@@ -118,6 +132,33 @@ public class ProveedoresBean extends MasterBean {
 		editing = false;
 	}
 
+	public void customizationOptions() {
+		pdfOpt = new PDFOptions();
+		pdfOpt.setFacetBgColor("#58ACFA");
+		pdfOpt.setFacetFontColor("#FFFFFF");
+		pdfOpt.setFacetFontStyle("BOLD");
+		pdfOpt.setCellFontSize("12");
+	}
+
+	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
+		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
+		Paragraph p1 = new Paragraph("Informe de proveedores | " + d);
+		Font font = new Font(Font.TIMES_ROMAN, 18.0f, Font.BOLD, Color.RED);
+		p1.setFont(font);
+		Paragraph p2 = new Paragraph("Creado por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
+				+ this.usuarioAutenticado.getUsuario().getEmail());
+		p2.setFont(font);
+
+		pdf.add(p1);
+		pdf.add(p2);
+		pdf.add(Chunk.NEWLINE);
+	}
+
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
@@ -156,6 +197,22 @@ public class ProveedoresBean extends MasterBean {
 
 	public void setFilteredProveedores(List<Proveedor> filteredProveedores) {
 		this.filteredProveedores = filteredProveedores;
+	}
+
+	public ExcelOptions getExcelOpt() {
+		return excelOpt;
+	}
+
+	public void setExcelOpt(ExcelOptions excelOpt) {
+		this.excelOpt = excelOpt;
+	}
+
+	public PDFOptions getPdfOpt() {
+		return pdfOpt;
+	}
+
+	public void setPdfOpt(PDFOptions pdfOpt) {
+		this.pdfOpt = pdfOpt;
 	}
 
 }

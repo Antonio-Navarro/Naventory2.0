@@ -39,7 +39,7 @@ public class Venta implements GenericEntity {
 	private Producto producto;
 	
 	@Column(name = "nombre_prod",length = 255,nullable = true)
-	private String nombrePod;
+	private String nombreProd;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_cliente")
@@ -171,12 +171,12 @@ public class Venta implements GenericEntity {
 		this.fecha = fecha;
 	}
 
-	public String getNombrePod() {
-		return nombrePod;
+	public String getNombreProd() {
+		return nombreProd;
 	}
 
-	public void setNombrePod(String nombrePod) {
-		this.nombrePod = nombrePod;
+	public void setNombreProd(String nombrePod) {
+		this.nombreProd = nombrePod;
 	}
 
 	public String getUnidad() {
@@ -206,7 +206,7 @@ public class Venta implements GenericEntity {
 		result = prime * result + ((formaPago == null) ? 0 : formaPago.hashCode());
 		result = prime * result + ((idVenta == null) ? 0 : idVenta.hashCode());
 		result = prime * result + ((iva == null) ? 0 : iva.hashCode());
-		result = prime * result + ((nombrePod == null) ? 0 : nombrePod.hashCode());
+		result = prime * result + ((nombreProd == null) ? 0 : nombreProd.hashCode());
 		result = prime * result + ((precio == null) ? 0 : precio.hashCode());
 		result = prime * result + ((producto == null) ? 0 : producto.hashCode());
 		result = prime * result + ((total == null) ? 0 : total.hashCode());
@@ -258,10 +258,10 @@ public class Venta implements GenericEntity {
 				return false;
 		} else if (!iva.equals(other.iva))
 			return false;
-		if (nombrePod == null) {
-			if (other.nombrePod != null)
+		if (nombreProd == null) {
+			if (other.nombreProd != null)
 				return false;
-		} else if (!nombrePod.equals(other.nombrePod))
+		} else if (!nombreProd.equals(other.nombreProd))
 			return false;
 		if (precio == null) {
 			if (other.precio != null)

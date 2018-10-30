@@ -77,13 +77,17 @@
 											class="fa fa-dashboard"></i> <h:outputText
 												value="#{msg['sidebar.menu.dashboard']}" /></a></li>
 
-									<li><a href="#{request.contextPath}/private/compras/compras.xhtml"><i class="fa fa-cart-plus"></i> <h:outputText
+									<li><a
+										href="#{request.contextPath}/private/compras/compras.xhtml"><i
+											class="fa fa-cart-plus"></i> <h:outputText
 												value="#{msg['sidebar.menu.compras']}" /> </a></li>
 
-									<li><a href="#{request.contextPath}/private/ventas/ventas.xhtml"><i class="fa fa-cart-arrow-down"></i> <h:outputText
+									<li><a
+										href="#{request.contextPath}/private/ventas/ventas.xhtml"><i
+											class="fa fa-cart-arrow-down"></i> <h:outputText
 												value="#{msg['sidebar.menu.ventas']}" /></a></li>
 
-									<li><a ><i class="fa fa-server "></i> <h:outputText
+									<li><a><i class="fa fa-server "></i> <h:outputText
 												value="#{msg['sidebar.menu.productos']}" /> <span
 											class="fa fa-chevron-down"></span></a>
 										<ul class="nav child_menu">
@@ -95,7 +99,9 @@
 														value="Ver #{msg['sidebar.menu.categorias']}" /></a></li>
 										</ul></li>
 
-									<li><a href="#{request.contextPath}/private/clientes/clientes.xhtml"><i class="fa fa-street-view"></i> <h:outputText
+									<li><a
+										href="#{request.contextPath}/private/clientes/clientes.xhtml"><i
+											class="fa fa-street-view"></i> <h:outputText
 												value="#{msg['sidebar.menu.clientes']}" /></a></li>
 
 									<li><a
@@ -103,17 +109,10 @@
 											class="fa fa-truck"></i> <h:outputText
 												value="#{msg['sidebar.menu.proveedores']}" /></a></li>
 
-									<li><a href="#{request.contextPath}/private/stock/stock.xhtml"><i class="fa fa-bar-chart"></i> <h:outputText
+									<li><a
+										href="#{request.contextPath}/private/stock/stock.xhtml"><i
+											class="fa fa-bar-chart"></i> <h:outputText
 												value="#{msg['sidebar.menu.stock']}" /> </a></li>
-
-
-									<li><a><i class="fa fa-file-pdf-o"></i> <h:outputText
-												value="#{msg['sidebar.menu.informes']}" /> </a></li>
-
-
-
-									<li><a><i class="fa fa-file-excel-o"></i> <h:outputText
-												value="#{msg['sidebar.menu.tratDatos']}" /> </a></li>
 								</h:panelGroup>
 							</ul>
 						</div>
@@ -122,76 +121,102 @@
 				</div>
 			</div>
 			<!-- top navigation -->
-			<div class="top_nav">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-							
-						</div>
+			<p:outputPanel id="panelTop" autoUpdate="true">
+				<div class="top_nav">
+					<div class="nav_menu">
+						<nav>
+							<div class="nav toggle">
+								<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+
+							</div>
 							<ul class="nav navbar-nav navbar-left">
-							<li><h4 style="margin-top: 20px;">#{homeBean.usuarioAuteticado.usuario.empresa}</h4></li>
+								<li><h4 style="margin-top: 20px;">#{homeBean.usuarioAuteticado.usuario.empresa}</h4></li>
 							</ul>
 
-						<ul class="nav navbar-nav navbar-right">
+							<ul class="nav navbar-nav navbar-right">
+
+								<li class="dropdown"><a href="javascript:;"
+									class="user-profile dropdown-toggle" data-toggle="dropdown"
+									aria-expanded="false"
+									style="color: #4d647b !important; font-weight: bold;"> <i
+										class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
+								</a>
+									<ul class="dropdown-menu dropdown-usermenu pull-right">
+										<li><a href="javascript:;"><i
+												class="fa fa-user pull-right"></i> <h:outputText
+													value="#{msg['navbar.profile']}" /> </a></li>
+										<h:panelGroup
+											rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
+											<li><a
+												href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
+													class="fa fa-cogs pull-right"></i> <h:outputText
+														value="#{msg['navbar.administrator']}" /></a></li>
+										</h:panelGroup>
+										<li><h:form id="formLogout" style="width:90%">
+												<p:commandLink action="#{loginBean.logout}" global="false">
+													<i class="fa fa-sign-out pull-right"></i>
+													<h:outputText value="#{msg['navbar.logout']}" />
+												</p:commandLink>
+											</h:form></li>
+									</ul></li>
 
 
-							<li class=""><a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"
-								style="color: #4d647b !important; font-weight: bold;"> <i
-									class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
-							</a>
-								<ul class="dropdown-menu dropdown-usermenu pull-right">
-									<li><a href="javascript:;"><i
-											class="fa fa-user pull-right"></i> <h:outputText
-												value="#{msg['navbar.profile']}" /> </a></li>
-									<h:panelGroup
-										rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
-										<li><a
-											href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
-												class="fa fa-cogs pull-right"></i> <h:outputText
-													value="#{msg['navbar.administrator']}" /></a></li>
-									</h:panelGroup>
-									<li><h:form id="formLogout" style="width:90%">
-											<p:commandLink action="#{loginBean.logout}" global="false">
-												<i class="fa fa-sign-out pull-right"></i>
-												<h:outputText value="#{msg['navbar.logout']}" />
-											</p:commandLink>
-										</h:form></li>
-								</ul></li>
+								<li class="dropdown "><a class="dropdown-toggle"
+									data-toggle="dropdown" href="#"><pe:switch
+											value="#{homeBean.exitenAlertas}">
+											<pe:case value="#{true}">
+												<i class="fa fa-bell fa-fw" style="color: red"></i>
+												<i class="fa fa-caret-down"></i>
+											</pe:case>
+											<pe:case value="#{false}">
+												<i class="fa fa-bell fa-fw"></i>
+												<i class="fa fa-caret-down"></i>
+											</pe:case>
+											<pe:defaultCase>
+												<i class="fa fa-bell fa-fw"></i>
+												<i class="fa fa-caret-down"></i>
+											</pe:defaultCase>
+										</pe:switch> </a>
 
-							<li class="dropdown "><a class="dropdown-toggle"
-								data-toggle="modal" data-target="#mensaje" href="#"> <i
-									class="fa fa-send fa-fw"></i>
-							</a></li>
+									<ul class="dropdown-menu dropdown-alerts">
+										<ui:repeat var="alerta" value="#{homeBean.alertas}">
+											<li style="padding: 5px"><i
+												class="fa fa-bell pull-left fa-fw"></i> <h:outputText
+													style="color:red" value="Alerta nivel bajo de stock en" />
+												<h:outputText style="color:darkred;font-weight: bold;"
+													value=" ${alerta.producto.nombre}" /> <h:outputText
+													style="color:red;font-weight: bold;" value=" quedan" /> <h:outputText
+													style="color:darkred;font-weight: bold;"
+													value=" ${alerta.producto.stock} ${alerta.producto.unidad}" />
 
-							<li class="dropdown"><a class="dropdown-toggle"
-								data-toggle="dropdown" href="#"> <i
-									class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
 
-							</a></li>
 
-							<li class="dropdown"><a class="dropdown-toggle"
-								data-toggle="modal" data-target="#mensaje" href="#"> <i
-									class="fa fa-send fa-fw"></i>
-							</a></li>
-						</ul>
-					</nav>
-				</div>
-				<div id="mensaje" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">Close</button>
-								<h4 class="modal-title">Nuevo mensaje</h4>
+											</li>
+										</ui:repeat>
+
+									</ul></li>
+								<li class="dropdown"><a style="height: 50px;"
+									href="#{request.contextPath}/private/home.xhtml"> <i style="font-size:20px"
+										class="fa fa-home "></i>
+								</a></li>
+
+							</ul>
+						</nav>
+					</div>
+					<div id="mensaje" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">Close</button>
+									<h4 class="modal-title">Nuevo mensaje</h4>
+								</div>
+								<div class="modal-body">sdfasd</div>
 							</div>
-							<div class="modal-body">sdfasd</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</p:outputPanel>
 			<!-- /top navigation -->
 
 			<!-- page content -->
@@ -226,7 +251,7 @@
 			<!-- /page content -->
 			<!-- footer content -->
 			<footer>
-				<div class="pull-right">
+				<div class="pull-right" style="margin-right: 5%">
 					<h:outputText value="#{msg['aplicacion.nombre']}" />
 					&#160;
 					<h:outputText value="#{msg['aplicacion.version']}" />

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
                       http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop.xsd
@@ -15,8 +16,8 @@
 			<tx:method name="exists*" read-only="true" />
 			<tx:method name="is*" read-only="true" />
 
-			<tx:method name="ownTransaction*" propagation="REQUIRES_NEW"
-				rollback-for="Exception" />
+			<tx:method name="ownTransaction*"
+				propagation="REQUIRES_NEW" rollback-for="Exception" />
 
 			<tx:method name="withoutTransaction*" propagation="NEVER" />
 
@@ -34,24 +35,28 @@
 
 	<aop:config>
 
-		<aop:pointcut id="serviceAnnotatedClassDefaultTransactionalBehavior"
+		<aop:pointcut
+			id="serviceAnnotatedClassDefaultTransactionalBehavior"
 			expression="@within(org.springframework.stereotype.Service) &amp;&amp; !@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever) 
 				&amp;&amp; !@annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever)
 				&amp;&amp; !@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew) 
 								&amp;&amp; !@annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew)" />
 
-		<aop:pointcut id="serviceAnnotatedClassTransactionalRequiredNew"
+		<aop:pointcut
+			id="serviceAnnotatedClassTransactionalRequiredNew"
 			expression="@within(org.springframework.stereotype.Service) &amp;&amp; !@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever) 
 				&amp;&amp; !@annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever) 
 				&amp;&amp; (@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew) 
 								|| @annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew))" />
 
 		<aop:advisor id="managerTxDefaultTransactionalBehavior"
-			advice-ref="txAdviceDefaultTransactionalBehavior" pointcut-ref="serviceAnnotatedClassDefaultTransactionalBehavior" />
-		
+			advice-ref="txAdviceDefaultTransactionalBehavior"
+			pointcut-ref="serviceAnnotatedClassDefaultTransactionalBehavior" />
+
 		<aop:advisor id="managerTxTransactionalRequiredNew"
-			advice-ref="txAdviceTransactionalRequiredNew" pointcut-ref="serviceAnnotatedClassTransactionalRequiredNew" />
-			
+			advice-ref="txAdviceTransactionalRequiredNew"
+			pointcut-ref="serviceAnnotatedClassTransactionalRequiredNew" />
+
 	</aop:config>
 </beans>
 

@@ -33,9 +33,6 @@ public class ServicioVentaImpl implements ServicioVenta {
 	private VentaDao ventaDao;
 	@Autowired
 	private ProductoDao productoDao;
-	
-	
-	
 
 	@Override
 	public Venta findById(Integer id) throws ServicioException {
@@ -108,7 +105,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
 			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
 		}
-		
+
 		validarStock(entity);
 	}
 
@@ -121,21 +118,11 @@ public class ServicioVentaImpl implements ServicioVenta {
 	}
 
 	@Override
-	public void comprobarAlerta(Venta entity) throws ServicioException {
-		if (entity.getProducto().getStock() <= entity.getProducto().getStockMin()) {
-			// guardar en alertas_stock
-			// TODO
-			throw new ServicioException(srvMensajes.getMensajeI18n("venta.stockBajo", entity.getProducto().getNombre(),
-					entity.getProducto().getStock().toString(), entity.getProducto().getUnidad()));
-		}
-	}
-
-	@Override
 	public Venta saveOrUpdate(Venta entity, boolean validate) throws ServicioException {
 		if (validate) {
 			validate(entity);
 		}
-		entity.getProducto().setStock(entity.getProducto().getStock()-entity.getCantidad());
+		entity.getProducto().setStock(entity.getProducto().getStock() - entity.getCantidad());
 		productoDao.save(entity.getProducto());
 		return this.save(entity);
 	}
@@ -162,15 +149,16 @@ public class ServicioVentaImpl implements ServicioVenta {
 		// TODO Auto-generated method stub
 		return this.ventaDao.findVentasByUsuario(user);
 	}
+
 	@Override
 	public Venta calcularVenta(Venta entity) {
-		entity.setNombrePod(entity.getProducto().getNombre());
+		entity.setNombreProd(entity.getProducto().getNombre());
 		entity.setUnidad(entity.getProducto().getUnidad());
 		entity.setPrecio(entity.getProducto().getPrecio());
 		entity.setTotal(entity.getPrecio() * entity.getCantidad());
 		if (entity.getDescuento() != null && entity.getDescuento() > 0) {
-			entity.setTotal(entity.getTotal() - (entity.getTotal() * (entity.getDescuento() / 100)));	
-		}else {
+			entity.setTotal(entity.getTotal() - (entity.getTotal() * (entity.getDescuento() / 100)));
+		} else {
 			entity.setDescuento(0f);
 		}
 		if (entity.getIva() != null && entity.getIva() > 0) {
@@ -179,7 +167,23 @@ public class ServicioVentaImpl implements ServicioVenta {
 			entity.setTotal(entity.getTotal() + (entity.getTotal() * (0.21f)));
 			entity.setIva(21f);
 		}
-		
+
 		return entity;
+	}
+
+	@Override
+	public Object[] findFormasPagoGrafica(String email) {
+		return this.ventaDao.findFormasPagoGrafica(email);
+	}
+
+	@Override
+	public List<Object> getVentasMensualesGrafica(String email) {
+		return this.ventaDao.getVentasMensualesGrafica(email);
+	}
+
+	@Override
+	public List<Object> getIngresosMensualesGrafica(String email) {
+		return this.ventaDao.getIngresosMensualesGrafica(email);
+
 	}
 }

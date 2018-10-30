@@ -1,6 +1,6 @@
 .ui-datatable .ui-column-filter {
-    margin-top:5px;
-    }
+	margin-top: 5px;
+}
 
 .daterangepicker .ranges li {
 	color: #73879C;
@@ -159,7 +159,7 @@
 @charset "UTF-8";
 
 .left_col {
-	background: #2A3F54;
+	    background-color: #2A3F54;
 }
 
 .nav-sm .container.body .col-md-3.left_col {
@@ -412,7 +412,6 @@ body .container.body .right_col {
 .nav_title {
 	width: 230px;
 	float: left;
-	background: #2A3F54;
 	border-radius: 0;
 	height: 60px;
 }
@@ -2741,8 +2740,6 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
 	border-color: #ac2925 !important;
 }
 
-
-
 .btn-dark {
 	color: #E9EDEF;
 	background-color: #4B5F71;
@@ -2773,6 +2770,58 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
 	border: 1px solid #ddd;
 	background-color: #fafafa;
 	font-size: 12px;
+}
+
+.btn-warning {
+	color: #fff !important;
+	background-color: #f0ad4e !important;
+	border-color: #eea236 !important;
+}
+
+.btn-warning:focus, .btn-warning.focus {
+	color: #fff !important;
+	background-color: #ec971f !important;
+	border-color: #985f0d !important;
+}
+
+.btn-warning:hover {
+	color: #fff !important;
+	background-color: #ec971f !important;
+	border-color: #d58512 !important;
+}
+
+.btn-warning:active, .btn-warning.active, .open>.dropdown-toggle.btn-warning
+	{
+	color: #fff !important;
+	background-color: #ec971f !important;
+	border-color: #d58512 !important;
+}
+
+.btn-warning:active:hover, .btn-warning.active:hover, .open>.dropdown-toggle.btn-warning:hover,
+	.btn-warning:active:focus, .btn-warning.active:focus, .open>.dropdown-toggle.btn-warning:focus,
+	.btn-warning:active.focus, .btn-warning.active.focus, .open>.dropdown-toggle.btn-warning.focus
+	{
+	color: #fff !important;
+	background-color: #d58512 !important;
+	border-color: #985f0d !important;
+}
+
+.btn-warning:active, .btn-warning.active, .open>.dropdown-toggle.btn-warning
+	{
+	background-image: none !important;
+}
+
+.btn-warning.disabled:hover, .btn-warning[disabled]:hover, fieldset[disabled] .btn-warning:hover,
+	.btn-warning.disabled:focus, .btn-warning[disabled]:focus, fieldset[disabled] .btn-warning:focus,
+	.btn-warning.disabled.focus, .btn-warning[disabled].focus, fieldset[disabled] .btn-warning.focus
+	{
+	background-color: #f0ad4e;
+	border-color: #eea236;
+}
+
+.btn-warning .badge {
+	color: #f0ad4e;
+	background-color: #fff;
 }
 
 .btn.btn-app>.fa, .btn.btn-app>.glyphicon, .btn.btn-app>.ion {
@@ -3983,12 +4032,12 @@ ul.project_files li a i {
 /* *********  /ecommerce  **************************** */
 /** login **/
 .login {
-	background: url("/naventory/resources/images/bg.jpg") no-repeat
-		center center fixed;
+	background: url("/naventory/resources/images/bg.jpg") no-repeat center
+		center fixed;
 	background-size: cover;
 	-moz-background-size: cover;
 	-webkit-background-size: cover;
-	-o-background-size: cover;		
+	-o-background-size: cover;
 }
 
 .login .fa-paw {
@@ -4951,7 +5000,6 @@ ul.notifications {
 /* .panel { */
 /* 	margin-bottom: 25% !important; */
 /* } */
-
 .panel-green {
 	border-color: #5cb85c;
 }
@@ -5005,33 +5053,88 @@ ul.notifications {
 .panel-yellow a:hover {
 	color: #df8a13;
 }
-.ui-tooltip { pointer-events: none; }
-.bloquear:hover{
-	color:red;
+
+.ui-tooltip {
+	pointer-events: none;
 }
-.ui-dialog .ui-dialog-buttonpane{
-	text-align:center !important;
+
+.bloquear:hover {
+	color: red;
 }
-.ui-button,.ui-button span,button.ui-button.ui-state-default span,.ui-button.ui-state-default span {
-    font-weight: normal !important; 
+
+.ui-dialog .ui-dialog-buttonpane {
+	text-align: center !important;
 }
-.btnAction{
-	   font-size: 16px !important;
-	   width: 100%;
+
+.ui-button, .ui-button span, button.ui-button.ui-state-default span,
+	.ui-button.ui-state-default span {
+	font-weight: normal !important;
 }
-.bottom-20{
-	margin-bottom:20px;
+
+.btnAction {
+	font-size: 16px !important;
+	width: 100%;
 }
+
+.bottom-20 {
+	margin-bottom: 20px;
+}
+
 .margin-10 {
-    margin-bottom: 10px;
-    margin-top: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
-.tdNumber{
-	text-align:right;
+
+.tdNumber {
+	text-align: right;
 }
+
 .ui-selectonemenu-trigger.ui-state-default.ui-corner-right {
-    width: 25px !important;
+	width: 25px !important;
 }
+
 .ui-selectonemenu-panel .ui-selectonemenu-filter-container {
-    width: 100%;
+	width: 100%;
+}
+
+.formaPago {
+	color: white;
+	border-radius: .25em;
+	padding: .2em .6em .3em;
+}
+
+.ui-column-filter {
+	width: 80% !important;
+}
+
+.ui-selectonemenu label.ui-selectonemenu-label {
+	text-align: center;
+}
+
+/* Animaciones */
+.animated {
+	-webkit-animation-duration: 1.5s;
+	animation-duration: 1.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+.fast {
+	-webkit-animation-duration: 0.4s;
+	animation-duration: 0.4s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
+@keyframes fadeIn {from { opacity:0;
+	
+}
+
+to {
+	opacity: 1;
+}
+
+}
+.fadeIn {
+	animation-name: fadeIn;
 }

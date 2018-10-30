@@ -2,9 +2,12 @@ package com.antoniojnavarro.naventory.model.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -23,7 +26,6 @@ public class FormaPago implements GenericEntity {
 	@Column(name = "id_pago")
 	private Integer idPago;
 
-
 	@Column(name = "nombre", length = 255)
 	private String nombre;
 
@@ -32,16 +34,13 @@ public class FormaPago implements GenericEntity {
 		return idPago;
 	}
 
-
 	public void setIdPago(Integer idPago) {
 		this.idPago = idPago;
 	}
 
-
 	public String getNombre() {
 		return nombre;
 	}
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -56,7 +55,6 @@ public class FormaPago implements GenericEntity {
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -79,6 +77,5 @@ public class FormaPago implements GenericEntity {
 			return false;
 		return true;
 	}
-
 
 }

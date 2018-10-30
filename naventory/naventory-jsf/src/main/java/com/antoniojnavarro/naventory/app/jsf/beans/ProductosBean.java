@@ -36,7 +36,7 @@ public class ProductosBean extends MasterBean {
 	// ENTITIES
 	@Autowired
 	ParamBean paramBean;
-	private Producto producto; 
+	private Producto producto;
 
 	private Producto selectedProducto;
 	@Autowired
@@ -109,9 +109,9 @@ public class ProductosBean extends MasterBean {
 	}
 
 	public void cargarTotalInventario() {
-		this.totalInventario = srvProducto.getTotalInventario();
+		this.totalInventario = srvProducto.getTotalInventario(this.usuarioAutenticado.getUsuario());
 	}
-	
+
 	public void cargarProductos() {
 		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
 	}
@@ -136,7 +136,7 @@ public class ProductosBean extends MasterBean {
 	public void guardarProducto() {
 
 		selectedProducto.setUsuario(usuarioAutenticado.getUsuario());
-		if(!editing) {
+		if (!editing) {
 			srvProducto.validateSKU(selectedProducto.getSku());
 		}
 		srvProducto.saveOrUpdate(this.selectedProducto, true);
@@ -149,8 +149,6 @@ public class ProductosBean extends MasterBean {
 		editing = false;
 	}
 
-	
-	
 	public Producto getProducto() {
 		return producto;
 	}
