@@ -50,32 +50,31 @@
 							<p:graphicImage library="images" name="loading.gif" width="65" />
 						</p:dialog>
 
-						<p:panel id="basic" header="#{msg['login.loginTitle']}"
-							style="margin-bottom:20px">
-
+						<p:panel id="basic" header="#{msg['login.loginTitle']}">
 
 
 							<div class="ui-inputgroup inputUser">
-								<span class="ui-inputgroup-addon"></span>
-								<p:outputLabel>#{msg['login.username']}</p:outputLabel>
+								<span class="ui-inputgroup-addon iconForm"><i
+									class="fa fa-envelope-o"></i></span>
 								<p:inputText value="#{loginBean.email}"
-									styleClass="form-control" placeholder="&#xF007;"
-									style="font-family:Arial, FontAwesome; text-align:center"
-									required="true"
+									styleClass="form-control" placeholder="#{msg['e-mail']}"
+									style="text-align:center" required="true"
 									requiredMessage="#{msg['login.username.required']}"
 									maxlength="255"></p:inputText>
 							</div>
 							<div>
 								<div class="ui-inputgroup inputUser">
-									<span class="ui-inputgroup-addon"><p:outputLabel>#{msg['login.password']}</p:outputLabel></span>
+									<span class="ui-inputgroup-addon iconForm"><i
+										class="fa fa-key"></i></span>
 									<p:password styleClass="form-control"
 										value="#{loginBean.password}" maxlength="255"
-										placeholder="&#xF084;"
-										style="font-family:Arial, FontAwesome; text-align:center"
+										placeholder="#{msg['contrasena']}" style="text-align:center"
 										required="true"
 										requiredMessage="#{msg['login.password.required']}" />
 								</div>
 							</div>
+
+
 
 							<div>
 								<p:commandButton icon="fa fa-sign-in"

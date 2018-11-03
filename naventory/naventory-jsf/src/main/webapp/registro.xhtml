@@ -52,44 +52,49 @@
 							<p:graphicImage library="images" name="loading.gif" width="65" />
 						</p:dialog>
 
-						<p:panel id="basic" header="#{msg['register.title']}"
-							style="margin-bottom:20px">
+						<p:panel id="basic" header="#{msg['register.title']}">
 
 							<div class="ui-inputgroup inputUser">
+								<span class="ui-inputgroup-addon iconForm"><i
+									class="fa fa-envelope-o"></i></span>
 								<p:inputText value="#{registroBean.usuario.email}"
 									styleClass="form-control"
-									placeholder="&#xF0e0; #{msg['register.email']}"
-									style="font-family:Arial, FontAwesome; text-align:center"
-									required="true" requiredMessage="#{msg['register.email.req']}"
-									maxlength="255"
-									validatorMessage="#{msg['register.email.error']}"
-									>
+									placeholder="#{msg['register.email']}"
+									style="text-align:center" required="true"
+									requiredMessage="#{msg['register.email.req']}" maxlength="255"
+									validatorMessage="#{msg['register.email.error']}">
 									<f:validateRegex
 										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 								</p:inputText>
 							</div>
 
 							<div class="ui-inputgroup inputUser">
+								<span class="ui-inputgroup-addon iconForm"><i
+									class="fa fa-envelope-o"></i></span>
 								<p:inputText value="#{registroBean.usuario.nombre}"
 									styleClass="form-control"
-									placeholder="&#xf007; #{msg['register.nombre']}"
+									placeholder="#{msg['register.nombre']}"
 									style="font-family:Arial, FontAwesome; text-align:center"
 									required="true" requiredMessage="#{msg['register.nombre.req']}"
 									maxlength="255"></p:inputText>
 							</div>
 							<div class="ui-inputgroup inputUser">
+								<span class="ui-inputgroup-addon iconForm"><i
+									class="fa fa-envelope-o"></i></span>
 								<p:inputText value="#{registroBean.usuario.apellido}"
 									styleClass="form-control"
-									placeholder="&#xf0c0; #{msg['register.apellidos']}"
+									placeholder="#{msg['register.apellidos']}"
 									style="font-family:Arial, FontAwesome; text-align:center"
 									required="true"
 									requiredMessage="#{msg['register.apellidos.req']}"
 									maxlength="255"></p:inputText>
 							</div>
 							<div class="ui-inputgroup inputUser">
+								<span class="ui-inputgroup-addon iconForm"><i
+									class="fa fa-envelope-o"></i></span>
 								<p:inputText value="#{registroBean.usuario.empresa}"
 									styleClass="form-control"
-									placeholder="&#xf1ad; #{msg['register.nombreEmpresa']}"
+									placeholder="#{msg['register.nombreEmpresa']}"
 									style="font-family:Arial, FontAwesome; text-align:center"
 									required="true"
 									requiredMessage="#{msg['register.nombreEmpresa.req']}"
@@ -97,9 +102,11 @@
 							</div>
 							<div>
 								<div class="ui-inputgroup inputUser">
+									<span class="ui-inputgroup-addon iconForm"><i
+										class="fa fa-envelope-o"></i></span>
 									<p:password styleClass="form-control"
 										value="#{registroBean.usuario.password}" maxlength="255"
-										placeholder="&#xF084;  #{msg['register.password']}"
+										placeholder="#{msg['register.password']}"
 										style="font-family:Arial, FontAwesome; text-align:center"
 										required="true"
 										requiredMessage="#{msg['register.password.req']}" />
@@ -107,9 +114,11 @@
 							</div>
 							<div>
 								<div class="ui-inputgroup inputUser">
+									<span class="ui-inputgroup-addon iconForm"><i
+										class="fa fa-envelope-o"></i></span>
 									<p:password styleClass="form-control"
 										value="#{registroBean.confPassword}" maxlength="255"
-										placeholder="&#xF084;  #{msg['register.repeatPassword']}"
+										placeholder="#{msg['register.repeatPassword']}"
 										style="font-family:Arial, FontAwesome; text-align:center"
 										required="true"
 										requiredMessage="#{msg['register.repeatPassword.req']}" />

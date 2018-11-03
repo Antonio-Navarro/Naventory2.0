@@ -7,6 +7,9 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="http://www.springframework.org/security/tags"
 	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="title">
+		<title>Categorias | Naventory</title>
+	</ui:define>
 	<ui:define name="body">
 		<div class="row">
 			<div class="col-md-12">
@@ -19,8 +22,9 @@
 		<div class="separator"></div>
 		<div class="row">
 			<div class="col-md-6 text-left">
-				<p:commandButton value="#{msg['categorias.nuevaCategoria']}" style="heig"
-					icon="fa fa-archive fa-fw" styleClass="btn btn-lg btn-success"
+				<p:commandButton value="#{msg['categorias.nuevaCategoria']}"
+					style="heig" icon="fa fa-archive fa-fw"
+					styleClass="btn btn-lg btn-success"
 					actionListener="#{categoriasBean.newCategoria}" process="@this"
 					oncomplete="PF('categoriaDetailsDialog').show();"
 					update="categoriaDetailsModal" />
@@ -29,15 +33,15 @@
 		<p:separator></p:separator>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
-				<p:dataTable id="categoriaTable" var="categoria" 
+				<p:dataTable id="categoriaTable" var="categoria"
 					widgetVar="categoriasWV" value="#{categoriasBean.categorias}"
 					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
-					rowIndexVar="cont" paginatorPosition="bottom"
-					lazy="false" resizableColumns="true"
+					rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
+					resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}"
 					filteredValue="#{categoriasBean.filteredCategorias}">
-					<f:facet name="header">				
+					<f:facet name="header">
 						<div class="text-left">
 							<p:commandButton id="toggler" type="button" value="Columnas"
 								style="float:left" icon="ui-icon-calculator" />
@@ -63,8 +67,8 @@
 					<p:column headerText="" style="width:5%;text-align:center">
 						<h:outputText value="#{(cont+1)}" />
 					</p:column>
-					<p:column sortBy="#{categoria.idCat}" filterBy="#{categoria.idCat}" styleClass="tdNumber"
-						style="width:12%" filterMatchMode="contains"
+					<p:column sortBy="#{categoria.idCat}" filterBy="#{categoria.idCat}"
+						styleClass="tdNumber" style="width:12%" filterMatchMode="contains"
 						headerText="#{msg['categorias.table.id']}">
 						<h:outputText value="#{categoria.idCat}" />
 					</p:column>
@@ -74,12 +78,12 @@
 						headerText="#{msg['users.datatable.header.nombre']}">
 						<h:outputText value="#{categoria.nomCat}" />
 					</p:column>
-					<p:column headerText="#{msg['categorias.desc']}" filterBy="#{categoria.desc}"
-						sortBy="#{categoria.desc}">
+					<p:column headerText="#{msg['categorias.desc']}"
+						filterBy="#{categoria.desc}" sortBy="#{categoria.desc}">
 						<h:outputText value="#{categoria.desc}" />
 					</p:column>
-					<p:column headerText="#{msg['categorias.obser']}" filterBy="#{categoria.obser}"
-						sortBy="#{categoria.obser}">
+					<p:column headerText="#{msg['categorias.obser']}"
+						filterBy="#{categoria.obser}" sortBy="#{categoria.obser}">
 						<h:outputText value="#{categoria.obser}" />
 					</p:column>
 					<p:column width="15%" style="text-align:center"

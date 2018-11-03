@@ -7,6 +7,9 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="http://www.springframework.org/security/tags"
 	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="title">
+		<title>Clientes | Naventory</title>
+	</ui:define>
 	<ui:define name="body">
 		<div class="row">
 			<div class="col-md-12">
@@ -54,9 +57,9 @@
 								<p:dataExporter type="xls" target="clienteTable"
 									fileName="clientes" />
 							</p:commandButton>
-							<p:commandButton value="PDF" immediate="true" ajax="false" encoding="ISO-8859-1"
-								styleClass="btn-success" style="float:right; margin-left:5px "
-								icon="fa fa-file-pdf-o">
+							<p:commandButton value="PDF" immediate="true" ajax="false"
+								encoding="ISO-8859-1" styleClass="btn-success"
+								style="float:right; margin-left:5px " icon="fa fa-file-pdf-o">
 								<p:dataExporter type="pdf" target="clienteTable"
 									fileName="clientes" options="#{clientesBean.pdfOpt}"
 									preProcessor="#{clientesBean.preProcesamientoPdf}" />
