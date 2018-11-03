@@ -7,6 +7,9 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="http://www.springframework.org/security/tags"
 	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="title">
+		<title>Clientes | Naventory</title>
+	</ui:define>
 	<ui:define name="body">
 		<div class="row">
 			<div class="col-md-12">
@@ -20,7 +23,7 @@
 		<div class="row">
 			<div class="col-md-6 text-left">
 				<p:commandButton value="#{msg['clientes.nuevaCliente']}"
-					style="heig" icon="fa fa-archive fa-fw"
+					style="heig" icon="fa fa-street-view fa-fw"
 					styleClass="btn btn-lg btn-success"
 					actionListener="#{clientesBean.newCliente}"
 					oncomplete="PF('clienteDetailsDialog').show();"
@@ -32,7 +35,7 @@
 			<div class="col-md-12">
 				<p:dataTable id="clienteTable" var="cliente" widgetVar="clientesWV"
 					value="#{clientesBean.clientes}" paginator="true" rowHover="true"
-					rows="#{defaultPaginatorRows}" rowIndexVar="cont" 
+					rows="#{defaultPaginatorRows}" rowIndexVar="cont"
 					paginatorPosition="bottom" lazy="false" resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}"
@@ -48,12 +51,32 @@
 							<p:columnToggler datasource="clienteTable" trigger="toggler" />
 						</div>
 						<div class="text-right">
+							<p:commandButton value="XLS" immediate="true" ajax="false"
+								styleClass="btn-success" style="float:right; margin-left:5px"
+								icon="fa fa-file-excel-o">
+								<p:dataExporter type="xls" target="clienteTable"
+									fileName="clientes" />
+							</p:commandButton>
+							<p:commandButton value="PDF" immediate="true" ajax="false"
+								encoding="ISO-8859-1" styleClass="btn-success"
+								style="float:right; margin-left:5px " icon="fa fa-file-pdf-o">
+								<p:dataExporter type="pdf" target="clienteTable"
+									fileName="clientes" options="#{clientesBean.pdfOpt}"
+									preProcessor="#{clientesBean.preProcesamientoPdf}" />
+							</p:commandButton>
+							<p:commandButton value="CSV" immediate="true" ajax="false"
+								styleClass="btn-success" style="float:right;  margin-left:5px"
+								icon="fa fa-file-text-o">
+								<p:dataExporter type="csv" target="clienteTable"
+									fileName="clientes" encoding="UTF8" />
+							</p:commandButton>
 							<p:outputPanel>
 								<p:inputText id="globalFilter"
 									onkeyup="PF('clientesWV').filter()" style="width:150px"
 									placeholder="#{msg['buscarTabla']}" />
 							</p:outputPanel>
 						</div>
+
 
 					</f:facet>
 					<f:facet name="footer">
@@ -64,9 +87,6 @@
 							</h:outputFormat>
 						</div>
 					</f:facet>
-					<p:column headerText="" styleClass="tdNumber" style="width:5%;text-align:center">
-						<h:outputText value="#{(cont+1)}" />
-					</p:column>
 					<p:column sortBy="#{cliente.idCliente}"
 						filterBy="#{cliente.idCliente}" styleClass="tdNumber"
 						style="width:5%" filterMatchMode="contains"
@@ -86,20 +106,20 @@
 						sortBy="#{cliente.ciudad}">
 						<h:outputText value="#{cliente.ciudad}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.cp']}" style="width:11%" styleClass="tdNumber"
-						sortBy="#{cliente.cp}">
+					<p:column headerText="#{msg['clientes.cp']}" style="width:11%"
+						styleClass="tdNumber" sortBy="#{cliente.cp}">
 						<h:outputText value="#{cliente.cp}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.tel']}" styleClass="tdNumber" style="width:11%"
-						sortBy="#{cliente.tel1}">
-						<h:outputText value="#{cliente.tel1}" />
+					<p:column headerText="#{msg['clientes.tel']}" styleClass="tdNumber"
+						style="width:11%" sortBy="#{cliente.tel1}">
+						<a href="tel:#{cliente.tel1}" style="color: blue">#{cliente.tel1}</a>
 					</p:column>
 					<p:column headerText="#{msg['clientes.correo']}"
 						sortBy="#{cliente.correo}">
 						<h:outputText value="#{cliente.correo}" />
 					</p:column>
 
-					<p:column width="15%" style="text-align:center"
+					<p:column width="15%" style="text-align:center" exportable="false"
 						headerText="#{msg['users.datatable.header.opciones']}">
 
 						<p:commandLink id="fadeVer"

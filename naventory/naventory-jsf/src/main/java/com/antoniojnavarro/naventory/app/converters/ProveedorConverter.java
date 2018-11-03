@@ -18,6 +18,7 @@ public class ProveedorConverter implements Converter {
 	@Autowired
 	private ServicioProveedor service;
 
+	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && value.trim().length() > 0) {
 			try {
@@ -31,11 +32,12 @@ public class ProveedorConverter implements Converter {
 		}
 	}
 
+	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			return String.valueOf(((Proveedor) value).getIdProv());
 		} else {
-			return null;
+			return "";
 		}
 	}
 

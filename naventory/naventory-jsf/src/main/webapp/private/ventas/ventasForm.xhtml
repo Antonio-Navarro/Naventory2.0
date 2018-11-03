@@ -61,8 +61,6 @@
 				<p:watermark for="ivaInput" value="Por defecto se aplica el 21 %"
 					id="watermark" />
 			</p:inputText>
-
-
 			<p:outputLabel for="descInput" value="#{msg['ventas.desc']}" />
 			<p:inputText id="descInput"
 				value="#{ventasBean.selectedVenta.descripcion}"
@@ -77,9 +75,16 @@
 				placeholder="Por defecto no se aplica ningún descuento. El descuento se realiza en porcentaje"
 				style="font-family:Arial, FontAwesome; text-align:center">
 				<p:watermark for="descuentoInput" style="font-size:10px"
-					value="El descuento se realiza en porcentaje"
-					id="watermark2" />
+					value="El descuento se realiza en porcentaje" id="watermark2" />
 			</p:inputText>
+			<p:outputLabel for="formaPagoInput"
+				styleClass="label-warning formaPago" value="#{msg['formaDePago']}" />
+			<p:selectOneRadio id="formaPagoInput" required="true" requiredMessage="#{msg['ventas.formaPago.required']}"
+				value="#{ventasBean.selectedVenta.formaPago}"
+				converter="#{formaPagoConverter}">
+				<f:selectItems value="#{ventasBean.formasPago}" var="formaPago"
+					itemLabel="#{formaPago.nombre}" itemValue="#{formaPago}" />
+			</p:selectOneRadio>
 
 		</p:panelGrid>
 		<f:facet name="footer">
@@ -88,7 +93,7 @@
 					<p:commandButton icon="fa fa-save"
 						styleClass="btn btn-lg btn-success btnAction"
 						title="#{msg['save']}" value="#{msg['ventas.crearVenta']}"
-						actionListener="#{ventasBean.guardarVenta}" update="ventaTable" />
+						actionListener="#{ventasBean.guardarVenta}" update="formApp:ventaTable, panelTop" />
 				</div>
 			</p:row>
 		</f:facet>

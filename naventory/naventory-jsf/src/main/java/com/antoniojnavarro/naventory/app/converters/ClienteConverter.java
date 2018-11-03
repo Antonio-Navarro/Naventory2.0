@@ -18,6 +18,7 @@ public class ClienteConverter implements Converter {
 	@Autowired
 	private ServicioCliente service;
 
+	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && value.trim().length() > 0) {
 			try {
@@ -31,11 +32,12 @@ public class ClienteConverter implements Converter {
 		}
 	}
 
+	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			return String.valueOf(((Cliente) value).getIdCliente());
 		} else {
-			return null;
+			return "";
 		}
 	}
 

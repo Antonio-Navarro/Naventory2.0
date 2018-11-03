@@ -1,0 +1,179 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<p:dialog id="compraDetailsModal" widgetVar="compraDetailsDialog"
+		responsive="true" closable="true" resizable="true" modal="true"
+		maximizable="true" width="600" focus="">
+		<f:facet name="header">
+			<h:outputText rendered="#{comprasBean.editing}"
+				value="#{msg['compras.editarCompra']}"></h:outputText>
+			<h:outputText rendered="#{!comprasBean.editing}"
+				value="#{msg['compras.titleNuevaCompra']}"></h:outputText>
+		</f:facet>
+		<p:wizard flowListener="#{comprasBean.onFlowProcess}">
+
+			<p:tab id="compraTab" title="Compra">
+				<p:panel header="Detalles de la compra">
+					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
+						columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
+
+						<p:outputLabel for="proveedorSelectNuevo"
+							value="#{msg['proveedor']}" />
+						<p:selectOneMenu id="proveedorSelectNuevo" filter="true"
+							required="true" converter="#{proveedorConverter}"
+							requiredMessage="#{msg['compras.proveedor.required']}"
+							value="#{comprasBean.selectedCompra.proveedor}"
+							style="min-width:100% !important;">
+							<f:selectItem itemLabel="Elige un proveedor..."
+								itemValue="#{null}" />
+							<f:selectItems value="#{comprasBean.proveedores}" var="proveedor"
+								itemLabel="#{proveedor.nombre}" itemValue="#{proveedor}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="facturaInputNuevo" value="#{msg['factura']}" />
+						<p:inputText id="facturaInputNuevo" required="true"
+							requiredMessage="#{msg['compras.factura.required']}"
+							value="#{comprasBean.selectedCompra.factura}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center"></p:inputText>
+
+						<p:outputLabel for="cantidadInputNuevo"
+							value="#{msg['compras.cantidad']}" />
+						<p:inputText id="cantidadInputNuevo" required="true"
+							requiredMessage="#{msg['compras.cantidad.required']}"
+							value="#{comprasBean.selectedCompra.cantidad}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center"></p:inputText>
+
+						<p:outputLabel for="ivaInputNuevo" value="#{msg['iva']}" />
+						<p:inputText id="ivaInputNuevo"
+							value="#{comprasBean.selectedCompra.iva}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}"
+							style="font-family:Arial, FontAwesome; text-align:center">
+							<p:watermark for="ivaInputNuevo"
+								value="Por defecto se aplica el 21 %" id="watermark3" />
+						</p:inputText>
+						<p:outputLabel for="descInputNuevo" value="#{msg['compras.desc']}" />
+						<p:inputText id="descInputNuevo"
+							value="#{comprasBean.selectedCompra.descripcion}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="descuentoInputNuevo"
+							value="#{msg['compras.descuento']}" />
+						<p:inputText id="descuentoInputNuevo"
+							value="#{comprasBean.selectedCompra.descuento}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}"
+							placeholder="Por defecto no se aplica ningún descuento. El descuento se realiza en porcentaje"
+							style="font-family:Arial, FontAwesome; text-align:center">
+							<p:watermark for="descuentoInputNuevo" style="font-size:10px"
+								value="El descuento se realiza en porcentaje" id="watermark4" />
+						</p:inputText>
+
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+			<p:tab id="productoTab" title="Producto">
+				<p:panel header="Detalle ">
+					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
+						columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
+						<p:outputLabel for="skuInputNuevo"
+							value="#{msg['productos.skuRef']}" />
+						<p:inputText id="skuInputNuevo" required="true"
+							requiredMessage="#{msg['productos.sku.required']}"
+							value="#{comprasBean.selectedProducto.sku}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="categoriaSelectInput"
+							value="#{msg['categoria']}" />
+						<p:selectOneMenu id="categoriaSelectInput" filter="true"
+							required="true" converter="#{categoriasConverter}"
+							requiredMessage="#{msg['productos.categoria.required']}"
+							value="#{comprasBean.selectedProducto.categoria}"
+							style="min-width:100% !important;">
+							<f:selectItem itemLabel="Elige una categoría..."
+								itemValue="#{null}" />
+							<f:selectItems value="#{comprasBean.categorias}" var="categoria"
+								itemLabel="#{categoria.nomCat}" itemValue="#{categoria}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="nombreInputNuevo"
+							value="#{msg['productos.nombreProducto']}" />
+						<p:inputText id="nombreInputNuevo" required="true"
+							requiredMessage="#{msg['productos.nombre.required']}"
+							value="#{comprasBean.selectedProducto.nombre}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="descProdInputNuevo"
+							value="#{msg['productos.desc']}" />
+						<p:inputText id="descProdInputNuevo" required="true"
+							requiredMessage="#{msg['productos.desc.required']}"
+							value="#{comprasBean.selectedProducto.descripcion}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+
+						<p:outputLabel for="costeInputNuevo"
+							value="#{msg['productos.coste']}" />
+						<p:inputText id="costeInputNuevo" required="true"
+							requiredMessage="#{msg['productos.coste.required']}"
+							value="#{comprasBean.selectedProducto.coste}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="precioInputNuevo"
+							value="#{msg['productos.precio']}" />
+						<p:inputText id="precioInputNuevo" required="true"
+							requiredMessage="#{msg['productos.precio.required']}"
+							value="#{comprasBean.selectedProducto.precio}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="stockMinInputNuevo"
+							value="#{msg['productos.stockMin']}" />
+						<p:inputText id="stockMinInputNuevo" required="true"
+							requiredMessage="#{msg['productos.stockMin.required']}"
+							value="#{comprasBean.selectedProducto.stockMin}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="unidadInputNuevo"
+							value="#{msg['productos.unidad']}" />
+						<p:inputText id="unidadInputNuevo" required="true"
+							requiredMessage="#{msg['productos.unidad.required']}"
+							value="#{comprasBean.selectedProducto.unidad}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="obserInputNuevo"
+							value="#{msg['productos.obser']}" />
+						<p:inputTextarea id="obserInputNuevo"
+							value="#{comprasBean.selectedProducto.observaciones}" rows="3"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+							style="width:100%;font-family:Arial, FontAwesome; text-align:center" />
+
+						<p:outputLabel for="" value="" />
+						<p:commandButton icon="fa fa-save"
+							styleClass="btn btn-lg btn-success btnAction"
+							process="compraDetailsModal" title="#{msg['save']}"
+							value="#{msg['compras.crearCompra']}"
+							actionListener="#{comprasBean.guardarCompra(true)}"
+							update="formApp:compraTable" />
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+		</p:wizard>
+		<f:facet name="footer">
+
+		</f:facet>
+	</p:dialog>
+
+</ui:composition>

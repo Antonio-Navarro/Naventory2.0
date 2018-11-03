@@ -13,8 +13,8 @@ public interface ProductoDao extends Dao<Producto, ProductoSearchFilter, String>
 
 	@Query("SELECT p FROM Producto p WHERE p.usuario = ?1")
 	List<Producto> findProductosByUsuario(Usuario user); 
-	@Query("SELECT sum(p.precio * p.stock) FROM Producto p")
-	Float getTotalInventario(); 
+	@Query("SELECT sum(p.precio * p.stock) FROM Producto p where p.usuario = ?1")
+	Float getTotalInventario(Usuario user); 
 	
 
 }

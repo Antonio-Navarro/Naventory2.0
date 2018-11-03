@@ -153,7 +153,7 @@ public class ServicioProductoImpl implements ServicioProducto {
 	}
 
 	@Override
-	public Float getTotalInventario() throws ServicioException {
-		return this.productoDao.getTotalInventario();
+	public Float getTotalInventario(Usuario user) throws ServicioException {
+		return this.productoDao.getTotalInventario(user);
 	}
 }

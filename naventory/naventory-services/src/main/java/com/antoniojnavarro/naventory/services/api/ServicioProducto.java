@@ -14,5 +14,5 @@ public interface ServicioProducto extends ServicioCrud<Producto, ProductoSearchF
 
 	void validateSKU(String sku) throws ServicioException;
 
-	Float getTotalInventario() throws ServicioException;
+	Float getTotalInventario(Usuario user) throws ServicioException;
 }

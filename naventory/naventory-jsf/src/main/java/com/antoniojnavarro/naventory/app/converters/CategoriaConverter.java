@@ -18,6 +18,7 @@ public class CategoriaConverter implements Converter {
 	@Autowired
 	private ServicioCategoria service;
 
+	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && value.trim().length() > 0) {
 			try {
@@ -31,11 +32,12 @@ public class CategoriaConverter implements Converter {
 		}
 	}
 
+	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			return String.valueOf(((Categoria) value).getIdCat());
 		} else {
-			return null;
+			return "";
 		}
 	}
 

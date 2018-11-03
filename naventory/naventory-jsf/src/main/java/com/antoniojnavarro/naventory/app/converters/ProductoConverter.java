@@ -18,6 +18,7 @@ public class ProductoConverter implements Converter {
 	@Autowired
 	private ServicioProducto service;
 
+	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && value.trim().length() > 0) {
 			try {
@@ -31,11 +32,13 @@ public class ProductoConverter implements Converter {
 		}
 	}
 
+	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
+
 		if (value != null) {
 			return ((Producto) value).getSku();
 		} else {
-			return null;
+			return "";
 		}
 	}
 

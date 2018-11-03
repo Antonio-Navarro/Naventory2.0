@@ -7,6 +7,9 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="http://www.springframework.org/security/tags"
 	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="title">
+		<title>Proveedores | Naventory</title>
+	</ui:define>
 	<ui:define name="body">
 		<div class="row">
 			<div class="col-md-12">
@@ -20,7 +23,7 @@
 		<div class="row">
 			<div class="col-md-6 text-left">
 				<p:commandButton value="#{msg['proveedores.nuevaProveedor']}"
-					style="heig" icon="fa fa-archive fa-fw"
+					style="heig" icon="fa fa-truck fa-fw"
 					styleClass="btn btn-lg btn-success"
 					actionListener="#{proveedoresBean.newProveedor}"
 					oncomplete="PF('proveedorDetailsDialog').show();"
@@ -53,6 +56,25 @@
 								<p:inputText id="globalFilter"
 									onkeyup="PF('proveedoresWV').filter()" style="width:150px"
 									placeholder="#{msg['buscarTabla']}" />
+								<p:commandButton value="XLS" immediate="true" ajax="false"
+									styleClass="btn-success" style="float:right; margin-left:5px"
+									icon="fa fa-file-excel-o">
+									<p:dataExporter type="xls" target="proveedorTable"
+										fileName="proveedores" />
+								</p:commandButton>
+								<p:commandButton value="PDF" immediate="true" ajax="false"
+									styleClass="btn-success" style="float:right; margin-left:5px "
+									icon="fa fa-file-pdf-o">
+									<p:dataExporter type="pdf" target="proveedorTable"
+										fileName="proveedores" options="#{proveedoresBean.pdfOpt}"
+										preProcessor="#{proveedoresBean.preProcesamientoPdf}" />
+								</p:commandButton>
+								<p:commandButton value="CSV" immediate="true" ajax="false"
+									styleClass="btn-success" style="float:right;  margin-left:5px"
+									icon="fa fa-file-text-o">
+									<p:dataExporter type="csv" target="proveedorTable"
+										fileName="proveedores" encoding="UTF8" />
+								</p:commandButton>
 							</p:outputPanel>
 						</div>
 
@@ -101,7 +123,7 @@
 						<h:outputText value="#{proveedor.correo}" />
 					</p:column>
 
-					<p:column width="15%" style="text-align:center"
+					<p:column width="15%" style="text-align:center" exportable="false"
 						headerText="#{msg['users.datatable.header.opciones']}">
 						<p:commandLink id="fadeVer"
 							action="#{proveedoresBean.irADetalle(proveedor)}">

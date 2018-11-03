@@ -15,7 +15,7 @@
 		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
 		<!-- JSF & Primefaces version -->
 		<jsf.version>2.2.13</jsf.version>
-		<primefaces.version>6.1</primefaces.version>
+		<primefaces.version>6.2</primefaces.version>
 		<primefaces.extensions.version>6.1.1</primefaces.extensions.version>
 		<primefaces.themes.version>1.0.8</primefaces.themes.version>
 		<!-- JSP versions -->

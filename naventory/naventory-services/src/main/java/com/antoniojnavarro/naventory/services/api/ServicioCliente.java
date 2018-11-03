@@ -12,4 +12,6 @@ public interface ServicioCliente extends ServicioCrud<Cliente, ClienteSearchFilt
 
 	List<Cliente> findClientesByUsuario(Usuario user) throws ServicioException;
 
+	Object[] findClientesGrafica(String email);
+
 }

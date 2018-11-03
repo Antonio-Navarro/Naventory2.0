@@ -45,11 +45,11 @@ public class Usuario implements GenericEntity {
 	@Column(name = "foto_perf", length = 255)
 	private String fotoPerf;
 	
-	@ColumnDefault("Y")
+	@ColumnDefault("'Y'")
 	@Column(name = "activo", length = 1)
 	private String activo;
 	
-	@ColumnDefault("N")
+	@ColumnDefault("'N'")
 	@Column(name = "administrador", length = 1)
 	private String administrador;
 	

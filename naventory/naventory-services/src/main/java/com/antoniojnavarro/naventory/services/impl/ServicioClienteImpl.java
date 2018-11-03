@@ -115,7 +115,6 @@ public class ServicioClienteImpl implements ServicioCliente {
 		this.srvValidacion.isNull("Código Postal",entity.getCp());
 		this.srvValidacion.isNull("Télefono 1", entity.getTel1());
 		this.srvValidacion.isNull("Email", entity.getCorreo());
-		this.srvValidacion.isNull("IVA", entity.getIva());
 
 		if(!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
 			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
@@ -156,4 +155,10 @@ public class ServicioClienteImpl implements ServicioCliente {
 		// TODO Auto-generated method stub
 		return this.clienteDao.findClientesByUsuario(user); 
 	}
+	
+	@Override
+	public Object[]findClientesGrafica(String email){
+		return this.clienteDao.findClientesGrafica(email);
+	}
+	
 }

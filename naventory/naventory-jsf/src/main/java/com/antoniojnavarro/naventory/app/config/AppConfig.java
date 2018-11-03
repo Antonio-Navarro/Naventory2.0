@@ -87,7 +87,7 @@ public class AppConfig {
 		dataSource.setPassword(env.getProperty("db.password"));
 		return dataSource;
 	}
-	
+
 	/*
 	 * Permite obtener un DataSource a partir del contexto JNDI (por ejemplo, en
 	 * Tomcat, que haya sido definido en el fichero context.xml del servidor
@@ -98,9 +98,10 @@ public class AppConfig {
 	// jndiDataSourceLookup.setResourceRef(true);
 	// return jndiDataSourceLookup.getDataSource("jdbc/oracle");
 	// }
-	
+
 	/**
-	 * Permite utilizar las anotaciones @Value con propiedades del sistema o propiedades que han sigo cargadas a partir de un fichero properties
+	 * Permite utilizar las anotaciones @Value con propiedades del sistema o
+	 * propiedades que han sigo cargadas a partir de un fichero properties
 	 */
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -109,6 +110,7 @@ public class AppConfig {
 
 	/**
 	 * Se añade @ViewScoped a Spring para su uso en JSF.
+	 * 
 	 * @return
 	 */
 	@Bean
@@ -122,12 +124,15 @@ public class AppConfig {
 		Properties jpaProps = new Properties();
 		jpaProps.setProperty("hibernate.show_sql", "true");
 		jpaProps.setProperty("hibernate.bytecode.use_reflection_optimizer", "true");
-		jpaProps.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		jpaProps.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 		jpaProps.setProperty("hibernate.hbm2ddl.auto", "validate");
-		
-		//Se añade esta propiedad, que es utilizada en JpaDao.java, para modificar el comportamiento del merge. 
-		//Si la entidad a la que hacer merge no existe, entonces lanzará una excepción si es 'true' esta propiedad
-		//En otro caso, el comportamiento será el de por defecto, es decir, almacenará de nuevo la entidad en base de datos
+
+		// Se añade esta propiedad, que es utilizada en JpaDao.java, para modificar el
+		// comportamiento del merge.
+		// Si la entidad a la que hacer merge no existe, entonces lanzará una excepción
+		// si es 'true' esta propiedad
+		// En otro caso, el comportamiento será el de por defecto, es decir, almacenará
+		// de nuevo la entidad en base de datos
 		jpaProps.setProperty("spring.datajpa.jpadao.merge.exception.ifnotexist", "false");
 		return jpaProps;
 	}
