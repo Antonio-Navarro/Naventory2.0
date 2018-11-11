@@ -34,12 +34,11 @@
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
 				<p:dataTable id="ventaTable" var="venta" widgetVar="ventasWV"
-					value="#{ventasBean.ventas}" paginator="true" rowHover="true"
+					value="#{ventasBean.lazyModel}" paginator="true" rowHover="true"
 					rows="#{defaultPaginatorRows}" rowIndexVar="cont"
-					paginatorPosition="bottom" lazy="false" resizableColumns="true"
+					paginatorPosition="bottom" lazy="true" resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
-					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{ventasBean.filteredVentas}">
+					emptyMessage="#{msg['noresult']}">
 					<f:facet name="header">
 						<div class="text-left">
 							<p:commandButton id="toggler" type="button" value="Columnas"
@@ -75,7 +74,7 @@
 
 						<div class="text-left">
 							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{fn:length(ventasBean.ventas)}"></f:param>
+								<f:param value="#{ventasBean.numResults}"></f:param>
 							</h:outputFormat>
 
 						</div>
@@ -87,7 +86,7 @@
 						<h:outputText value="#{venta.cliente.nombre}" />
 					</p:column>
 					<p:column sortBy="#{venta.producto.nombre}"
-						filterBy="#{venta.producto.nombre}" style="width:12%"
+						filterBy="#{venta.nombre}" style="width:12%"
 						filterMatchMode="contains" headerText="#{msg['producto']}">
 						<h:outputText value="#{venta.nombreProd}" />
 					</p:column>
@@ -103,8 +102,8 @@
 						headerText="#{msg['ventas.cantidad']}">
 						<h:outputText value="#{venta.cantidad} #{venta.unidad} " />
 					</p:column>
-					<p:column sortBy="#{venta.precio}" filterBy="#{venta.precio}"
-						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+					<p:column sortBy="#{venta.precio}" style="width:12%"
+						filterMatchMode="contains" styleClass="tdNumber"
 						headerText="#{msg['ventas.precio.table']}">
 						<h:outputText value="#{venta.precio}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"
@@ -112,29 +111,25 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column sortBy="#{venta.iva}" filterBy="#{venta.iva}"
-						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
-						headerText="#{msg['iva']}">
+					<p:column sortBy="#{venta.iva}" style="width:12%"
+						styleClass="tdNumber" headerText="#{msg['iva']}">
 						<h:outputText value="#{venta.iva}">
 							<f:convertNumber type="currency" currencySymbol="%" />
 						</h:outputText>
 					</p:column>
-					<p:column sortBy="#{venta.descuento}" filterBy="#{venta.descuento}"
-						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
-						headerText="#{msg['ventas.descuento']}">
+					<p:column sortBy="#{venta.descuento}" style="width:12%"
+						styleClass="tdNumber" headerText="#{msg['ventas.descuento']}">
 						<h:outputText value="#{venta.descuento}">
 							<f:convertNumber type="currency" currencySymbol="%" />
 						</h:outputText>
 
 					</p:column>
 					<p:column sortBy="#{venta.formaPago.nombre}" exportable="false"
-						filterBy="#{venta.formaPago.nombre}" style="width:12%"
-						filterMatchMode="contains" headerText="#{msg['formapago']}">
+						style="width:12%" headerText="#{msg['formapago']}">
 						<h:outputText value="#{venta.formaPago.nombre}" />
 					</p:column>
 
 					<p:column style="width:12%" sortBy="#{venta.total}"
-						filterBy="#{venta.total}" filterMatchMode="contains"
 						styleClass="tdNumber" headerText="#{msg['total']}">
 						<h:outputText value="#{venta.total}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"

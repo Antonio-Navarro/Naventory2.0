@@ -22,8 +22,6 @@ public class UsuarioAutenticado extends MasterBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(UsuarioAutenticado.class);
 
-
-
 	// CAMPOS
 	// ENTITIES
 	private Usuario usuario;
@@ -31,7 +29,7 @@ public class UsuarioAutenticado extends MasterBean {
 	// LISTAS
 
 	// SERVICIOS
-	
+
 	@PostConstruct
 	public void init() {
 		logger.info("UsuarioAutenticado.init()");
@@ -50,7 +48,20 @@ public class UsuarioAutenticado extends MasterBean {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			try {
-				externalContext.redirect(externalContext.getRequestContextPath()+"/login.xhtml");
+				externalContext.redirect(externalContext.getRequestContextPath() + "/login.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void isNotLogin() {
+		if (getUsuario() != null) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			try {
+				externalContext.redirect(externalContext.getRequestContextPath() + "/private/home.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

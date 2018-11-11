@@ -1,6 +1,8 @@
 package com.antoniojnavarro.naventory.services.impl;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -148,15 +150,17 @@ public class ServicioAlertaStockImpl implements ServicioAlertaStock {
 				a.setUsuario(entity.getUsuario());
 				this.save(a);
 			}
+			ExecutorService executor = Executors.newSingleThreadExecutor();
+			executor.submit(() -> {
+				String body = "";
+				body = "<center><img src='http://naventory.cerrajerianavarro.es/assets/img/logofinal.jpg'></center><hr/><br> Hola "
+						+ entity.getUsuario().getNombre() + "<br>";
+				body += "<h3 style='color:red'>Producto con nivel de stock bajo </h3> <br><br>";
+				body += "Quedan <b>" + entity.getStock() + "</b> " + entity.getUnidad() + " del producto <b>"
+						+ entity.getNombre() + "</b><br><br>";
+				this.srvMail.sendEmail(entity.getUsuario().getEmail(), "Alerta de inventario", body);
 
-			String body = "";
-			body = "<center><img src='http://naventory.cerrajerianavarro.es/assets/img/logofinal.jpg'></center><hr/><br> Hola "
-					+ entity.getUsuario().getNombre() + "<br>";
-			body += "<h3 style='color:red'>Producto con nivel de stock bajo </h3> <br><br>";
-			body += "Quedan <b>" + entity.getStock() + "</b> " + entity.getUnidad() + " del producto <b>"
-					+ entity.getNombre() + "</b><br><br>";
-
-			this.srvMail.sendEmail(entity.getUsuario().getEmail(), "Alerta de inventario", body);
+			});
 			return "venta.stockBajo";
 		} else if (a != null && entity.getStock() > entity.getStockMin()) {
 			this.alertaStockDao.delete(a);

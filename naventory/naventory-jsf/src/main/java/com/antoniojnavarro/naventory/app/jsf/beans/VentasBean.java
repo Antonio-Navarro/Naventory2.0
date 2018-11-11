@@ -2,25 +2,34 @@ package com.antoniojnavarro.naventory.app.jsf.beans;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 import org.primefaces.component.export.ExcelOptions;
 import org.primefaces.component.export.PDFOptions;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.util.Constantes;
+import com.antoniojnavarro.naventory.app.util.SortOrderParseUtil;
+import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.FormaPago;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Venta;
+import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 import com.antoniojnavarro.naventory.services.api.ServicioFormaPago;
@@ -46,19 +55,23 @@ public class VentasBean extends MasterBean {
 	private boolean editing;
 	private ExcelOptions excelOpt;
 	private PDFOptions pdfOpt;
+	private long numResults;
+	private DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
 	// ENTITIES
 	@Autowired
 	ParamBean paramBean;
 	private Venta venta;
 	private Venta selectedVenta;
+	private VentaSearchFilter ventaFilter;
 	@Autowired
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Venta> ventas;
 	private List<Venta> filteredVentas;
 	private List<Cliente> clientes;
 	private List<Producto> productos;
 	private List<FormaPago> formasPago;
+	private LazyDataModel<Venta> lazyModel;
 
 	// SERVICIOS
 	@Autowired
@@ -77,11 +90,11 @@ public class VentasBean extends MasterBean {
 		usuarioAutenticado.isLoged();
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
-		cargarVentas();
 		cargarClientes();
 		cargarProductos();
 		cargarFormasPago();
 		customizationOptions();
+		initLazyModel();
 	}
 
 	public void customizationOptions() {
@@ -112,10 +125,11 @@ public class VentasBean extends MasterBean {
 	}
 
 	public void inicilizarAtributos() {
-		this.ventas = null;
 		this.editing = false;
 		this.selectedVenta = new Venta();
 		this.venta = new Venta();
+		this.ventaFilter = new VentaSearchFilter();
+		ventaFilter.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
 	}
 
 	public void newVenta() {
@@ -131,10 +145,6 @@ public class VentasBean extends MasterBean {
 
 	public void iniciarSelectedVenta() {
 		this.selectedVenta = null;
-	}
-
-	public void cargarVentas() {
-		this.ventas = srvVenta.findVentasByUsuario(this.usuarioAutenticado.getUsuario());
 	}
 
 	public void cargarClientes() {
@@ -161,7 +171,6 @@ public class VentasBean extends MasterBean {
 			}
 		}
 		srvVenta.delete(venta);
-		this.ventas.remove(venta);
 		addInfo("ventas.succesDelete");
 		this.editing = false;
 	}
@@ -177,14 +186,10 @@ public class VentasBean extends MasterBean {
 		selectedVenta = srvVenta.calcularVenta(selectedVenta);
 		selectedVenta = srvVenta.saveOrUpdate(selectedVenta, true);
 		selectedVenta = srvVenta.findById(selectedVenta.getIdVenta());
-		if (!editing) {
-			this.ventas.add(0, selectedVenta);
-		}
 		super.closeDialog("ventaDetailsDialog");
 		addInfo("ventas.succesNew");
 		String msjError = srvAlertaStock.comprobarAlerta(selectedVenta.getProducto());
 		if (msjError != null) {
-			updateComponent("panelTop");
 			addError(msjError, selectedVenta.getProducto().getNombre(),
 					selectedVenta.getProducto().getStock().toString(), selectedVenta.getProducto().getUnidad());
 		}
@@ -221,14 +226,6 @@ public class VentasBean extends MasterBean {
 
 	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
 		this.usuarioAutenticado = usuarioAutenticado;
-	}
-
-	public List<Venta> getVentas() {
-		return ventas;
-	}
-
-	public void setVentas(List<Venta> ventas) {
-		this.ventas = ventas;
 	}
 
 	public List<Venta> getFilteredVentas() {
@@ -277,6 +274,74 @@ public class VentasBean extends MasterBean {
 
 	public void setPdfOpt(PDFOptions pdfOpt) {
 		this.pdfOpt = pdfOpt;
+	}
+
+	public VentaSearchFilter getVentaFilter() {
+		return ventaFilter;
+	}
+
+	public void setVentaFilter(VentaSearchFilter ventaFilter) {
+		this.ventaFilter = ventaFilter;
+	}
+
+	public LazyDataModel<Venta> getLazyModel() {
+		return lazyModel;
+	}
+
+	public void setLazyModel(LazyDataModel<Venta> lazyModel) {
+		this.lazyModel = lazyModel;
+	}
+
+	public long getNumResults() {
+		return numResults;
+	}
+
+	public void setNumResults(long numResults) {
+		this.numResults = numResults;
+	}
+
+	public void initLazyModel() {
+		this.lazyModel = new LazyDataModel<Venta>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Venta getRowData(String rowKey) {
+				return srvVenta.findById(Integer.parseInt(rowKey));
+			}
+
+			@Override
+			public Object getRowKey(Venta object) {
+				return object.getIdVenta().toString();
+			}
+
+			@Override
+			public List<Venta> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+
+				ventaFilter.setNombreProducto((String) filters.get("nombre"));
+				ventaFilter.setNombreCliente((String) filters.get("cliente.nombre"));
+
+				ventaFilter.setCantidad(
+						(String) filters.get("cantidad") != null ? Integer.parseInt((String) filters.get("cantidad"))
+								: null);
+				try {
+					ventaFilter.setFecha(
+							(String) filters.get("fecha") != null ? sdf.parse((String) filters.get("fecha")) : null);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				PaginationResult<Venta> paginationResult = srvVenta.findBySearchFilterPagination(ventaFilter,
+						pageSize > 0 ? (first / pageSize) + 1 : 1,
+						pageSize > 0 ? pageSize : Constantes.DEFAULT_PAGE_SIZE, sortField,
+						SortOrderParseUtil.parseSortOrderPrimefacesToSortOrderDao(sortOrder));
+				numResults = paginationResult.getTotalResult();
+				this.setRowCount(new Long(numResults).intValue());
+				return paginationResult.getResult();
+			}
+
+		};
 	}
 
 }
