@@ -159,7 +159,7 @@ public class ServicioCompraImpl implements ServicioCompra {
 	@Override
 	public List<Compra> findComprasByUsuario(Usuario user) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.compraDao.findComprasByUsuario(user);
+		return this.compraDao.findComprasByUsuarioOrderByFechaDesc(user);
 	}
 
 	@Override
@@ -182,9 +182,16 @@ public class ServicioCompraImpl implements ServicioCompra {
 
 		return entity;
 	}
+
 	@Override
 	public List<Object> getGastosMensualesGrafica(String email) {
 		return this.compraDao.getGastosMensualesGrafica(email);
+
+	}
+
+	@Override
+	public Long countByUsuario(Usuario usuario) {
+		return this.compraDao.countByUsuario(usuario);
 
 	}
 

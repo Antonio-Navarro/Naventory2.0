@@ -73,7 +73,7 @@ public class ServicioProductoImpl implements ServicioProducto {
 		if (entity == null) {
 			throw new IllegalArgumentException("Entity no puede ser un nulo");
 		}
-		if (entity.getSku()== null)
+		if (entity.getSku() == null)
 			return false;
 		return existsById(entity.getSku());
 	}
@@ -139,10 +139,11 @@ public class ServicioProductoImpl implements ServicioProducto {
 		this.productoDao.delete(id);
 
 	}
+
 	@Override
-	public void validateSKU(String sku)  throws ServicioException {
-		if(existsById(sku)){			
-			throw new ServicioException(srvMensajes.getMensajeI18n("productos.exist"));			
+	public void validateSKU(String sku) throws ServicioException {
+		if (existsById(sku)) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("productos.exist"));
 		}
 	}
 
@@ -155,5 +156,10 @@ public class ServicioProductoImpl implements ServicioProducto {
 	@Override
 	public Float getTotalInventario(Usuario user) throws ServicioException {
 		return this.productoDao.getTotalInventario(user);
+	}
+
+	@Override
+	public Long countByUsuario(Usuario usuario) {
+		return this.productoDao.countByUsuario(usuario);
 	}
 }

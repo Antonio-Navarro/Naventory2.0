@@ -9,6 +9,7 @@ import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.Pagination
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
 import com.antoniojnavarro.naventory.dao.repositories.VentaDao;
+import com.antoniojnavarro.naventory.model.dtos.GraficaVentaDto;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.entities.Venta;
 import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
@@ -68,7 +69,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 	@Override
 	public List<Venta> findAll() throws ServicioException {
 		// TODO Auto-generated method stub
-		return (List<Venta>) this.ventaDao.findAll();
+		return ventaDao.findAll();
 	}
 
 	@Override
@@ -147,7 +148,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 	@Override
 	public List<Venta> findVentasByUsuario(Usuario user) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.ventaDao.findVentasByUsuario(user);
+		return this.ventaDao.findVentasByUsuarioOrderByFechaDesc(user);
 	}
 
 	@Override
@@ -177,7 +178,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 	}
 
 	@Override
-	public List<Object> getVentasMensualesGrafica(String email) {
+	public List<GraficaVentaDto> getVentasMensualesGrafica(String email) {
 		return this.ventaDao.getVentasMensualesGrafica(email);
 	}
 
@@ -185,5 +186,11 @@ public class ServicioVentaImpl implements ServicioVenta {
 	public List<Object> getIngresosMensualesGrafica(String email) {
 		return this.ventaDao.getIngresosMensualesGrafica(email);
 
+	}
+
+	@Override
+	public Long countByUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return this.ventaDao.countByUsuario(usuario);
 	}
 }

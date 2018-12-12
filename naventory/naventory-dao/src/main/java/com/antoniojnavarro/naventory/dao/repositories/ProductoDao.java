@@ -11,10 +11,11 @@ import com.antoniojnavarro.naventory.model.filters.ProductoSearchFilter;
 
 public interface ProductoDao extends Dao<Producto, ProductoSearchFilter, String> {
 
-	@Query("SELECT p FROM Producto p WHERE p.usuario = ?1")
-	List<Producto> findProductosByUsuario(Usuario user); 
+	List<Producto> findProductosByUsuario(Usuario user);
+
 	@Query("SELECT sum(p.precio * p.stock) FROM Producto p where p.usuario = ?1")
-	Float getTotalInventario(Usuario user); 
-	
+	Float getTotalInventario(Usuario user);
+
+	Long countByUsuario(Usuario usuario);
 
 }

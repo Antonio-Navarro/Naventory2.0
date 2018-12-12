@@ -152,13 +152,18 @@ public class ServicioClienteImpl implements ServicioCliente {
 
 	@Override
 	public List<Cliente> findClientesByUsuario(Usuario user) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.clienteDao.findClientesByUsuario(user); 
 	}
 	
 	@Override
 	public Object[]findClientesGrafica(String email){
 		return this.clienteDao.findClientesGrafica(email);
+	}
+
+
+	@Override
+	public Long countByUsuario(Usuario usuario) {
+		return this.clienteDao.countByUsuario(usuario);
 	}
 	
 }

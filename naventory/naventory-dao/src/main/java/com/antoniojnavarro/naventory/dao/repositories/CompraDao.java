@@ -11,9 +11,10 @@ import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
 
 public interface CompraDao extends Dao<Compra, CompraSearchFilter, Integer> {
 
-	@Query("SELECT p FROM Compra p WHERE p.usuario = ?1 order by p.fecha desc")
-	List<Compra> findComprasByUsuario(Usuario user);
+	List<Compra> findComprasByUsuarioOrderByFechaDesc(Usuario user);
 
 	@Query("select date_format(c.fecha,'%m-%Y'),  round(sum(c.total),2) from Compra c where c.usuario.email= ?1 group by date_format(c.fecha,'%m-%Y')")
 	List<Object> getGastosMensualesGrafica(String email);
+
+	Long countByUsuario(Usuario usuario);
 }

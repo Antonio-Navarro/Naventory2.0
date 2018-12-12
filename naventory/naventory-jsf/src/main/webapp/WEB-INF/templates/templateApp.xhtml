@@ -61,7 +61,7 @@
 							<span><h:outputText value="#{msg['welcome']}" /></span>
 							<h2>
 								<h:outputText
-									value="#{homeBean.usuarioAuteticado.usuario.nombre}" />
+									value="#{templateAppBean.usuarioAutenticado.usuario.nombre}" />
 							</h2>
 						</div>
 					</div>
@@ -131,7 +131,7 @@
 
 							</div>
 							<ul class="nav navbar-nav navbar-left">
-								<li><h4 style="margin-top: 20px;">#{homeBean.usuarioAuteticado.usuario.empresa}</h4></li>
+								<li><h4 style="margin-top: 20px;">#{templateAppBean.usuarioAutenticado.usuario.empresa}</h4></li>
 							</ul>
 
 							<ul class="nav navbar-nav navbar-right">
@@ -147,7 +147,7 @@
 												class="fa fa-user pull-right"></i> <h:outputText
 													value="#{msg['navbar.profile']}" /> </a></li>
 										<h:panelGroup
-											rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
+											rendered="#{templateAppBean.usuarioAutenticado.usuario.administrador eq 'Y'}">
 											<li><a
 												href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
 													class="fa fa-cogs pull-right"></i> <h:outputText
@@ -162,40 +162,40 @@
 									</ul></li>
 
 
-								<li class="dropdown "><a class="dropdown-toggle"
-									data-toggle="dropdown" href="#"><pe:switch
-											value="#{homeBean.exitenAlertas}">
-											<pe:case value="#{true}">
-												<i class="fa fa-bell fa-fw" style="color: red"></i>
-												<i class="fa fa-caret-down"></i>
-											</pe:case>
-											<pe:case value="#{false}">
-												<i class="fa fa-bell fa-fw"></i>
-												<i class="fa fa-caret-down"></i>
-											</pe:case>
-											<pe:defaultCase>
-												<i class="fa fa-bell fa-fw"></i>
-												<i class="fa fa-caret-down"></i>
-											</pe:defaultCase>
-										</pe:switch> </a>
+<!-- 								<li class="dropdown "><a class="dropdown-toggle" -->
+<!-- 									data-toggle="dropdown" href="#"><pe:switch -->
+<!-- 											value="#{templateAppBean.exitenAlertas}"> -->
+<!-- 											<pe:case value="#{true}"> -->
+<!-- 												<i class="fa fa-bell fa-fw" style="color: red"></i> -->
+<!-- 												<i class="fa fa-caret-down"></i> -->
+<!-- 											</pe:case> -->
+<!-- 											<pe:case value="#{false}"> -->
+<!-- 												<i class="fa fa-bell fa-fw"></i> -->
+<!-- 												<i class="fa fa-caret-down"></i> -->
+<!-- 											</pe:case> -->
+<!-- 											<pe:defaultCase> -->
+<!-- 												<i class="fa fa-bell fa-fw"></i> -->
+<!-- 												<i class="fa fa-caret-down"></i> -->
+<!-- 											</pe:defaultCase> -->
+<!-- 										</pe:switch> </a> -->
 
-									<ul class="dropdown-menu dropdown-alerts">
-										<ui:repeat var="alerta" value="#{homeBean.alertas}">
-											<li style="padding: 5px"><i
-												class="fa fa-bell pull-left fa-fw"></i> <h:outputText
-													style="color:red" value="Alerta nivel bajo de stock en" />
-												<h:outputText style="color:darkred;font-weight: bold;"
-													value=" ${alerta.producto.nombre}" /> <h:outputText
-													style="color:red;font-weight: bold;" value=" quedan" /> <h:outputText
-													style="color:darkred;font-weight: bold;"
-													value=" ${alerta.producto.stock} ${alerta.producto.unidad}" />
+<!-- 									<ul class="dropdown-menu dropdown-alerts"> -->
+<!-- 										<ui:repeat var="alerta" value="#{templateAppBean.alertas}"> -->
+<!-- 											<li style="padding: 5px"><i -->
+<!-- 												class="fa fa-bell pull-left fa-fw"></i> <h:outputText -->
+<!-- 													style="color:red" value="Alerta nivel bajo de stock en" /> -->
+<!-- 												<h:outputText style="color:darkred;font-weight: bold;" -->
+<!-- 													value=" ${alerta.producto.nombre}" /> <h:outputText -->
+<!-- 													style="color:red;font-weight: bold;" value=" quedan" /> <h:outputText -->
+<!-- 													style="color:darkred;font-weight: bold;" -->
+<!-- 													value=" ${alerta.producto.stock} ${alerta.producto.unidad}" /> -->
 
 
 
-											</li>
-										</ui:repeat>
+<!-- 											</li> -->
+<!-- 										</ui:repeat> -->
 
-									</ul></li>
+<!-- 									</ul></li> -->
 								<li class="dropdown"><a style="height: 50px;"
 									href="#{request.contextPath}/private/home.xhtml"> <i
 										style="font-size: 20px" class="fa fa-home "></i>
@@ -231,7 +231,7 @@
 							onsuccess="PF('statusDialog').hide()" />
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 							closable="false" resizable="false" showHeader="false">
-							<p:graphicImage library="images" name="loading.gif" width="65" />
+							<p:graphicImage library="images" name="loading2.gif" width="65" />
 						</p:dialog>
 
 						<ui:insert name="body" />

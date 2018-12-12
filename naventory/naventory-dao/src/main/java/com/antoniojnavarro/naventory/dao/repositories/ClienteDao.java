@@ -11,9 +11,10 @@ import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
 
 public interface ClienteDao extends Dao<Cliente, ClienteSearchFilter, Integer> {
 
-	@Query("SELECT c FROM Cliente c WHERE c.usuario = ?1")
 	List<Cliente> findClientesByUsuario(Usuario user);
 
 	@Query("select date_format(c.fecha_alta,'%d/%m/%Y'), count(*) from Cliente c where c.usuario.email = ?1 group by date_format(c.fecha_alta,'%d/%m/%Y')")
 	Object[] findClientesGrafica(String email);
+
+	Long countByUsuario(Usuario usuario);
 }

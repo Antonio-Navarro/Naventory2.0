@@ -30,10 +30,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
-import com.antoniojnavarro.naventory.model.entities.AlertaStock;
+import com.antoniojnavarro.naventory.model.dtos.GraficaVentaDto;
 import com.antoniojnavarro.naventory.model.entities.Evento;
 import com.antoniojnavarro.naventory.model.entities.Novedad;
-import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 import com.antoniojnavarro.naventory.services.api.ServicioCompra;
 import com.antoniojnavarro.naventory.services.api.ServicioEvento;
@@ -52,9 +51,6 @@ public class HomeBean extends MasterBean {
 	private UsuarioAutenticado usuarioAuteticado;
 
 	@Autowired
-	private ServicioAlertaStock srvAlertaStock;
-
-	@Autowired
 	private ServicioProducto srvProducto;
 	@Autowired
 	private ServicioCompra srvCompra;
@@ -66,15 +62,14 @@ public class HomeBean extends MasterBean {
 	private ServicioCliente srvCliente;
 	@Autowired
 	private ServicioNovedad srvNovedad;
-	private List<AlertaStock> alertas;
 	private List<Novedad> novedades;
 	private List<Evento> eventos;
 
 	boolean exitenAlertas;
-	private Integer numProductos;
-	private Integer numCompras;
-	private Integer numVentas;
-	private Integer numClientes;
+	private Long numProductos;
+	private Long numCompras;
+	private Long numVentas;
+	private Long numClientes;
 	private DonutChartModel donutFormasPago;
 	private LineChartModel areaClientes;
 	private LineChartModel areaVentas;
@@ -86,13 +81,11 @@ public class HomeBean extends MasterBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("Pasando por el init de home");
-		this.usuarioAuteticado.isLoged();
-		cargarAlertas();
 		cargarNovedades();
-		this.numProductos = srvProducto.findProductosByUsuario(this.usuarioAuteticado.getUsuario()).size();
-		this.numCompras = srvCompra.findComprasByUsuario(this.usuarioAuteticado.getUsuario()).size();
-		this.numVentas = srvVenta.findVentasByUsuario(this.usuarioAuteticado.getUsuario()).size();
-		this.numClientes = srvCliente.findClientesByUsuario(this.usuarioAuteticado.getUsuario()).size();
+		this.numProductos = srvProducto.countByUsuario(this.usuarioAuteticado.getUsuario());
+		this.numCompras = srvCompra.countByUsuario(this.usuarioAuteticado.getUsuario());
+		this.numVentas = srvVenta.countByUsuario(this.usuarioAuteticado.getUsuario());
+		this.numClientes = srvCliente.countByUsuario(this.usuarioAuteticado.getUsuario());
 		if (this.usuarioAuteticado.getUsuario() != null && this.usuarioAuteticado.getUsuario().getEmail() != null) {
 			crearDonutFormasPago();
 			crearAreaClientes();
@@ -282,7 +275,7 @@ public class HomeBean extends MasterBean {
 		ventas.setFill(true);
 		ventas.setLabel("Ventas");
 
-		List<Object> datosGraficaVentas = srvVenta
+		List<GraficaVentaDto> datosGraficaVentas = srvVenta
 				.getVentasMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmail());
 		for (Object registro : datosGraficaVentas) {
 			Object[] dato = (Object[]) registro;
@@ -314,60 +307,43 @@ public class HomeBean extends MasterBean {
 		this.usuarioAuteticado = usuarioAuteticado;
 	}
 
-	public void cargarAlertas() {
-		alertas = this.srvAlertaStock.findAlertasByUsuario(this.usuarioAuteticado.getUsuario());
-	}
-
 	public void cargarNovedades() {
 		novedades = this.srvNovedad.findNovedadesByUsuario(this.usuarioAuteticado.getUsuario(), LIMIT_NOVEDADES);
-	}
-
-	public List<AlertaStock> getAlertas() {
-		return alertas;
-	}
-
-	public void setAlertas(List<AlertaStock> alertas) {
-		this.alertas = alertas;
-	}
-
-	public boolean isExitenAlertas() {
-		return (this.alertas.size() > 0);
-
 	}
 
 	public void setExitenAlertas(boolean exitenAlertas) {
 		this.exitenAlertas = exitenAlertas;
 	}
 
-	public Integer getNumProductos() {
+	public Long getNumProductos() {
 		return numProductos;
 	}
 
-	public void setNumProductos(Integer numProductos) {
+	public void setNumProductos(Long numProductos) {
 		this.numProductos = numProductos;
 	}
 
-	public Integer getNumCompras() {
+	public Long getNumCompras() {
 		return numCompras;
 	}
 
-	public void setNumCompras(Integer numCompras) {
+	public void setNumCompras(Long numCompras) {
 		this.numCompras = numCompras;
 	}
 
-	public Integer getNumVentas() {
+	public Long getNumVentas() {
 		return numVentas;
 	}
 
-	public void setNumVentas(Integer numVentas) {
+	public void setNumVentas(Long numVentas) {
 		this.numVentas = numVentas;
 	}
 
-	public Integer getNumClientes() {
+	public Long getNumClientes() {
 		return numClientes;
 	}
 
-	public void setNumClientes(Integer numClientes) {
+	public void setNumClientes(Long numClientes) {
 		this.numClientes = numClientes;
 	}
 

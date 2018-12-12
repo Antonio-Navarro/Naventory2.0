@@ -95,6 +95,9 @@ public class VentasBean extends MasterBean {
 		cargarFormasPago();
 		customizationOptions();
 		initLazyModel();
+		List<Venta> ventados = srvVenta.findAll();
+		logger.info("Tamaño:" + ventados.size());
+
 	}
 
 	public void customizationOptions() {

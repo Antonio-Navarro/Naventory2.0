@@ -14,4 +14,6 @@ public interface ServicioCliente extends ServicioCrud<Cliente, ClienteSearchFilt
 
 	Object[] findClientesGrafica(String email);
 
+	Long countByUsuario(Usuario usuario);
+
 }
