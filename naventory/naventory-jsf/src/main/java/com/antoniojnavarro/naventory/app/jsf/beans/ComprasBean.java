@@ -79,7 +79,7 @@ public class ComprasBean extends MasterBean {
 	@PostConstruct
 	public void init() {
 		usuarioAutenticado.isLoged();
-		logger.info("Prooveedores.init()");
+		logger.info("Compras.init()");
 		inicilizarAtributos();
 		cargarCompras();
 		cargarProveedores();

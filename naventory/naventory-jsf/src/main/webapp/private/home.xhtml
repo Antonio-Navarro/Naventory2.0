@@ -187,13 +187,12 @@
 					<div class="panel-body">
 						<div class="list-group">
 							<ui:repeat var="nov" value="#{homeBean.novedades}">
-								<a href="#" class="list-group-item"> <h:outputText
+								<a href="#" class="list-group-item tamNovedades"> <h:outputText
 										id="warningDose" escape="false" value="#{nov.novedad}"></h:outputText>
 
 								</a>
 							</ui:repeat>
 						</div>
-						<!-- 9/.list-group -->
 					</div>
 				</div>
 				<!-- /.panel-body -->
@@ -227,7 +226,7 @@
 				<h:panelGrid columnClasses="value">
 					<h3 style="margin-top: 0">Calendario</h3>
 					<p:schedule id="schedule" value="#{homeBean.eventModel}"
-						widgetVar="myschedule" >
+						widgetVar="myschedule">
 
 						<p:ajax event="dateSelect" listener="#{homeBean.onDateSelect}"
 							update="eventDetails" oncomplete="PF('eventDialog').show();" />

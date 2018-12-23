@@ -9,6 +9,7 @@ import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.Pagination
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.CompraDao;
 import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
+import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
@@ -184,7 +185,7 @@ public class ServicioCompraImpl implements ServicioCompra {
 	}
 
 	@Override
-	public List<Object> getGastosMensualesGrafica(String email) {
+	public List<GraficaGenericDto> getGastosMensualesGrafica(String email) {
 		return this.compraDao.getGastosMensualesGrafica(email);
 
 	}

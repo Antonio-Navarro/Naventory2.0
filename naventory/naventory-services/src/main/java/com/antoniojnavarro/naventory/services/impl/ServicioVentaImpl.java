@@ -9,7 +9,7 @@ import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.Pagination
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
 import com.antoniojnavarro.naventory.dao.repositories.VentaDao;
-import com.antoniojnavarro.naventory.model.dtos.GraficaVentaDto;
+import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.entities.Venta;
 import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
@@ -173,24 +173,23 @@ public class ServicioVentaImpl implements ServicioVenta {
 	}
 
 	@Override
-	public Object[] findFormasPagoGrafica(String email) {
+	public List<GraficaGenericDto> findFormasPagoGrafica(String email) {
 		return this.ventaDao.findFormasPagoGrafica(email);
 	}
 
 	@Override
-	public List<GraficaVentaDto> getVentasMensualesGrafica(String email) {
+	public List<GraficaGenericDto> getVentasMensualesGrafica(String email) {
 		return this.ventaDao.getVentasMensualesGrafica(email);
 	}
 
 	@Override
-	public List<Object> getIngresosMensualesGrafica(String email) {
+	public List<GraficaGenericDto> getIngresosMensualesGrafica(String email) {
 		return this.ventaDao.getIngresosMensualesGrafica(email);
 
 	}
 
 	@Override
 	public Long countByUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
 		return this.ventaDao.countByUsuario(usuario);
 	}
 }

@@ -3,6 +3,7 @@ package com.antoniojnavarro.naventory.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
@@ -132,10 +133,9 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 
 	@Override
 	public List<Novedad> findNovedadesByUsuario(Usuario user, Integer limit) throws ServicioException {
-		// TODO Auto-generated method stub
-		List<Novedad> lista = this.novedadDao.findNovedadesByUsuario(user);
+		List<Novedad> lista = this.novedadDao.findNovedadesByUsuario(user, new PageRequest(0, limit));
 
-		return lista.subList(0, (lista.size() <= limit) ? lista.size() : limit);
+		return lista;
 	}
 
 }

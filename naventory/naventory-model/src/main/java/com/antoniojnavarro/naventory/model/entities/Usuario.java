@@ -1,10 +1,14 @@
 package com.antoniojnavarro.naventory.model.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,11 +49,9 @@ public class Usuario implements GenericEntity {
 	@Column(name = "foto_perf", length = 255)
 	private String fotoPerf;
 	
-	@ColumnDefault("'Y'")
 	@Column(name = "activo", length = 1)
 	private String activo;
 	
-	@ColumnDefault("'N'")
 	@Column(name = "administrador", length = 1)
 	private String administrador;
 	
@@ -58,6 +60,10 @@ public class Usuario implements GenericEntity {
 	
 	@Column(name = "token_pass", length = 255)
 	private String tokenPass;
+	
+	@OneToMany()
+	@JoinColumn(name = "user_email")
+	private List<Role> roles;
 	
 	public String getEmail() {
 		return email;
@@ -237,7 +243,6 @@ public class Usuario implements GenericEntity {
 			return false;
 		return true;
 	}
-	
 	
 	
 }

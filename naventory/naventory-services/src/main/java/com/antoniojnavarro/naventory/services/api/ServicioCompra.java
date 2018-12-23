@@ -2,6 +2,7 @@ package com.antoniojnavarro.naventory.services.api;
 
 import java.util.List;
 
+import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
@@ -16,7 +17,7 @@ public interface ServicioCompra extends ServicioCrud<Compra, CompraSearchFilter,
 
 	Compra saveNewOrUpdate(Compra entity, boolean validate, boolean nuevoProducto) throws ServicioException;
 
-	List<Object> getGastosMensualesGrafica(String email);
+	List<GraficaGenericDto> getGastosMensualesGrafica(String email);
 
 	Long countByUsuario(Usuario usuario);
 }

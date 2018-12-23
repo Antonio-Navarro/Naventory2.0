@@ -2,6 +2,7 @@ package com.antoniojnavarro.naventory.services.api;
 
 import java.util.List;
 
+import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
@@ -12,7 +13,7 @@ public interface ServicioCliente extends ServicioCrud<Cliente, ClienteSearchFilt
 
 	List<Cliente> findClientesByUsuario(Usuario user) throws ServicioException;
 
-	Object[] findClientesGrafica(String email);
+	List<GraficaGenericDto> findClientesGrafica(String email);
 
 	Long countByUsuario(Usuario usuario);
 

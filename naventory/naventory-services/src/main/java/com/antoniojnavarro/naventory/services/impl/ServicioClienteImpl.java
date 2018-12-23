@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.ClienteDao;
+import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
@@ -156,7 +157,7 @@ public class ServicioClienteImpl implements ServicioCliente {
 	}
 	
 	@Override
-	public Object[]findClientesGrafica(String email){
+	public List<GraficaGenericDto> findClientesGrafica(String email){
 		return this.clienteDao.findClientesGrafica(email);
 	}
 
