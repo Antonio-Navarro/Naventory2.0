@@ -1,6 +1,6 @@
 package com.antoniojnavarro.naventory.model.entities.enums;
 
-public enum RoleEnum {
+public enum RolEnum {
 
-	ROLE_ADMIN;
+	ROLE_USER, ROLE_ADMIN;
 }

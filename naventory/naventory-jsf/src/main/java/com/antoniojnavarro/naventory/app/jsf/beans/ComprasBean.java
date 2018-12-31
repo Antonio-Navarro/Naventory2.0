@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.entities.Producto;
@@ -55,7 +57,7 @@ public class ComprasBean extends MasterBean {
 
 	private Compra selectedCompra;
 	private Producto selectedProducto;
-	@Autowired
+
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
 	private List<Compra> compras;
@@ -76,10 +78,13 @@ public class ComprasBean extends MasterBean {
 	@Autowired
 	private ServicioAlertaStock srvAlertaStock;
 
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
+
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
 		logger.info("Compras.init()");
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		inicilizarAtributos();
 		cargarCompras();
 		cargarProveedores();
@@ -238,14 +243,6 @@ public class ComprasBean extends MasterBean {
 		this.selectedCompra = selectedCompra;
 	}
 
-	public UsuarioAutenticado getUsuarioAutenticado() {
-		return usuarioAutenticado;
-	}
-
-	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
-		this.usuarioAutenticado = usuarioAutenticado;
-	}
-
 	public List<Compra> getCompras() {
 		return compras;
 	}
@@ -317,4 +314,13 @@ public class ComprasBean extends MasterBean {
 	public void setPdfOpt(PDFOptions pdfOpt) {
 		this.pdfOpt = pdfOpt;
 	}
+
+	public UsuarioAutenticado getUsuarioAutenticado() {
+		return usuarioAutenticado;
+	}
+
+	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
+		this.usuarioAutenticado = usuarioAutenticado;
+	}
+
 }

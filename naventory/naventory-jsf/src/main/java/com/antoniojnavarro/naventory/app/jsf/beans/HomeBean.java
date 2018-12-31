@@ -30,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Evento;
 import com.antoniojnavarro.naventory.model.entities.Novedad;
@@ -47,7 +49,6 @@ public class HomeBean extends MasterBean {
 	private static final long serialVersionUID = 1L;
 	private static final Integer LIMIT_NOVEDADES = 10;
 
-	@Autowired
 	private UsuarioAutenticado usuarioAuteticado;
 
 	@Autowired
@@ -62,6 +63,10 @@ public class HomeBean extends MasterBean {
 	private ServicioCliente srvCliente;
 	@Autowired
 	private ServicioNovedad srvNovedad;
+
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
+
 	private List<Novedad> novedades;
 	private List<Evento> eventos;
 
@@ -81,6 +86,8 @@ public class HomeBean extends MasterBean {
 	@PostConstruct
 	public void init() {
 		logger.debug("Pasando por el init de home");
+		this.usuarioAuteticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
+		logger.info("Usuario autenticado: " + usuarioAuteticado.getUsername());
 		cargarNovedades();
 		this.numProductos = srvProducto.countByUsuario(this.usuarioAuteticado.getUsuario());
 		this.numCompras = srvCompra.countByUsuario(this.usuarioAuteticado.getUsuario());
@@ -299,14 +306,6 @@ public class HomeBean extends MasterBean {
 
 	}
 
-	public UsuarioAutenticado getUsuarioAuteticado() {
-		return usuarioAuteticado;
-	}
-
-	public void setUsuarioAuteticado(UsuarioAutenticado usuarioAuteticado) {
-		this.usuarioAuteticado = usuarioAuteticado;
-	}
-
 	public void cargarNovedades() {
 		novedades = this.srvNovedad.findNovedadesByUsuario(this.usuarioAuteticado.getUsuario(), LIMIT_NOVEDADES);
 	}
@@ -401,6 +400,14 @@ public class HomeBean extends MasterBean {
 
 	public void setEventModel(ScheduleModel eventModel) {
 		this.eventModel = eventModel;
+	}
+
+	public UsuarioAutenticado getUsuarioAuteticado() {
+		return usuarioAuteticado;
+	}
+
+	public void setUsuarioAuteticado(UsuarioAutenticado usuarioAuteticado) {
+		this.usuarioAuteticado = usuarioAuteticado;
 	}
 
 }

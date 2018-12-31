@@ -8,10 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
-import com.antoniojnavarro.naventory.app.util.CifrarClave;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
@@ -32,6 +35,9 @@ public class LoginBean extends MasterBean {
 	@Autowired
 	private UsuarioAutenticado usuarioAutenticado;
 
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
 	// LISTAS
 
 	// SERVICIOS
@@ -42,22 +48,22 @@ public class LoginBean extends MasterBean {
 	public void init() {
 
 		logger.info("LoginBean.init()");
-		this.usuarioAutenticado.isNotLogin();
 	}
 
 	public String login() {
 
-		usuario = srvUsuario.findUsuarioByEmail(email);
-		if (usuario != null && CifrarClave.correctEncoder(password, usuario.getPassword())
-				&& "Y".equals(usuario.getActivo())) {
-			usuarioAutenticado.setUsuario(usuario);
+		try {
+			Authentication auth = new UsernamePasswordAuthenticationToken(this.email, password);
+			Authentication result = this.authenticationManager.authenticate(auth);
+			SecurityContextHolder.getContext().setAuthentication(result);
 			return Constantes.GO_TO_HOME;
-		} else {
+		} catch (AuthenticationException e) {
+			logger.info(e.getMessage(), e);
 			addError("login.userOrPasswordIncorrect");
-			this.password = null;
+			// Nunca se debe retornar "null". Si se retorna "null" la vista no
+			// se actualiza
 			return new String();
 		}
-
 	}
 
 	public String irARegistro() {
@@ -65,6 +71,7 @@ public class LoginBean extends MasterBean {
 	}
 
 	public String logout() {
+		logger.info("Cerrando sesion");
 		SecurityContextHolder.clearContext();
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return Constantes.GO_TO_LOGIN;

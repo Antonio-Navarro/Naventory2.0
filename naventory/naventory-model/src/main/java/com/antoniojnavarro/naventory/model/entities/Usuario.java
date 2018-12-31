@@ -5,19 +5,22 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.antoniojnavarro.naventory.model.commons.GenericEntity;
-
 
 @Entity
 @DynamicInsert
@@ -30,41 +33,43 @@ public class Usuario implements GenericEntity {
 	@Column(name = "email", length = 255, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 255, nullable = false)	
+	@Column(name = "password", length = 255, nullable = false)
 	private String password;
-	
+
 	@Column(name = "nombre", length = 255)
 	private String nombre;
 
 	@Column(name = "apellido", length = 255)
 	private String apellido;
-	
+
 	@Column(name = "empresa", length = 255)
 	private String empresa;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "fecha_alta", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable=false)
+	@Column(name = "fecha_alta", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	private Date fecha_alta;
 
 	@Column(name = "foto_perf", length = 255)
 	private String fotoPerf;
-	
+
 	@Column(name = "activo", length = 1)
 	private String activo;
-	
+
 	@Column(name = "administrador", length = 1)
 	private String administrador;
-	
+
 	@Column(name = "token", length = 255)
 	private String token;
-	
+
 	@Column(name = "token_pass", length = 255)
 	private String tokenPass;
-	
-	@OneToMany()
-	@JoinColumn(name = "user_email")
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@Fetch(FetchMode.JOIN)
+	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "email"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private List<Role> roles;
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -129,8 +134,6 @@ public class Usuario implements GenericEntity {
 		this.activo = activo;
 	}
 
-
-
 	public String getAdministrador() {
 		return administrador;
 	}
@@ -157,6 +160,14 @@ public class Usuario implements GenericEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	@Override
@@ -243,6 +254,5 @@ public class Usuario implements GenericEntity {
 			return false;
 		return true;
 	}
-	
-	
+
 }

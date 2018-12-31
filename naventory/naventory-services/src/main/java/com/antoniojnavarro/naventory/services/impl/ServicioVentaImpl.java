@@ -42,14 +42,12 @@ public class ServicioVentaImpl implements ServicioVenta {
 
 	@Override
 	public List<Venta> findBySearchFilter(VentaSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return ventaDao.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Venta> findBySearchFilter(VentaSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.ventaDao.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
@@ -62,13 +60,11 @@ public class ServicioVentaImpl implements ServicioVenta {
 	@Override
 	public PaginationResult<Venta> findBySearchFilterPagination(VentaSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.ventaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Venta> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return ventaDao.findAll();
 	}
 
@@ -84,13 +80,11 @@ public class ServicioVentaImpl implements ServicioVenta {
 
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return ventaDao.exists(id);
 	}
 
 	@Override
 	public Venta save(Venta entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.ventaDao.save(entity);
 	}
 
