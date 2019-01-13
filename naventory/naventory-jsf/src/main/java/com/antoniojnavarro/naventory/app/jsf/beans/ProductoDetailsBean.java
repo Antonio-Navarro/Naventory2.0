@@ -25,22 +25,21 @@ public class ProductoDetailsBean extends MasterBean {
 	ParamBean param;
 
 	private Producto producto;
-	@Autowired
-	private UsuarioAutenticado usuarioAutenticado;
+
 	// LISTAS
 	// SERVICIOS
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
 		this.producto = (Producto) param.getParam();
-		
+
 		logger.info("ProductoDetail.init()");
-		
 
 	}
+
 	public Producto getProducto() {
 		return producto;
 	}
+
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}

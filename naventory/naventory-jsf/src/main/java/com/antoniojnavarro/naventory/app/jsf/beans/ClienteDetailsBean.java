@@ -25,22 +25,21 @@ public class ClienteDetailsBean extends MasterBean {
 	ParamBean param;
 
 	private Cliente cliente;
-	@Autowired
-	private UsuarioAutenticado usuarioAutenticado;
+
 	// LISTAS
 	// SERVICIOS
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
 		this.cliente = (Cliente) param.getParam();
-		
+
 		logger.info("ClienteDetail.init()");
-		
 
 	}
+
 	public Cliente getCliente() {
 		return cliente;
 	}
+
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}

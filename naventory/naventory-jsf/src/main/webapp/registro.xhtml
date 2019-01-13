@@ -41,7 +41,9 @@
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-						<p:growl autoUpdate="true" escape="false" />
+						<p:growl escape="false">
+							<p:autoUpdate />
+						</p:growl>
 
 						<p:ajaxStatus onstart="PF('statusDialog').show()"
 							onsuccess="PF('statusDialog').hide()" />

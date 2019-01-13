@@ -9,12 +9,12 @@
 
 	<properties>
 		<!-- JEE versions -->
-		<java.version>1.8</java.version>
+		<java.version>10</java.version>
 		<!-- Project encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
 		<!-- JSF & Primefaces version -->
-		<jsf.version>2.2.13</jsf.version>
+	<jsf.version>2.2.13</jsf.version>
 		<primefaces.version>6.2</primefaces.version>
 		<primefaces.extensions.version>6.1.1</primefaces.extensions.version>
 		<primefaces.themes.version>1.0.8</primefaces.themes.version>
@@ -124,7 +124,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>3.7.0</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>

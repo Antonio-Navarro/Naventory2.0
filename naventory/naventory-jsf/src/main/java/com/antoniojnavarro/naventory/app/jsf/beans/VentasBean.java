@@ -3,28 +3,24 @@ package com.antoniojnavarro.naventory.app.jsf.beans;
 import java.awt.Color;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 import org.primefaces.component.export.ExcelOptions;
 import org.primefaces.component.export.PDFOptions;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
-import com.antoniojnavarro.naventory.app.util.Constantes;
-import com.antoniojnavarro.naventory.app.util.SortOrderParseUtil;
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.VentaLazyDataModel;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.FormaPago;
 import com.antoniojnavarro.naventory.model.entities.Producto;
@@ -55,7 +51,6 @@ public class VentasBean extends MasterBean {
 	private boolean editing;
 	private ExcelOptions excelOpt;
 	private PDFOptions pdfOpt;
-	private long numResults;
 	private DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	// ENTITIES
@@ -64,14 +59,14 @@ public class VentasBean extends MasterBean {
 	private Venta venta;
 	private Venta selectedVenta;
 	private VentaSearchFilter ventaFilter;
-	@Autowired
+
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
 	private List<Venta> filteredVentas;
 	private List<Cliente> clientes;
 	private List<Producto> productos;
 	private List<FormaPago> formasPago;
-	private LazyDataModel<Venta> lazyModel;
+	private VentaLazyDataModel listaVentas;
 
 	// SERVICIOS
 	@Autowired
@@ -84,47 +79,19 @@ public class VentasBean extends MasterBean {
 	private ServicioFormaPago srvFormaPago;
 	@Autowired
 	private ServicioAlertaStock srvAlertaStock;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
 		cargarClientes();
 		cargarProductos();
 		cargarFormasPago();
 		customizationOptions();
-		initLazyModel();
-		List<Venta> ventados = srvVenta.findAll();
-		logger.info("Tamaño:" + ventados.size());
 
-	}
-
-	public void customizationOptions() {
-		pdfOpt = new PDFOptions();
-		pdfOpt.setFacetBgColor("#58ACFA");
-		pdfOpt.setFacetFontColor("#FFFFFF");
-		pdfOpt.setFacetFontStyle("BOLD");
-		pdfOpt.setCellFontSize("12");
-	}
-
-	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
-		Document pdf = (Document) document;
-		pdf.open();
-		pdf.setPageSize(PageSize.A4);
-
-		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
-		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
-		Paragraph p1 = new Paragraph("Informe de ventas | " + d);
-		Font font = new Font(Font.TIMES_ROMAN, 18.0f, Font.BOLD, Color.RED);
-		p1.setFont(font);
-		Paragraph p2 = new Paragraph("Creado por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
-				+ this.usuarioAutenticado.getUsuario().getEmail());
-		p2.setFont(font);
-
-		pdf.add(p1);
-		pdf.add(p2);
-		pdf.add(Chunk.NEWLINE);
 	}
 
 	public void inicilizarAtributos() {
@@ -133,6 +100,7 @@ public class VentasBean extends MasterBean {
 		this.venta = new Venta();
 		this.ventaFilter = new VentaSearchFilter();
 		ventaFilter.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.listaVentas = new VentaLazyDataModel(ventaFilter, srvVenta);
 	}
 
 	public void newVenta() {
@@ -165,12 +133,14 @@ public class VentasBean extends MasterBean {
 	public void borrarVenta(Venta venta) {
 		if (venta.getIdVenta() != null && venta.getIdVenta() > 0) {
 			Producto p = srvVenta.findById(venta.getIdVenta()).getProducto();
-			p.setStock(p.getStock() + venta.getCantidad());
-			srvProducto.saveOrUpdate(p, true);
-			if (srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p) != null
-					&& p.getStock() > p.getStockMin()) {
-				srvAlertaStock
-						.delete(srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p));
+			if (p != null) {
+				p.setStock(p.getStock() + venta.getCantidad());
+				srvProducto.saveOrUpdate(p, true);
+				if (srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p) != null
+						&& p.getStock() > p.getStockMin()) {
+					srvAlertaStock.delete(
+							srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p));
+				}
 			}
 		}
 		srvVenta.delete(venta);
@@ -183,8 +153,12 @@ public class VentasBean extends MasterBean {
 		selectedVenta.setUsuario(usuarioAutenticado.getUsuario());
 		if (editing && selectedVenta.getIdVenta() != null && selectedVenta.getIdVenta() > 0) {
 			Venta v = srvVenta.findById(selectedVenta.getIdVenta());
-			selectedVenta.getProducto().setStock(selectedVenta.getProducto().getStock() + v.getCantidad());
-			srvProducto.saveOrUpdate(selectedVenta.getProducto(), true);
+			Producto p = selectedVenta.getProducto();
+			if (p != null) {
+				p.setStock(selectedVenta.getProducto().getStock() + v.getCantidad());
+				srvProducto.saveOrUpdate(selectedVenta.getProducto(), true);
+			}
+
 		}
 		selectedVenta = srvVenta.calcularVenta(selectedVenta);
 		selectedVenta = srvVenta.saveOrUpdate(selectedVenta, true);
@@ -197,6 +171,33 @@ public class VentasBean extends MasterBean {
 					selectedVenta.getProducto().getStock().toString(), selectedVenta.getProducto().getUnidad());
 		}
 		editing = false;
+	}
+
+	public void customizationOptions() {
+		pdfOpt = new PDFOptions();
+		pdfOpt.setFacetBgColor("#58ACFA");
+		pdfOpt.setFacetFontColor("#FFFFFF");
+		pdfOpt.setFacetFontStyle("BOLD");
+		pdfOpt.setCellFontSize("12");
+	}
+
+	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
+		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
+		Paragraph p1 = new Paragraph("Informe de ventas | " + d);
+		Font font = new Font(Font.TIMES_ROMAN, 18.0f, Font.BOLD, Color.RED);
+		p1.setFont(font);
+		Paragraph p2 = new Paragraph("Creado por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
+				+ this.usuarioAutenticado.getUsuario().getEmail());
+		p2.setFont(font);
+
+		pdf.add(p1);
+		pdf.add(p2);
+		pdf.add(Chunk.NEWLINE);
 	}
 
 	public boolean isEditing() {
@@ -287,64 +288,12 @@ public class VentasBean extends MasterBean {
 		this.ventaFilter = ventaFilter;
 	}
 
-	public LazyDataModel<Venta> getLazyModel() {
-		return lazyModel;
+	public VentaLazyDataModel getListaVentas() {
+		return listaVentas;
 	}
 
-	public void setLazyModel(LazyDataModel<Venta> lazyModel) {
-		this.lazyModel = lazyModel;
-	}
-
-	public long getNumResults() {
-		return numResults;
-	}
-
-	public void setNumResults(long numResults) {
-		this.numResults = numResults;
-	}
-
-	public void initLazyModel() {
-		this.lazyModel = new LazyDataModel<Venta>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Venta getRowData(String rowKey) {
-				return srvVenta.findById(Integer.parseInt(rowKey));
-			}
-
-			@Override
-			public Object getRowKey(Venta object) {
-				return object.getIdVenta().toString();
-			}
-
-			@Override
-			public List<Venta> load(int first, int pageSize, String sortField, SortOrder sortOrder,
-					Map<String, Object> filters) {
-
-				ventaFilter.setNombreProducto((String) filters.get("nombre"));
-				ventaFilter.setNombreCliente((String) filters.get("cliente.nombre"));
-
-				ventaFilter.setCantidad(
-						(String) filters.get("cantidad") != null ? Integer.parseInt((String) filters.get("cantidad"))
-								: null);
-				try {
-					ventaFilter.setFecha(
-							(String) filters.get("fecha") != null ? sdf.parse((String) filters.get("fecha")) : null);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				PaginationResult<Venta> paginationResult = srvVenta.findBySearchFilterPagination(ventaFilter,
-						pageSize > 0 ? (first / pageSize) + 1 : 1,
-						pageSize > 0 ? pageSize : Constantes.DEFAULT_PAGE_SIZE, sortField,
-						SortOrderParseUtil.parseSortOrderPrimefacesToSortOrderDao(sortOrder));
-				numResults = paginationResult.getTotalResult();
-				this.setRowCount(new Long(numResults).intValue());
-				return paginationResult.getResult();
-			}
-
-		};
+	public void setListaVentas(VentaLazyDataModel listaVentas) {
+		this.listaVentas = listaVentas;
 	}
 
 }

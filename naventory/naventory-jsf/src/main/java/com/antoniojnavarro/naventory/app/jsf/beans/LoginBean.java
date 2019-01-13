@@ -1,6 +1,9 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -8,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,8 +20,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.util.Constantes;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 
 @Named("loginBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -31,23 +33,30 @@ public class LoginBean extends MasterBean {
 	private String email;
 	private String password;
 	// ENTITIES
-	private Usuario usuario;
-	@Autowired
-	private UsuarioAutenticado usuarioAutenticado;
-
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	// LISTAS
 
 	// SERVICIOS
-	@Autowired
-	private ServicioUsuario srvUsuario;
 
 	@PostConstruct
 	public void init() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			try {
+				externalContext.redirect(externalContext.getRequestContextPath() + "/private/home.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		logger.info("LoginBean.init()");
+
 	}
 
 	public String login() {

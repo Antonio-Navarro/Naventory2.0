@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 
@@ -29,7 +31,6 @@ public class CategoriasBean extends MasterBean {
 	private Categoria categoria;
 
 	private Categoria selectedCategoria;
-	@Autowired
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
 	private List<Categoria> categorias;
@@ -37,10 +38,11 @@ public class CategoriasBean extends MasterBean {
 	// SERVICIOS
 	@Autowired
 	private ServicioCategoria srvCategoria;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
 		logger.info("Categorias.init()");
 		inicilizarAtributos();
 		cargarCategorias();
@@ -48,23 +50,28 @@ public class CategoriasBean extends MasterBean {
 	}
 
 	public void inicilizarAtributos() {
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		this.categorias = null;
 		this.editing = false;
 		this.selectedCategoria = new Categoria();
 		this.categoria = new Categoria();
 	}
+
 	public void newCategoria() {
 		this.editing = false;
 		this.selectedCategoria = new Categoria();
 	}
-	public void editarCategoria (Categoria categoria) {
+
+	public void editarCategoria(Categoria categoria) {
 		this.selectedCategoria = null;
-		this.selectedCategoria =categoria;
+		this.selectedCategoria = categoria;
 		this.editing = true;
 	}
+
 	public void iniciarSelectedCategoria() {
 		this.selectedCategoria = null;
 	}
+
 	public void cargarCategorias() {
 		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
 	}
@@ -74,19 +81,19 @@ public class CategoriasBean extends MasterBean {
 		srvCategoria.delete(categoria);
 		this.categorias.remove(categoria);
 		addInfo("categorias.succesDelete");
-		this.editing =false;
+		this.editing = false;
 	}
 
 	public void guardarCategoria() {
-		
+
 		selectedCategoria.setUsuario(usuarioAutenticado.getUsuario());
 		srvCategoria.saveOrUpdate(this.selectedCategoria, true);
-		if(!editing) {
+		if (!editing) {
 			this.categorias.add(selectedCategoria);
 		}
 		super.closeDialog("categoriaDetailsDialog");
 		addInfo("categorias.succesNew");
-		editing=false;
+		editing = false;
 	}
 
 	public Categoria getCategoria() {

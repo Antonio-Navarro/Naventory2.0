@@ -31,8 +31,8 @@
 	<h:outputScript library="js" name="custom.js" />
 
 	<!-- X-CSRF-TOKEN -->
-<!-- 	<meta name="_csrf" content="${_csrf.token}" /> -->
-<!-- 	<meta name="_csrf_header" content="${_csrf.headerName}" /> -->
+	<!-- 	<meta name="_csrf" content="${_csrf.token}" /> -->
+	<!-- 	<meta name="_csrf_header" content="${_csrf.headerName}" /> -->
 
 	<ui:insert name="head" />
 </h:head>
@@ -48,7 +48,6 @@
 									value="#{msg['aplicacion.nombre']}" /> &#160; <h:outputText
 									value="#{msg['aplicacion.version']}" /> </span></a>
 					</div>
-
 					<div class="clearfix"></div>
 
 					<!-- menu profile quick info -->
@@ -132,7 +131,14 @@
 
 							</div>
 							<ul class="nav navbar-nav navbar-left">
-								<li><h4 style="margin-top: 20px;">#{templateAppBean.usuarioAutenticado.usuario.empresa}</h4></li>
+								<li>
+									<h2 style="margin-top: 20px;">
+										<span><h:outputText
+												value="#{templateAppBean.usuarioAutenticado.usuario.empresa}" />
+											&#160; </span>
+										<ui:insert name="titlePagina" />
+									</h2>
+								</li>
 							</ul>
 
 							<ul class="nav navbar-nav navbar-right">
@@ -147,15 +153,16 @@
 										<li><a href="javascript:;"><i
 												class="fa fa-user pull-right"></i> <h:outputText
 													value="#{msg['navbar.profile']}" /> </a></li>
-										<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_USER')}">
-
+										<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_ADMIN')}">
 											<li><a
 												href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
 													class="fa fa-cogs pull-right"></i> <h:outputText
 														value="#{msg['navbar.administrator']}" /></a></li>
 										</h:panelGroup>
-										<li><h:form id="formLogout" style="width:90%">
-												<p:commandLink action="#{loginBean.logout}" ajax="true">
+										<li style="margin-top: 5px;" class="hoverPersonalizado"><h:form
+												id="formLogout" style="width:90%">
+												<p:commandLink action="#{templateAppBean.logout}"
+													ajax="true">
 													<i class="fa fa-sign-out pull-right"></i>
 													<h:outputText value="#{msg['navbar.logout']}" />
 												</p:commandLink>
@@ -231,7 +238,7 @@
 						</p:growl>
 						<!-- Ajax Status -->
 						<p:ajaxStatus onstart="PF('statusDialog').show()"
-							onsuccess="PF('statusDialog').hide()"/>
+							onsuccess="PF('statusDialog').hide()" />
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 							closable="false" resizable="false" showHeader="false">
 							<p:graphicImage library="images" name="loading2.gif" width="65" />

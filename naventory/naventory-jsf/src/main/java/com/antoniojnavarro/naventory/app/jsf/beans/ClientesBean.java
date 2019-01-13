@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
@@ -48,18 +50,21 @@ public class ClientesBean extends MasterBean {
 	private Cliente cliente;
 
 	private Cliente selectedCliente;
-	@Autowired
 	private UsuarioAutenticado usuarioAutenticado;
+
 	// LISTAS
 	private List<Cliente> clientes;
 	private List<Cliente> filteredClientes;
 	// SERVICIOS
 	@Autowired
 	private ServicioCliente srvCliente;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
+
 		logger.info("Clientes.init()");
 		inicilizarAtributos();
 		cargarClientes();

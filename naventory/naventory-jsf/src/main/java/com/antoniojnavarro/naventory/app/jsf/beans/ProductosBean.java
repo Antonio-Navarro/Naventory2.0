@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Producto;
@@ -39,7 +41,7 @@ public class ProductosBean extends MasterBean {
 	private Producto producto;
 
 	private Producto selectedProducto;
-	@Autowired
+
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
 	private List<Producto> productos;
@@ -54,10 +56,13 @@ public class ProductosBean extends MasterBean {
 	private ServicioCategoria srvCategoria;
 	@Autowired
 	private ServicioProveedor srvProveedor;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
+
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
 		cargarProductos();

@@ -9,12 +9,9 @@ import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.Pagination
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.FormaPagoDao;
 import com.antoniojnavarro.naventory.model.entities.FormaPago;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.FormaPagoSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioFormaPago;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
-import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
 
 @Service
@@ -24,10 +21,6 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 
 	@Autowired
 	private ServicioValidacion srvValidacion;
-
-	@Autowired
-	private ServicioMensajesI18n srvMensajes;
-
 
 	@Autowired
 	private FormaPagoDao formaPagoDao;
@@ -100,8 +93,6 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 		return this.formaPagoDao.save(entity);
 	}
 
-	@Autowired
-	private ServicioUsuario srvUsuario;
 	
 	@Override
 	public void validate(FormaPago entity) throws ServicioException {
