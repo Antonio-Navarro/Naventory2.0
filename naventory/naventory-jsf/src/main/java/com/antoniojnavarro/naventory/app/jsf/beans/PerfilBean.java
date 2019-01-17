@@ -1,21 +1,20 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 
@@ -28,92 +27,51 @@ public class PerfilBean extends MasterBean {
 	private static final Logger logger = LoggerFactory.getLogger(PerfilBean.class);
 
 	// CAMPOS
+	private UploadedFile file;
 	// ENTITIES
-
+	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Usuario> usuarios;
 	// Graficas
-	private LineChartModel graficaCrecimiento;
 	// SERVICIOS
 	@Autowired
 	private ServicioUsuario srvUsuario;
 
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
+
 	@PostConstruct
 	public void init() {
 
-		logger.info("Administracion.init()");
-		cargarUsuarios();
-		crearGrafica();
+		logger.info("Perfil.init()");
 	}
 
-	private void crearGrafica() {
-		graficaCrecimiento = initGraficaModel();
-		graficaCrecimiento.setTitle("Crecimiento de usuarios");
-		graficaCrecimiento.setLegendPosition("e");
-		graficaCrecimiento.setShowPointLabels(true);
-		graficaCrecimiento.getAxes().put(AxisType.X, new CategoryAxis("Años"));
-		Axis yAxis = graficaCrecimiento.getAxis(AxisType.Y);
-		yAxis.setLabel("Número de usuarios");
-		graficaCrecimiento.setAnimate(true);
+	public UploadedFile getFile() {
+		return file;
 	}
 
-	private LineChartModel initGraficaModel() {
-		LineChartModel model = new LineChartModel();
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
 
-		ChartSeries users = new ChartSeries();
-
-		users.setLabel("Usuarios");
-		Object[] usersDB = this.srvUsuario.findUsersGrafica();
-		for (int i = 0; i < usersDB.length; i++) {
-			Object[] datos = (Object[]) usersDB[i];
-			users.set(datos[0].toString(), (Number) datos[1]);
+	public void upload() {
+		if (file != null) {
+			FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
+	}
 
-		model.addSeries(users);
-		return model;
+	public void gestorSubidaFicheros(FileUploadEvent event) {
+		FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void inicilizarAtributos() {
-		this.usuarios = null;
-	}
-
-	public void cargarUsuarios() {
-		this.usuarios = srvUsuario.findAll();
-	}
-
-	public void cambiarEstadoActivo(Usuario user) {
-		user.setActivo(("Y".equals(user.getActivo())) ? "N" : "Y");
-		srvUsuario.saveOrUpdate(user, false);
-		addInfo("users.succesUpdate");
-	}
-
-	public void cambiarEstadoAdmin(Usuario user) {
-		user.setAdministrador(("Y".equals(user.getAdministrador())) ? "N" : "Y");
-		srvUsuario.saveOrUpdate(user, false);
-		addInfo("users.succesUpdate");
 	}
 
 	public void borrarUsuario(Usuario user) {
 
 		srvUsuario.delete(user);
-		this.usuarios.remove(user);
 		addInfo("users.succesDelete");
-	}
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-
-	public LineChartModel getGraficaCrecimiento() {
-		return graficaCrecimiento;
-	}
-
-	public void setGraficaCrecimiento(LineChartModel graficaCrecimiento) {
-		this.graficaCrecimiento = graficaCrecimiento;
 	}
 
 }
