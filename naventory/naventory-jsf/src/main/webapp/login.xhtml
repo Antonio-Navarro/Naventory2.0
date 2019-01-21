@@ -4,6 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://www.facebook.com/2008/fbml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -35,12 +36,13 @@
 							styleClass="logon" />
 					</div>
 					<p:focus for="loginForm" />
+
 					<h:form id="loginForm">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-						<p:growl escape="false" >
-							<p:autoUpdate/>
+						<p:growl escape="false">
+							<p:autoUpdate />
 						</p:growl>
 
 						<p:ajaxStatus onstart="PF('statusDialog').show()"
@@ -88,6 +90,16 @@
 									value="#{msg['login.button.registrar']}" style="width:100%"
 									action="#{loginBean.irARegistro}" />
 							</div>
+							<div>
+
+								<p:remoteCommand name="passToJSFMB" process="@this"
+									partialSubmit="true" action="#{loginBean.loginFacebook}" />
+
+								<fb:login-button scope="public_profile,email"
+									onlogin="checkLoginState();">Iniciar sesión con facebook
+								</fb:login-button>
+							</div>
+
 						</p:panel>
 						<div class="clearfix"></div>
 						<div class="separator">
@@ -105,10 +117,57 @@
 							</div>
 						</div>
 					</h:form>
+
+
 				</section>
 			</div>
 		</div>
 	</div>
-
 </h:body>
+<script>
+	function hola() {
+		alert("hola");
+	}
+
+	function checkLoginState() {
+		console.log('checkLoginState');
+
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	}
+	function statusChangeCallback(response) {
+		// 		FB.api('/me?fields=id,first_name,last_name,picture,email', function(response) {
+		// 			console.log(response);
+
+		// 		});
+		console.log(response);
+		passToJSFMB([ {
+			name : 'respuestaFacebook',
+			value : response.authResponse.accessToken
+		} ]);
+	}
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : '1631200237143057',
+			cookie : true,
+			xfbml : true,
+			version : 'v2.8'
+		});
+
+		FB.AppEvents.logPageView();
+
+	};
+
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {
+			return;
+		}
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "https://connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
 </html>

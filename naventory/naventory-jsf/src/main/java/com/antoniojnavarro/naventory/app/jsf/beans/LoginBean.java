@@ -20,6 +20,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.util.Constantes;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.types.User;
 
 @Named("loginBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -102,4 +107,13 @@ public class LoginBean extends MasterBean {
 		this.password = password;
 	}
 
+	public void loginFacebook() {
+		String accesstoken = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				.get("respuestaFacebook");
+		logger.debug(accesstoken);
+
+		FacebookClient facebookClient = new DefaultFacebookClient(accesstoken, Version.VERSION_2_8);
+		User user = facebookClient.fetchObject("me", User.class, Parameter.with("fields", "id,name,email"));
+		logger.debug(user.getName() + " " + user.getEmail());
+	}
 }

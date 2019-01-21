@@ -143,16 +143,15 @@
 
 							<ul class="nav navbar-nav navbar-right">
 
-								<li class="dropdown"><a href="javascript:;"
+								<li class="dropdown"><a href="#{request.contextPath}/private/perfil/perfil.xhtml"
 									class="user-profile dropdown-toggle" data-toggle="dropdown"
 									aria-expanded="false"
 									style="color: #4d647b !important; font-weight: bold;"> <i
 										class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
 								</a>
 									<ul class="dropdown-menu dropdown-usermenu pull-right">
-										<li><a href="javascript:;"><i
-												class="fa fa-user pull-right"></i> <h:outputText
-													value="#{msg['navbar.profile']}" /> </a></li>
+										<li><a href=""><i class="fa fa-user pull-right"></i>
+												<h:outputText value="#{msg['navbar.profile']}" /> </a></li>
 										<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_ADMIN')}">
 											<li><a
 												href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
@@ -284,4 +283,5 @@
 	</div>
 
 </h:body>
+
 </html>

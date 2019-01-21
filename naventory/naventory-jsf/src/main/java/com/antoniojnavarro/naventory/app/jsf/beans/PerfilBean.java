@@ -1,5 +1,8 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -30,6 +33,7 @@ public class PerfilBean extends MasterBean {
 	private UploadedFile file;
 	// ENTITIES
 	private UsuarioAutenticado usuarioAutenticado;
+	private Usuario usuarioSelected;
 	// LISTAS
 	// Graficas
 	// SERVICIOS
@@ -43,6 +47,9 @@ public class PerfilBean extends MasterBean {
 	public void init() {
 
 		logger.info("Perfil.init()");
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
+		usuarioSelected = this.usuarioAutenticado.getUsuario();
+
 	}
 
 	public UploadedFile getFile() {
@@ -61,8 +68,23 @@ public class PerfilBean extends MasterBean {
 	}
 
 	public void gestorSubidaFicheros(FileUploadEvent event) {
-		FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		this.file = event.getFile();
+
+		InputStream is;
+		byte[] buffer = null;
+		try {
+			is = event.getFile().getInputstream();
+			buffer = new byte[(int) file.getSize()]; // creamos el buffer
+			int readers = is.read(buffer); // leemos el archivo al buffer
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // lo abrimos. Lo importante es que sea un InputStream
+
+		usuarioSelected.setFotoPerf(buffer);
+
+		srvUsuario.saveOrUpdate(usuarioSelected, false);
+
 	}
 
 	public void inicilizarAtributos() {

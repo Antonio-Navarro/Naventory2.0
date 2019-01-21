@@ -3,12 +3,14 @@ package com.antoniojnavarro.naventory.model.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -48,9 +50,10 @@ public class Usuario implements GenericEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha_alta", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	private Date fecha_alta;
-
-	@Column(name = "foto_perf", length = 255)
-	private String fotoPerf;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "foto_perf", length = 100000)
+	private byte[] fotoPerf;
 
 	@Column(name = "activo", length = 1)
 	private String activo;
@@ -118,11 +121,11 @@ public class Usuario implements GenericEntity {
 		this.fecha_alta = fecha_alta;
 	}
 
-	public String getFotoPerf() {
+	public byte[] getFotoPerf() {
 		return fotoPerf;
 	}
 
-	public void setFotoPerf(String fotoPerf) {
+	public void setFotoPerf(byte[] fotoPerf) {
 		this.fotoPerf = fotoPerf;
 	}
 

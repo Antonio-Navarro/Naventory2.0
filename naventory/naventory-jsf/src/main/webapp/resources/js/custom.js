@@ -208,6 +208,7 @@ function customExtender() {
 		background : '#FFF' // Set background to white
 	};
 }
+
 PrimeFaces.locales['es'] = {
 	closeText : 'Cerrar',
 	prevText : 'Anterior',
