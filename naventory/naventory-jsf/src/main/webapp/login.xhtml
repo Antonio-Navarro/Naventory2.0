@@ -90,6 +90,7 @@
 									value="#{msg['login.button.registrar']}" style="width:100%"
 									action="#{loginBean.irARegistro}" />
 							</div>
+							<hr />
 							<div>
 
 								<p:remoteCommand name="passToJSFMB" process="@this"
@@ -125,10 +126,6 @@
 	</div>
 </h:body>
 <script>
-	function hola() {
-		alert("hola");
-	}
-
 	function checkLoginState() {
 		console.log('checkLoginState');
 
@@ -137,10 +134,6 @@
 		});
 	}
 	function statusChangeCallback(response) {
-		// 		FB.api('/me?fields=id,first_name,last_name,picture,email', function(response) {
-		// 			console.log(response);
-
-		// 		});
 		console.log(response);
 		passToJSFMB([ {
 			name : 'respuestaFacebook',
@@ -152,7 +145,7 @@
 			appId : '1631200237143057',
 			cookie : true,
 			xfbml : true,
-			version : 'v2.8'
+			version : 'v3.1'
 		});
 
 		FB.AppEvents.logPageView();

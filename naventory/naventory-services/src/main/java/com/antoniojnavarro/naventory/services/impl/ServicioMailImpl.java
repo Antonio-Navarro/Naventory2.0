@@ -12,6 +12,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.antoniojnavarro.naventory.services.commons.ServicioMail;
@@ -32,6 +34,9 @@ public class ServicioMailImpl implements ServicioMail {
 	 * @param subject
 	 * @param body
 	 */
+	@Autowired
+	private Environment env;
+
 	@Override
 	public void sendEmail(String toEmail, String subject, String body) {
 		try {
@@ -63,8 +68,10 @@ public class ServicioMailImpl implements ServicioMail {
 		}
 	}
 
-	public static Session createSession() {
+	public Session createSession() {
 		final String fromEmail = "naventory@naventory.cerrajerianavarro.es";
+		String pass2 = env.getProperty("password.email");
+		System.out.println(pass2);
 		final String password = "bender40";
 
 		Properties props = new Properties();
@@ -81,4 +88,5 @@ public class ServicioMailImpl implements ServicioMail {
 		Session session = Session.getInstance(props, auth);
 		return session;
 	}
+
 }
