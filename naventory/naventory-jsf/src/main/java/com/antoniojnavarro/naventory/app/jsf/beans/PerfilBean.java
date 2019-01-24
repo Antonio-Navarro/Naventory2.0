@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.apache.commons.codec.binary.Base64;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.slf4j.Logger;
@@ -56,6 +57,11 @@ public class PerfilBean extends MasterBean {
 		return file;
 	}
 
+	public String getFotoPerfil() {
+		String imageString = new String(Base64.encodeBase64(usuarioSelected.getFotoPerf()));
+		return imageString;
+	}
+
 	public void setFile(UploadedFile file) {
 		this.file = file;
 	}
@@ -94,6 +100,14 @@ public class PerfilBean extends MasterBean {
 
 		srvUsuario.delete(user);
 		addInfo("users.succesDelete");
+	}
+
+	public Usuario getUsuarioSelected() {
+		return usuarioSelected;
+	}
+
+	public void setUsuarioSelected(Usuario usuarioSelected) {
+		this.usuarioSelected = usuarioSelected;
 	}
 
 }

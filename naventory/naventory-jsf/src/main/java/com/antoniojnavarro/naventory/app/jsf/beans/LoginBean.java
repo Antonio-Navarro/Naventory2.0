@@ -35,6 +35,8 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
+import com.restfb.json.JsonObject;
+import com.restfb.json.JsonValue;
 import com.restfb.types.User;
 
 @Named("loginBean")
@@ -138,7 +140,15 @@ public class LoginBean extends MasterBean {
 		FacebookClient facebookClient = new DefaultFacebookClient(accesstoken, Version.VERSION_3_1);
 
 		User user = facebookClient.fetchObject("me", User.class,
-				Parameter.with("fields", "email,first_name,last_name,picture"), Parameter.with("type", "large"));
+				Parameter.with("fields", "email,first_name,last_name"));
+
+		JsonObject jsonObject = facebookClient.fetchObject("/" + user.getId() + "/picture", JsonObject.class,
+				Parameter.with("height", "720"), Parameter.with("redirect", "false"));
+		JsonValue jsonValue = jsonObject.get("data");
+		JsonObject object = jsonValue.asObject();
+		String profileImageUrl = object.get("url").asString();
+		user.getPicture().setUrl(profileImageUrl);
+
 		if (user == null) {
 			addError("error.login.facebook");
 			return new String();

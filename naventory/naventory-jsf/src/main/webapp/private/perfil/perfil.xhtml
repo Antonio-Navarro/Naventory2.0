@@ -12,7 +12,7 @@
 	</ui:define>
 	<ui:define name="body">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-4">
 				<h1>
 					<i class="fa fa-users iconTitle"></i>
 					<h:outputText value="#{msg['perfil.title']}" />
@@ -23,14 +23,19 @@
 		<div class="separator"></div>
 		<div class="row">
 			<div class="row" style="margin-top: 1%;">
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<p:fileUpload
 						fileUploadListener="#{perfilBean.gestorSubidaFicheros}"
-						mode="advanced" dragDropSupport="true" update="messages"
-						sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
-					<p:growl id="messages" showDetail="true" />
+						update="miImagen" mode="advanced" dragDropSupport="true"
+						sizeLimit="3000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 				</div>
+				<div class="col-md-6">
+					<h:graphicImage id="miImagen"
+						value="data:image/jpg;base64,#{perfilBean.fotoPerfil}"
+						height="50px" width="50px" />
+					<!-- 					<p:graphicImage value="#{perfilBean.usuarioSelected.fotoPerf}" stream="true"></p:graphicImage> -->
+				</div>
+
 			</div>
 		</div>
 	</ui:define>
