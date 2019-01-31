@@ -6,11 +6,14 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fb="http://www.facebook.com/2008/fbml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
+<meta name="google-signin-client_id" 
+	content="45636355362-814k7r2fdh4pacvdo0qk69ej4k39seo1.apps.googleusercontent.com" />
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 	<title>Naventory | Iniciar Sesión</title>
 	<link rel="icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/images/favicon.jpg" />
@@ -91,16 +94,21 @@
 									action="#{loginBean.irARegistro}" />
 							</div>
 							<hr />
-							<div>
+							<div class="col-md-12">
+								<div class="col-md-6">
+									<p:remoteCommand name="passToJSFMB" process="@this"
+										partialSubmit="true" action="#{loginBean.loginFacebook}" />
 
-								<p:remoteCommand name="passToJSFMB" process="@this"
-									partialSubmit="true" action="#{loginBean.loginFacebook}" />
-
-								<fb:login-button scope="public_profile,email"
-									onlogin="checkLoginState();">Iniciar sesión con facebook
+									<fb:login-button scope="public_profile,email"
+										onlogin="checkLoginState();">Iniciar sesión con facebook
 								</fb:login-button>
-							</div>
+								</div>
+								<div class="col-md-6">
 
+									
+									<div class="g-signin2" data-onsuccess="onSignIn"></div>
+								</div>
+							</div>
 						</p:panel>
 						<div class="clearfix"></div>
 						<div class="separator">
@@ -162,5 +170,23 @@
 		js.src = "https://connect.facebook.net/en_US/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
+
+	function onSignIn(googleUser) {
+		var profile = googleUser.getBasicProfile();
+		console.log(googleUser);
+		var id_token = googleUser.getAuthResponse().id_token;
+		console.log(googleUser.getAuthResponse());
+		console.log(googleUser);
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		passToJSFMB([ {
+			name : 'respuestaGoogle',
+			value : id_token
+		} ]);
+	}
 </script>
+<script src="https://apis.google.com/js/platform.js"></script>
+
 </html>

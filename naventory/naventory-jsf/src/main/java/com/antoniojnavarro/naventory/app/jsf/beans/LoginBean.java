@@ -31,6 +31,11 @@ import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.services.api.ServicioRole;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.commons.ServicioMail;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.oauth2.Oauth2;
+import com.google.api.services.oauth2.model.Userinfoplus;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -130,7 +135,6 @@ public class LoginBean extends MasterBean {
 	public String loginFacebook() {
 		String accesstoken = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
 				.get("respuestaFacebook");
-		logger.debug(accesstoken);
 
 		if (accesstoken == null) {
 			addError("error.login.facebook");
@@ -142,6 +146,10 @@ public class LoginBean extends MasterBean {
 		User user = facebookClient.fetchObject("me", User.class,
 				Parameter.with("fields", "email,first_name,last_name"));
 
+		if (user == null) {
+			addError("error.login.facebook");
+			return new String();
+		}
 		JsonObject jsonObject = facebookClient.fetchObject("/" + user.getId() + "/picture", JsonObject.class,
 				Parameter.with("height", "720"), Parameter.with("redirect", "false"));
 		JsonValue jsonValue = jsonObject.get("data");
@@ -149,10 +157,6 @@ public class LoginBean extends MasterBean {
 		String profileImageUrl = object.get("url").asString();
 		user.getPicture().setUrl(profileImageUrl);
 
-		if (user == null) {
-			addError("error.login.facebook");
-			return new String();
-		}
 		logger.debug(user.getPicture().getUrl());
 
 		usuario = srvUsuario.findById(user.getEmail());
@@ -195,4 +199,28 @@ public class LoginBean extends MasterBean {
 		return Constantes.GO_TO_HOME;
 
 	}
+
+	public String loginGoogle() {
+		String accesstoken = "ya29.GludBrk_TQCUj2KmiF1uLH1l1YLlM3nV3zgPHABNOiOFSBRRtghdU1FOZ_u_NAIC0sIpAGxBr4GTxtFKskM01Letgqd8EimSnYZ3rndPJeuIEmH0bP5PFvb3ANZt";
+
+		if (accesstoken == null || accesstoken == "") {
+			addError("error.login.facebook");
+			return new String();
+		}
+		GoogleCredential credential = new GoogleCredential().setAccessToken(accesstoken);
+
+		Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
+				.setApplicationName("Naventory").build();
+
+		// Get userInfo using credential
+		try {
+			Userinfoplus userInfo = oauth2.userinfo().get().execute();
+			logger.debug(userInfo.getGivenName());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Constantes.GO_TO_HOME;
+	}
+
 }
