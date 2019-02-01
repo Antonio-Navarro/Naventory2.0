@@ -218,7 +218,7 @@ public class LoginBean extends MasterBean {
 	}
 
 	public String loginGoogle() {
-		String accesstoken = "ya29.GludBrk_TQCUj2KmiF1uLH1l1YLlM3nV3zgPHABNOiOFSBRRtghdU1FOZ_u_NAIC0sIpAGxBr4GTxtFKskM01Letgqd8EimSnYZ3rndPJeuIEmH0bP5PFvb3ANZt";
+		String accesstoken = "ya29.GlyjBhpwO098lfr8qWCocSjG6POCMnhlUqK743luwE6I9Aub2JcsXL5P0Sbb6UICpil7YZ91AtZoj2a2Kax6B2PRbkpYfpae4DT1NXufQcrpcOsr5Ths1CDp4AXvmA";
 
 		if (accesstoken == null || accesstoken == "") {
 			addError("error.login.facebook");

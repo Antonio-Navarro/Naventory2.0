@@ -30,10 +30,104 @@
 		<div class="separator"></div>
 		<div class="row">
 			<div class="col-md-6 text-left">
-				<p:inputText value="filtro0s"/>
+				<p:inputText value="filtro0s" />
 			</div>
 		</div>
 		<div class="row" style="margin-top: 1%;">
+			<p:tabView dynamic="true" cache="true" effect="fold">
+				<f:validateBean disabled="true">
+					<p:tab title="Búsqueda">
+						<f:facet name="actions">
+							<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+								style="float:right" actionListener="#{expedientesList.limpiar}"
+								update="@form">
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-search" value="Buscar"
+								style="float:right" actionListener="#{expedientesList.buscar}"
+								update="@form"></p:commandButton>
+						</f:facet>
+						<p:panelGrid styleClass="ui-noborder">
+							<p:row>
+								<p:column>
+									<p:outputLabel for="filtroDNI" value="DNI" styleClass="lblForm" />
+									<p:inputText id="filtroDNI" size="9"
+										value="#{expedientesList.filtro['dni']}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel for="filtroNombre" value="Nombre"
+										styleClass="lblForm" />
+									<p:inputText id="filtroNombre" size="14"
+										value="#{expedientesList.filtro['nombre']}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel for="filtroApellido1" value="Primer Apellido"
+										styleClass="lblForm" />
+									<p:inputText id="filtroApellido1" size="18"
+										value="#{expedientesList.filtro['apellido1']}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel for="filtroApellido2" value="Segundo Apellido"
+										styleClass="lblForm" />
+									<p:inputText id="filtroApellido2" size="18"
+										value="#{expedientesList.filtro['apellido2']}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Búsqueda Avanzada">
+						<f:facet name="actions">
+							<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+								style="float:right" actionListener="#{expedientesList.limpiar}"
+								update="@form">
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-search" value="Buscar"
+								style="float:right" actionListener="#{expedientesList.buscar}"
+								update="@form"></p:commandButton>
+						</f:facet>
+						<p:panelGrid styleClass="ui-noborder">
+							<p:row>
+								<p:column>
+									<p:outputLabel for="filtroCodExp" value="Código Expediente"
+										styleClass="lblForm" />
+									<p:inputText id="filtroCodExp" size="9"
+										value="#{expedientesList.filtro['codexpediente']}">
+									</p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel for="filtrocajaexpbaja" value="Caja en Baja"
+										styleClass="lblForm" />
+									<p:inputText id="filtrocajaexpbaja" size="14"
+										value="#{expedientesList.filtro['cajaexpbaja']}">
+									</p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel for="filtrofcreacion" value="Fecha Creación"
+										styleClass="lblForm" />
+									<p:inputText id="filtrofcreacion" size="14"
+										value="#{expedientesList.filtro['fcreacion']}">
+									</p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel for="filtrofbaja" value="Fecha Baja"
+										styleClass="lblForm" />
+									<p:inputText id="filtrofbaja" size="14"
+										value="#{expedientesList.filtro['fbaja']}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid styleClass="ui-noborder">
+							<p:row>
+								<p:column>
+									<p:outputLabel for="filtroObservaciones" value="Observaciones"
+										styleClass="lblForm" />
+									<p:inputTextarea id="filtroObservaciones" rows="3" cols="66"
+										value="#{expedientesList.filtro.observaciones}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:tab>
+				</f:validateBean>
+			</p:tabView>
 			<div class="col-md-12">
 				<p:dataTable id="ventaTable" var="venta" widgetVar="ventasWV"
 					value="#{ventasBean.listaVentas}" paginator="true" rowHover="true"

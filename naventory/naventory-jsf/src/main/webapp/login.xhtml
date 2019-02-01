@@ -102,7 +102,9 @@
 
 							</div>
 							<div>
-								<div class="g-signin2" data-onsuccess="onSignIn" style="margin: 0 auto">Iniciar sesión con Gooogle</div>
+								<div class="g-signin2" onclick="ClickLogin()" data-onsuccess="onSignIn">Iniciar sesión con Gooogle</div>
+								<p:remoteCommand name="passToJSFMB" process="@this"
+									partialSubmit="true" action="#{loginBean.loginGoogle}" />
 							</div>
 						</p:panel>
 						<div class="clearfix"></div>
@@ -168,8 +170,15 @@
 
 
 //IMPLEMENTACIÓN LOGIN GOOGLE
-	
+	//https://developers.google.com/api-client-library/javascript/samples/samples   
+	//https://developers.google.com/identity/sign-in/web/build-button
+	var clicked=false;//Global Variable
+function ClickLogin()
+{
+    clicked=true;
+}
 	function onSignIn(googleUser) {
+		if(clicked){
 		var profile = googleUser.getBasicProfile();
 		console.log(googleUser);
 		var id_token = googleUser.getAuthResponse().id_token;
@@ -183,6 +192,7 @@
 			name : 'respuestaGoogle',
 			value : id_token
 		} ]);
+		}
 	}
 </script>
 <script src="https://apis.google.com/js/platform.js"></script>
