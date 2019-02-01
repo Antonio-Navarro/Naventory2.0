@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fb="http://www.facebook.com/2008/fbml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-<meta name="google-signin-client_id" 
+<meta name="google-signin-client_id"
 	content="45636355362-814k7r2fdh4pacvdo0qk69ej4k39seo1.apps.googleusercontent.com" />
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -93,21 +93,16 @@
 									value="#{msg['login.button.registrar']}" style="width:100%"
 									action="#{loginBean.irARegistro}" />
 							</div>
-							<hr />
-							<div class="col-md-12">
-								<div class="col-md-6">
-									<p:remoteCommand name="passToJSFMB" process="@this"
-										partialSubmit="true" action="#{loginBean.loginFacebook}" />
 
-									<fb:login-button scope="public_profile,email"
-										onlogin="checkLoginState();">Iniciar sesión con facebook
-								</fb:login-button>
-								</div>
-								<div class="col-md-6">
+							<div>
+								<p:remoteCommand name="passToJSFMB" process="@this"
+									partialSubmit="true" action="#{loginBean.loginFacebook}" />
+								<fb:login-button scope="public_profile,email"
+									onlogin="checkLoginState();">Iniciar sesión con Facebook</fb:login-button>
 
-									
-									<div class="g-signin2" data-onsuccess="onSignIn"></div>
-								</div>
+							</div>
+							<div>
+								<div class="g-signin2" data-onsuccess="onSignIn" style="margin: 0 auto">Iniciar sesión con Gooogle</div>
 							</div>
 						</p:panel>
 						<div class="clearfix"></div>
@@ -171,6 +166,9 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 
+
+//IMPLEMENTACIÓN LOGIN GOOGLE
+	
 	function onSignIn(googleUser) {
 		var profile = googleUser.getBasicProfile();
 		console.log(googleUser);

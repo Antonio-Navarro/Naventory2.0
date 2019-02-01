@@ -1,6 +1,10 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
@@ -9,6 +13,7 @@ import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -155,9 +160,6 @@ public class LoginBean extends MasterBean {
 		JsonValue jsonValue = jsonObject.get("data");
 		JsonObject object = jsonValue.asObject();
 		String profileImageUrl = object.get("url").asString();
-		user.getPicture().setUrl(profileImageUrl);
-
-		logger.debug(user.getPicture().getUrl());
 
 		usuario = srvUsuario.findById(user.getEmail());
 		if (usuario == null) {
@@ -189,6 +191,21 @@ public class LoginBean extends MasterBean {
 
 		String passwordGenerada = CifrarClave.generarPassword();
 		usuario.setPassword(CifrarClave.encriptarClave(passwordGenerada));
+		URL url;
+		try {
+			url = new URL(profileImageUrl);
+			BufferedImage imagen = ImageIO.read(url);
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			ImageIO.write(imagen, "jpg", os);
+			byte[] buffer = os.toByteArray();
+			usuario.setFotoPerf(buffer);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		this.srvUsuario.saveOrUpdate(usuario, false);
 		Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), passwordGenerada,
