@@ -6,14 +6,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fb="http://www.facebook.com/2008/fbml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-<meta name="google-signin-client_id"
-	content="45636355362-814k7r2fdh4pacvdo0qk69ej4k39seo1.apps.googleusercontent.com" />
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+	<meta name="google-signin-client_id"
+		content="45636355362-814k7r2fdh4pacvdo0qk69ej4k39seo1.apps.googleusercontent.com" />
 	<title>Naventory | Iniciar Sesión</title>
 	<link rel="icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/images/favicon.jpg" />
@@ -95,17 +94,17 @@
 							</div>
 
 							<div>
-								<p:remoteCommand name="passToJSFMB" process="@this"
+								<p:remoteCommand name="passToJSFacebook" process="@this"
 									partialSubmit="true" action="#{loginBean.loginFacebook}" />
 								<fb:login-button scope="public_profile,email"
 									onlogin="checkLoginState();">Iniciar sesión con Facebook</fb:login-button>
 
 							</div>
-							<div>
-								<div class="g-signin2" onclick="ClickLogin()" data-onsuccess="onSignIn">Iniciar sesión con Gooogle</div>
-								<p:remoteCommand name="passToJSFMB" process="@this"
-									partialSubmit="true" action="#{loginBean.loginGoogle}" />
-							</div>
+							<div class="g-signin2" onclick="ClickLogin()"
+								data-onsuccess="onSignIn" data-theme="dark" data-value="Iniciar">Iniciar
+								sesión con Gooogle</div>
+							<p:remoteCommand name="passToJSFGoogle	" process="@this"
+								partialSubmit="true" action="#{loginBean.loginGoogle}" />
 						</p:panel>
 						<div class="clearfix"></div>
 						<div class="separator">
@@ -140,7 +139,7 @@
 	}
 	function statusChangeCallback(response) {
 		console.log(response);
-		passToJSFMB([ {
+		passToJSFacebook([ {
 			name : 'respuestaFacebook',
 			value : response.authResponse.accessToken
 		} ]);
@@ -168,30 +167,22 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 
-
-//IMPLEMENTACIÓN LOGIN GOOGLE
+	//IMPLEMENTACIÓN LOGIN GOOGLE
 	//https://developers.google.com/api-client-library/javascript/samples/samples   
+	//
 	//https://developers.google.com/identity/sign-in/web/build-button
-	var clicked=false;//Global Variable
-function ClickLogin()
-{
-    clicked=true;
-}
+	var clicked = false;//Global Variable
+	function ClickLogin() {
+		clicked = true;
+	}
 	function onSignIn(googleUser) {
-		if(clicked){
-		var profile = googleUser.getBasicProfile();
-		console.log(googleUser);
-		var id_token = googleUser.getAuthResponse().id_token;
-		console.log(googleUser.getAuthResponse());
-		console.log(googleUser);
-		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-		console.log('Name: ' + profile.getName());
-		console.log('Image URL: ' + profile.getImageUrl());
-		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-		passToJSFMB([ {
-			name : 'respuestaGoogle',
-			value : id_token
-		} ]);
+		if (clicked) {
+			var id_token = googleUser.getAuthResponse().id_token;
+			console.log("idtoken" + id_token);
+			passToJSFGoogle([ {
+				name : 'respuestaGoogle',
+				value : id_token
+			} ]);
 		}
 	}
 </script>

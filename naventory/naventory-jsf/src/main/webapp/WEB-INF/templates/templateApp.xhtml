@@ -53,8 +53,13 @@
 					<!-- menu profile quick info -->
 					<div class="profile">
 						<div class="profile_pic">
-							<p:graphicImage library="images" name="user.png"
+							<p:graphicImage rendered="#{templateAppBean.fotoPerfil==null}"
+								library="images" name="user.png"
 								styleClass="img-circle profile_img" />
+
+							<h:graphicImage rendered="#{templateAppBean.fotoPerfil!=null}"
+								id="miImagen" styleClass="img-circle profile_img"
+								value="data:image/jpg;base64,#{templateAppBean.fotoPerfil}" />
 						</div>
 						<div class="profile_info">
 							<span><h:outputText value="#{msg['welcome']}" /></span>
@@ -150,8 +155,10 @@
 										class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
 								</a>
 									<ul class="dropdown-menu dropdown-usermenu pull-right">
-										<li><a href="#{request.contextPath}/private/perfil/perfil.xhtml"><i class="fa fa-user pull-right"></i>
-												<h:outputText value="#{msg['navbar.profile']}" /> </a></li>
+										<li><a
+											href="#{request.contextPath}/private/perfil/perfil.xhtml"><i
+												class="fa fa-user pull-right"></i> <h:outputText
+													value="#{msg['navbar.profile']}" /> </a></li>
 										<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_ADMIN')}">
 											<li><a
 												href="#{request.contextPath}/private/administracion/administracion.xhtml"><i

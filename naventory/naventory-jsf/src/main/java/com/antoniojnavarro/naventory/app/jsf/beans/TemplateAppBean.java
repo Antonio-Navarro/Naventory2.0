@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,15 @@ public class TemplateAppBean extends MasterBean {
 
 	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
 		this.usuarioAutenticado = usuarioAutenticado;
+	}
+
+	public String getFotoPerfil() {
+		String imageString = new String(Base64.encodeBase64(usuarioAutenticado.getUsuario().getFotoPerf()));
+		if (imageString != null && imageString.length() > 0) {
+			return imageString;
+		} else {
+			return null;
+		}
 	}
 
 }
