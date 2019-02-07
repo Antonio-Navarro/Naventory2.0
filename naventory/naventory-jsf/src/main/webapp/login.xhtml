@@ -96,13 +96,16 @@
 							<div>
 								<p:remoteCommand name="passToJSFacebook" process="@this"
 									partialSubmit="true" action="#{loginBean.loginFacebook}" />
-								<fb:login-button scope="public_profile,email"
-									onlogin="checkLoginState();">Iniciar sesión con Facebook</fb:login-button>
+								<fb:login-button scope="public_profile,email" data-width="320px"
+									data-button-type="continue_with" style="width: 321px;"
+									onlogin="checkLoginState();" data-size="medium"
+									data-use-continue-as="true"></fb:login-button>
 
 							</div>
 							<div class="g-signin2" onclick="ClickLogin()"
-								data-onsuccess="onSignIn" data-theme="dark" data-value="Iniciar">Iniciar
-								sesión con Gooogle</div>
+								data-onsuccess="onSignIn" data-theme="dark" data-value="Iniciar">
+								<span>Iniciar sesión con Gooogle</span>
+							</div>
 							<p:remoteCommand name="passToJSFGoogle	" process="@this"
 								partialSubmit="true" action="#{loginBean.loginGoogle}" />
 						</p:panel>
@@ -163,7 +166,7 @@
 		}
 		js = d.createElement(s);
 		js.id = id;
-		js.src = "https://connect.facebook.net/en_US/sdk.js";
+		js.src = "https://connect.facebook.net/es_ES/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 

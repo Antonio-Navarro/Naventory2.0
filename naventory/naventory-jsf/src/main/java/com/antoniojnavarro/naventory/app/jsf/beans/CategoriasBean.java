@@ -14,6 +14,7 @@ import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
+import com.antoniojnavarro.naventory.model.filters.CategoriaSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 
 @Named("categoriasBean")
@@ -27,7 +28,7 @@ public class CategoriasBean extends MasterBean {
 	// CAMPOS
 	private boolean editing;
 	// ENTITIES
-
+	private CategoriaSearchFilter filtro;
 	private Categoria categoria;
 
 	private Categoria selectedCategoria;
@@ -134,6 +135,14 @@ public class CategoriasBean extends MasterBean {
 
 	public void setFilteredCategorias(List<Categoria> filteredCategorias) {
 		this.filteredCategorias = filteredCategorias;
+	}
+
+	public CategoriaSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(CategoriaSearchFilter filtro) {
+		this.filtro = filtro;
 	}
 
 }
