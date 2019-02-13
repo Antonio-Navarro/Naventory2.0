@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.CategoriaLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
@@ -27,6 +28,8 @@ public class CategoriasBean extends MasterBean {
 
 	// CAMPOS
 	private boolean editing;
+	private String nombre;
+	private Integer id;
 	// ENTITIES
 	private CategoriaSearchFilter filtro;
 	private Categoria categoria;
@@ -36,6 +39,8 @@ public class CategoriasBean extends MasterBean {
 	// LISTAS
 	private List<Categoria> categorias;
 	private List<Categoria> filteredCategorias;
+	private CategoriaLazyDataModel listaCategorias;
+
 	// SERVICIOS
 	@Autowired
 	private ServicioCategoria srvCategoria;
@@ -56,6 +61,9 @@ public class CategoriasBean extends MasterBean {
 		this.editing = false;
 		this.selectedCategoria = new Categoria();
 		this.categoria = new Categoria();
+		this.filtro = new CategoriaSearchFilter();
+		this.filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.listaCategorias = new CategoriaLazyDataModel(filtro, srvCategoria);
 	}
 
 	public void newCategoria() {
@@ -95,6 +103,12 @@ public class CategoriasBean extends MasterBean {
 		super.closeDialog("categoriaDetailsDialog");
 		addInfo("categorias.succesNew");
 		editing = false;
+	}
+
+	public void buscar() {
+		filtro.setId(id);
+		filtro.setNombre(nombre);
+		listaCategorias = new CategoriaLazyDataModel(filtro, srvCategoria);
 	}
 
 	public Categoria getCategoria() {
@@ -143,6 +157,30 @@ public class CategoriasBean extends MasterBean {
 
 	public void setFiltro(CategoriaSearchFilter filtro) {
 		this.filtro = filtro;
+	}
+
+	public CategoriaLazyDataModel getListaCategorias() {
+		return listaCategorias;
+	}
+
+	public void setListaCategorias(CategoriaLazyDataModel listaCategorias) {
+		this.listaCategorias = listaCategorias;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

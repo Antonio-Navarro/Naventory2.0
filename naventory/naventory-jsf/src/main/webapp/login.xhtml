@@ -92,8 +92,15 @@
 									value="#{msg['login.button.registrar']}" style="width:100%"
 									action="#{loginBean.irARegistro}" />
 							</div>
+							<div class="separator">
+								<div id="googleDiv" class="g-signin2" onclick="ClickLogin()"
+									style="width: auto; height: 24px;" data-onsuccess="onSignIn"
+									data-value="Iniciar" data-longtitle="true" data-theme="dark"></div>
+								<p:remoteCommand name="passToJSFGoogle" process="@this"
+									partialSubmit="true" action="#{loginBean.loginGoogle}" />
 
-							<div>
+							</div>
+							<div style="margin-top: 3px">
 								<p:remoteCommand name="passToJSFacebook" process="@this"
 									partialSubmit="true" action="#{loginBean.loginFacebook}" />
 								<fb:login-button scope="public_profile,email" data-width="320px"
@@ -102,12 +109,6 @@
 									data-use-continue-as="true"></fb:login-button>
 
 							</div>
-							<div class="g-signin2" onclick="ClickLogin()"
-								data-onsuccess="onSignIn" data-theme="dark" data-value="Iniciar">
-								<span>Iniciar sesión con Gooogle</span>
-							</div>
-							<p:remoteCommand name="passToJSFGoogle	" process="@this"
-								partialSubmit="true" action="#{loginBean.loginGoogle}" />
 						</p:panel>
 						<div class="clearfix"></div>
 						<div class="separator">
@@ -166,7 +167,7 @@
 		}
 		js = d.createElement(s);
 		js.id = id;
-		js.src = "https://connect.facebook.net/es_ES/sdk.js";
+		js.src = "#{request.contextPath}/resources/js/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 
@@ -189,6 +190,9 @@
 		}
 	}
 </script>
-<script src="https://apis.google.com/js/platform.js"></script>
+<script
+	src="#{request.contextPath}/resources/js/platform.js">
+	
+</script>
 
 </html>

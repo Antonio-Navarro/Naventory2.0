@@ -1,4 +1,4 @@
-package com.antoniojnavarro.naventory.app.security.social.providers;
+package com.antoniojnavarro.naventory.app.security.social;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

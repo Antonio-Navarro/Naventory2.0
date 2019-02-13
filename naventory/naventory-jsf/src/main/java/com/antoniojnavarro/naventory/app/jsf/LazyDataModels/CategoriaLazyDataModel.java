@@ -26,7 +26,7 @@ public class CategoriaLazyDataModel extends LazyDataModel<Categoria> {
 	// SERVICIOS
 	private ServicioCategoria srvCategoria;
 
-	public CategoriaLazyDataModel(CategoriaSearchFilter ventaFilter, ServicioCategoria srvCategoria) {
+	public CategoriaLazyDataModel(CategoriaSearchFilter categoriaFilter, ServicioCategoria srvCategoria) {
 		super();
 		this.categoriaFilter = categoriaFilter;
 		this.srvCategoria = srvCategoria;

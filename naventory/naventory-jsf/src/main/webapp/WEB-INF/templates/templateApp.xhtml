@@ -147,7 +147,6 @@
 							</ul>
 
 							<ul class="nav navbar-nav navbar-right">
-
 								<li class="dropdown"><a href="#"
 									class="user-profile dropdown-toggle" data-toggle="dropdown"
 									aria-expanded="false"
@@ -181,15 +180,15 @@
 											value="#{templateAppBean.exitenAlertas}">
 											<pe:case value="#{true}">
 												<i class="fa fa-bell fa-fw" style="color: red"></i>
+												<span class="badge badge-notify">#{templateAppBean.alertas.size()}</span>
 												<i class="fa fa-caret-down"></i>
 											</pe:case>
 											<pe:case value="#{false}">
 												<i class="fa fa-bell fa-fw"></i>
-												<i class="fa fa-caret-down"></i>
+												<span class="badge badge-notify-zero">#{templateAppBean.alertas.size()}</span>
 											</pe:case>
 											<pe:defaultCase>
 												<i class="fa fa-bell fa-fw"></i>
-												<i class="fa fa-caret-down"></i>
 											</pe:defaultCase>
 										</pe:switch> </a>
 
@@ -226,7 +225,7 @@
 									<button type="button" class="close" data-dismiss="modal">Close</button>
 									<h4 class="modal-title">Nuevo mensaje</h4>
 								</div>
-								<div class="modal-body">sdfasd</div>
+								<div class="modal-body"></div>
 							</div>
 						</div>
 					</div>

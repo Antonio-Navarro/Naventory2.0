@@ -46,19 +46,6 @@ public class VentaLazyDataModel extends LazyDataModel<Venta> {
 	public List<Venta> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
 
-//		ventaFilter.setNombreProducto((String) filters.get("nombre"));
-//		ventaFilter.setNombreCliente((String) filters.get("cliente.nombre"));
-//
-//		ventaFilter.setCantidad(
-//				(String) filters.get("cantidad") != null ? Integer.parseInt((String) filters.get("cantidad")) : null);
-//		try {
-//			ventaFilter
-//					.setFecha((String) filters.get("fecha") != null ? sdf.parse((String) filters.get("fecha")) : null);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
 		paginationResult = srvVenta.findBySearchFilterPagination(ventaFilter, pageSize > 0 ? (first / pageSize) + 1 : 1,
 				pageSize > 0 ? pageSize : Constantes.DEFAULT_PAGE_SIZE, sortField,
 				SortOrderParseUtil.parseSortOrderPrimefacesToSortOrderDao(sortOrder));

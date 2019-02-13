@@ -10,53 +10,52 @@
 	<ui:define name="title">
 		<title>Categorias | Naventory</title>
 	</ui:define>
+	<ui:define name="titlePagina">
+		&#160; #{msg['categorias.title']}
+	</ui:define>
 	<ui:define name="body">
+		<div class="row"></div>
 		<div class="row">
 			<div class="col-md-12">
-				<h1>
-					<h:outputText value="#{msg['categorias.title']}" />
-				</h1>
-			</div>
-		</div>
-		<div class="separator"></div>
-		<div class="row">
-			<p:tabView dynamic="true" cache="true" effect="fold">
-				<f:validateBean disabled="true">
-					<p:tab title="Búsqueda">
-						<f:facet name="actions">
+				<p:outputPanel id="panelFiltro">
+					<p:accordionPanel activeIndex="2" style="width:100%"
+						styleClass="ui-icon-plus">
+						<p:tab title=" Filtros de búsqueda">
 							<p:commandButton icon="ui-icon-refresh" value="Limpiar"
-								style="float:right" actionListener="#{categoriasBean.limpiar}"
-								update="@form">
+								style="float:right"
+								actionListener="#{categoriasBean.inicilizarAtributos}"
+								process="@this">
 							</p:commandButton>
 							<p:commandButton icon="ui-icon-search" value="Buscar"
 								style="float:right" actionListener="#{categoriasBean.buscar}"
-								update="@form"></p:commandButton>
-						</f:facet>
-						<p:panelGrid styleClass="ui-noborder">
-							<p:row>
-								<p:column>
-									<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
-									<p:inputText id="filtroID" size="9"
-										value="#{categoriasBean.filtro.id}" />
-								</p:column>
-								<p:column>
-									<p:outputLabel for="filtroNombre" value="Nombre"
-										styleClass="lblForm" />
-									<p:inputText id="filtroNombre" size="14"
-										value="#{categoriasBean.filtro.nombre}" />
-								</p:column>
-								<p:column>
-									<p:outputLabel for="filtroDescripcion" value="Descripción"
-										styleClass="lblForm" />
-									<p:inputText id="filtroDescripcion" size="18"
-										value="#{categoriasBean.filtro['apellido1']}" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>
-					</p:tab>
-				</f:validateBean>
-			</p:tabView>
+								update=":panelFiltro, categoriaTable"></p:commandButton>
+							<p:panelGrid styleClass="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
+										<p:inputText id="filtroID" size="9"
+											value="#{categoriasBean.id}" />
+									</p:column>
+									<p:column>
+										<p:outputLabel for="filtroNombre" value="Nombre"
+											styleClass="lblForm" />
+										<p:inputText id="filtroNombre" size="14"
+											value="#{categoriasBean.nombre}" />
+									</p:column>
+									<p:column>
+										<p:outputLabel for="filtroDescripcion" value="Descripción"
+											styleClass="lblForm" />
+										<p:inputText id="filtroDescripcion" size="18"
+											value="#{categoriasBean.filtro.descripcion}" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:tab>
+					</p:accordionPanel>
+				</p:outputPanel>
+			</div>
 		</div>
+		<br />
 		<!-- 				<div class="row"> -->
 		<!-- 					<div class="col-md-6 text-left"> -->
 		<!-- 						<p:commandButton value="#{msg['categorias.nuevaCategoria']}" -->
@@ -70,9 +69,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<p:dataTable id="categoriaTable" var="categoria"
-					widgetVar="categoriasWV" value="#{categoriasBean.categorias}"
+					widgetVar="categoriasWV" value="#{categoriasBean.listaCategorias}"
 					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
-					paginatorPosition="bottom" lazy="false"
+					paginatorPosition="bottom" lazy="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}"
 					filteredValue="#{categoriasBean.filteredCategorias}">

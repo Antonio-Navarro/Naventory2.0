@@ -893,7 +893,7 @@ a:hover, a:focus {
 	padding-left: 10px;
 }
 
-.site_titleSub{
+.site_titleSub {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	font-weight: 400;
@@ -907,6 +907,7 @@ a:hover, a:focus {
 	margin: 0;
 	padding-left: 52px;
 }
+
 .site_title:hover, .site_title:focus {
 	text-decoration: none;
 }
@@ -5168,11 +5169,28 @@ to {
 	text-decoration: none;
 	background-color: #f5f5f5;
 }
+
 .hoverPersonalizado i:hover {
 	color: black;
 	text-decoration: none;
 	background-color: #f5f5f5;
 }
-.lblForm{
-	margin-right:5px;
+
+.lblForm {
+	margin-right: 5px;
+}
+
+.badge-notify-zero {
+	background: #2A3F54;
+	position: relative;
+	top: -14px;
+	left: -5px;
+	font-size: 9px;
+}
+.badge-notify {
+	background: red;
+	position: relative;
+	top: -14px;
+	left: -5px;
+	font-size: 9px;
 }

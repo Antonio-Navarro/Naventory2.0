@@ -19,8 +19,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
-import com.antoniojnavarro.naventory.app.security.social.providers.FacebookProvider;
-import com.antoniojnavarro.naventory.app.security.social.providers.GoogleProvider;
+import com.antoniojnavarro.naventory.app.security.social.FacebookProvider;
+import com.antoniojnavarro.naventory.app.security.social.GoogleProvider;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 
 @Named("loginBean")
