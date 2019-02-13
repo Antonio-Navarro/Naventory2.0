@@ -107,6 +107,7 @@ public class CategoriasBean extends MasterBean {
 
 	public void buscar() {
 		filtro.setId(id);
+		nombre="adf";
 		filtro.setNombre(nombre);
 		listaCategorias = new CategoriaLazyDataModel(filtro, srvCategoria);
 	}

@@ -17,19 +17,11 @@
 		<div class="row"></div>
 		<div class="row">
 			<div class="col-md-12">
-				<p:outputPanel id="panelFiltro">
-					<p:accordionPanel activeIndex="2" style="width:100%"
-						styleClass="ui-icon-plus">
-						<p:tab title=" Filtros de búsqueda">
-							<p:commandButton icon="ui-icon-refresh" value="Limpiar"
-								style="float:right"
-								actionListener="#{categoriasBean.inicilizarAtributos}"
-								process="@this">
-							</p:commandButton>
-							<p:commandButton icon="ui-icon-search" value="Buscar"
-								style="float:right" actionListener="#{categoriasBean.buscar}"
-								update=":panelFiltro, categoriaTable"></p:commandButton>
-							<p:panelGrid styleClass="ui-noborder">
+				<p:accordionPanel  style="width:100%"
+					styleClass="ui-icon-plus">
+					<p:tab title=" Filtros de búsqueda">
+						<f:validateBean>
+							<p:panelGrid styleClass="ui-noborder" id="panelFiltro">
 								<p:row>
 									<p:column>
 										<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
@@ -50,9 +42,17 @@
 									</p:column>
 								</p:row>
 							</p:panelGrid>
-						</p:tab>
-					</p:accordionPanel>
-				</p:outputPanel>
+							<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+								style="float:right"
+								actionListener="#{categoriasBean.inicilizarAtributos}"
+								process="@this">
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-search" value="Buscar"
+								immediate="true" style="float:right"
+								actionListener="#{categoriasBean.buscar}" update="@form"></p:commandButton>
+						</f:validateBean>
+					</p:tab>
+				</p:accordionPanel>
 			</div>
 		</div>
 		<br />
@@ -76,6 +76,7 @@
 					emptyMessage="#{msg['noresult']}"
 					filteredValue="#{categoriasBean.filteredCategorias}">
 					<f:facet name="header">
+					Lista de Categorías
 						<div class="text-rigth" style="text-align: right">
 							<p:commandButton value="#{msg['categorias.nuevaCategoria']}"
 								icon="fa fa-archive fa-fw" styleClass="btn btn-lg btn-success"

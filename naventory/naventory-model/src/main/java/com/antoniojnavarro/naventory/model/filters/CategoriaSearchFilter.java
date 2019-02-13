@@ -20,7 +20,7 @@ public class CategoriaSearchFilter implements SearchFilter {
 		return false;
 	}
 
-	@FieldWhere(columns = "c.idcat", likeMode = LikeMode.NONE)
+	@FieldWhere(columns = "c.idcat", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private Integer id;
 
 	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
