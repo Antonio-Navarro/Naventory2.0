@@ -733,7 +733,6 @@ a:hover, a:focus {
 
 .top_nav .navbar-right {
 	margin: 0;
-	width: 70%;
 	float: right;
 }
 
@@ -5187,10 +5186,17 @@ to {
 	left: -5px;
 	font-size: 9px;
 }
+
 .badge-notify {
 	background: red;
 	position: relative;
 	top: -14px;
 	left: -5px;
 	font-size: 9px;
+}
+
+.barraMenu {
+	font-style: oblique;
+	font-weight: 1000;
+	padding: 5px;
 }

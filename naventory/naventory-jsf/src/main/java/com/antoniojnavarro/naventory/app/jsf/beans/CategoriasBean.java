@@ -37,7 +37,6 @@ public class CategoriasBean extends MasterBean {
 	private Categoria selectedCategoria;
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Categoria> categorias;
 	private List<Categoria> filteredCategorias;
 	private CategoriaLazyDataModel listaCategorias;
 
@@ -51,13 +50,11 @@ public class CategoriasBean extends MasterBean {
 	public void init() {
 		logger.info("Categorias.init()");
 		inicilizarAtributos();
-		cargarCategorias();
 
 	}
 
 	public void inicilizarAtributos() {
 		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
-		this.categorias = null;
 		this.editing = false;
 		this.selectedCategoria = new Categoria();
 		this.categoria = new Categoria();
@@ -81,14 +78,9 @@ public class CategoriasBean extends MasterBean {
 		this.selectedCategoria = null;
 	}
 
-	public void cargarCategorias() {
-		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
 	public void borrarCategoria(Categoria categoria) {
 
 		srvCategoria.delete(categoria);
-		this.categorias.remove(categoria);
 		addInfo("categorias.succesDelete");
 		this.editing = false;
 	}
@@ -97,18 +89,14 @@ public class CategoriasBean extends MasterBean {
 
 		selectedCategoria.setUsuario(usuarioAutenticado.getUsuario());
 		srvCategoria.saveOrUpdate(this.selectedCategoria, true);
-		if (!editing) {
-			this.categorias.add(selectedCategoria);
-		}
 		super.closeDialog("categoriaDetailsDialog");
 		addInfo("categorias.succesNew");
 		editing = false;
 	}
 
 	public void buscar() {
-		filtro.setId(id);
-		nombre="adf";
-		filtro.setNombre(nombre);
+		logger.debug(filtro.getNombre());
+		logger.debug(categoria.getNomCat());
 		listaCategorias = new CategoriaLazyDataModel(filtro, srvCategoria);
 	}
 
@@ -126,14 +114,6 @@ public class CategoriasBean extends MasterBean {
 
 	public void setSelectedCategoria(Categoria selectedCategoria) {
 		this.selectedCategoria = selectedCategoria;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
 	}
 
 	public boolean isEditing() {

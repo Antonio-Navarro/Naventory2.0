@@ -10,29 +10,40 @@
 	<ui:define name="title">
 		<title>Categorias | Naventory</title>
 	</ui:define>
-	<ui:define name="titlePagina">
-		&#160; #{msg['categorias.title']}
-	</ui:define>
 	<ui:define name="body">
-		<div class="row"></div>
 		<div class="row">
-			<div class="col-md-12">
-				<p:accordionPanel  style="width:100%"
-					styleClass="ui-icon-plus">
-					<p:tab title=" Filtros de búsqueda">
+			<div class="col-md-4" style="color: #232323">
+				<h3>
+					<p:outputLabel id="idEmptyLabel">
+						<i class="fa fa-archive fa-fw" />		 #{msg['categorias.title']}
+		</p:outputLabel>
+				</h3>
+			</div>
+		</div>
+		<div class="separator" />
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<p:tabView styleClass="ui-icon-plus">
+					<p:tab>
+						<f:facet name="title">
+							<p:outputLabel id="idEmptyLabel">
+								<i class="fa fa-filter fa-fw" />
+							</p:outputLabel>
+							<h:outputText value="Filtros de Búsqueda" />
+						</f:facet>
 						<f:validateBean>
 							<p:panelGrid styleClass="ui-noborder" id="panelFiltro">
 								<p:row>
 									<p:column>
 										<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
 										<p:inputText id="filtroID" size="9"
-											value="#{categoriasBean.id}" />
+											value="#{categoriasBean.filtro.id}" />
 									</p:column>
 									<p:column>
 										<p:outputLabel for="filtroNombre" value="Nombre"
 											styleClass="lblForm" />
 										<p:inputText id="filtroNombre" size="14"
-											value="#{categoriasBean.nombre}" />
+											value="#{categoriasBean.filtro.nombre}" />
 									</p:column>
 									<p:column>
 										<p:outputLabel for="filtroDescripcion" value="Descripción"
@@ -41,31 +52,27 @@
 											value="#{categoriasBean.filtro.descripcion}" />
 									</p:column>
 								</p:row>
+								<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+									style="float:right" immediate="true"
+									actionListener="#{categoriasBean.inicilizarAtributos}"
+									process="panelFiltro" id="btnLimpiar" update="@form">
+									<p:resetInput target="panelFiltro" />
+								</p:commandButton>
+								<p:commandButton icon="ui-icon-search" value="Buscar"
+									id="btnBuscar" style="float:right"
+									actionListener="#{categoriasBean.buscar}"
+									update="formApp:categoriaTable" process="panelFiltro" />
+
 							</p:panelGrid>
-							<p:commandButton icon="ui-icon-refresh" value="Limpiar"
-								style="float:right"
-								actionListener="#{categoriasBean.inicilizarAtributos}"
-								process="@this">
-							</p:commandButton>
-							<p:commandButton icon="ui-icon-search" value="Buscar"
-								immediate="true" style="float:right"
-								actionListener="#{categoriasBean.buscar}" update="@form"></p:commandButton>
+
+
 						</f:validateBean>
 					</p:tab>
-				</p:accordionPanel>
+
+				</p:tabView>
 			</div>
 		</div>
-		<br />
-		<!-- 				<div class="row"> -->
-		<!-- 					<div class="col-md-6 text-left"> -->
-		<!-- 						<p:commandButton value="#{msg['categorias.nuevaCategoria']}" -->
-		<!-- 							style="heig" icon="fa fa-archive fa-fw" -->
-		<!-- 							styleClass="btn btn-lg btn-success" -->
-		<!-- 							actionListener="#{categoriasBean.newCategoria}" process="@this" -->
-		<!-- 							oncomplete="PF('categoriaDetailsDialog').show();" -->
-		<!-- 							update="categoriaDetailsModal" /> -->
-		<!-- 					</div> -->
-		<!-- 				</div> -->
+		<div class="clearfix"></div>
 		<div class="row">
 			<div class="col-md-12">
 				<p:dataTable id="categoriaTable" var="categoria"
@@ -73,22 +80,26 @@
 					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
 					paginatorPosition="bottom" lazy="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
-					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{categoriasBean.filteredCategorias}">
+					emptyMessage="#{msg['noresult']}">
 					<f:facet name="header">
-					Lista de Categorías
-						<div class="text-rigth" style="text-align: right">
+						<div class="text-left">
 							<p:commandButton value="#{msg['categorias.nuevaCategoria']}"
-								icon="fa fa-archive fa-fw" styleClass="btn btn-lg btn-success"
+								style="float:left" icon="fa fa-archive fa-fw"
+								styleClass="btn btn-lg btn-success"
 								actionListener="#{categoriasBean.newCategoria}" process="@this"
 								oncomplete="PF('categoriaDetailsDialog').show();"
 								update="formApp:categoriaDetailsModal" />
+						</div>
+						<div class="text-rigth" style="text-align: right">
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								icon="ui-icon-calculator" />
+							<p:columnToggler datasource="categoriaTable" trigger="toggler" />
 						</div>
 					</f:facet>
 					<f:facet name="footer">
 						<div class="text-left">
 							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{fn:length(categoriasBean.categorias)}"></f:param>
+								<f:param value="#{categoriasBean.listaCategorias.numResults}"></f:param>
 							</h:outputFormat>
 						</div>
 					</f:facet>

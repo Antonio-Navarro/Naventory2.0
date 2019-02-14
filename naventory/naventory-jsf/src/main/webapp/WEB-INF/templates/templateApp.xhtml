@@ -30,9 +30,6 @@
 	<h:outputScript library="js" name="bootstrap.min.js" />
 	<h:outputScript library="js" name="custom.js" />
 
-	<!-- X-CSRF-TOKEN -->
-	<!-- 	<meta name="_csrf" content="${_csrf.token}" /> -->
-	<!-- 	<meta name="_csrf_header" content="${_csrf.headerName}" /> -->
 
 	<ui:insert name="head" />
 </h:head>
@@ -137,11 +134,9 @@
 							</div>
 							<ul class="nav navbar-nav navbar-left">
 								<li>
-									<h2 style="margin-top: 20px;">
+									<h2 style="margin-top: 20px; color: #5A738E">
 										<span><h:outputText
-												value="#{templateAppBean.usuarioAutenticado.usuario.empresa}" />
-											&#160; </span>
-										<ui:insert name="titlePagina" />
+												value="#{templateAppBean.usuarioAutenticado.usuario.empresa}" /></span>
 									</h2>
 								</li>
 							</ul>
