@@ -8,6 +8,7 @@ import com.antoniojnavarro.naventory.model.commons.filters.annotations.BetweenDa
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.EntityFilter;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.LikeMode;
+import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.LogicalOperatorBetweenNames;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.OperatorLikeNoneEnum;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.OrderByColumn;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.OrderByMultipleColumns;
@@ -27,7 +28,7 @@ public class VentaSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.cantidad", likeMode = LikeMode.NONE)
 	private Integer cantidad;
 
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
+	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator=LogicalOperatorBetweenNames.AND)
 	private String usuario;
 
 	@FieldWhere(columns = "c.producto.nombre", likeMode = LikeMode.CONTAINS)

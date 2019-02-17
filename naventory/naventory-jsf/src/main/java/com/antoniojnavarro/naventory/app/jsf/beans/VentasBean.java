@@ -2,7 +2,6 @@ package com.antoniojnavarro.naventory.app.jsf.beans;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +50,6 @@ public class VentasBean extends MasterBean {
 	private boolean editing;
 	private ExcelOptions excelOpt;
 	private PDFOptions pdfOpt;
-	private DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	// ENTITIES
 	@Autowired

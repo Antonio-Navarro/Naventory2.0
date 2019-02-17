@@ -15,62 +15,14 @@
 			<div class="col-md-4" style="color: #232323">
 				<h3>
 					<p:outputLabel id="idEmptyLabel">
-						<i class="fa fa-archive fa-fw" />		 #{msg['categorias.title']}
-		</p:outputLabel>
+						<i class="fa fa-archive fa-fw" />#{msg['categorias.title']}
+					</p:outputLabel>
 				</h3>
 			</div>
 		</div>
 		<div class="separator" />
 		<div class="row">
-			<div class="col-md-12 col-sm-12">
-				<p:tabView styleClass="ui-icon-plus">
-					<p:tab>
-						<f:facet name="title">
-							<p:outputLabel id="idEmptyLabel">
-								<i class="fa fa-filter fa-fw" />
-							</p:outputLabel>
-							<h:outputText value="Filtros de Búsqueda" />
-						</f:facet>
-						<f:validateBean>
-							<p:panelGrid styleClass="ui-noborder" id="panelFiltro">
-								<p:row>
-									<p:column>
-										<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
-										<p:inputText id="filtroID" size="9"
-											value="#{categoriasBean.filtro.id}" />
-									</p:column>
-									<p:column>
-										<p:outputLabel for="filtroNombre" value="Nombre"
-											styleClass="lblForm" />
-										<p:inputText id="filtroNombre" size="14"
-											value="#{categoriasBean.filtro.nombre}" />
-									</p:column>
-									<p:column>
-										<p:outputLabel for="filtroDescripcion" value="Descripción"
-											styleClass="lblForm" />
-										<p:inputText id="filtroDescripcion" size="18"
-											value="#{categoriasBean.filtro.descripcion}" />
-									</p:column>
-								</p:row>
-								<p:commandButton icon="ui-icon-refresh" value="Limpiar"
-									style="float:right" immediate="true"
-									actionListener="#{categoriasBean.inicilizarAtributos}"
-									process="panelFiltro" id="btnLimpiar" update="@form">
-									<p:resetInput target="panelFiltro" />
-								</p:commandButton>
-								<p:commandButton icon="ui-icon-search" value="Buscar"
-									id="btnBuscar" style="float:right"
-									actionListener="#{categoriasBean.buscar}"
-									update="formApp:categoriaTable" process="panelFiltro" />
-
-							</p:panelGrid>
-
-
-						</f:validateBean>
-					</p:tab>
-
-				</p:tabView>
-			</div>
+			<ui:include src="categoriasFilter.xhtml" />
 		</div>
 		<div class="clearfix"></div>
 		<div class="row">
@@ -104,8 +56,7 @@
 						</div>
 					</f:facet>
 					<p:column sortBy="#{categoria.idCat}" style="width:8%;"
-						styleClass="tdNumber" filterMatchMode="contains"
-						headerText="#{msg['categorias.table.id']}">
+						styleClass="tdNumber" headerText="#{msg['categorias.table.id']}">
 						<h:outputText value="#{categoria.idCat}" />
 					</p:column>
 					<p:column sortBy="#{categoria.nomCat}" style="width:20%"
@@ -135,7 +86,8 @@
 							actionListener="#{categoriasBean.borrarCategoria(categoria)}"
 							update="categoriaTable">
 							<p:confirm header="#{msg['needConfirmation']}"
-								message="#{msg['areyousure']}" icon="fa fa-warning" />
+								message="#{msg['categorias.areyousure']}"
+								icon="fa fa-warning fa-red" />
 							<i class="fa fa-trash fa-fw " style="color: red;"></i>
 							<p:tooltip id="toolTipFade5" for="fadeBorrar"
 								value="Borrar categoría" position="top" />

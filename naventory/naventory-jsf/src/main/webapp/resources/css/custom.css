@@ -159,7 +159,7 @@
 @charset "UTF-8";
 
 .left_col {
-	background-color: #2A3F54;
+	background-color: #232323;
 }
 
 .nav-sm .container.body .col-md-3.left_col {
@@ -167,7 +167,7 @@
 	width: 70px;
 	padding: 0;
 	z-index: 9999;
-	position: absolute;
+	position: fixed;
 }
 
 .nav-sm .container.body .col-md-3.left_col.menu_fixed {
@@ -294,18 +294,19 @@
 }
 
 .img-circle.profile_img {
-	width: 70%;
+	width: 70px;
+	height: 70px;
 	background: #fff;
 	margin-left: 15%;
 	z-index: 1000;
 	position: inherit;
 	margin-top: 20px;
 	border: 1px solid rgba(52, 73, 94, 0.44);
-	padding: 4px;
+	padding: 2px;
 }
 
 .profile_info {
-	padding: 25px 10px 10px;
+	padding: 25px 20px 10px;
 	width: 65%;
 	float: left;
 }
@@ -373,6 +374,8 @@
 .nav_menu {
 	float: left;
 	background: #E6E6E6;
+	background-image: -webkit-gradient(linear, left top, right top, from(#1e469a),
+		to(#49a7c1));
 	border-bottom: 1px solid #e7e7e7;
 	margin-bottom: 10px;
 	width: 100%;
@@ -389,7 +392,7 @@
 	min-height: 100%;
 	width: 230px;
 	padding: 0;
-	position: absolute;
+	position: fixed;
 	display: -ms-flexbox;
 	display: flex;
 	z-index: 1;
@@ -560,12 +563,12 @@ body .container.body .right_col {
 
 .top_nav .nav>li>a:focus, .top_nav .nav>li>a:hover, .top_nav .nav .open>a,
 	.top_nav .nav .open>a:focus, .top_nav .nav .open>a:hover {
-	background: #D9DEE4;
+	background: #30768A;
 }
 
 body {
 	color: #73879C;
-	background: #2A3F54;
+	background: #232323;
 	font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
 	font-size: 13px;
 	font-weight: 400;
@@ -725,10 +728,6 @@ a:hover, a:focus {
 
 .navbar-header {
 	background: #34495E;
-}
-
-.navbar-right {
-	margin-right: 0;
 }
 
 .top_nav .navbar-right {
@@ -912,7 +911,7 @@ a:hover, a:focus {
 }
 
 .nav.navbar-nav>li>a {
-	color: #515356 !important;
+	color: white !important;
 }
 
 .nav.top_menu>li>a {
@@ -955,8 +954,7 @@ a:hover, a:focus {
 .toggle {
 	float: left;
 	margin: 0;
-	padding-top: 16px;
-	width: 70px;
+	padding-top: 12px;
 }
 
 .toggle a {
@@ -1753,20 +1751,20 @@ ul.msg_list li a .message {
 	text-shadow: none;
 	top: 100%;
 	z-index: 9998;
-	border: 1px solid #D9DEE4;
+	border: 1px solid #30768A;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
 
 .dropdown-menu li a {
-	color: #5A738E;
+	color: white;
 }
 
 .navbar-nav .open .dropdown-menu {
 	position: absolute;
-	background: #fff;
+	background: #232323;
 	margin-top: 0;
-	border: 1px solid #D9DEE4;
+	border: 1px solid #232323;
 	-webkit-box-shadow: none;
 	right: 0;
 	left: auto;
@@ -1956,7 +1954,7 @@ span.right {
 }
 
 .tile_count .tile_stats_count {
-	border-bottom: 1px solid #D9DEE4;
+	border-bottom: 1px solid #30768A;
 	padding: 0 10px 0 20px;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -5166,37 +5164,68 @@ to {
 .hoverPersonalizado:hover {
 	color: black;
 	text-decoration: none;
-	background-color: #f5f5f5;
+	background-color: white;
+}
+
+#formLogout hover {
+	color: black;
+	text-decoration: none;
+	background-color: white;
+}
+
+.hoverPersonalizado a:hover {
+	color: black;
+	text-decoration: none;
+	background-color: white;
 }
 
 .hoverPersonalizado i:hover {
 	color: black;
 	text-decoration: none;
-	background-color: #f5f5f5;
+	background-color: white;
 }
 
 .lblForm {
 	margin-right: 5px;
+	margin-top: 5px;
+}
+
+.ui-outputlabel-rfi {
+	color: red;
 }
 
 .badge-notify-zero {
 	background: #2A3F54;
 	position: relative;
-	top: -14px;
-	left: -5px;
-	font-size: 9px;
+	top: -10px;
+	left: -11px;
+	font-size: 8px;
 }
 
 .badge-notify {
 	background: red;
 	position: relative;
-	top: -14px;
-	left: -5px;
-	font-size: 9px;
+	top: -10px;
+	left: -11px;
+	font-size: 8px;
 }
 
 .barraMenu {
 	font-style: oblique;
 	font-weight: 1000;
 	padding: 5px;
+}
+
+.inputFiltro {
+	float: right;
+}
+
+#panelTop {
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
+
+.page-subcontent {
+	margin-top: 45px;
 }

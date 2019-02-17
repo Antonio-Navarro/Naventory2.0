@@ -19,10 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProveedorLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
+import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Chunk;
@@ -49,10 +51,11 @@ public class ProveedoresBean extends MasterBean {
 	ParamBean paramBean;
 	private Proveedor proveedor;
 	private Proveedor selectedProveedor;
+	private ProveedorSearchFilter filtro;
 	private UsuarioAutenticado usuarioAutenticado;
 
 	// LISTAS
-	private List<Proveedor> proveedores;
+	private ProveedorLazyDataModel listaProveedores;
 	private List<Proveedor> filteredProveedores;
 	// SERVICIOS
 	@Autowired
@@ -65,15 +68,20 @@ public class ProveedoresBean extends MasterBean {
 		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
-		cargarProveedores();
 		customizationOptions();
 	}
 
 	public void inicilizarAtributos() {
-		this.proveedores = null;
+		this.filtro = new ProveedorSearchFilter();
+		this.filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.listaProveedores = new ProveedorLazyDataModel(filtro, srvProveedor);
 		this.editing = false;
 		this.selectedProveedor = new Proveedor();
 		this.proveedor = new Proveedor();
+	}
+
+	public void buscar() {
+		this.listaProveedores = new ProveedorLazyDataModel(filtro, srvProveedor);
 	}
 
 	public void newProveedor() {
@@ -111,14 +119,9 @@ public class ProveedoresBean extends MasterBean {
 		this.selectedProveedor = null;
 	}
 
-	public void cargarProveedores() {
-		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
 	public void borrarProveedor(Proveedor proveedor) {
 
 		srvProveedor.delete(proveedor);
-		this.proveedores.remove(proveedor);
 		addInfo("proveedores.succesDelete");
 		this.editing = false;
 	}
@@ -127,9 +130,6 @@ public class ProveedoresBean extends MasterBean {
 
 		selectedProveedor.setUsuario(usuarioAutenticado.getUsuario());
 		srvProveedor.saveOrUpdate(this.selectedProveedor, true);
-		if (!editing) {
-			this.proveedores.add(selectedProveedor);
-		}
 		super.closeDialog("proveedorDetailsDialog");
 		addInfo("proveedores.succesNew");
 		editing = false;
@@ -170,20 +170,28 @@ public class ProveedoresBean extends MasterBean {
 		this.proveedor = proveedor;
 	}
 
+	public ProveedorSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(ProveedorSearchFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public ProveedorLazyDataModel getListaProveedores() {
+		return listaProveedores;
+	}
+
+	public void setListaProveedores(ProveedorLazyDataModel listaProveedores) {
+		this.listaProveedores = listaProveedores;
+	}
+
 	public Proveedor getSelectedProveedor() {
 		return selectedProveedor;
 	}
 
 	public void setSelectedProveedor(Proveedor selectedProveedor) {
 		this.selectedProveedor = selectedProveedor;
-	}
-
-	public List<Proveedor> getProveedores() {
-		return proveedores;
-	}
-
-	public void setProveedores(List<Proveedor> proveedores) {
-		this.proveedores = proveedores;
 	}
 
 	public boolean isEditing() {

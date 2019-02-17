@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<div class="col-md-12 col-sm-12">
+		<p:tabView styleClass="ui-icon-plus" id="panelFiltro">
+			<p:tab>
+				<f:facet name="title">
+					<p:outputLabel id="idEmptyLabel">
+						<i class="fa fa-filter fa-fw" />
+					</p:outputLabel>
+					<h:outputText value="Búsqueda" />
+				</f:facet>
+				<f:facet name="actions">
+					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+						style="float:right" immediate="true"
+						actionListener="#{categoriasBean.inicilizarAtributos}"
+						process="panelFiltro" id="btnLimpiar" update="@form">
+						<p:resetInput target="panelFiltro" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-search" value="Buscar"
+						id="btnBuscar" style="float:right"
+						actionListener="#{categoriasBean.buscar}"
+						update="formApp:categoriaTable" process="panelFiltro" />
+				</f:facet>
+				<f:validateBean>
+					<p:panelGrid styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
+								<p:inputText id="filtroID" size="9"
+									value="#{categoriasBean.filtro.id}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel for="filtroNombre" value="Nombre"
+									styleClass="lblForm" />
+								<p:inputText id="filtroNombre" size="14"
+									value="#{categoriasBean.filtro.nombre}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel for="filtroDescripcion" value="Descripción"
+									styleClass="lblForm" />
+								<p:inputText id="filtroDescripcion" size="18"
+									value="#{categoriasBean.filtro.descripcion}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
+
+				</f:validateBean>
+			</p:tab>
+
+		</p:tabView>
+	</div>
+</ui:composition>

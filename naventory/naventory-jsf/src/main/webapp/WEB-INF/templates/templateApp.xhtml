@@ -126,15 +126,16 @@
 			<p:outputPanel id="panelTop">
 				<p:autoUpdate />
 				<div class="top_nav">
-					<div class="nav_menu">
+					<div class="nav_menu ">
 						<nav>
 							<div class="nav toggle">
-								<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+								<a id="menu_toggle" style="color: white !important"><i
+									class="fa fa-bars"></i></a>
 
 							</div>
 							<ul class="nav navbar-nav navbar-left">
 								<li>
-									<h2 style="margin-top: 20px; color: #5A738E">
+									<h2 style="margin-top: 15px; color: white !important;">
 										<span><h:outputText
 												value="#{templateAppBean.usuarioAutenticado.usuario.empresa}" /></span>
 									</h2>
@@ -145,7 +146,7 @@
 								<li class="dropdown"><a href="#"
 									class="user-profile dropdown-toggle" data-toggle="dropdown"
 									aria-expanded="false"
-									style="color: #4d647b !important; font-weight: bold;"> <i
+									style="color: white !important; font-weight: bold;"> <i
 										class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
 								</a>
 									<ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -159,33 +160,31 @@
 													class="fa fa-cogs pull-right"></i> <h:outputText
 														value="#{msg['navbar.administrator']}" /></a></li>
 										</h:panelGroup>
-										<li style="margin-top: 5px;" class="hoverPersonalizado"><h:form
-												id="formLogout" style="width:90%">
-												<p:commandLink action="#{templateAppBean.logout}"
-													ajax="true">
-													<i class="fa fa-sign-out pull-right"></i>
-													<h:outputText value="#{msg['navbar.logout']}" />
-												</p:commandLink>
-											</h:form></li>
+										<li style="margin-top: 5px;" class="hoverPersonalizado">
+											<p:commandLink action="#{templateAppBean.logout}" ajax="true"
+												immediate="true" process="@this">
+												<i class="fa fa-sign-out pull-right"></i>
+												<h:outputText value="#{msg['navbar.logout']}" />
+											</p:commandLink>
+										</li>
 									</ul></li>
 
-
 								<li class="dropdown "><a class="dropdown-toggle"
-									data-toggle="dropdown" href="#"><pe:switch
+									data-toggle="dropdown" href="#"> <i
+										class="fa fa-bell fa-fw"></i> <pe:switch
 											value="#{templateAppBean.exitenAlertas}">
 											<pe:case value="#{true}">
-												<i class="fa fa-bell fa-fw" style="color: red"></i>
 												<span class="badge badge-notify">#{templateAppBean.alertas.size()}</span>
-												<i class="fa fa-caret-down"></i>
 											</pe:case>
+
 											<pe:case value="#{false}">
-												<i class="fa fa-bell fa-fw"></i>
 												<span class="badge badge-notify-zero">#{templateAppBean.alertas.size()}</span>
 											</pe:case>
 											<pe:defaultCase>
 												<i class="fa fa-bell fa-fw"></i>
 											</pe:defaultCase>
-										</pe:switch> </a>
+										</pe:switch> <i class="fa fa-caret-down" style="margin-left: -10px;"></i>
+								</a>
 
 									<ul class="dropdown-menu dropdown-alerts">
 										<ui:repeat var="alerta" value="#{templateAppBean.alertas}">
@@ -230,7 +229,7 @@
 
 			<!-- page content -->
 			<div class="page-content right_col" role="main">
-				<div class="">
+				<div class="page-subcontent">
 					<h:form id="formApp">
 						<!-- Growl Messages -->
 						<p:growl escape="false">
@@ -248,7 +247,7 @@
 
 						<!-- General Confirm Dialog -->
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-							style="text-align:center" width="600px">
+							width="400px">
 							<p:commandButton value="#{msg['yes']}" type="button"
 								styleClass="ui-confirmdialog-yes btn-success"
 								icon="fa fa-check-circle" />

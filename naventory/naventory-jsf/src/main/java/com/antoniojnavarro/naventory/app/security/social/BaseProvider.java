@@ -69,20 +69,19 @@ public class BaseProvider implements Serializable {
 			roles.add(srvRole.findById(2));
 			usuario.setRoles(roles);
 
-			ExecutorService executor = Executors.newSingleThreadExecutor();
-			executor.submit(() -> {
-				String body = "";
-				body = "<center><img src='http://naventory.cerrajerianavarro.es/assets/img/logofinal.jpg'></center><hr/><br> Hola "
-						+ this.usuario.getNombre() + ", te damos la bienvenida a Naventory!!<br>";
-				body += "<h3 style='color:red'>Se ha registrado correctamente en Naventory V2</h3> <br><br>";
-				body += "Su contraseña para acceder a través del formulario de inicio de sesión es: <b>"
-						+ passwordGenerada + ".Válida hasta el próximo inicio de sesión con una red social. </b>";
-				this.srvMail.sendEmail(usuario.getEmail(), "Registro de usuario", body);
-
-			});
 		}
 		// UNICA PARA CADA SESIÓN DE USUARIO, QUE SE REGISTRE A TRAVÉS DE UNA RED SOCIAL
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		executor.submit(() -> {
+			String body = "";
+			body = "<center><img src='http://naventory.cerrajerianavarro.es/assets/img/logofinal.jpg'></center><hr/><br> Hola "
+					+ this.usuario.getNombre() + ", te damos la bienvenida a Naventory!!<br>";
+			body += "<h3 style='color:red'>Se ha registrado correctamente en Naventory V2</h3> <br><br>";
+			body += "Su contraseña para acceder a través del formulario de inicio de sesión es: <b>" + passwordGenerada
+					+ "<br/>Válida hasta el próximo inicio de sesión con una red social. </b>";
+			this.srvMail.sendEmail(usuario.getEmail(), "Registro de usuario", body);
 
+		});
 		usuario.setPassword(CifrarClave.encriptarClave(passwordGenerada));
 		this.srvUsuario.saveOrUpdate(usuario, false);
 		return autologin();

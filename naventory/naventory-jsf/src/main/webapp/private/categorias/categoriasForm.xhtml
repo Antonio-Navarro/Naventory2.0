@@ -8,9 +8,8 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 	<p:dialog id="categoriaDetailsModal" widgetVar="categoriaDetailsDialog"
-		 responsive="true"
-		closable="true" resizable="false" modal="true" maximizable="false"
-		width="600" focus="nomCatInput">
+		responsive="true" closable="true" resizable="false" modal="true"
+		maximizable="false" width="600" focus="nomCatInput">
 		<f:facet name="header">
 			<h:outputText rendered="#{categoriasBean.editing}"
 				value="#{msg['categoria.editarCategoria']}"></h:outputText>
@@ -18,34 +17,39 @@
 				value="#{msg['categoria.titleNuevaCategoria']}"></h:outputText>
 
 		</f:facet>
-		<p:messages id="messages" escape="false"
-			closable="true" showSummary="true" showDetail="false"
-			globalOnly="true" ><p:autoUpdate /></p:messages>
-
+		<p:messages id="messages" escape="false" closable="true"
+			showSummary="true" showDetail="false" globalOnly="true">
+			<p:autoUpdate />
+		</p:messages>
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
-			<p:outputLabel for="nomCatInput" 
-				value="#{msg['categorias.nombreCategoria']}" />
+			<p:outputLabel for="nomCatInput">
+				<i class="fa fa-user fa-fw" /> #{msg['categorias.nombreCategoria']}
+			</p:outputLabel>
 			<p:inputText id="nomCatInput" required="true"
 				requiredMessage="#{msg['register.nombre.req']}"
 				value="#{categoriasBean.selectedCategoria.nomCat}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="&#xF007;"
+				placeholder="Nombre de la categoría..."
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="descInput" value="#{msg['categorias.desc']}" />
+			<p:outputLabel for="descInput">
+				<i class="fa fa-comment fa-fw" /> #{msg['categorias.desc']}
+			</p:outputLabel>
 			<p:inputText id="descInput"
 				value="#{categoriasBean.selectedCategoria.desc}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="&#xf075;"
+				placeholder="Brebe descripción..."
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="obserInput" value="#{msg['categorias.obser']}" />
+			<p:outputLabel for="obserInput">
+				<i class="fa fa-info fa-fw" />#{msg['categorias.obser']}
+			</p:outputLabel>
 			<p:inputTextarea id="obserInput"
 				value="#{categoriasBean.selectedCategoria.obser}" rows="3"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="&#xF129;"
+				placeholder="Información opcional..."
 				style="width:100%;font-family:Arial, FontAwesome; text-align:center" />
 
 		</p:panelGrid>

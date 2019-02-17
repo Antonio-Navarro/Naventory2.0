@@ -11,44 +11,42 @@
 		<title>Clientes | Naventory</title>
 	</ui:define>
 	<ui:define name="body">
+
 		<div class="row">
-			<div class="col-md-12">
-				<h1>
-					<h:outputText value="#{msg['clientes.title']}" />
-				</h1>
+			<div class="col-md-4" style="color: #232323">
+				<h3>
+					<p:outputLabel>
+						<i class="fa fa-street-view fa-fw" /> #{msg['clientes.title']}
+					</p:outputLabel>
+				</h3>
 			</div>
+		</div>
+		<div class="separator" />
+		<div class="row">
+			<ui:include src="clientesFilter.xhtml" />
 		</div>
 		<div class="clearfix"></div>
-		<div class="separator"></div>
-		<div class="row">
-			<div class="col-md-6 text-left">
-				<p:commandButton value="#{msg['clientes.nuevaCliente']}"
-					style="heig" icon="fa fa-street-view fa-fw"
-					styleClass="btn btn-lg btn-success"
-					actionListener="#{clientesBean.newCliente}"
-					oncomplete="PF('clienteDetailsDialog').show();"
-					update="clienteDetailsModal" />
-			</div>
-		</div>
-		<p:separator></p:separator>
+
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
 				<p:dataTable id="clienteTable" var="cliente" widgetVar="clientesWV"
-					value="#{clientesBean.clientes}" paginator="true" rowHover="true"
-					rows="#{defaultPaginatorRows}" rowIndexVar="cont"
-					paginatorPosition="bottom" lazy="false" resizableColumns="true"
+					value="#{clientesBean.listaClientes}" paginator="true"
+					rowHover="true" rows="#{defaultPaginatorRows}" rowIndexVar="cont"
+					paginatorPosition="bottom" lazy="true" resizableColumns="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
-					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{clientesBean.filteredClientes}"
-					selectionMode="single" selection="#{clientesBean.cliente}"
-					rowKey="#{cliente.idCliente}">
+					emptyMessage="#{msg['noresult']}" selectionMode="single"
+					selection="#{clientesBean.cliente}" rowKey="#{cliente.idCliente}">
 					<p:ajax event="rowSelect" listener="#{clientesBean.onRowSelect}" />
 
 					<f:facet name="header">
 						<div class="text-left">
-							<p:commandButton id="toggler" type="button" value="Columnas"
-								style="float:left" icon="ui-icon-calculator" />
-							<p:columnToggler datasource="clienteTable" trigger="toggler" />
+
+							<p:commandButton value="#{msg['clientes.nuevaCliente']}"
+								icon="fa fa-street-view fa-fw" style="float:left"
+								styleClass="btn btn-lg btn-success"
+								actionListener="#{clientesBean.newCliente}"
+								oncomplete="PF('clienteDetailsDialog').show();"
+								update="formApp:clienteDetailsModal" />
 						</div>
 						<div class="text-right">
 							<p:commandButton value="XLS" immediate="true" ajax="false"
@@ -70,20 +68,16 @@
 								<p:dataExporter type="csv" target="clienteTable"
 									fileName="clientes" encoding="UTF8" />
 							</p:commandButton>
-							<p:outputPanel>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('clientesWV').filter()" style="width:150px"
-									placeholder="#{msg['buscarTabla']}" />
-							</p:outputPanel>
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								icon="ui-icon-calculator" />
+							<p:columnToggler datasource="clienteTable" trigger="toggler" />
 						</div>
-
-
 					</f:facet>
 					<f:facet name="footer">
 
 						<div class="text-left">
 							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{fn:length(clientesBean.clientes)}"></f:param>
+								<f:param value="#{clientesBean.listaClientes.numResults}"></f:param>
 							</h:outputFormat>
 						</div>
 					</f:facet>
