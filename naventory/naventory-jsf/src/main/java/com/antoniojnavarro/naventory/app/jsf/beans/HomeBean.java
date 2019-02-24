@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
@@ -69,8 +71,8 @@ public class HomeBean extends MasterBean {
 
 	private List<Novedad> novedades;
 	private List<Evento> eventos;
+	private String empresa;
 
-	boolean exitenAlertas;
 	private Long numProductos;
 	private Long numCompras;
 	private Long numVentas;
@@ -100,7 +102,14 @@ public class HomeBean extends MasterBean {
 			crearBarGastosIngresos();
 			crearCalendario();
 		}
+		logger.debug(empresa);
+		if (empresa != null)
+			addInfo(empresa);
 
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map params = externalContext.getRequestParameterMap();
+		logger.debug((String) params.get("empresa"));
 	}
 
 	private DonutChartModel iniciarDonutFormasPago() {
@@ -310,10 +319,6 @@ public class HomeBean extends MasterBean {
 		novedades = this.srvNovedad.findNovedadesByUsuario(this.usuarioAuteticado.getUsuario(), LIMIT_NOVEDADES);
 	}
 
-	public void setExitenAlertas(boolean exitenAlertas) {
-		this.exitenAlertas = exitenAlertas;
-	}
-
 	public Long getNumProductos() {
 		return numProductos;
 	}
@@ -408,6 +413,14 @@ public class HomeBean extends MasterBean {
 
 	public void setUsuarioAuteticado(UsuarioAutenticado usuarioAuteticado) {
 		this.usuarioAuteticado = usuarioAuteticado;
+	}
+
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 }

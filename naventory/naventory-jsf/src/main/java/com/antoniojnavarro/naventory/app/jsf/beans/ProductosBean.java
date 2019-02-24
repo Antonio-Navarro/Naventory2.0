@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProductoLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
+import com.antoniojnavarro.naventory.model.filters.ProductoSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
@@ -39,13 +41,13 @@ public class ProductosBean extends MasterBean {
 	@Autowired
 	ParamBean paramBean;
 	private Producto producto;
-
+	private ProductoSearchFilter filtro;
 	private Producto selectedProducto;
 
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Producto> productos;
-	private List<Producto> filteredProductos;
+	private ProductoLazyDataModel listaProductos;
+
 	private List<Categoria> categorias;
 	private List<Proveedor> proveedores;
 
@@ -65,17 +67,24 @@ public class ProductosBean extends MasterBean {
 
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
-		cargarProductos();
 		cargarCategorias();
 		cargarProveedores();
 		cargarTotalInventario();
 	}
 
 	public void inicilizarAtributos() {
-		this.productos = null;
+
 		this.editing = false;
 		this.selectedProducto = new Producto();
 		this.producto = new Producto();
+		this.filtro = new ProductoSearchFilter();
+		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		listaProductos = new ProductoLazyDataModel(filtro, srvProducto);
+	}
+
+	public void buscar() {
+		listaProductos = new ProductoLazyDataModel(filtro, srvProducto);
+
 	}
 
 	public void newProducto() {
@@ -117,10 +126,6 @@ public class ProductosBean extends MasterBean {
 		this.totalInventario = srvProducto.getTotalInventario(this.usuarioAutenticado.getUsuario());
 	}
 
-	public void cargarProductos() {
-		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
 	public void cargarCategorias() {
 		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
 	}
@@ -132,7 +137,6 @@ public class ProductosBean extends MasterBean {
 	public void borrarProducto(Producto producto) {
 
 		srvProducto.delete(producto);
-		this.productos.remove(producto);
 		cargarTotalInventario();
 		addInfo("productos.succesDelete");
 		this.editing = false;
@@ -145,9 +149,6 @@ public class ProductosBean extends MasterBean {
 			srvProducto.validateSKU(selectedProducto.getSku());
 		}
 		srvProducto.saveOrUpdate(this.selectedProducto, true);
-		if (!editing) {
-			this.productos.add(selectedProducto);
-		}
 		cargarTotalInventario();
 		super.closeDialog("productoDetailsDialog");
 		addInfo("productos.succesNew");
@@ -170,28 +171,12 @@ public class ProductosBean extends MasterBean {
 		this.selectedProducto = selectedProducto;
 	}
 
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
-	}
-
 	public boolean isEditing() {
 		return editing;
 	}
 
 	public void setEditing(boolean editing) {
 		this.editing = editing;
-	}
-
-	public List<Producto> getFilteredProductos() {
-		return filteredProductos;
-	}
-
-	public void setFilteredProductos(List<Producto> filteredProductos) {
-		this.filteredProductos = filteredProductos;
 	}
 
 	public List<Categoria> getCategorias() {
@@ -216,6 +201,22 @@ public class ProductosBean extends MasterBean {
 
 	public void setTotalInventario(Float totalInventario) {
 		this.totalInventario = totalInventario;
+	}
+
+	public ProductoSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(ProductoSearchFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public ProductoLazyDataModel getListaProductos() {
+		return listaProductos;
+	}
+
+	public void setListaProductos(ProductoLazyDataModel listaProductos) {
+		this.listaProductos = listaProductos;
 	}
 
 }

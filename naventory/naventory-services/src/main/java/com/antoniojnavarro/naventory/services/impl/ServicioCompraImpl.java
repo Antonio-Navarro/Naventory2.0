@@ -108,8 +108,8 @@ public class ServicioCompraImpl implements ServicioCompra {
 		this.srvValidacion.isNull("Factura", entity.getFactura());
 		this.srvValidacion.isNull("Cantidad", entity.getCantidad());
 		CompraSearchFilter searchFilter = new CompraSearchFilter();
-		searchFilter = searchFilter.factura(entity.getFactura());
-		searchFilter = searchFilter.usuario(entity.getUsuario().getEmail());
+		searchFilter.setFactura(entity.getFactura());
+		searchFilter.setUsuario(entity.getUsuario().getEmail());
 		List<Compra> compras = this.compraDao.findBySearchFilter(searchFilter);
 		if (compras.size() > 0) {
 			throw new ServicioException(srvMensajes.getMensajeI18n("compra.factura.existe"));

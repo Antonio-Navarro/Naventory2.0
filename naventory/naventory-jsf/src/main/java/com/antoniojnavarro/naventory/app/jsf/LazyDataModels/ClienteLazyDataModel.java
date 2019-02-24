@@ -33,6 +33,11 @@ public class ClienteLazyDataModel extends LazyDataModel<Cliente> {
 	}
 
 	@Override
+	public void setPageSize(int pageSize) {
+		super.setPageSize(pageSize);
+	}
+
+	@Override
 	public Cliente getRowData(String rowKey) {
 		return srvCliente.findById(Integer.parseInt(rowKey));
 	}

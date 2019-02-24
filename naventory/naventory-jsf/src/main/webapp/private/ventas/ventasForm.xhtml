@@ -17,28 +17,72 @@
 				value="#{msg['ventas.titleNuevaVenta']}"></h:outputText>
 
 		</f:facet>
-		<p:messages id="messages" escape="false"
-			closable="true" showSummary="true" showDetail="false"
-			globalOnly="true">
-			<p:autoUpdate />
-		</p:messages>
-
-
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
+			<p:outputLabel for="clienteSeleccionado" value="#{msg['cliente']}" />
+			<p:column style="display:inline-flex">
+				<div class="ui-inputgroup">
+					<p:inputText id="clienteSeleccionado" readonly="true"
+						required="true" style="height:30px"
+						requiredMessage="#{msg['ventas.cliente.required']}"
+						value="#{ventasBean.selectedVenta.cliente.nombre}" />
+					<p:commandButton id="buscarCliente" icon="fa fa-street-view"
+						style="height:30px;width: 15%;" type="button" />
+				</div>
+				<!-- 				<p:inputText id="clienteSeleccionado" readonly="true" -->
+				<!-- 					required="true" style="width:65%" -->
+				<!-- 					requiredMessage="#{msg['ventas.cliente.required']}" -->
+				<!-- 					value="#{ventasBean.selectedVenta.cliente.nombre}"></p:inputText> -->
 
-			<p:outputLabel for="clienteSelect" value="#{msg['cliente']}" />
-			<p:selectOneMenu id="clienteSelect" filter="true" required="true"
-				converter="#{clienteConverter}"
-				requiredMessage="#{msg['ventas.cliente.required']}"
-				value="#{ventasBean.selectedVenta.cliente}"
-				style="min-width:100% !important;">
-				<f:selectItem itemLabel="Elige un cliente..." itemValue="#{null}" />
-				<f:selectItems value="#{ventasBean.clientes}" var="cliente"
-					itemLabel="#{cliente.nombre}" itemValue="#{cliente}" />
-			</p:selectOneMenu>
+				<p:overlayPanel id="panelClientesOverlayId" for="buscarCliente"
+					onShow="PrimeFaces.focus('formApp:filtroNombre');"
+					appendToBody="true" hideEffect="fade" dismissable="true"
+					showCloseIcon="true" widgetVar="panelClientesOverlay"
+					style="width:700px" modal="true">
+					<p:outputPanel id="filtroClientePanel">
+						<p:outputLabel for="filtroNombre"
+							value="#{ventasBean.filtroClientes.nombre}" styleClass="lblForm" />
+						<p:inputText id="filtroNombre" styleClass="inputFiltro"
+							value="#{ventasBean.filtroClientes.nombre}" style="float:unset" />
+						<p:commandButton id="buscarTablaClientes"
+							style="float:right" actionListener="#{ventasBean.cargarClientes}"
+							value="Buscar"
+							update="formApp:tablaClientesOverlay,formApp:filtroClientePanel"
+							process="@this" />
+					</p:outputPanel>
+					<p:dataTable var="cliente" id="tablaClientesOverlay"
+						style="margin-top:3px;" value="#{ventasBean.clientes}" rows="5"
+						lazy="true" paginator="true" paginatorPosition="top">
+						<f:facet name="header">Lista de Clientes</f:facet>
+						<p:column headerText="Nombre">
+							<h:outputText value="#{cliente.nombre}" />
+						</p:column>
+						<p:column style="text-align: center">
+							<p:commandButton update="formApp:clienteSeleccionado"
+								immediate="true" oncomplete="PF('panelClientesOverlay').hide()"
+								icon="fa fa-hand-o-up" title="Seleccionar">
+								<f:setPropertyActionListener value="#{cliente}"
+									target="#{ventasBean.selectedVenta.cliente}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:overlayPanel>
+			</p:column>
 
+
+
+			<!-- 			<p:outputLabel for="clienteSelect" value="#{msg['cliente']}" /> -->
+			<!-- 			<p:selectOneMenu id="clienteSelect" filter="true" required="true" -->
+			<!-- 				converter="#{clienteConverter}" dynamic="true" -->
+			<!-- 				requiredMessage="#{msg['ventas.cliente.required']}" -->
+			<!-- 				value="#{ventasBean.selectedVenta.cliente}" -->
+			<!-- 				style="min-width:100% !important;"> -->
+			<!-- 				<f:selectItem itemLabel="Elige un cliente..." itemValue="#{null}" /> -->
+			<!-- 				<f:selectItems value="#{ventasBean.clientes}" var="cliente" -->
+			<!-- 					itemLabel="#{cliente.nombre}" itemValue="#{cliente}" /> -->
+
+			<!-- 			</p:selectOneMenu> -->
 			<p:outputLabel for="productoSelect" value="#{msg['producto']}" />
 			<p:selectOneMenu id="productoSelect" filter="true" required="true"
 				converter="#{productoConverter}"
@@ -49,6 +93,7 @@
 				<f:selectItems value="#{ventasBean.productos}" var="producto"
 					itemLabel="#{producto.nombre}" itemValue="#{producto}" />
 			</p:selectOneMenu>
+
 
 			<p:outputLabel for="cantidadInput" value="#{msg['ventas.cantidad']}" />
 			<p:inputText id="cantidadInput" required="true"
@@ -103,5 +148,16 @@
 			</p:row>
 		</f:facet>
 	</p:dialog>
+	<script type="text/javascript">
+		(function() {
+			var proxied = PrimeFaces.widget.OverlayPanel.prototype.applyFocus;
 
+			PrimeFaces.widget.OverlayPanel.prototype.applyFocus = function() {
+				if (this.id == "formApp:panelClientesOverlayId")
+					return;
+
+				return proxied.apply(this, arguments);
+			};
+		})();
+	</script>
 </ui:composition>

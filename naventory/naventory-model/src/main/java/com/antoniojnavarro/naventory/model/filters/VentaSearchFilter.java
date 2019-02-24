@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.antoniojnavarro.naventory.model.commons.filters.SearchFilter;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.BetweenDate;
-import com.antoniojnavarro.naventory.model.commons.filters.annotations.BetweenDate.ModeEnum;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.EntityFilter;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.LikeMode;
@@ -12,6 +11,7 @@ import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWher
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.OperatorLikeNoneEnum;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.OrderByColumn;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.OrderByMultipleColumns;
+import com.antoniojnavarro.naventory.model.commons.filters.annotations.BetweenDate.ModeEnum;
 import com.antoniojnavarro.naventory.model.entities.Venta;;
 
 @EntityFilter(entity = Venta.class, abbr = "c")
@@ -28,7 +28,7 @@ public class VentaSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.cantidad", likeMode = LikeMode.NONE)
 	private Integer cantidad;
 
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator=LogicalOperatorBetweenNames.AND)
+	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
 	private String usuario;
 
 	@FieldWhere(columns = "c.producto.nombre", likeMode = LikeMode.CONTAINS)
@@ -38,8 +38,27 @@ public class VentaSearchFilter implements SearchFilter {
 	private String nombreCliente;
 
 	@FieldWhere(columns = "c.fecha")
+	@BetweenDate(mode = ModeEnum.AFTER_EQUALS)
+	private Date fechaIni;
+
+	@FieldWhere(columns = "c.fecha")
 	@BetweenDate(mode = ModeEnum.BEFORE_EQUALS)
-	private Date fecha;
+	private Date fechaFin;
+
+	@FieldWhere(columns = "c.formaPago.idPago", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
+	private Integer formaPago;
+
+	@FieldWhere(columns = "c.descuento", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
+	private Float descuento;
+
+	@FieldWhere(columns = "c.iva", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
+	private Float iva;
+
+	@FieldWhere(columns = "c.precio", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
+	private Float precio;
+
+	@FieldWhere(columns = "c.total", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
+	private Float total;
 
 	public String getUsuario() {
 		return usuario;
@@ -65,12 +84,20 @@ public class VentaSearchFilter implements SearchFilter {
 		this.nombreProducto = nombreProducto;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaIni() {
+		return fechaIni;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaIni(Date fechaIni) {
+		this.fechaIni = fechaIni;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 
 	public String getNombreCliente() {
@@ -79,6 +106,46 @@ public class VentaSearchFilter implements SearchFilter {
 
 	public void setNombreCliente(String nombreCliente) {
 		this.nombreCliente = nombreCliente;
+	}
+
+	public Integer getFormaPago() {
+		return formaPago;
+	}
+
+	public void setFormaPago(Integer formaPago) {
+		this.formaPago = formaPago;
+	}
+
+	public Float getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Float descuento) {
+		this.descuento = descuento;
+	}
+
+	public Float getIva() {
+		return iva;
+	}
+
+	public void setIva(Float iva) {
+		this.iva = iva;
+	}
+
+	public Float getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Float precio) {
+		this.precio = precio;
+	}
+
+	public Float getTotal() {
+		return total;
+	}
+
+	public void setTotal(Float total) {
+		this.total = total;
 	}
 
 }

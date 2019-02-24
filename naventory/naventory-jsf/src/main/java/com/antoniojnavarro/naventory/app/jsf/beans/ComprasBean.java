@@ -18,12 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.CompraLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
+import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioCompra;
@@ -57,10 +59,10 @@ public class ComprasBean extends MasterBean {
 
 	private Compra selectedCompra;
 	private Producto selectedProducto;
-
+	private CompraSearchFilter filtro;
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Compra> compras;
+	private CompraLazyDataModel listaCompras;
 	private List<Compra> filteredCompras;
 	private List<Proveedor> proveedores;
 	private List<Producto> productos;
@@ -86,7 +88,6 @@ public class ComprasBean extends MasterBean {
 		logger.info("Compras.init()");
 		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		inicilizarAtributos();
-		cargarCompras();
 		cargarProveedores();
 		cargarProductos();
 		cargarCategorias();
@@ -95,11 +96,17 @@ public class ComprasBean extends MasterBean {
 	}
 
 	public void inicilizarAtributos() {
-		this.compras = null;
 		this.editing = false;
+		this.filtro = new CompraSearchFilter();
+		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.listaCompras = new CompraLazyDataModel(filtro, srvCompra);
 		this.selectedCompra = new Compra();
 		this.selectedProducto = new Producto();
 		this.compra = new Compra();
+	}
+
+	public void buscar() {
+		this.listaCompras = new CompraLazyDataModel(filtro, srvCompra);
 	}
 
 	public void newCompra() {
@@ -117,10 +124,6 @@ public class ComprasBean extends MasterBean {
 
 	public void iniciarSelectedCompra() {
 		this.selectedCompra = null;
-	}
-
-	public void cargarCompras() {
-		this.compras = srvCompra.findComprasByUsuario(this.usuarioAutenticado.getUsuario());
 	}
 
 	public void cargarProveedores() {
@@ -146,7 +149,6 @@ public class ComprasBean extends MasterBean {
 
 		}
 		srvCompra.delete(compra);
-		this.compras.remove(compra);
 		addInfo("compras.succesDelete");
 		this.editing = false;
 	}
@@ -169,9 +171,6 @@ public class ComprasBean extends MasterBean {
 		selectedCompra = srvCompra.saveNewOrUpdate(selectedCompra, true, nuevoProducto);
 		selectedCompra = srvCompra.findById(selectedCompra.getIdCompra());
 
-		if (!editing) {
-			this.compras.add(0, selectedCompra);
-		}
 		if (!nuevoProducto)
 			super.closeDialog("compraExisteDetailsDialog");
 		else
@@ -241,14 +240,6 @@ public class ComprasBean extends MasterBean {
 
 	public void setSelectedCompra(Compra selectedCompra) {
 		this.selectedCompra = selectedCompra;
-	}
-
-	public List<Compra> getCompras() {
-		return compras;
-	}
-
-	public void setCompras(List<Compra> compras) {
-		this.compras = compras;
 	}
 
 	public List<Compra> getFilteredCompras() {
@@ -321,6 +312,22 @@ public class ComprasBean extends MasterBean {
 
 	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
 		this.usuarioAutenticado = usuarioAutenticado;
+	}
+
+	public CompraSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(CompraSearchFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public CompraLazyDataModel getListaCompras() {
+		return listaCompras;
+	}
+
+	public void setListaCompras(CompraLazyDataModel listaCompras) {
+		this.listaCompras = listaCompras;
 	}
 
 }

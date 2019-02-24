@@ -18,39 +18,39 @@
 				<f:facet name="actions">
 					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
 						style="float:right" immediate="true"
-						actionListener="#{clientesBean.inicilizarAtributos}"
+						actionListener="#{productosBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiar" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
 					<p:commandButton icon="ui-icon-search" value="Buscar"
 						id="btnBuscar" style="float:right"
-						actionListener="#{clientesBean.buscar}"
-						update="formApp:clienteTable" process="panelFiltro" />
+						actionListener="#{productosBean.buscar}"
+						update="formApp:productoTable" process="panelFiltro" />
 				</f:facet>
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
+							<p:outputLabel for="filtroID" value="SKU" styleClass="lblForm" />
 							<p:inputText id="filtroID" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.idCliente}" />
+								value="#{productosBean.filtro.sku}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel for="filtroNombre" value="Nombre"
 								styleClass="lblForm" />
 							<p:inputText id="filtroNombre" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.nombre}" />
+								value="#{productosBean.filtro.nombre}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroDireccion" value="Dirección"
+							<p:outputLabel for="filtroCategoria" value="Categoría"
 								styleClass="lblForm" />
-							<p:inputText id="filtroDireccion" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.direccion}" />
+							<p:inputText id="filtroCategoria" styleClass="inputFiltro"
+								value="#{productosBean.filtro.categoria}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroCiudad" value="Ciudad"
+							<p:outputLabel for="filtroProveedor" value="Proveedor"
 								styleClass="lblForm" />
-							<p:inputText id="filtroCiudad" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.ciudad}" />
+							<p:inputText id="filtroProveedor" styleClass="inputFiltro"
+								value="#{productosBean.filtro.proveedor}" />
 						</p:column>
 					</p:row>
 
@@ -66,68 +66,47 @@
 				<f:facet name="actions">
 					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
 						style="float:right" immediate="true"
-						actionListener="#{clientesBean.inicilizarAtributos}"
+						actionListener="#{productosBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiarAvanzada" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
 					<p:commandButton icon="ui-icon-search" value="Buscar"
 						id="btnBuscarAvanzada" style="float:right"
-						actionListener="#{clientesBean.buscar}"
-						update="formApp:clienteTable" process="panelFiltro" />
+						actionListener="#{productosBean.buscar}"
+						update="formApp:productoTable" process="panelFiltro" />
 				</f:facet>
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroNombreComercial"
-								value="Nombre comercial" styleClass="lblForm" />
-							<p:inputText id="filtroNombreComercial" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.nombreCom}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel for="filtroProvincia" value="Provincia"
+							<p:outputLabel for="filtroCoste" value="Coste"
 								styleClass="lblForm" />
-							<p:inputText id="filtroProvincia" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.provincia}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel for="filtroPais" value="País" styleClass="lblForm" />
-							<p:inputText id="filtroPais" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.pais}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel for="filtroCp" value="C.P." styleClass="lblForm" />
-							<p:inputText id="filtroCp" value="#{clientesBean.filtro.cp}"
+							<p:inputNumber id="filtroCoste" symbol="€" symbolPosition="s"
+								emptyValue="empty" value="#{productosBean.filtro.coste}"
 								styleClass="inputFiltro" />
 						</p:column>
-					</p:row>
-					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroTel1" value="Teléfono 1"
+							<p:outputLabel for="filtroPrecio" value="Precio"
 								styleClass="lblForm" />
-							<p:inputText id="filtroTel1" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.tel1}" />
-						</p:column>
+							<p:inputNumber id="filtroPrecio"
+								value="#{productosBean.filtro.precio}" symbol="€"
+								symbolPosition="s" emptyValue="empty" styleClass=" inputFiltro" />
 
-						<p:column>
-							<p:outputLabel for="filtroCorreo" value="Correo"
-								styleClass="lblForm" />
-							<p:inputText id="filtroCorreo" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.correo}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroDescuento" value="Descuento"
+							<p:outputLabel for="filtroStock" value="Stock"
 								styleClass="lblForm" />
-							<p:inputNumber id="filtroDescuento"
-								value="#{clientesBean.filtro.descuento}" symbol="%"
-								symbolPosition="s" emptyValue="empty" styleClass="inputFiltro" />
+							<p:inputText id="filtroStock" styleClass="inputFiltro"
+								value="#{productosBean.filtro.stock}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroIva" value="I.V.A" styleClass="lblForm" />
-							<p:inputNumber id="filtroIva" value="#{clientesBean.filtro.iva}"
-								symbol="%" symbolPosition="s" emptyValue="empty"
+							<p:outputLabel for="filtroStockMin" value="Stock Mínimo"
+								styleClass="lblForm" />
+							<p:inputText id="filtroStockMin"
+								value="#{productosBean.filtro.stockMin}"
 								styleClass="inputFiltro" />
 						</p:column>
 					</p:row>
+
 
 				</p:panelGrid>
 			</p:tab>

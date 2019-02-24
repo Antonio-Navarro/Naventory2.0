@@ -15,145 +15,61 @@
 	</ui:define>
 
 	<ui:define name="body">
-
-		<div class="clearfix"></div>
 		<div class="row">
-			<div class="col-md-6 text-left">
-				<p:commandButton value="#{msg['ventas.nuevaVenta']}"
-					style="float:left" icon="fa fa-cart-arrow-down  fa-fw"
-					process="@this" styleClass="btn btn-lg btn-success "
-					actionListener="#{ventasBean.newVenta}"
-					oncomplete="PF('ventaDetailsDialog').show();"
-					update="ventaDetailsModal" />
+			<div class="col-md-4" style="color: #232323">
+				<h3>
+					<p:outputLabel>
+						<i class="fa fa-cart-arrow-down fa-fw" /> #{msg['ventas.title']}
+					</p:outputLabel>
+				</h3>
 			</div>
 		</div>
-		<div class="separator"></div>
-		<div class="row" style="margin-top: 1%;">
-<!-- 			<p:tabView dynamic="true" cache="true" effect="fold"> -->
-<!-- 				<f:validateBean disabled="true"> -->
-<!-- 					<p:tab title="Búsqueda"> -->
-<!-- 						<f:facet name="actions"> -->
-<!-- 							<p:commandButton icon="ui-icon-refresh" value="Limpiar" -->
-<!-- 								style="float:right" actionListener="#{expedientesList.limpiar}" -->
-<!-- 								update="@form"> -->
-<!-- 							</p:commandButton> -->
-<!-- 							<p:commandButton icon="ui-icon-search" value="Buscar" -->
-<!-- 								style="float:right" actionListener="#{expedientesList.buscar}" -->
-<!-- 								update="@form"></p:commandButton> -->
-<!-- 						</f:facet> -->
-<!-- 						<p:panelGrid styleClass="ui-noborder"> -->
-<!-- 							<p:row> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtroDNI" value="DNI" styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtroDNI" size="9" -->
-<!-- 										value="#{expedientesList.filtro['dni']}" /> -->
-<!-- 								</p:column> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtroNombre" value="Nombre" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtroNombre" size="14" -->
-<!-- 										value="#{expedientesList.filtro['nombre']}" /> -->
-<!-- 								</p:column> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtroApellido1" value="Primer Apellido" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtroApellido1" size="18" -->
-<!-- 										value="#{expedientesList.filtro['apellido1']}" /> -->
-<!-- 								</p:column> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtroApellido2" value="Segundo Apellido" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtroApellido2" size="18" -->
-<!-- 										value="#{expedientesList.filtro['apellido2']}" /> -->
-<!-- 								</p:column> -->
-<!-- 							</p:row> -->
-<!-- 						</p:panelGrid> -->
-<!-- 					</p:tab> -->
-<!-- 					<p:tab title="Búsqueda Avanzada"> -->
-<!-- 						<f:facet name="actions"> -->
-<!-- 							<p:commandButton icon="ui-icon-refresh" value="Limpiar" -->
-<!-- 								style="float:right" actionListener="#{expedientesList.limpiar}" -->
-<!-- 								update="@form"> -->
-<!-- 							</p:commandButton> -->
-<!-- 							<p:commandButton icon="ui-icon-search" value="Buscar" -->
-<!-- 								style="float:right" actionListener="#{expedientesList.buscar}" -->
-<!-- 								update="@form"></p:commandButton> -->
-<!-- 						</f:facet> -->
-<!-- 						<p:panelGrid styleClass="ui-noborder"> -->
-<!-- 							<p:row> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtroCodExp" value="Código Expediente" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtroCodExp" size="9" -->
-<!-- 										value="#{expedientesList.filtro['codexpediente']}"> -->
-<!-- 									</p:inputText> -->
-<!-- 								</p:column> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtrocajaexpbaja" value="Caja en Baja" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtrocajaexpbaja" size="14" -->
-<!-- 										value="#{expedientesList.filtro['cajaexpbaja']}"> -->
-<!-- 									</p:inputText> -->
-<!-- 								</p:column> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtrofcreacion" value="Fecha Creación" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtrofcreacion" size="14" -->
-<!-- 										value="#{expedientesList.filtro['fcreacion']}"> -->
-<!-- 									</p:inputText> -->
-<!-- 								</p:column> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtrofbaja" value="Fecha Baja" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputText id="filtrofbaja" size="14" -->
-<!-- 										value="#{expedientesList.filtro['fbaja']}" /> -->
-<!-- 								</p:column> -->
-<!-- 							</p:row> -->
-<!-- 						</p:panelGrid> -->
-<!-- 						<p:panelGrid styleClass="ui-noborder"> -->
-<!-- 							<p:row> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel for="filtroObservaciones" value="Observaciones" -->
-<!-- 										styleClass="lblForm" /> -->
-<!-- 									<p:inputTextarea id="filtroObservaciones" rows="3" cols="66" -->
-<!-- 										value="#{expedientesList.filtro.observaciones}" /> -->
-<!-- 								</p:column> -->
-<!-- 							</p:row> -->
-<!-- 						</p:panelGrid> -->
-<!-- 					</p:tab> -->
-<!-- 				</f:validateBean> -->
-<!-- 			</p:tabView> -->
+		<div class="separator" />
+		<div class="row">
+			<ui:include src="ventasFilter.xhtml" />
+		</div>
+		<div class="row">
 			<div class="col-md-12">
 				<p:dataTable id="ventaTable" var="venta" widgetVar="ventasWV"
 					value="#{ventasBean.listaVentas}" paginator="true" rowHover="true"
 					rows="#{defaultPaginatorRows}" rowIndexVar="cont"
-					paginatorPosition="bottom" lazy="true" resizableColumns="true"
+					paginatorPosition="bottom" lazy="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}">
 					<f:facet name="header">
-						<div class="text-left"></div>
+						<div class="text-left">
+							<p:commandButton value="#{msg['ventas.nuevaVenta']}"
+								icon="fa fa-cart-arrow-down  fa-fw" style="float:left"
+								process="@this" styleClass="btn btn-lg btn-success "
+								actionListener="#{ventasBean.newVenta}"
+								oncomplete="PF('ventaDetailsDialog').show();"
+								update="formApp:ventaDetailsModal" />
+						</div>
 						<div class="text-right">
-							<p:commandButton value="XLS" immediate="true" ajax="false"
-								styleClass="btn-success" style="float:right; margin-left:5px"
-								icon="fa fa-file-excel-o">
-								<p:dataExporter type="xls" target="ventaTable" fileName="ventas" />
-							</p:commandButton>
-							<p:commandButton value="PDF" immediate="true" ajax="false"
-								styleClass="btn-success" style="float:right; margin-left:5px "
-								icon="fa fa-file-pdf-o">
-								<p:dataExporter type="pdf" target="ventaTable" fileName="ventas"
-									options="#{ventasBean.pdfOpt}"
-									preProcessor="#{ventasBean.preProcesamientoPdf}" />
-							</p:commandButton>
-							<p:commandButton value="CSV" immediate="true" ajax="false"
-								styleClass="btn-success" style="float:right;  margin-left:5px"
-								icon="fa fa-file-text-o">
-								<p:dataExporter type="csv" target="ventaTable" fileName="ventas"
-									encoding="UTF8" />
-							</p:commandButton>
 							<p:outputPanel>
-								<p:inputText id="globalFilter" onkeyup="PF('ventasWV').filter()"
-									style="width:150px" placeholder="#{msg['buscarTabla']}" />
+
+								<p:commandButton value="XLS" immediate="true" ajax="false"
+									styleClass="btn-success" style="float:right; margin-left:5px"
+									icon="fa fa-file-excel-o">
+									<p:dataExporter type="xls" target="ventaTable"
+										fileName="ventas" />
+								</p:commandButton>
+								<p:commandButton value="PDF" immediate="true" ajax="false"
+									styleClass="btn-success" style="float:right; margin-left:5px "
+									icon="fa fa-file-pdf-o">
+									<p:dataExporter type="pdf" target="ventaTable"
+										fileName="ventas" options="#{ventasBean.pdfOpt}"
+										preProcessor="#{ventasBean.preProcesamientoPdf}" />
+								</p:commandButton>
+								<p:commandButton value="CSV" immediate="true" ajax="false"
+									styleClass="btn-success" style="float:right;  margin-left:5px"
+									icon="fa fa-file-text-o">
+									<p:dataExporter type="csv" target="ventaTable"
+										fileName="ventas" encoding="UTF8" />
+								</p:commandButton>
+								<p:commandButton id="toggler" type="button" value="Columnas"
+									icon="ui-icon-calculator" />
+								<p:columnToggler datasource="ventaTable" trigger="toggler" />
 							</p:outputPanel>
 						</div>
 					</f:facet>
@@ -167,30 +83,25 @@
 						</div>
 					</f:facet>
 					<p:column sortBy="#{venta.cliente.nombre}"
-						filterBy="#{venta.cliente.nombre}"
-						style="width:12%; white-space:inherit" filterMatchMode="contains"
+						style="width:12%; white-space:inherit"
 						headerText="#{msg['cliente']}">
 						<h:outputText value="#{venta.cliente.nombre}" />
 					</p:column>
 					<p:column sortBy="#{venta.producto.nombre}"
-						filterBy="#{venta.nombre}" style="width:12%"
-						filterMatchMode="contains" headerText="#{msg['producto']}">
+						headerText="#{msg['producto']}">
 						<h:outputText value="#{venta.nombreProd}" />
 					</p:column>
-					<p:column sortBy="#{venta.fecha}" filterBy="#{venta.fecha}"
-						styleClass="tdNumber" style="width:12%" filterMatchMode="contains"
+					<p:column sortBy="#{venta.fecha}" styleClass="tdNumber"
 						headerText="#{msg['fecha']}">
 						<h:outputText value="#{venta.fecha}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" />
 						</h:outputText>
 					</p:column>
-					<p:column sortBy="#{venta.cantidad}" filterBy="#{venta.cantidad}"
-						style="width:12%" styleClass="tdNumber" filterMatchMode="contains"
+					<p:column sortBy="#{venta.cantidad}" styleClass="tdNumber"
 						headerText="#{msg['ventas.cantidad']}">
 						<h:outputText value="#{venta.cantidad} #{venta.unidad} " />
 					</p:column>
-					<p:column sortBy="#{venta.precio}" style="width:12%"
-						filterMatchMode="contains" styleClass="tdNumber"
+					<p:column sortBy="#{venta.precio}" styleClass="tdNumber"
 						headerText="#{msg['ventas.precio.table']}">
 						<h:outputText value="#{venta.precio}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"
@@ -198,33 +109,33 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column sortBy="#{venta.iva}" style="width:12%"
-						styleClass="tdNumber" headerText="#{msg['iva']}">
+					<p:column sortBy="#{venta.iva}" styleClass="tdNumber"
+						headerText="#{msg['iva']}">
 						<h:outputText value="#{venta.iva}">
 							<f:convertNumber type="currency" currencySymbol="%" />
 						</h:outputText>
 					</p:column>
-					<p:column sortBy="#{venta.descuento}" style="width:12%"
-						styleClass="tdNumber" headerText="#{msg['ventas.descuento']}">
+					<p:column sortBy="#{venta.descuento}" styleClass="tdNumber"
+						headerText="#{msg['ventas.descuento']}">
 						<h:outputText value="#{venta.descuento}">
 							<f:convertNumber type="currency" currencySymbol="%" />
 						</h:outputText>
 
 					</p:column>
 					<p:column sortBy="#{venta.formaPago.nombre}" exportable="false"
-						style="width:12%" headerText="#{msg['formapago']}">
+						headerText="#{msg['formapago']}">
 						<h:outputText value="#{venta.formaPago.nombre}" />
 					</p:column>
 
-					<p:column style="width:12%" sortBy="#{venta.total}"
-						styleClass="tdNumber" headerText="#{msg['total']}">
+					<p:column sortBy="#{venta.total}" styleClass="tdNumber"
+						headerText="#{msg['total']}">
 						<h:outputText value="#{venta.total}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"
 								minIntegerDigits="2" />
 						</h:outputText>
 					</p:column>
 
-					<p:column width="15%" style="text-align:center" exportable="false"
+					<p:column style="text-align:center" exportable="false"
 						headerText="#{msg['users.datatable.header.opciones']}">
 
 						<p:commandLink id="fadeEditar" global="false" process="@this"

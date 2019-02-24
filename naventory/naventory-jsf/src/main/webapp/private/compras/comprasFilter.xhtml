@@ -18,40 +18,44 @@
 				<f:facet name="actions">
 					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
 						style="float:right" immediate="true"
-						actionListener="#{clientesBean.inicilizarAtributos}"
+						actionListener="#{comprasBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiar" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
 					<p:commandButton icon="ui-icon-search" value="Buscar"
 						id="btnBuscar" style="float:right"
-						actionListener="#{clientesBean.buscar}"
-						update="formApp:clienteTable" process="panelFiltro" />
+						actionListener="#{comprasBean.buscar}"
+						update="formApp:compraTable" process="panelFiltro" />
 				</f:facet>
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
-							<p:inputText id="filtroID" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.idCliente}" />
+							<p:outputLabel for="facturaFiltro" value="Factura"
+								styleClass="lblForm" />
+							<p:inputText id="facturaFiltro" styleClass="inputFiltro"
+								value="#{comprasBean.filtro.factura}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroNombre" value="Nombre"
+							<p:outputLabel for="filtroProducto" value="Producto "
 								styleClass="lblForm" />
-							<p:inputText id="filtroNombre" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.nombre}" />
+							<p:inputText id="filtroProducto" styleClass="inputFiltro"
+								value="#{comprasBean.filtro.nombreProd}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroDireccion" value="Dirección"
+							<p:outputLabel for="filtroProveedor" value="Proveedor"
 								styleClass="lblForm" />
-							<p:inputText id="filtroDireccion" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.direccion}" />
+							<p:inputText id="filtroProveedor" styleClass="inputFiltro"
+								value="#{comprasBean.filtro.proveedor}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroCiudad" value="Ciudad"
-								styleClass="lblForm" />
-							<p:inputText id="filtroCiudad" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.ciudad}" />
+							<p:calendar id="filtroFechaHasta" placeholder="Fecha desde"
+								value="#{comprasBean.filtro.fechaFin}" pattern="dd/MM/yyyy" />  -  	
+							<p:calendar id="filtroFecha" placeholder="Fecha hasta"
+								style="margin-left:3px" value="#{comprasBean.filtro.fechaIni}"
+								pattern="dd/MM/yyyy" />
+
 						</p:column>
+
 					</p:row>
 
 				</p:panelGrid>
@@ -66,69 +70,45 @@
 				<f:facet name="actions">
 					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
 						style="float:right" immediate="true"
-						actionListener="#{clientesBean.inicilizarAtributos}"
+						actionListener="#{comprasBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiarAvanzada" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
 					<p:commandButton icon="ui-icon-search" value="Buscar"
 						id="btnBuscarAvanzada" style="float:right"
-						actionListener="#{clientesBean.buscar}"
-						update="formApp:clienteTable" process="panelFiltro" />
+						actionListener="#{comprasBean.buscar}"
+						update="formApp:compraTable" process="panelFiltro" />
 				</f:facet>
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroNombreComercial"
-								value="Nombre comercial" styleClass="lblForm" />
-							<p:inputText id="filtroNombreComercial" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.nombreCom}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel for="filtroProvincia" value="Provincia"
+							<p:outputLabel for="filtroCantidad" value="Cantidad"
 								styleClass="lblForm" />
-							<p:inputText id="filtroProvincia" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.provincia}" />
+							<p:inputText id="filtroCantidad" styleClass="inputFiltro"
+								value="#{comprasBean.filtro.cantidad}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroPais" value="País" styleClass="lblForm" />
-							<p:inputText id="filtroPais" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.pais}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel for="filtroCp" value="C.P." styleClass="lblForm" />
-							<p:inputText id="filtroCp" value="#{clientesBean.filtro.cp}"
-								styleClass="inputFiltro" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel for="filtroTel1" value="Teléfono 1"
+							<p:outputLabel for="filtroPrecio" value="Precio"
 								styleClass="lblForm" />
-							<p:inputText id="filtroTel1" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.tel1}" />
-						</p:column>
+							<p:inputNumber id="filtroPrecio"
+								value="#{comprasBean.filtro.precio}" symbol="€"
+								symbolPosition="s" emptyValue="empty" styleClass=" inputFiltro" />
 
-						<p:column>
-							<p:outputLabel for="filtroCorreo" value="Correo"
-								styleClass="lblForm" />
-							<p:inputText id="filtroCorreo" styleClass="inputFiltro"
-								value="#{clientesBean.filtro.correo}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel for="filtroDescuento" value="Descuento"
 								styleClass="lblForm" />
 							<p:inputNumber id="filtroDescuento"
-								value="#{clientesBean.filtro.descuento}" symbol="%"
+								value="#{comprasBean.filtro.descuento}" symbol="%"
 								symbolPosition="s" emptyValue="empty" styleClass="inputFiltro" />
 						</p:column>
 						<p:column>
 							<p:outputLabel for="filtroIva" value="I.V.A" styleClass="lblForm" />
-							<p:inputNumber id="filtroIva" value="#{clientesBean.filtro.iva}"
+							<p:inputNumber id="filtroIva" value="#{comprasBean.filtro.iva}"
 								symbol="%" symbolPosition="s" emptyValue="empty"
 								styleClass="inputFiltro" />
 						</p:column>
 					</p:row>
-
 				</p:panelGrid>
 			</p:tab>
 		</p:tabView>

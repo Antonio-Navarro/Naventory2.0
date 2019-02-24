@@ -32,8 +32,8 @@ public class LoginBean extends MasterBean {
 	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
 
 	// CAMPOS
-	private String email;
-	private String password;
+	private String email = "anavarrodelamor@gmail.com";
+	private String password = "PKClAsGR";
 	// ENTITIES
 	@Autowired
 	private AuthenticationManager authenticationManager;

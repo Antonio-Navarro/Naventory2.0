@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 
 import org.primefaces.component.export.ExcelOptions;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ClienteLazyDataModel;
 import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.VentaLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
@@ -24,6 +26,7 @@ import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.FormaPago;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Venta;
+import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
 import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
@@ -56,12 +59,13 @@ public class VentasBean extends MasterBean {
 	ParamBean paramBean;
 	private Venta venta;
 	private Venta selectedVenta;
-	private VentaSearchFilter ventaFilter;
+	private VentaSearchFilter filtro;
+	private ClienteSearchFilter filtroClientes;
 
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
 	private List<Venta> filteredVentas;
-	private List<Cliente> clientes;
+	private ClienteLazyDataModel clientes;
 	private List<Producto> productos;
 	private List<FormaPago> formasPago;
 	private VentaLazyDataModel listaVentas;
@@ -95,15 +99,21 @@ public class VentasBean extends MasterBean {
 	public void inicilizarAtributos() {
 		this.editing = false;
 		this.selectedVenta = new Venta();
+		this.selectedVenta.setCliente(new Cliente());
 		this.venta = new Venta();
-		this.ventaFilter = new VentaSearchFilter();
-		ventaFilter.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
-		this.listaVentas = new VentaLazyDataModel(ventaFilter, srvVenta);
+		this.filtro = new VentaSearchFilter();
+		filtroClientes = new ClienteSearchFilter();
+
+		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.listaVentas = new VentaLazyDataModel(filtro, srvVenta);
+	}
+
+	public void buscar() {
+		this.listaVentas = new VentaLazyDataModel(filtro, srvVenta);
 	}
 
 	public void newVenta() {
 		this.editing = false;
-		this.selectedVenta = new Venta();
 	}
 
 	public void editarVenta(Venta venta) {
@@ -117,7 +127,12 @@ public class VentasBean extends MasterBean {
 	}
 
 	public void cargarClientes() {
-		this.clientes = srvCliente.findClientesByUsuario(this.usuarioAutenticado.getUsuario());
+		filtroClientes.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.clientes = new ClienteLazyDataModel(filtroClientes, srvCliente);
+	}
+
+	public void buscarNuevosClientes(final AjaxBehaviorEvent event) {
+		System.out.println(event.getSource());
 	}
 
 	public void cargarFormasPago() {
@@ -238,11 +253,11 @@ public class VentasBean extends MasterBean {
 		this.filteredVentas = filteredVentas;
 	}
 
-	public List<Cliente> getClientes() {
+	public ClienteLazyDataModel getClientes() {
 		return clientes;
 	}
 
-	public void setClientes(List<Cliente> clientes) {
+	public void setClientes(ClienteLazyDataModel clientes) {
 		this.clientes = clientes;
 	}
 
@@ -278,12 +293,12 @@ public class VentasBean extends MasterBean {
 		this.pdfOpt = pdfOpt;
 	}
 
-	public VentaSearchFilter getVentaFilter() {
-		return ventaFilter;
+	public VentaSearchFilter getFiltro() {
+		return filtro;
 	}
 
-	public void setVentaFilter(VentaSearchFilter ventaFilter) {
-		this.ventaFilter = ventaFilter;
+	public void setFiltro(VentaSearchFilter ventaFilter) {
+		this.filtro = ventaFilter;
 	}
 
 	public VentaLazyDataModel getListaVentas() {
@@ -292,6 +307,14 @@ public class VentasBean extends MasterBean {
 
 	public void setListaVentas(VentaLazyDataModel listaVentas) {
 		this.listaVentas = listaVentas;
+	}
+
+	public ClienteSearchFilter getFiltroClientes() {
+		return filtroClientes;
+	}
+
+	public void setFiltroClientes(ClienteSearchFilter filtroClientes) {
+		this.filtroClientes = filtroClientes;
 	}
 
 }

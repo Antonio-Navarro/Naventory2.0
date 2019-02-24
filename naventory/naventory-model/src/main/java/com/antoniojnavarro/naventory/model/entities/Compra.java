@@ -45,6 +45,8 @@ public class Compra implements GenericEntity {
 	@Column(name = "nombre_prod", length = 255, nullable = true)
 	private String nombreProd;
 
+	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	private Date fecha;

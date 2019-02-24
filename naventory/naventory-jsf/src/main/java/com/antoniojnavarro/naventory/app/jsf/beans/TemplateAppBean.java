@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -64,6 +65,25 @@ public class TemplateAppBean extends MasterBean {
 
 	public boolean isExitenAlertas() {
 		return (this.alertas.size() > 0);
+
+	}
+
+	private String includedPage = "#{request.contextPath}/private/home.xhtml";
+
+	public String getIncludedPage() {
+		return includedPage;
+	}
+
+	public void setIncludedPage(String includedPage) {
+		this.includedPage = includedPage;
+	}
+
+	public void navegador() {
+
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		String source = request.getParameter("source");
+		includedPage = (source);
 
 	}
 
