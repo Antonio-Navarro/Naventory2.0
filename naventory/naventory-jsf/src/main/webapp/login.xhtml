@@ -51,8 +51,7 @@
 							onsuccess="PF('statusDialog').hide()" />
 
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-							closable="false" resizable="false" showHeader="false"
-							style="z-index: 9;">
+							closable="false" resizable="false" showHeader="false">
 							<p:graphicImage library="images" name="loading2.gif" width="65" />
 						</p:dialog>
 
@@ -167,7 +166,7 @@
 		}
 		js = d.createElement(s);
 		js.id = id;
-		js.src = "https://connect.facebook.net/es_ES/sdk.js";
+		js.src = "https://connect.facebook.net/en_En/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 
@@ -190,8 +189,7 @@
 		}
 	}
 </script>
-<script
-	src="#{request.contextPath}/resources/js/platform.js">
+<script src="#{request.contextPath}/resources/js/platform.js">
 	
 </script>
 

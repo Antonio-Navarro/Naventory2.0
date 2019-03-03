@@ -114,13 +114,19 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	@Override
 	public void validate(Usuario entity) throws ServicioException {
+		validateAndEmailOpcional(entity, true);
+	}
+	@Override
+	public void validateAndEmailOpcional(Usuario entity, boolean validarEmail) throws ServicioException {
 		this.srvValidacion.isNull("Usuario", entity);
 		this.srvValidacion.isNull("Nombre", entity.getNombre());
 		this.srvValidacion.isNull("Apellidos", entity.getApellido());
 		this.srvValidacion.isNull("Email", entity.getEmail());
 		this.srvValidacion.isNull("Contraseña", entity.getPassword());
 		this.srvValidacion.isNull("Empresa", entity.getEmpresa());
-		validateEmail(entity.getEmail());
+		if (validarEmail) {
+			validateEmail(entity.getEmail());
+		}
 	}
 
 	@Override

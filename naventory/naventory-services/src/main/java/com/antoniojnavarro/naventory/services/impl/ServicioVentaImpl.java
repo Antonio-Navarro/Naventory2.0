@@ -94,7 +94,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 	@Override
 	public void validate(Venta entity) throws ServicioException {
 		this.srvValidacion.isNull("Venta", entity);
-		this.srvValidacion.isNull("Cliente", entity.getCliente());
+		this.srvValidacion.isNull("Cliente", entity.getCliente().getNombre());
 		this.srvValidacion.isNull("Producto", entity.getProducto());
 		this.srvValidacion.isNull("Cantidad", entity.getCantidad());
 		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {

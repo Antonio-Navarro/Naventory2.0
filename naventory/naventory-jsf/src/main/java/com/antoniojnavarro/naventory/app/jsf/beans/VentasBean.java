@@ -5,9 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.component.export.ExcelOptions;
@@ -57,7 +58,6 @@ public class VentasBean extends MasterBean {
 	// ENTITIES
 	@Autowired
 	ParamBean paramBean;
-	private Venta venta;
 	private Venta selectedVenta;
 	private VentaSearchFilter filtro;
 	private ClienteSearchFilter filtroClientes;
@@ -98,12 +98,8 @@ public class VentasBean extends MasterBean {
 
 	public void inicilizarAtributos() {
 		this.editing = false;
-		this.selectedVenta = new Venta();
-		this.selectedVenta.setCliente(new Cliente());
-		this.venta = new Venta();
+		iniciarSelectedVenta();
 		this.filtro = new VentaSearchFilter();
-		filtroClientes = new ClienteSearchFilter();
-
 		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
 		this.listaVentas = new VentaLazyDataModel(filtro, srvVenta);
 	}
@@ -114,6 +110,7 @@ public class VentasBean extends MasterBean {
 
 	public void newVenta() {
 		this.editing = false;
+		iniciarSelectedVenta();
 	}
 
 	public void editarVenta(Venta venta) {
@@ -123,16 +120,20 @@ public class VentasBean extends MasterBean {
 	}
 
 	public void iniciarSelectedVenta() {
-		this.selectedVenta = null;
+		this.selectedVenta = new Venta();
+		selectedVenta.setCliente(new Cliente());
+		filtroClientes = new ClienteSearchFilter();
+		filtroClientes.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+
 	}
 
 	public void cargarClientes() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		@SuppressWarnings("rawtypes")
+		Map map = context.getExternalContext().getRequestParameterMap();
+		filtroClientes.setNombre((String) map.get("myJSValue"));
 		filtroClientes.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
 		this.clientes = new ClienteLazyDataModel(filtroClientes, srvCliente);
-	}
-
-	public void buscarNuevosClientes(final AjaxBehaviorEvent event) {
-		System.out.println(event.getSource());
 	}
 
 	public void cargarFormasPago() {
@@ -219,14 +220,6 @@ public class VentasBean extends MasterBean {
 
 	public void setEditing(boolean editing) {
 		this.editing = editing;
-	}
-
-	public Venta getVenta() {
-		return venta;
-	}
-
-	public void setVenta(Venta venta) {
-		this.venta = venta;
 	}
 
 	public Venta getSelectedVenta() {

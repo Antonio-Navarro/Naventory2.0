@@ -12,31 +12,119 @@
 	</ui:define>
 	<ui:define name="body">
 		<div class="row">
-			<div class="col-md-4" style="color: #232323">
-				<h3>
-					<p:outputLabel id="idEmptyLabel">
-						<i class="fa fa-user fa-fw" />#{msg['perfil.title']}
+			<div class="row">
+				<div class="col-md-4" style="color: #232323">
+					<h3>
+						<p:outputLabel id="idEmptyLabel">
+							<i class="fa fa-user fa-fw" />#{msg['perfil.title']} 
 					</p:outputLabel>
-				</h3>
+					</h3>
+				</div>
 			</div>
-		</div>
-		<div class="separator" />
-		<div class="row">
-			<div class="row" style="margin-top: 1%;">
+			<div class="separator" />
+
+			<div class="col-md-12">
 				<div class="col-md-6">
-					<p:fileUpload
-						fileUploadListener="#{perfilBean.gestorSubidaFicheros}"
-						update="miImagen" mode="advanced" dragDropSupport="true"
-						sizeLimit="3000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+					<h3 style="font-family: sans-serif;">
+						<span class="label label-info">Mis datos</span>
+					</h3>
+					<div class="separator" />
+					<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-white"
+						id="panelMisDatos" style="width: 100%;">
+
+						<p:outputLabel for="usuario" value="#{msg['usuario']}" />
+						<p:inputText id="usuario" required="true"
+							styleClass="inputDisabled" disabled="true" readonly="true"
+							requiredMessage="#{msg['login.username.required']}"
+							value="#{perfilBean.usuarioSelected.email}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}"></p:inputText>
+
+						<p:outputLabel for="nombre" value="#{msg['register.nombre']}" />
+						<p:inputText id="nombre" required="true"
+							requiredMessage="#{msg['register.nombre.req']}"
+							value="#{perfilBean.usuarioSelected.nombre}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}"></p:inputText>
+
+						<p:outputLabel for="apellidos"
+							value="#{msg['register.apellidos']}" />
+						<p:inputText id="apellidos" required="true"
+							requiredMessage="#{msg['register.apellidos.req']}"
+							value="#{perfilBean.usuarioSelected.apellido}"
+							maxlength="#{defaultMaxLengthDataBaseVarchar}"></p:inputText>
+
+						<p:commandButton icon="fa fa-check" value="#{msg['save']}"
+							styleClass="btn btn-primary"
+							actionListener="#{perfilBean.guardar}" update="panelMisDatos" />
+					</p:panelGrid>
 				</div>
 				<div class="col-md-6">
-					<h:graphicImage id="miImagen"
-						value="data:image/jpg;base64,#{perfilBean.fotoPerfil}"
-						height="50px" width="50px" />
-					<!-- 					<p:graphicImage value="#{perfilBean.usuarioSelected.fotoPerf}" stream="true"></p:graphicImage> -->
+					<h3 style="font-family: sans-serif;">
+						<span class="label label-warning">Cambiar Contraseña</span>
+					</h3>
+					<div class="separator" />
+					<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-white"
+						id="panelMiContra" style="width: 100%;">
+
+						<p:outputLabel for="oldPassword"
+							value="#{msg['perfil.oldpassword']}" />
+						<p:password  id="oldPassword"
+							value="#{perfilBean.confPassword}" maxlength="255"
+							placeholder="#{msg['register.repeatPassword']}" required="true"
+							requiredMessage="#{msg['register.repeatPassword.req']}" />
+
+						<p:outputLabel for="newPassword"
+							value="#{msg['perfil.newpassword1']}" />
+						<p:password  id="newPassword"
+							value="#{perfilBean.usuarioSelected.password}" maxlength="255"
+							placeholder="#{msg['register.password']}" required="true"
+							requiredMessage="#{msg['register.password.req']}" />
+
+
+						<p:outputLabel for="newPassword2"
+							value="#{msg['perfil.newpassword2']}" />
+						<p:password  id="newPassword2"
+							value="#{perfilBean.confPassword}" maxlength="255"
+							placeholder="#{msg['register.repeatPassword']}" required="true"
+							requiredMessage="#{msg['register.repeatPassword.req']}" />
+
+						<p:commandButton icon="fa fa-check" value="#{msg['save']}"
+							styleClass="btn btn-secondary"
+							actionListener="#{perfilBean.guardar}" update="panelMiContra" />
+					</p:panelGrid>
 				</div>
 
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<h3 style="font-family: sans-serif;">Imagen usuario</h3>
+					<hr />
+					<div class="user-thumbnail col-md-12">
+						<p:lightBox styleClass="imagebox" id="lighbox1">
+							<h:outputLink
+								value="data:image/jpg;base64,#{perfilBean.fotoPerfil}"
+								title="Imagen de perfil">
+								<h:graphicImage id="miImagen2" styleClass="img-circle"
+									style="width:100px;height:100px"
+									value="data:image/jpg;base64,#{perfilBean.fotoPerfil}" />
+							</h:outputLink>
+						</p:lightBox>
+						<p:fileUpload id="gestorArchivos" style="margin-top:15px"
+							label="Elegir"
+							fileUploadListener="#{perfilBean.gestorSubidaFicheros}"
+							invalidFileMessage="El tipo de archivo no es valido"
+							update="miImagen" mode="advanced" dragDropSupport="true"
+							invalidSizeMessage="Arhivos inferiores a 1 MB"
+							uploadLabel="Subir imagen" cancelLabel="Cancelar"
+							sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+					</div>
+
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-6"></div>
+
 			</div>
+
+
 		</div>
+
+
 	</ui:define>
 </ui:composition>

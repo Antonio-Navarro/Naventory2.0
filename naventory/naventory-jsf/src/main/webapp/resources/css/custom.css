@@ -1396,7 +1396,6 @@ table.tile_info td:first-child {
 /* td span { */
 /* 	line-height: 28px; */
 /* } */
-
 .sidebar-widget {
 	overflow: hidden;
 }
@@ -5228,4 +5227,20 @@ to {
 
 .page-subcontent {
 	margin-top: 45px;
+}
+
+.buttonOverlay {
+	height: 30px;
+	width: 15% !important;
+	border-bottom-right-radius: 3px !important;
+	border-top-right-radius: 3px !important;
+}
+
+.inputDisabled {
+	cursor: not-allowed !important;
+	background-color: #eee !important;
+	opacity: 2 !important;
+}
+.ui-progressbar{
+	width: 145px !important;
 }

@@ -15,7 +15,7 @@ import com.antoniojnavarro.naventory.model.entities.Compra;;
 public class CompraSearchFilter implements SearchFilter {
 
 	private static final long serialVersionUID = 1L;
-	@FieldWhere(columns = "c.factura", likeMode = LikeMode.CONTAINS)
+	@FieldWhere(columns = "c.factura", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private String factura;
 	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private String usuario;

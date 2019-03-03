@@ -8,8 +8,9 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 	<p:dialog id="clienteDetailsModal" widgetVar="clienteDetailsDialog"
-		responsive="true" closable="true" resizable="false" modal="true"
-		maximizable="false" width="600" focus="nombreInput">
+		showEffect="fade" hideEffect="fade" responsive="true" closable="true"
+		resizable="false" modal="true" maximizable="false" width="600"
+		focus="nombreInput">
 		<f:facet name="header">
 			<h:outputText rendered="#{clientesBean.editing}"
 				value="#{msg['cliente.editarCliente']}"></h:outputText>

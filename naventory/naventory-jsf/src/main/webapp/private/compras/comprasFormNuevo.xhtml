@@ -16,25 +16,110 @@
 			<h:outputText rendered="#{!comprasBean.editing}"
 				value="#{msg['compras.titleNuevaCompra']}"></h:outputText>
 		</f:facet>
-		<p:wizard flowListener="#{comprasBean.onFlowProcess}">
+		<p:wizard flowListener="#{comprasBean.onFlowProcess}"
+			backLabel="Atras" nextLabel="Siguiente">
 
 			<p:tab id="compraTab" title="Compra">
 				<p:panel header="Detalles de la compra">
 					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 						columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
+
+
+
+
+
 						<p:outputLabel for="proveedorSelectNuevo"
 							value="#{msg['proveedor']}" />
-						<p:selectOneMenu id="proveedorSelectNuevo" filter="true"
-							required="true" converter="#{proveedorConverter}"
-							requiredMessage="#{msg['compras.proveedor.required']}"
-							value="#{comprasBean.selectedCompra.proveedor}"
-							style="min-width:100% !important;">
-							<f:selectItem itemLabel="Elige un proveedor..."
-								itemValue="#{null}" />
-							<f:selectItems value="#{comprasBean.proveedores}" var="proveedor"
-								itemLabel="#{proveedor.nombre}" itemValue="#{proveedor}" />
-						</p:selectOneMenu>
+						<p:column style="display:inline-flex">
+							<div class="ui-inputgroup">
+								<p:inputText id="proveedorSelectNuevo" readonly="true"
+									required="true" style="height:30px;text-align:center"
+									placeholder="Elije un proveedor de la lista de valores..."
+									requiredMessage="#{msg['compras.proveedor.required']}"
+									value="#{comprasBean.selectedCompra.proveedor.nombre}" />
+								<p:commandButton id="buscarProveedorNuevo" icon="fa fa-truck"
+									styleClass="buttonOverlay" type="button" />
+								<h:inputHidden required="true" id="proveedorSelectHiddenNuevo"
+									requiredMessage="#{msg['compras.proveedor.required']}"
+									value="#{comprasBean.selectedCompra.proveedor.nombre}">
+								</h:inputHidden>
+							</div>
+							<p:overlayPanel id="panelProveedoresOverlayIdNuevo" 
+								for="buscarProveedorNuevo"
+								onShow="PrimeFaces.focus('formApp:filtroNombreNuevo');"
+								hideEffect="fade" dismissable="true" showCloseIcon="true"
+								widgetVar="panelProveedoresOverlayNuevo" style="width:700px"
+								modal="true">
+								<p:panel id="panelProveedorFiltroNuevo">
+									<p:inputText id="filtroNombreNuevo" styleClass="inputFiltro"
+										placeholder="Nombre"
+										value="#{comprasBean.filtroProveedores.nombre}"
+										style="float:unset" />
+									<p:commandButton id="buscarTablaProveedoresNuevo"
+										style="float:right" onclick="pasarValorFiltroNuevo()"
+										value="Buscar" immediate="true"
+										update="formApp:tablaProveedoresOverlayNuevo" />
+									<p:remoteCommand name="cargarProveedoresRCNuevo"
+										immediate="true" partialSubmit="panelProveedorFiltroNuevo"
+										actionListener="#{comprasBean.cargarProveedores}" />
+								</p:panel>
+								<p:dataTable var="prov" id="tablaProveedoresOverlayNuevo"
+									style="margin-top:3px;" value="#{comprasBean.proveedores}"
+									rows="5" lazy="true" paginator="true" paginatorPosition="top">
+									<f:facet name="header">Lista de Proveedores</f:facet>
+									<p:column headerText="Nombre">
+										<h:outputText value="#{prov.nombre}" />
+									</p:column>
+									<p:column style="text-align: center">
+										<p:commandButton update="formApp:proveedorSelectNuevo"
+											onblur="inyectaValorProveedorEnHiddenNuevo()"
+											immediate="true"
+											oncomplete="PF('panelProveedoresOverlayNuevo').hide()"
+											icon="fa fa-hand-o-up" title="Seleccionar">
+											<f:setPropertyActionListener value="#{prov}"
+												target="#{comprasBean.selectedCompra.proveedor}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</p:overlayPanel>
+						</p:column>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 						<p:outputLabel for="proveedorSelectNuevo" -->
+<!-- 							value="#{msg['proveedor']}" /> -->
+<!-- 						<p:selectOneMenu id="proveedorSelectNuevo" filter="true" -->
+<!-- 							required="true" converter="#{proveedorConverter}" -->
+<!-- 							requiredMessage="#{msg['compras.proveedor.required']}" -->
+<!-- 							value="#{comprasBean.selectedCompra.proveedor}" -->
+<!-- 							style="min-width:100% !important;"> -->
+<!-- 							<f:selectItem itemLabel="Elige un proveedor..." -->
+<!-- 								itemValue="#{null}" /> -->
+<!-- 							<f:selectItems value="#{comprasBean.proveedores}" var="proveedor" -->
+<!-- 								itemLabel="#{proveedor.nombre}" itemValue="#{proveedor}" /> -->
+<!-- 						</p:selectOneMenu> -->
 
 						<p:outputLabel for="facturaInputNuevo" value="#{msg['factura']}" />
 						<p:inputText id="facturaInputNuevo" required="true"
@@ -175,5 +260,18 @@
 
 		</f:facet>
 	</p:dialog>
-
+	<script type="text/javascript">
+		function inyectaValorProveedorEnHiddenNuevo() {
+			var valor = document.getElementById('formApp:proveedorSelectNuevo').value;
+			console.log(valor);
+			document.getElementById('formApp:proveedorSelectHiddenNuevo').value = valor;
+		}
+		function pasarValorFiltroNuevo() {
+			myJSValue = document.getElementById('formApp:filtroNombreNuevo').value;
+			cargarProveedoresRCNuevo([ {
+				name : 'myJSValue',
+				value : myJSValue
+			} ]);
+		}
+	</script>
 </ui:composition>

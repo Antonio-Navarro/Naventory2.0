@@ -2,6 +2,7 @@ package com.antoniojnavarro.naventory.app.jsf.beans;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProductoLazyDataModel;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProveedorLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
@@ -22,6 +24,7 @@ import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
 import com.antoniojnavarro.naventory.model.filters.ProductoSearchFilter;
+import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
@@ -43,13 +46,14 @@ public class ProductosBean extends MasterBean {
 	private Producto producto;
 	private ProductoSearchFilter filtro;
 	private Producto selectedProducto;
+	private ProveedorSearchFilter filtroProveedores;
 
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
 	private ProductoLazyDataModel listaProductos;
 
 	private List<Categoria> categorias;
-	private List<Proveedor> proveedores;
+	private ProveedorLazyDataModel proveedores;
 
 	// SERVICIOS
 	@Autowired
@@ -75,7 +79,7 @@ public class ProductosBean extends MasterBean {
 	public void inicilizarAtributos() {
 
 		this.editing = false;
-		this.selectedProducto = new Producto();
+		iniciarSelectedProducto();
 		this.producto = new Producto();
 		this.filtro = new ProductoSearchFilter();
 		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
@@ -84,12 +88,11 @@ public class ProductosBean extends MasterBean {
 
 	public void buscar() {
 		listaProductos = new ProductoLazyDataModel(filtro, srvProducto);
-
 	}
 
 	public void newProducto() {
 		this.editing = false;
-		this.selectedProducto = new Producto();
+		iniciarSelectedProducto();
 	}
 
 	public void editarProducto(Producto producto) {
@@ -119,7 +122,10 @@ public class ProductosBean extends MasterBean {
 	}
 
 	public void iniciarSelectedProducto() {
-		this.selectedProducto = null;
+		this.selectedProducto = new Producto();
+		this.selectedProducto.setProveedor(new Proveedor());
+		filtroProveedores = new ProveedorSearchFilter();
+		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
 	}
 
 	public void cargarTotalInventario() {
@@ -131,7 +137,13 @@ public class ProductosBean extends MasterBean {
 	}
 
 	public void cargarProveedores() {
-		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		@SuppressWarnings("rawtypes")
+		Map map = context.getExternalContext().getRequestParameterMap();
+		filtroProveedores.setNombre((String) map.get("myJSValue"));
+		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.proveedores = new ProveedorLazyDataModel(filtroProveedores, srvProveedor);
 	}
 
 	public void borrarProducto(Producto producto) {
@@ -187,11 +199,19 @@ public class ProductosBean extends MasterBean {
 		this.categorias = categorias;
 	}
 
-	public List<Proveedor> getProveedores() {
+	public ProveedorSearchFilter getFiltroProveedores() {
+		return filtroProveedores;
+	}
+
+	public void setFiltroProveedores(ProveedorSearchFilter filtroProveedores) {
+		this.filtroProveedores = filtroProveedores;
+	}
+
+	public ProveedorLazyDataModel getProveedores() {
 		return proveedores;
 	}
 
-	public void setProveedores(List<Proveedor> proveedores) {
+	public void setProveedores(ProveedorLazyDataModel proveedores) {
 		this.proveedores = proveedores;
 	}
 

@@ -30,7 +30,7 @@ public class Proveedor implements GenericEntity {
 	@JoinColumn(name = "email")
 	private Usuario usuario;
 
-	@Column(name = "nombre", length = 255, nullable = false)
+	@Column(name = "nombre", length = 255, nullable = true)
 	private String nombre;
 
 	@Column(name = "nombre_com", length = 255, nullable = false)

@@ -21,6 +21,8 @@ import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutentica
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
+import com.antoniojnavarro.naventory.services.commons.ServicioException;
+import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 
 @Named("perfilBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -29,7 +31,7 @@ public class PerfilBean extends MasterBean {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory.getLogger(PerfilBean.class);
-
+	private String confPassword;
 	// CAMPOS
 	private UploadedFile file;
 	// ENTITIES
@@ -44,6 +46,9 @@ public class PerfilBean extends MasterBean {
 	@Autowired
 	private ServicioAutenticacion srvAutenticacion;
 
+	@Autowired
+	private ServicioMensajesI18n srvMensajes;
+
 	@PostConstruct
 	public void init() {
 
@@ -53,14 +58,38 @@ public class PerfilBean extends MasterBean {
 
 	}
 
+	public void validarIgualPassword() throws ServicioException {
+		if (!usuarioSelected.getPassword().equals(confPassword)) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("register.password.distinct"));
+		}
+	}
+
+	public void guardar() {
+		if (!this.srvUsuario.existsById(usuarioSelected.getEmail())) {
+			addError("email.error");
+		}
+		if (confPassword != null && !confPassword.isEmpty()) {
+			validarIgualPassword();
+		}
+		this.srvUsuario.validateAndEmailOpcional(usuarioSelected, false);
+		this.srvUsuario.saveOrUpdate(usuarioSelected, false);
+		addInfo("user.save.ok");
+	}
+
 	public UploadedFile getFile() {
 		return file;
 	}
 
 	public String getFotoPerfil() {
-		String imageString = new String(Base64.encodeBase64(usuarioSelected.getFotoPerf()));
-		return imageString;
+		fotoPerfil = new String(Base64.encodeBase64(usuarioAutenticado.getUsuario().getFotoPerf()));
+		if (fotoPerfil != null && fotoPerfil.length() > 0) {
+			return fotoPerfil;
+		} else {
+			return null;
+		}
 	}
+
+	private String fotoPerfil;
 
 	public void setFile(UploadedFile file) {
 		this.file = file;
@@ -81,6 +110,8 @@ public class PerfilBean extends MasterBean {
 		try {
 			is = event.getFile().getInputstream();
 			buffer = new byte[(int) file.getSize()]; // creamos el buffer
+			int readers = is.read(buffer); // leemos el archivo al buffer
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,10 +120,8 @@ public class PerfilBean extends MasterBean {
 		usuarioSelected.setFotoPerf(buffer);
 
 		srvUsuario.saveOrUpdate(usuarioSelected, false);
+		updateComponent("formApp:lighbox1");
 
-	}
-
-	public void inicilizarAtributos() {
 	}
 
 	public void borrarUsuario(Usuario user) {
@@ -107,6 +136,14 @@ public class PerfilBean extends MasterBean {
 
 	public void setUsuarioSelected(Usuario usuarioSelected) {
 		this.usuarioSelected = usuarioSelected;
+	}
+
+	public String getConfPassword() {
+		return confPassword;
+	}
+
+	public void setConfPassword(String confPassword) {
+		this.confPassword = confPassword;
 	}
 
 }

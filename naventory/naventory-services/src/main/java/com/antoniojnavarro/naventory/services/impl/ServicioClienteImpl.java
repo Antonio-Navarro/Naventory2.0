@@ -29,31 +29,24 @@ public class ServicioClienteImpl implements ServicioCliente {
 	@Autowired
 	private ServicioMensajesI18n srvMensajes;
 
-
 	@Autowired
 	private ClienteDao clienteDao;
-
 
 	@Override
 	public Cliente findById(Integer id) throws ServicioException {
 		return this.clienteDao.findOne(id);
 	}
 
-
 	@Override
 	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return clienteDao.findBySearchFilter(searchFilter);
 	}
 
-
 	@Override
-	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter, String sortField,
-			SortOrderEnum sortOrder) throws ServicioException {
-		// TODO Auto-generated method stub
+	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
+			throws ServicioException {
 		return this.clienteDao.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
-
 
 	@Override
 	public PaginationResult<Cliente> findBySearchFilterPagination(ClienteSearchFilter searchFilter, int pageNumber,
@@ -61,21 +54,17 @@ public class ServicioClienteImpl implements ServicioCliente {
 		return this.clienteDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
-
 	@Override
 	public PaginationResult<Cliente> findBySearchFilterPagination(ClienteSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.clienteDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
-
 
 	@Override
 	public List<Cliente> findAll() throws ServicioException {
 		// TODO Auto-generated method stub
 		return (List<Cliente>) this.clienteDao.findAll();
 	}
-
 
 	@Override
 	public boolean exists(Cliente entity) throws ServicioException {
@@ -87,23 +76,19 @@ public class ServicioClienteImpl implements ServicioCliente {
 		return existsById(entity.getIdCliente());
 	}
 
-
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.existsById(id);
 	}
 
-
 	@Override
 	public Cliente save(Cliente entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.clienteDao.save(entity);
 	}
 
 	@Autowired
 	private ServicioUsuario srvUsuario;
-	
+
 	@Override
 	public void validate(Cliente entity) throws ServicioException {
 		this.srvValidacion.isNull("Cliente", entity);
@@ -113,19 +98,20 @@ public class ServicioClienteImpl implements ServicioCliente {
 		this.srvValidacion.isNull("Ciudad", entity.getCiudad());
 		this.srvValidacion.isNull("Provincia", entity.getProvincia());
 		this.srvValidacion.isNull("País", entity.getPais());
-		this.srvValidacion.isNull("Código Postal",entity.getCp());
+		this.srvValidacion.isNull("Código Postal", entity.getCp());
 		this.srvValidacion.isNull("Télefono 1", entity.getTel1());
 		this.srvValidacion.isNull("Email", entity.getCorreo());
 
-		if(!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
+		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
 			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
 
 		}
-		
+
 	}
+
 	@Override
 	public Cliente saveOrUpdate(Cliente entity, boolean validate) throws ServicioException {
-		if(validate) {
+		if (validate) {
 			validate(entity);
 		}
 		return this.save(entity);
@@ -137,34 +123,30 @@ public class ServicioClienteImpl implements ServicioCliente {
 		this.clienteDao.delete(entity);
 	}
 
-
 	@Override
 	public void deleteRange(List<Cliente> entity) throws ServicioException {
-		throw new UnsupportedOperationException();		
+		throw new UnsupportedOperationException();
 	}
-
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
 		this.clienteDao.delete(id);
-		
-	}
 
+	}
 
 	@Override
 	public List<Cliente> findClientesByUsuario(Usuario user) throws ServicioException {
-		return this.clienteDao.findClientesByUsuario(user); 
-	}
-	
-	@Override
-	public List<GraficaGenericDto> findClientesGrafica(String email){
-		return this.clienteDao.findClientesGrafica(email);
+		return this.clienteDao.findClientesByUsuario(user);
 	}
 
+	@Override
+	public List<GraficaGenericDto> findClientesGrafica(String email) {
+		return this.clienteDao.findClientesGrafica(email);
+	}
 
 	@Override
 	public Long countByUsuario(Usuario usuario) {
 		return this.clienteDao.countByUsuario(usuario);
 	}
-	
+
 }

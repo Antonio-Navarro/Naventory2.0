@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.component.export.ExcelOptions;
@@ -19,6 +21,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.CompraLazyDataModel;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProveedorLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
@@ -26,6 +29,7 @@ import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
 import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
+import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioCompra;
@@ -60,11 +64,13 @@ public class ComprasBean extends MasterBean {
 	private Compra selectedCompra;
 	private Producto selectedProducto;
 	private CompraSearchFilter filtro;
+	private ProveedorSearchFilter filtroProveedores;
+
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
 	private CompraLazyDataModel listaCompras;
 	private List<Compra> filteredCompras;
-	private List<Proveedor> proveedores;
+	private ProveedorLazyDataModel proveedores;
 	private List<Producto> productos;
 	private List<Categoria> categorias;
 
@@ -100,8 +106,7 @@ public class ComprasBean extends MasterBean {
 		this.filtro = new CompraSearchFilter();
 		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
 		this.listaCompras = new CompraLazyDataModel(filtro, srvCompra);
-		this.selectedCompra = new Compra();
-		this.selectedProducto = new Producto();
+		inicializarCompra();
 		this.compra = new Compra();
 	}
 
@@ -109,25 +114,33 @@ public class ComprasBean extends MasterBean {
 		this.listaCompras = new CompraLazyDataModel(filtro, srvCompra);
 	}
 
+	public void inicializarCompra() {
+		this.selectedCompra = new Compra();
+		this.selectedCompra.setProveedor(new Proveedor());
+		this.selectedProducto = new Producto();
+		filtroProveedores = new ProveedorSearchFilter();
+		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+	}
+
 	public void newCompra() {
 		this.editing = false;
-		this.selectedCompra = new Compra();
-		this.selectedProducto = new Producto();
-
+		inicializarCompra();
 	}
 
 	public void existeCompra() {
 		this.editing = false;
-		this.selectedCompra = new Compra();
+		inicializarCompra();
 
-	}
-
-	public void iniciarSelectedCompra() {
-		this.selectedCompra = null;
 	}
 
 	public void cargarProveedores() {
-		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		@SuppressWarnings("rawtypes")
+		Map map = context.getExternalContext().getRequestParameterMap();
+		filtroProveedores.setNombre((String) map.get("myJSValue"));
+		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.proveedores = new ProveedorLazyDataModel(filtroProveedores, srvProveedor);
 	}
 
 	public void cargarProductos() {
@@ -258,11 +271,19 @@ public class ComprasBean extends MasterBean {
 		this.productos = productos;
 	}
 
-	public List<Proveedor> getProveedores() {
+	public ProveedorSearchFilter getFiltroProveedores() {
+		return filtroProveedores;
+	}
+
+	public void setFiltroProveedores(ProveedorSearchFilter filtroProveedores) {
+		this.filtroProveedores = filtroProveedores;
+	}
+
+	public ProveedorLazyDataModel getProveedores() {
 		return proveedores;
 	}
 
-	public void setProveedores(List<Proveedor> proveedores) {
+	public void setProveedores(ProveedorLazyDataModel proveedores) {
 		this.proveedores = proveedores;
 	}
 

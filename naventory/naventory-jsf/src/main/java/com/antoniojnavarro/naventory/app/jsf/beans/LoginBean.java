@@ -32,8 +32,8 @@ public class LoginBean extends MasterBean {
 	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
 
 	// CAMPOS
-	private String email = "anavarrodelamor@gmail.com";
-	private String password = "PKClAsGR";
+	private String email;
+	private String password;
 	// ENTITIES
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -56,7 +56,6 @@ public class LoginBean extends MasterBean {
 			try {
 				externalContext.redirect(externalContext.getRequestContextPath() + "/private/home.xhtml");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

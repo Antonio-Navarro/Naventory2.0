@@ -16,4 +16,6 @@ public interface ServicioUsuario extends ServicioCrud<Usuario, UsuarioSearchFilt
 	Object[] findUsersGrafica();
 
 	void validateEmail(String email) throws ServicioException;
+
+	void validateAndEmailOpcional(Usuario entity, boolean validarEmail) throws ServicioException;
 }
