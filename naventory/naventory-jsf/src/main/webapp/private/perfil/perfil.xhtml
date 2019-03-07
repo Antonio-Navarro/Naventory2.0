@@ -67,35 +67,35 @@
 
 						<p:outputLabel for="oldPassword"
 							value="#{msg['perfil.oldpassword']}" />
-						<p:password  id="oldPassword"
-							value="#{perfilBean.confPassword}" maxlength="255"
-							placeholder="#{msg['register.repeatPassword']}" required="true"
-							requiredMessage="#{msg['register.repeatPassword.req']}" />
+						<p:password id="oldPassword" value="#{perfilBean.oldPassword}"
+							maxlength="255" required="true"
+							requiredMessage="#{msg['perfil.oldpassword.required ']}" />
 
 						<p:outputLabel for="newPassword"
 							value="#{msg['perfil.newpassword1']}" />
-						<p:password  id="newPassword"
-							value="#{perfilBean.usuarioSelected.password}" maxlength="255"
-							placeholder="#{msg['register.password']}" required="true"
-							requiredMessage="#{msg['register.password.req']}" />
+						<p:password id="newPassword" value="#{perfilBean.newPassword}"
+							maxlength="255" required="true"
+							requiredMessage="#{msg['perfil.newpassword1.required']}" />
 
 
 						<p:outputLabel for="newPassword2"
 							value="#{msg['perfil.newpassword2']}" />
-						<p:password  id="newPassword2"
-							value="#{perfilBean.confPassword}" maxlength="255"
-							placeholder="#{msg['register.repeatPassword']}" required="true"
+						<p:password id="newPassword2" value="#{perfilBean.confPassword}"
+							maxlength="255" placeholder="#{msg['register.repeatPassword']}"
+							required="true"
 							requiredMessage="#{msg['register.repeatPassword.req']}" />
 
 						<p:commandButton icon="fa fa-check" value="#{msg['save']}"
-							styleClass="btn btn-secondary"
+							styleClass="btn btn-secondary" process="formApp:panelMiContra"
 							actionListener="#{perfilBean.guardar}" update="panelMiContra" />
 					</p:panelGrid>
 				</div>
 
 				<div class="col-sm-6 col-md-6 col-lg-6">
-					<h3 style="font-family: sans-serif;">Imagen usuario</h3>
-					<hr />
+					<h3 style="font-family: sans-serif;">
+						<span class="label label-warning">Imagen usuario</span>
+					</h3>
+					<div class="separator" />
 					<div class="user-thumbnail col-md-12">
 						<p:lightBox styleClass="imagebox" id="lighbox1">
 							<h:outputLink
@@ -118,12 +118,72 @@
 					</div>
 
 				</div>
-				<div class="col-sm-6 col-md-6 col-lg-6"></div>
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<p:commandButton icon="fa fa-user-times fa-fw"
+						value="#{msg['perfil.darbaja']}" process="@this"
+						styleClass="btn btn-secondary btn-blcok"
+						actionListener="#{perfilBean.darBaja}" update="@this">
+						<p:confirm header="#{msg['needConfirmation']}"
+							message="#{msg['perfil.msg.darbaja']}" icon="fa fa-warning" />
+					</p:commandButton>
+				</div>
+
+				<div class="col-md-12">
+					<p:growl id="messages" showDetail="true" />
+
+					<h:panelGrid columnClasses="value">
+						<h3 style="margin-top: 0">Calendario</h3>
+						<p:schedule id="schedule" value="#{perfilBean.eventModel}"
+							widgetVar="myschedule">
+
+							<p:ajax event="dateSelect" listener="#{perfilBean.onDateSelect}"
+								update="eventDetails" oncomplete="PF('eventDialog').show();" />
+							<p:ajax event="eventSelect"
+								listener="#{perfilBean.onEventSelect}" update="eventDetails"
+								oncomplete="PF('eventDialog').show();" />
+							<p:ajax event="eventMove" listener="#{perfilBean.onEventMove}" />
+							<p:ajax event="eventResize"
+								listener="#{perfilBean.onEventResize}" />
+
+						</p:schedule>
+					</h:panelGrid>
+					<p:dialog widgetVar="eventDialog" header="Detalles: "
+						showEffect="clip" hideEffect="clip">
+						<h:panelGrid id="eventDetails" columns="2">
+							<p:outputLabel for="title" value="Título: " />
+							<p:inputText id="title" value="#{perfilBean.event.title}"
+								required="true" />
+
+							<p:outputLabel for="from" value="Desde: " />
+							<p:calendar id="from" value="#{perfilBean.event.startDate}"
+								pattern="dd/MM/yyyy HH:mm" />
+
+							<p:outputLabel for="to" value="Hasta:" />
+							<p:calendar id="to" value="#{perfilBean.event.endDate}"
+								pattern="dd/MM/yyyy HH:mm" />
+
+							<p:outputLabel for="allDay" value="Todo el día:" />
+							<h:selectBooleanCheckbox id="allDay"
+								value="#{perfilBean.event.allDay}" />
+
+							<p:commandButton type="reset" value="Reiniciar" />
+							<p:commandButton id="addButton" value="Guardar" process="@this"
+								actionListener="#{perfilBean.addEvent}"
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+						</h:panelGrid>
+					</p:dialog>
+				</div>
+
+
+
+
+
 
 			</div>
 
-
 		</div>
+
+
 
 
 	</ui:define>

@@ -17,6 +17,9 @@ public interface UsuarioDao extends Dao<Usuario, UsuarioSearchFilter, String> {
 	@Query("SELECT u FROM Usuario u WHERE u.email = ?1 and u.password= ?2")
 	Usuario findUsuarioByEmailAndPassword(String email, String pass);
 	
+	@Query("SELECT u FROM Usuario u WHERE u.email = ?1 and u.activo = ?2")
+	Usuario findUsuarioByEmailAndActivo(String email, String activo);
+	
 	@Query("SELECT year(u.fecha_alta), count(email) FROM Usuario u group by year(u.fecha_alta) order by year(u.fecha_alta) asc")
 	Object[] findUsersGrafica();
 }

@@ -157,5 +157,6 @@
 		<module>naventory-services</module>
 		<module>naventory-dao</module>
 		<module>naventory-model</module>
+		<module>naventory-api</module>
 	</modules>
 </project>

@@ -142,6 +142,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 		return this.usuarioDao.findUsuarioByEmailAndPassword(email, pass);
 	}
+	@Override
+	public Usuario findUsuarioByEmailAndActivo(String email, String activo) throws ServicioException {
+
+		return this.usuarioDao.findUsuarioByEmailAndActivo(email, activo);
+	}
 
 	public Object[] findUsersGrafica() {
 		return this.usuarioDao.findUsersGrafica();

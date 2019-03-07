@@ -5241,6 +5241,17 @@ to {
 	background-color: #eee !important;
 	opacity: 2 !important;
 }
-.ui-progressbar{
+
+.ui-progressbar {
 	width: 145px !important;
+}
+
+.btn-block {
+	width: 230px !important;
+	float: left;
+	font-size: 16px;
+	background-color: #2E2E2E;
+	border-color: white;
+	clear: both;
+	text-align: center
 }

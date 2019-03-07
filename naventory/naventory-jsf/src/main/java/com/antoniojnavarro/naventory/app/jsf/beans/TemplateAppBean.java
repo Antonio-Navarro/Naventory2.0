@@ -103,6 +103,9 @@ public class TemplateAppBean extends MasterBean {
 	}
 
 	public String getFotoPerfil() {
+		if (usuarioAutenticado.getUsuario().getFotoPerf() == null) {
+			return null;
+		}
 		String imageString = new String(Base64.encodeBase64(usuarioAutenticado.getUsuario().getFotoPerf()));
 		if (imageString != null && imageString.length() > 0) {
 			return imageString;

@@ -29,6 +29,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		Usuario usuario = this.srvUsuario.findUsuarioByEmail(login);
 		if (usuario == null) {
 			throw new UsernameNotFoundException(this.srvMensajes.getMensajeI18n("login.notFound"));
+		} else if (!"Y".equals(usuario.getActivo())) {
+			throw new UsernameNotFoundException(this.srvMensajes.getMensajeI18n("login.lock"));
 		}
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		if (usuario.getRoles() != null) {

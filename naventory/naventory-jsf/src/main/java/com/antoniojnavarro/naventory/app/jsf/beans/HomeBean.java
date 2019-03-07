@@ -1,6 +1,5 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,16 +7,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -35,11 +26,9 @@ import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
-import com.antoniojnavarro.naventory.model.entities.Evento;
 import com.antoniojnavarro.naventory.model.entities.Novedad;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 import com.antoniojnavarro.naventory.services.api.ServicioCompra;
-import com.antoniojnavarro.naventory.services.api.ServicioEvento;
 import com.antoniojnavarro.naventory.services.api.ServicioNovedad;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.api.ServicioVenta;
@@ -57,8 +46,7 @@ public class HomeBean extends MasterBean {
 	private ServicioProducto srvProducto;
 	@Autowired
 	private ServicioCompra srvCompra;
-	@Autowired
-	ServicioEvento srvEvento;
+
 	@Autowired
 	private ServicioVenta srvVenta;
 	@Autowired
@@ -70,7 +58,6 @@ public class HomeBean extends MasterBean {
 	private ServicioAutenticacion srvAutenticacion;
 
 	private List<Novedad> novedades;
-	private List<Evento> eventos;
 	private String empresa;
 
 	private Long numProductos;
@@ -82,8 +69,6 @@ public class HomeBean extends MasterBean {
 	private LineChartModel areaVentas;
 	private BarChartModel barGastosIngresos;
 	private Double beneficio;
-	private ScheduleModel eventModel;
-	private ScheduleEvent event = new DefaultScheduleEvent();
 
 	@PostConstruct
 	public void init() {
@@ -100,7 +85,6 @@ public class HomeBean extends MasterBean {
 			crearAreaClientes();
 			crearAreaVentas();
 			crearBarGastosIngresos();
-			crearCalendario();
 		}
 		logger.debug(empresa);
 		if (empresa != null)
@@ -249,72 +233,6 @@ public class HomeBean extends MasterBean {
 		yAxis.setMax(this.numVentas);
 	}
 
-	// CALENDARIO
-
-	private void crearCalendario() {
-		eventModel = new DefaultScheduleModel();
-
-		this.eventos = this.srvEvento.findEventosByUsuario(this.usuarioAuteticado.getUsuario());
-
-		for (Evento e : eventos) {
-			eventModel.addEvent(new DefaultScheduleEvent(e.getTitulo(), e.getFechaInicio(), e.getFechaFin()));
-		}
-
-	}
-
-	public ScheduleEvent getEvent() {
-		return event;
-	}
-
-	public void setEvent(ScheduleEvent event) {
-		this.event = event;
-	}
-
-	public void addEvent(ActionEvent actionEvent) {
-		if (event.getId() == null) {
-			eventModel.addEvent(event);
-		} else {
-			eventModel.updateEvent(event);
-		}
-		parsearEvento(event);
-		event = new DefaultScheduleEvent();
-	}
-
-	public void parsearEvento(ScheduleEvent event) {
-		Evento evento = new Evento();
-
-		evento.setIdEvento(event.getId());
-		evento.setDiaEntero(event.isAllDay());
-		evento.setFechaInicio(event.getStartDate());
-		evento.setFechaFin(event.getEndDate());
-		evento.setTitulo(event.getTitle());
-		evento.setUsuario(this.usuarioAuteticado.getUsuario());
-		this.srvEvento.saveOrUpdate(evento);
-
-	}
-
-	public void onEventSelect(SelectEvent selectEvent) {
-		event = (ScheduleEvent) selectEvent.getObject();
-	}
-
-	public void onDateSelect(SelectEvent selectEvent) {
-		event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-	}
-
-	public void onEventMove(ScheduleEntryMoveEvent event) {
-		this.event = event.getScheduleEvent();
-		parsearEvento(this.event);
-		this.event = new DefaultScheduleEvent();
-
-	}
-
-	public void onEventResize(ScheduleEntryResizeEvent event) {
-		this.event = event.getScheduleEvent();
-		parsearEvento(this.event);
-		this.event = new DefaultScheduleEvent();
-
-	}
-
 	public void cargarNovedades() {
 		novedades = this.srvNovedad.findNovedadesByUsuario(this.usuarioAuteticado.getUsuario(), LIMIT_NOVEDADES);
 	}
@@ -397,14 +315,6 @@ public class HomeBean extends MasterBean {
 
 	public void setBeneficio(Double beneficio) {
 		this.beneficio = beneficio;
-	}
-
-	public ScheduleModel getEventModel() {
-		return eventModel;
-	}
-
-	public void setEventModel(ScheduleModel eventModel) {
-		this.eventModel = eventModel;
 	}
 
 	public UsuarioAutenticado getUsuarioAuteticado() {
