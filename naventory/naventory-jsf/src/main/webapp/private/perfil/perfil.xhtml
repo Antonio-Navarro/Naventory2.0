@@ -137,9 +137,9 @@
 							widgetVar="myschedule">
 
 							<p:ajax event="dateSelect" listener="#{perfilBean.onDateSelect}"
-								update="eventDetails" oncomplete="PF('eventDialog').show();" />
+								update="formApp:eventDetails" oncomplete="PF('eventDialog').show();" />
 							<p:ajax event="eventSelect"
-								listener="#{perfilBean.onEventSelect}" update="eventDetails"
+								listener="#{perfilBean.onEventSelect}" update="formApp:eventDetails"
 								oncomplete="PF('eventDialog').show();" />
 							<p:ajax event="eventMove" listener="#{perfilBean.onEventMove}" />
 							<p:ajax event="eventResize"
@@ -167,7 +167,7 @@
 								value="#{perfilBean.event.allDay}" />
 
 							<p:commandButton type="reset" value="Reiniciar" />
-							<p:commandButton id="addButton" value="Guardar" process="@this"
+							<p:commandButton id="addButton" value="Guardar" process="formApp:eventDetails"
 								actionListener="#{perfilBean.addEvent}"
 								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
 						</h:panelGrid>
