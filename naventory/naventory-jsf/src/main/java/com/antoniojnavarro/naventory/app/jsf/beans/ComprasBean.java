@@ -104,7 +104,7 @@ public class ComprasBean extends MasterBean {
 	public void inicilizarAtributos() {
 		this.editing = false;
 		this.filtro = new CompraSearchFilter();
-		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.listaCompras = new CompraLazyDataModel(filtro, srvCompra);
 		inicializarCompra();
 		this.compra = new Compra();
@@ -119,7 +119,7 @@ public class ComprasBean extends MasterBean {
 		this.selectedCompra.setProveedor(new Proveedor());
 		this.selectedProducto = new Producto();
 		filtroProveedores = new ProveedorSearchFilter();
-		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 	}
 
 	public void newCompra() {
@@ -139,16 +139,16 @@ public class ComprasBean extends MasterBean {
 		@SuppressWarnings("rawtypes")
 		Map map = context.getExternalContext().getRequestParameterMap();
 		filtroProveedores.setNombre((String) map.get("myJSValue"));
-		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.proveedores = new ProveedorLazyDataModel(filtroProveedores, srvProveedor);
 	}
 
 	public void cargarProductos() {
-		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
+		this.productos = srvProducto.findProductosByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void cargarCategorias() {
-		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
+		this.categorias = srvCategoria.findCategoriasByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void borrarCompra(Compra compra) {
@@ -168,11 +168,11 @@ public class ComprasBean extends MasterBean {
 
 	public void guardarCompra(Boolean nuevoProducto) {
 
-		selectedCompra.setUsuario(usuarioAutenticado.getUsuario());
+		selectedCompra.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		if (nuevoProducto) {
 			selectedProducto.setProveedor(selectedCompra.getProveedor());
 			selectedProducto.setStock(selectedCompra.getCantidad());
-			selectedProducto.setUsuario(usuarioAutenticado.getUsuario());
+			selectedProducto.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 			selectedCompra.setProducto(selectedProducto);
 		}
 		if (selectedCompra.getIdCompra() != null && selectedCompra.getIdCompra() > 0) {
@@ -197,7 +197,7 @@ public class ComprasBean extends MasterBean {
 
 	public String onFlowProcess(FlowEvent event) {
 		if (skip) {
-			skip = false; // reset in case user goes back
+			skip = false;
 			return "compraTab";
 		} else {
 			return event.getNewStep();

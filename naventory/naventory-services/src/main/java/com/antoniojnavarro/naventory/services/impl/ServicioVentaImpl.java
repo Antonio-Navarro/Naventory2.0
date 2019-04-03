@@ -10,10 +10,10 @@ import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
 import com.antoniojnavarro.naventory.dao.repositories.VentaDao;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Venta;
 import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
+import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioVenta;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
@@ -31,7 +31,11 @@ public class ServicioVentaImpl implements ServicioVenta {
 	private ServicioMensajesI18n srvMensajes;
 
 	@Autowired
+	private ServicioEmpresa srvEmpresa;
+
+	@Autowired
 	private VentaDao ventaDao;
+
 	@Autowired
 	private ProductoDao productoDao;
 
@@ -87,18 +91,16 @@ public class ServicioVentaImpl implements ServicioVenta {
 	public Venta save(Venta entity) throws ServicioException {
 		return this.ventaDao.save(entity);
 	}
-
-	@Autowired
-	private ServicioUsuario srvUsuario;
-
+	
 	@Override
 	public void validate(Venta entity) throws ServicioException {
 		this.srvValidacion.isNull("Venta", entity);
 		this.srvValidacion.isNull("Cliente", entity.getCliente().getNombre());
 		this.srvValidacion.isNull("Producto", entity.getProducto());
 		this.srvValidacion.isNull("Cantidad", entity.getCantidad());
-		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+		if (!this.srvEmpresa.existsEmpresaByCif(entity.getEmpresa().getCif())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("cif.noexist"));
+
 		}
 
 		validarStock(entity);
@@ -140,12 +142,6 @@ public class ServicioVentaImpl implements ServicioVenta {
 	}
 
 	@Override
-	public List<Venta> findVentasByUsuario(Usuario user) throws ServicioException {
-		// TODO Auto-generated method stub
-		return this.ventaDao.findVentasByUsuarioOrderByFechaDesc(user);
-	}
-
-	@Override
 	public Venta calcularVenta(Venta entity) {
 		entity.setNombreProd(entity.getProducto().getNombre());
 		entity.setUnidad(entity.getProducto().getUnidad());
@@ -167,23 +163,23 @@ public class ServicioVentaImpl implements ServicioVenta {
 	}
 
 	@Override
-	public List<GraficaGenericDto> findFormasPagoGrafica(String email) {
-		return this.ventaDao.findFormasPagoGrafica(email);
+	public List<GraficaGenericDto> findFormasPagoGrafica(Empresa empresa) {
+		return this.ventaDao.findFormasPagoGrafica(empresa);
 	}
 
 	@Override
-	public List<GraficaGenericDto> getVentasMensualesGrafica(String email) {
-		return this.ventaDao.getVentasMensualesGrafica(email);
+	public List<GraficaGenericDto> getVentasMensualesGrafica(Empresa empresa) {
+		return this.ventaDao.getVentasMensualesGrafica(empresa);
 	}
 
 	@Override
-	public List<GraficaGenericDto> getIngresosMensualesGrafica(String email) {
-		return this.ventaDao.getIngresosMensualesGrafica(email);
+	public List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa) {
+		return this.ventaDao.getIngresosMensualesGrafica(empresa);
 
 	}
 
 	@Override
-	public Long countByUsuario(Usuario usuario) {
-		return this.ventaDao.countByUsuario(usuario);
+	public Long countByEmpresa(Empresa empresa) {
+		return this.ventaDao.countByEmpresa(empresa);
 	}
 }

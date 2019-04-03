@@ -20,6 +20,16 @@
 					</p:outputLabel>
 					</h3>
 				</div>
+				<div class="col-md-6"
+					style="margin-top: 15px; color: #232323; float: right;text-align:right">
+					<p:commandButton icon="fa fa-user-times fa-fw" style="background-color:black;border: 1px solid white"
+						value="#{msg['perfil.darbaja']}" process="@this"
+						styleClass="btn btn-secondary btn-blcok text-right"
+						action="#{perfilBean.darBaja}" update="@this">
+						<p:confirm header="#{msg['needConfirmation']}"
+							message="#{msg['perfil.msg.darbaja']}" icon="fa fa-warning" />
+					</p:commandButton>
+				</div>
 			</div>
 			<div class="separator" />
 
@@ -118,17 +128,9 @@
 					</div>
 
 				</div>
-				<div class="col-sm-6 col-md-6 col-lg-6">
-					<p:commandButton icon="fa fa-user-times fa-fw"
-						value="#{msg['perfil.darbaja']}" process="@this"
-						styleClass="btn btn-secondary btn-blcok"
-						actionListener="#{perfilBean.darBaja}" update="@this">
-						<p:confirm header="#{msg['needConfirmation']}"
-							message="#{msg['perfil.msg.darbaja']}" icon="fa fa-warning" />
-					</p:commandButton>
-				</div>
+				<div class="col-sm-6 col-md-6 col-lg-6"></div>
 
-				<div class="col-md-12">
+				<div class="col-md-12" style="margin-top: 20px">
 					<p:growl id="messages" showDetail="true" />
 
 					<h:panelGrid columnClasses="value">
@@ -137,9 +139,11 @@
 							widgetVar="myschedule">
 
 							<p:ajax event="dateSelect" listener="#{perfilBean.onDateSelect}"
-								update="formApp:eventDetails" oncomplete="PF('eventDialog').show();" />
+								update="formApp:eventDetails"
+								oncomplete="PF('eventDialog').show();" />
 							<p:ajax event="eventSelect"
-								listener="#{perfilBean.onEventSelect}" update="formApp:eventDetails"
+								listener="#{perfilBean.onEventSelect}"
+								update="formApp:eventDetails"
 								oncomplete="PF('eventDialog').show();" />
 							<p:ajax event="eventMove" listener="#{perfilBean.onEventMove}" />
 							<p:ajax event="eventResize"
@@ -167,17 +171,19 @@
 								value="#{perfilBean.event.allDay}" />
 
 							<p:commandButton type="reset" value="Reiniciar" />
-							<p:commandButton id="addButton" value="Guardar" process="formApp:eventDetails"
+							<p:commandButton id="addButton" value="Guardar"
+								process="formApp:eventDetails"
 								actionListener="#{perfilBean.addEvent}"
 								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
 						</h:panelGrid>
 					</p:dialog>
 				</div>
 
+				<!-- 				<div class="row" style="margin-top:20px;"> -->
+				<!-- 					<div class="col-sm-6 col-md-6 col-lg-6"> -->
 
-
-
-
+				<!-- 					</div> -->
+				<!-- 				</div> -->
 
 			</div>
 

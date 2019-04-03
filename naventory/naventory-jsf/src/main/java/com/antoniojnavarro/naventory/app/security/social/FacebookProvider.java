@@ -1,5 +1,9 @@
 package com.antoniojnavarro.naventory.app.security.social;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.restfb.DefaultFacebookClient;
@@ -18,6 +22,15 @@ public class FacebookProvider extends BaseProvider {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String accessToken;
+	@Autowired
+	private Environment env;
+
+	private String appId;
+
+	@PostConstruct
+	public void initAppId() {
+		this.appId = env.getProperty("facebook.appId");
+	}
 
 	public String login() {
 		FacebookClient facebookClient = new DefaultFacebookClient(this.accessToken, Version.VERSION_3_1);
@@ -32,8 +45,7 @@ public class FacebookProvider extends BaseProvider {
 		JsonValue jsonValue = jsonObject.get("data");
 		JsonObject object = jsonValue.asObject();
 		String profileImageUrl = object.get("url").asString();
-
-		return iniciarSesion(user.getEmail(), user.getFirstName(), user.getLastName(), profileImageUrl);
+		return iniciarSesion(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), profileImageUrl);
 
 	}
 
@@ -43,6 +55,14 @@ public class FacebookProvider extends BaseProvider {
 
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
+	}
+
+	public String getAppId() {
+		return appId;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
 	}
 
 }

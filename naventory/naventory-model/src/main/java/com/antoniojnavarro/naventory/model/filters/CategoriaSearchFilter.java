@@ -23,8 +23,8 @@ public class CategoriaSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.idCat", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private Integer id;
 
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
-	private String usuario;
+	@FieldWhere(columns = "c.empresa.cif", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
+	private String cif;
 
 	@FieldWhere(columns = "c.nomCat", likeMode = LikeMode.CONTAINS)
 	private String nombre;
@@ -32,12 +32,12 @@ public class CategoriaSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.desc", likeMode = LikeMode.CONTAINS)
 	private String descripcion;
 
-	public String getUsuario() {
-		return usuario;
+	public String getCif() {
+		return cif;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setCif(String cif) {
+		this.cif = cif;
 	}
 
 	public Integer getId() {

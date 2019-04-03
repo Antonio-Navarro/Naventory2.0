@@ -39,7 +39,6 @@ public class TestServicioEjemplo {
 			user.setAdministrador("Y");
 			user.setPassword(pass);
 			user.setActivo("Y");
-			user.setEmpresa("TFG");
 
 			srvUusuario.saveOrUpdate(user, false);
 		}

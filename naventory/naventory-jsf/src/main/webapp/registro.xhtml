@@ -51,9 +51,139 @@
 							style="z-index: 1002;">
 							<p:graphicImage library="images" name="loading.gif" width="65" />
 						</p:dialog>
+						<p:outputPanel rendered="#{registroBean.registroInvitacion == false}">
+							<p:wizard flowListener="#{registroBean.onFlowProcess}"
+								id="wizardRegistroEmpresa" nextLabel="Ir a datos del Usuario"
+								backLabel="Atras" showStepStatus="false">
+								<p:tab id="empresaTab">
+									<p:panel id="empresaPanel"
+										header="#{msg['register.title.empresa']}">
+										<div class="ui-inputgroup inputUser">
+											<span class="ui-inputgroup-addon iconForm"><i
+												class="fa fa-industry"></i></span>
+											<p:inputText value="#{registroBean.usuario.empresa.nombre}"
+												styleClass="form-control"
+												placeholder="#{msg['register.empresa.nombre']}"
+												style="text-align:center" required="true"
+												requiredMessage="#{msg['register.empresa.nombre.req']}"
+												maxlength="255" />
+										</div>
 
-						<p:panel id="basic" header="#{msg['register.title']}">
+										<div class="ui-inputgroup inputUser">
+											<span class="ui-inputgroup-addon iconForm"><i
+												class="fa fa-group"></i></span>
+											<p:inputText value="#{registroBean.usuario.empresa.cif}"
+												styleClass="form-control"
+												placeholder="#{msg['register.empresa.cif']}"
+												style="font-family:Arial, FontAwesome; text-align:center"
+												required="true"
+												requiredMessage="#{msg['register.empresa.cif.req']}"
+												maxlength="255" />
+										</div>
 
+										<div class="ui-inputgroup inputUser">
+											<span class="ui-inputgroup-addon iconForm"><i
+												class="fa fa-road"></i></span>
+											<p:inputText
+												value="#{registroBean.usuario.empresa.domicilioSocial}"
+												styleClass="form-control"
+												placeholder="#{msg['register.empresa.domSocial']}"
+												style="font-family:Arial, FontAwesome; text-align:center"
+												required="true"
+												requiredMessage="#{msg['register.empresa.domSocial.req']}"
+												maxlength="255" />
+										</div>
+										<div class="ui-inputgroup inputUser">
+											<span class="ui-inputgroup-addon iconForm"><i
+												class="fa fa-phone"></i></span>
+											<p:outputLabel for="telEmpresa" value="Teléfono"
+												style="display:none" />
+											<p:inputText value="#{registroBean.usuario.empresa.telefono}"
+												styleClass="form-control" maxlength="2555" id="telEmpresa"
+												placeholder="#{msg['register.empresa.telefono']}"
+												alt="Telefono" size="9"
+												style="font-family:Arial, FontAwesome;text-align:center;" />
+
+
+										</div>
+									</p:panel>
+								</p:tab>
+								<p:tab id="usuarioTab">
+									<p:panel id="usuarioPanel"
+										header="#{msg['register.title.usuario']}">
+										<div class="ui-inputgroup inputUser">
+											<span class="ui-inputgroup-addon iconForm"><i
+												class="fa fa-envelope-o"></i></span>
+											<p:inputText value="#{registroBean.usuario.email}"
+												styleClass="form-control"
+												placeholder="#{msg['register.email']}"
+												style="text-align:center" required="true"
+												requiredMessage="#{msg['register.email.req']}"
+												maxlength="255"
+												validatorMessage="#{msg['register.email.error']}">
+												<f:validateRegex
+													pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+											</p:inputText>
+										</div>
+
+										<div class="ui-inputgroup inputUser">
+											<span class="ui-inputgroup-addon iconForm"><i
+												class="fa fa-user"></i></span>
+											<p:inputText value="#{registroBean.usuario.nombre}"
+												styleClass="form-control"
+												placeholder="#{msg['register.nombre']}"
+												style="font-family:Arial, FontAwesome; text-align:center"
+												required="true"
+												requiredMessage="#{msg['register.nombre.req']}"
+												maxlength="255"></p:inputText>
+										</div>
+										<div class="ui-inputgroup inputUser">
+											<span class="ui-inputgroup-addon iconForm"><i
+												class="fa fa-users"></i></span>
+											<p:inputText value="#{registroBean.usuario.apellido}"
+												styleClass="form-control"
+												placeholder="#{msg['register.apellidos']}"
+												style="font-family:Arial, FontAwesome; text-align:center"
+												required="true"
+												requiredMessage="#{msg['register.apellidos.req']}"
+												maxlength="255"></p:inputText>
+										</div>
+										<div>
+											<div class="ui-inputgroup inputUser">
+												<span class="ui-inputgroup-addon iconForm"><i
+													class="fa fa-lock"></i></span>
+												<p:password styleClass="form-control"
+													value="#{registroBean.usuario.password}" maxlength="255"
+													placeholder="#{msg['register.password']}"
+													style="font-family:Arial, FontAwesome; text-align:center"
+													required="true"
+													requiredMessage="#{msg['register.password.req']}" />
+											</div>
+										</div>
+										<div>
+											<div class="ui-inputgroup inputUser">
+												<span class="ui-inputgroup-addon iconForm"><i
+													class="fa fa-lock"></i></span>
+												<p:password styleClass="form-control"
+													value="#{registroBean.confPassword}" maxlength="255"
+													placeholder="#{msg['register.repeatPassword']}"
+													style="font-family:Arial, FontAwesome; text-align:center"
+													required="true"
+													requiredMessage="#{msg['register.repeatPassword.req']}" />
+											</div>
+										</div>
+									</p:panel>
+								</p:tab>
+							</p:wizard>
+						</p:outputPanel>
+
+
+
+						<!-- 						REGISTRO POR INVITACION -->
+
+						<p:panel id="usuarioPanelInvitacion"
+							rendered="#{registroBean.registroInvitacion}"
+							header="#{msg['register.title.usuario']}">
 							<div class="ui-inputgroup inputUser">
 								<span class="ui-inputgroup-addon iconForm"><i
 									class="fa fa-envelope-o"></i></span>
@@ -70,7 +200,7 @@
 
 							<div class="ui-inputgroup inputUser">
 								<span class="ui-inputgroup-addon iconForm"><i
-									class="fa fa-envelope-o"></i></span>
+									class="fa fa-user"></i></span>
 								<p:inputText value="#{registroBean.usuario.nombre}"
 									styleClass="form-control"
 									placeholder="#{msg['register.nombre']}"
@@ -80,7 +210,7 @@
 							</div>
 							<div class="ui-inputgroup inputUser">
 								<span class="ui-inputgroup-addon iconForm"><i
-									class="fa fa-envelope-o"></i></span>
+									class="fa fa-users"></i></span>
 								<p:inputText value="#{registroBean.usuario.apellido}"
 									styleClass="form-control"
 									placeholder="#{msg['register.apellidos']}"
@@ -89,21 +219,10 @@
 									requiredMessage="#{msg['register.apellidos.req']}"
 									maxlength="255"></p:inputText>
 							</div>
-							<div class="ui-inputgroup inputUser">
-								<span class="ui-inputgroup-addon iconForm"><i
-									class="fa fa-envelope-o"></i></span>
-								<p:inputText value="#{registroBean.usuario.empresa}"
-									styleClass="form-control"
-									placeholder="#{msg['register.nombreEmpresa']}"
-									style="font-family:Arial, FontAwesome; text-align:center"
-									required="true"
-									requiredMessage="#{msg['register.nombreEmpresa.req']}"
-									maxlength="255"></p:inputText>
-							</div>
 							<div>
 								<div class="ui-inputgroup inputUser">
 									<span class="ui-inputgroup-addon iconForm"><i
-										class="fa fa-envelope-o"></i></span>
+										class="fa fa-lock"></i></span>
 									<p:password styleClass="form-control"
 										value="#{registroBean.usuario.password}" maxlength="255"
 										placeholder="#{msg['register.password']}"
@@ -115,7 +234,7 @@
 							<div>
 								<div class="ui-inputgroup inputUser">
 									<span class="ui-inputgroup-addon iconForm"><i
-										class="fa fa-envelope-o"></i></span>
+										class="fa fa-lock"></i></span>
 									<p:password styleClass="form-control"
 										value="#{registroBean.confPassword}" maxlength="255"
 										placeholder="#{msg['register.repeatPassword']}"
@@ -124,12 +243,16 @@
 										requiredMessage="#{msg['register.repeatPassword.req']}" />
 								</div>
 							</div>
+						</p:panel>
 
+
+
+
+						<p:panel>
 							<div>
 								<p:commandButton icon="fa fa-check"
 									value="#{msg['register.registarme.button']}" style="width:100%"
-									styleClass="btn btn-success"
-									actionListener="#{registroBean.register}" update="@form" />
+									styleClass="btn btn-success" action="#{registroBean.register}" />
 							</div>
 							<div>
 								<p:commandButton icon="fa fa-sign-in" immediate="true"
@@ -137,6 +260,10 @@
 									action="#{registroBean.volverInicioSesion}" />
 							</div>
 						</p:panel>
+
+
+
+
 						<div class="clearfix"></div>
 						<div class="separator">
 							<div>

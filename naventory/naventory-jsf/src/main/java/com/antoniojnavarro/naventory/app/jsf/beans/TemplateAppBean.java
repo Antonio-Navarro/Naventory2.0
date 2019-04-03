@@ -52,7 +52,7 @@ public class TemplateAppBean extends MasterBean {
 	}
 
 	public void cargarAlertas() {
-		alertas = this.srvAlertaStock.findAlertasByUsuario(this.usuarioAutenticado.getUsuario());
+		alertas = this.srvAlertaStock.findAlertasByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public List<AlertaStock> getAlertas() {

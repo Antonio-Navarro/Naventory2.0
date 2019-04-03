@@ -79,7 +79,7 @@ public class ClientesBean extends MasterBean {
 
 	public void inicilizarAtributos() {
 		this.filtro = new ClienteSearchFilter();
-		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.listaClientes = new ClienteLazyDataModel(filtro, srvCliente);
 		this.editing = false;
 		this.selectedCliente = new Cliente();
@@ -132,7 +132,7 @@ public class ClientesBean extends MasterBean {
 	}
 
 	public void guardarCliente() {
-		selectedCliente.setUsuario(usuarioAutenticado.getUsuario());
+		selectedCliente.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		srvCliente.saveOrUpdate(this.selectedCliente, true);
 		super.closeDialog("clienteDetailsDialog");
 		addInfo("clientes.succesNew");

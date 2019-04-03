@@ -100,7 +100,7 @@ public class VentasBean extends MasterBean {
 		this.editing = false;
 		iniciarSelectedVenta();
 		this.filtro = new VentaSearchFilter();
-		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.listaVentas = new VentaLazyDataModel(filtro, srvVenta);
 	}
 
@@ -123,7 +123,7 @@ public class VentasBean extends MasterBean {
 		this.selectedVenta = new Venta();
 		selectedVenta.setCliente(new Cliente());
 		filtroClientes = new ClienteSearchFilter();
-		filtroClientes.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtroClientes.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 
 	}
 
@@ -132,7 +132,7 @@ public class VentasBean extends MasterBean {
 		@SuppressWarnings("rawtypes")
 		Map map = context.getExternalContext().getRequestParameterMap();
 		filtroClientes.setNombre((String) map.get("myJSValue"));
-		filtroClientes.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtroClientes.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.clientes = new ClienteLazyDataModel(filtroClientes, srvCliente);
 	}
 
@@ -141,7 +141,7 @@ public class VentasBean extends MasterBean {
 	}
 
 	public void cargarProductos() {
-		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
+		this.productos = srvProducto.findProductosByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void borrarVenta(Venta venta) {
@@ -150,10 +150,10 @@ public class VentasBean extends MasterBean {
 			if (p != null) {
 				p.setStock(p.getStock() + venta.getCantidad());
 				srvProducto.saveOrUpdate(p, true);
-				if (srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p) != null
-						&& p.getStock() > p.getStockMin()) {
-					srvAlertaStock.delete(
-							srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p));
+				if (srvAlertaStock.findAlertaByEmpresaAndProducto(this.usuarioAutenticado.getUsuario().getEmpresa(),
+						p) != null && p.getStock() > p.getStockMin()) {
+					srvAlertaStock.delete(srvAlertaStock
+							.findAlertaByEmpresaAndProducto(this.usuarioAutenticado.getUsuario().getEmpresa(), p));
 				}
 			}
 		}
@@ -164,7 +164,7 @@ public class VentasBean extends MasterBean {
 
 	public void guardarVenta() {
 
-		selectedVenta.setUsuario(usuarioAutenticado.getUsuario());
+		selectedVenta.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		if (editing && selectedVenta.getIdVenta() != null && selectedVenta.getIdVenta() > 0) {
 			Venta v = srvVenta.findById(selectedVenta.getIdVenta());
 			Producto p = selectedVenta.getProducto();

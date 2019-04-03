@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.model.chart.Axis;
@@ -76,24 +74,16 @@ public class HomeBean extends MasterBean {
 		this.usuarioAuteticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		logger.info("Usuario autenticado: " + usuarioAuteticado.getUsername());
 		cargarNovedades();
-		this.numProductos = srvProducto.countByUsuario(this.usuarioAuteticado.getUsuario());
-		this.numCompras = srvCompra.countByUsuario(this.usuarioAuteticado.getUsuario());
-		this.numVentas = srvVenta.countByUsuario(this.usuarioAuteticado.getUsuario());
-		this.numClientes = srvCliente.countByUsuario(this.usuarioAuteticado.getUsuario());
+		this.numProductos = srvProducto.countByEmpresa(this.usuarioAuteticado.getUsuario().getEmpresa());
+		this.numCompras = srvCompra.countByEmpresa(this.usuarioAuteticado.getUsuario().getEmpresa());
+		this.numVentas = srvVenta.countByEmpresa(this.usuarioAuteticado.getUsuario().getEmpresa());
+		this.numClientes = srvCliente.countByEmpresa(this.usuarioAuteticado.getUsuario().getEmpresa());
 		if (this.usuarioAuteticado.getUsuario() != null && this.usuarioAuteticado.getUsuario().getEmail() != null) {
 			crearDonutFormasPago();
 			crearAreaClientes();
 			crearAreaVentas();
 			crearBarGastosIngresos();
 		}
-		logger.debug(empresa);
-		if (empresa != null)
-			addInfo(empresa);
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		Map params = externalContext.getRequestParameterMap();
-		logger.debug((String) params.get("empresa"));
 	}
 
 	private DonutChartModel iniciarDonutFormasPago() {
@@ -102,7 +92,7 @@ public class HomeBean extends MasterBean {
 		Map<String, Number> donut = new LinkedHashMap<String, Number>();
 
 		List<GraficaGenericDto> datosGraficaVentas = srvVenta
-				.findFormasPagoGrafica(this.usuarioAuteticado.getUsuario().getEmail());
+				.findFormasPagoGrafica(this.usuarioAuteticado.getUsuario().getEmpresa());
 		for (GraficaGenericDto registro : datosGraficaVentas) {
 			donut.put(registro.getEtiqueta(), registro.getCantidad());
 		}
@@ -134,7 +124,7 @@ public class HomeBean extends MasterBean {
 		ingresos.setLabel("Ingresos");
 
 		List<GraficaGenericDto> datosGraficaIngresos = srvVenta
-				.getIngresosMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmail());
+				.getIngresosMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa());
 
 		for (GraficaGenericDto registro : datosGraficaIngresos) {
 			ingresos.set(registro.getEtiqueta(), registro.getCantidad());
@@ -181,7 +171,7 @@ public class HomeBean extends MasterBean {
 		clientes.setLabel("Clientes");
 
 		List<GraficaGenericDto> datosGraficaClientes = srvCliente
-				.findClientesGrafica(this.usuarioAuteticado.getUsuario().getEmail());
+				.findClientesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa().getCif());
 		for (GraficaGenericDto registro : datosGraficaClientes) {
 			clientes.set(registro.getEtiqueta(), registro.getCantidad());
 
@@ -211,7 +201,7 @@ public class HomeBean extends MasterBean {
 		ventas.setLabel("Ventas");
 
 		List<GraficaGenericDto> datosGraficaVentas = srvVenta
-				.getVentasMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmail());
+				.getVentasMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa());
 		for (GraficaGenericDto registro : datosGraficaVentas) {
 			ventas.set(registro.getEtiqueta(), registro.getCantidad());
 		}
@@ -234,7 +224,8 @@ public class HomeBean extends MasterBean {
 	}
 
 	public void cargarNovedades() {
-		novedades = this.srvNovedad.findNovedadesByUsuario(this.usuarioAuteticado.getUsuario(), LIMIT_NOVEDADES);
+		novedades = this.srvNovedad.findNovedadesByEmpresa(this.usuarioAuteticado.getUsuario().getEmpresa(),
+				LIMIT_NOVEDADES);
 	}
 
 	public Long getNumProductos() {

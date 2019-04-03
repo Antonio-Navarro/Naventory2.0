@@ -10,10 +10,10 @@ import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.ClienteDao;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
+import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
@@ -31,6 +31,8 @@ public class ServicioClienteImpl implements ServicioCliente {
 
 	@Autowired
 	private ClienteDao clienteDao;
+	@Autowired
+	private ServicioEmpresa srvEmpresa;
 
 	@Override
 	public Cliente findById(Integer id) throws ServicioException {
@@ -62,7 +64,6 @@ public class ServicioClienteImpl implements ServicioCliente {
 
 	@Override
 	public List<Cliente> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<Cliente>) this.clienteDao.findAll();
 	}
 
@@ -86,9 +87,6 @@ public class ServicioClienteImpl implements ServicioCliente {
 		return this.clienteDao.save(entity);
 	}
 
-	@Autowired
-	private ServicioUsuario srvUsuario;
-
 	@Override
 	public void validate(Cliente entity) throws ServicioException {
 		this.srvValidacion.isNull("Cliente", entity);
@@ -101,9 +99,8 @@ public class ServicioClienteImpl implements ServicioCliente {
 		this.srvValidacion.isNull("Código Postal", entity.getCp());
 		this.srvValidacion.isNull("Télefono 1", entity.getTel1());
 		this.srvValidacion.isNull("Email", entity.getCorreo());
-
-		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+		if (!this.srvEmpresa.existsEmpresaByCif(entity.getEmpresa().getCif())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("cif.noexist"));
 
 		}
 
@@ -135,18 +132,13 @@ public class ServicioClienteImpl implements ServicioCliente {
 	}
 
 	@Override
-	public List<Cliente> findClientesByUsuario(Usuario user) throws ServicioException {
-		return this.clienteDao.findClientesByUsuario(user);
+	public List<GraficaGenericDto> findClientesGrafica(String cif) {
+		return this.clienteDao.findClientesGrafica(cif);
 	}
 
 	@Override
-	public List<GraficaGenericDto> findClientesGrafica(String email) {
-		return this.clienteDao.findClientesGrafica(email);
-	}
-
-	@Override
-	public Long countByUsuario(Usuario usuario) {
-		return this.clienteDao.countByUsuario(usuario);
+	public Long countByEmpresa(Empresa empresa) {
+		return this.clienteDao.countByEmpresa(empresa);
 	}
 
 }

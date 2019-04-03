@@ -16,8 +16,8 @@ public class ProveedorSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.idProv", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private Integer idProv;
 
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
-	private String usuario;
+	@FieldWhere(columns = "c.empresa.cif", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
+	private String empresa;
 
 	@FieldWhere(columns = "c.nombre", likeMode = LikeMode.CONTAINS)
 	private String nombre;
@@ -57,12 +57,12 @@ public class ProveedorSearchFilter implements SearchFilter {
 		this.idProv = idProv;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 	public String getNombre() {

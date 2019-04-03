@@ -30,7 +30,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (usuario == null) {
 			throw new UsernameNotFoundException(this.srvMensajes.getMensajeI18n("login.notFound"));
 		} else if (!"Y".equals(usuario.getActivo())) {
-			throw new UsernameNotFoundException(this.srvMensajes.getMensajeI18n("login.lock"));
+			UsernameNotFoundException e = new UsernameNotFoundException(this.srvMensajes.getMensajeI18n("login.lock"));
+			e.addSuppressed(new Throwable("login.lock"));
+			throw e;
 		}
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		if (usuario.getRoles() != null) {

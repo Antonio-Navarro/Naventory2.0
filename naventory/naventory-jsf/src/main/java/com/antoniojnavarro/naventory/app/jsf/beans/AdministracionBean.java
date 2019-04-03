@@ -54,7 +54,7 @@ public class AdministracionBean extends MasterBean {
 		graficaCrecimiento.getAxes().put(AxisType.X, new CategoryAxis("Años"));
 		Axis yAxis = graficaCrecimiento.getAxis(AxisType.Y);
 		yAxis.setLabel("Número de usuarios");
-		graficaCrecimiento.setAnimate(true);
+
 	}
 
 	private LineChartModel initGraficaModel() {

@@ -1,5 +1,6 @@
 package com.antoniojnavarro.naventory.model.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,9 +24,9 @@ public class Producto implements GenericEntity {
 	@Column(name = "sku")
 	private String sku;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "email")
-	private Usuario usuario;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "cif")
+	private Empresa empresa;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_cat")
@@ -34,30 +35,29 @@ public class Producto implements GenericEntity {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_proveedor")
 	private Proveedor proveedor;
-	
+
 	@Column(name = "nombre", length = 255)
 	private String nombre;
 
-	@Column(name = "descripcion",length = 255,nullable = true)
+	@Column(name = "descripcion", length = 255, nullable = true)
 	private String descripcion;
-	
-	@Column(name = "unidad",length = 255,nullable = true)
+
+	@Column(name = "unidad", length = 255, nullable = true)
 	private String unidad;
 
-	@Column(name = "coste",length = 11 ,nullable = true)
+	@Column(name = "coste", length = 11, nullable = true)
 	private Float coste;
 
-
-	@Column(name = "precio",length = 11 ,nullable = true)
+	@Column(name = "precio", length = 11, nullable = true)
 	private Float precio;
 
-	@Column(name = "stock" ,nullable = true)
+	@Column(name = "stock", nullable = true)
 	private Integer stock;
-	
-	@Column(name = "stock_min" ,nullable = true)
+
+	@Column(name = "stock_min", nullable = true)
 	private Integer stockMin;
-	
-	@Column(name = "observaciones",length = 255,nullable = true)
+
+	@Column(name = "observaciones", length = 255, nullable = true)
 	private String observaciones;
 
 	public String getSku() {
@@ -68,12 +68,12 @@ public class Producto implements GenericEntity {
 		this.sku = sku;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public Categoria getCategoria() {
@@ -216,11 +216,5 @@ public class Producto implements GenericEntity {
 			return false;
 		return true;
 	}
-
-
-
-
-
-	
 
 }

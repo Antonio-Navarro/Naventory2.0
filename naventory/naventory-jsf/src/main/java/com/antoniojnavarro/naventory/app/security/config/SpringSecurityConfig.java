@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.antoniojnavarro.naventory.app.security.services.impl.UserDetailsServiceImpl;
+import com.antoniojnavarro.naventory.model.entities.enums.RolEnum;
 
 @Configuration
 @EnableWebSecurity
@@ -31,9 +32,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/resources/**", "/javax.faces.resource/**", "/errorPage.xhtml", "/session-expired.xhtml",
 						"/403.xhtml", "/404.xhtml", "/too-many-sessions.xhtml", "/login.xhtml", "/registro.xhtml")
-				.permitAll().anyRequest().authenticated().and().csrf().disable().exceptionHandling().and()
-				.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true)
+				.permitAll().and().authorizeRequests().antMatchers("/private/administracion/**")
+				.hasAuthority(RolEnum.ROLE_ADMIN.name()).and().authorizeRequests().antMatchers("/private/empresa/**")
+				.hasAuthority(RolEnum.ROLE_EMP.name()).anyRequest().authenticated().and().csrf().disable()
+				.exceptionHandling().and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true)
 				.expiredUrl("/too-many-sessionse.xhtml");
+		http.authorizeRequests();
 	}
 
 	@Bean

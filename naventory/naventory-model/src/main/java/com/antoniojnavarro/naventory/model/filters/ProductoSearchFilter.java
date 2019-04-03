@@ -16,8 +16,8 @@ public class ProductoSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.sku", likeMode = LikeMode.CONTAINS)
 	private String sku;
 
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
-	private String usuario;
+	@FieldWhere(columns = "c.empresa.cif", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
+	private String empresa;
 
 	@FieldWhere(columns = "c.categoria.idCat", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private Integer categoria;
@@ -57,12 +57,12 @@ public class ProductoSearchFilter implements SearchFilter {
 		this.sku = sku;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 	public Integer getCategoria() {

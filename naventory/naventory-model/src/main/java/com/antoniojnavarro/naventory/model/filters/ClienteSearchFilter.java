@@ -18,8 +18,8 @@ public class ClienteSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.idCliente", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private Integer idCliente;
 
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
-	private String usuario;
+	@FieldWhere(columns = "c.empresa.cif", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
+	private String empresa;
 
 	@FieldWhere(columns = "c.nombre", likeMode = LikeMode.CONTAINS)
 	private String nombre;
@@ -74,12 +74,12 @@ public class ClienteSearchFilter implements SearchFilter {
 		this.idCliente = idCliente;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 	public String getNombre() {

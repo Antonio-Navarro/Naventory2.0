@@ -2,6 +2,7 @@ package com.antoniojnavarro.naventory.model.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,9 +31,9 @@ public class Cliente implements GenericEntity {
 	@Column(name = "id_cliente")
 	private Integer idCliente;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "email")
-	private Usuario usuario;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "cif")
+	private Empresa empresa;
 
 	@Column(name = "nombre", length = 255, nullable = true)
 	private String nombre;
@@ -43,7 +44,6 @@ public class Cliente implements GenericEntity {
 	@Column(name = "nif", length = 255, nullable = true)
 	private String nif;
 
-	
 	@Column(name = "direccion", length = 255, nullable = true)
 	private String direccion;
 
@@ -58,26 +58,26 @@ public class Cliente implements GenericEntity {
 
 	@Column(name = "cp", nullable = true)
 	private Integer cp;
-	
+
 	@Column(name = "tel1", nullable = true)
 	private Integer tel1;
-	
+
 	@Column(name = "tel2", nullable = true)
 	private Integer tel2;
-	
+
 	@Column(name = "correo", length = 255, nullable = true)
 	private String correo;
 
 	@Column(name = "descuento", nullable = true)
 	private Float descuento;
-	
+
 	@Column(name = "iva", nullable = true)
 	private Integer iva;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "fecha_alta", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable=false)
+	@Column(name = "fecha_alta", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	private Date fecha_alta;
-	
+
 	@Column(name = "observaciones", length = 255, nullable = true)
 	private String observaciones;
 
@@ -89,12 +89,12 @@ public class Cliente implements GenericEntity {
 		this.idCliente = idCliente;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public String getNombre() {
@@ -331,6 +331,5 @@ public class Cliente implements GenericEntity {
 			return false;
 		return true;
 	}
-	
-	
+
 }

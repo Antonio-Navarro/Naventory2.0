@@ -21,14 +21,14 @@ public class UsuarioSearchFilter implements SearchFilter {
 
 	private static final long serialVersionUID = 1L;
 
-	@FieldWhere(columns = "e.nombre", likeMode = LikeMode.CONTAINS)
+	@FieldWhere(columns = "u.nombre", likeMode = LikeMode.CONTAINS)
 	private String nombre;
 
-	@FieldWhere(columns = "e.fechaAlta")
+	@FieldWhere(columns = "u.fechaAlta")
 	@BetweenDate(mode = ModeEnum.AFTER_EQUALS)
 	private Date fechaAltaDesde;
 
-	@FieldWhere(columns = "e.fechaAlta")
+	@FieldWhere(columns = "u.fechaAlta")
 	@BetweenDate(mode = ModeEnum.BEFORE_EQUALS)
 	private Date fechaAltaHasta;
 

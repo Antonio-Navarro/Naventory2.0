@@ -25,11 +25,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.CifrarClave;
+import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Evento;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.services.api.ServicioEvento;
@@ -94,11 +96,14 @@ public class PerfilBean extends MasterBean {
 		}
 	}
 
-	public void darBaja() {
+	public String darBaja() {
 		this.usuarioSelected.setActivo("N");
 		this.srvUsuario.validateAndEmailOpcional(usuarioSelected, false);
 		this.srvUsuario.saveOrUpdate(usuarioSelected, false);
 		addInfo("perfil.baja.ok");
+		SecurityContextHolder.clearContext();
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return Constantes.GO_TO_LOGIN;
 	}
 
 	public void guardar() {

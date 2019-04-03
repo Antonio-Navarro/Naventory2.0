@@ -45,7 +45,7 @@
 									value="#{comprasBean.selectedCompra.proveedor.nombre}">
 								</h:inputHidden>
 							</div>
-							<p:overlayPanel id="panelProveedoresOverlayIdNuevo" 
+							<p:overlayPanel id="panelProveedoresOverlayIdNuevo"
 								for="buscarProveedorNuevo"
 								onShow="PrimeFaces.focus('formApp:filtroNombreNuevo');"
 								hideEffect="fade" dismissable="true" showCloseIcon="true"
@@ -84,43 +84,6 @@
 								</p:dataTable>
 							</p:overlayPanel>
 						</p:column>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 						<p:outputLabel for="proveedorSelectNuevo" -->
-<!-- 							value="#{msg['proveedor']}" /> -->
-<!-- 						<p:selectOneMenu id="proveedorSelectNuevo" filter="true" -->
-<!-- 							required="true" converter="#{proveedorConverter}" -->
-<!-- 							requiredMessage="#{msg['compras.proveedor.required']}" -->
-<!-- 							value="#{comprasBean.selectedCompra.proveedor}" -->
-<!-- 							style="min-width:100% !important;"> -->
-<!-- 							<f:selectItem itemLabel="Elige un proveedor..." -->
-<!-- 								itemValue="#{null}" /> -->
-<!-- 							<f:selectItems value="#{comprasBean.proveedores}" var="proveedor" -->
-<!-- 								itemLabel="#{proveedor.nombre}" itemValue="#{proveedor}" /> -->
-<!-- 						</p:selectOneMenu> -->
-
 						<p:outputLabel for="facturaInputNuevo" value="#{msg['factura']}" />
 						<p:inputText id="facturaInputNuevo" required="true"
 							requiredMessage="#{msg['compras.factura.required']}"

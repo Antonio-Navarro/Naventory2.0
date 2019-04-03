@@ -9,10 +9,10 @@ import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.Pagination
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.CategoriaDao;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.CategoriaSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
+import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
@@ -24,35 +24,30 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 
 	@Autowired
 	private ServicioValidacion srvValidacion;
+	@Autowired
+	private ServicioEmpresa srvEmpresa;
 
 	@Autowired
 	private ServicioMensajesI18n srvMensajes;
 
-
 	@Autowired
 	private CategoriaDao categoriaDao;
-
 
 	@Override
 	public Categoria findById(Integer id) throws ServicioException {
 		return this.categoriaDao.findOne(id);
 	}
 
-
 	@Override
 	public List<Categoria> findBySearchFilter(CategoriaSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return categoriaDao.findBySearchFilter(searchFilter);
 	}
-
 
 	@Override
 	public List<Categoria> findBySearchFilter(CategoriaSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.categoriaDao.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
-
 
 	@Override
 	public PaginationResult<Categoria> findBySearchFilterPagination(CategoriaSearchFilter searchFilter, int pageNumber,
@@ -60,21 +55,16 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 		return this.categoriaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
-
 	@Override
 	public PaginationResult<Categoria> findBySearchFilterPagination(CategoriaSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.categoriaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
-
 	@Override
 	public List<Categoria> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<Categoria>) this.categoriaDao.findAll();
 	}
-
 
 	@Override
 	public boolean exists(Categoria entity) throws ServicioException {
@@ -86,36 +76,30 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 		return existsById(entity.getIdCat());
 	}
 
-
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.existsById(id);
 	}
 
-
 	@Override
 	public Categoria save(Categoria entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.categoriaDao.save(entity);
 	}
 
-	@Autowired
-	private ServicioUsuario srvUsuario;
-	
 	@Override
 	public void validate(Categoria entity) throws ServicioException {
 		this.srvValidacion.isNull("Categoria", entity);
 		this.srvValidacion.isNull("Nombre", entity.getNomCat());
-		if(!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+		if (!this.srvEmpresa.existsEmpresaByCif(entity.getEmpresa().getCif())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("cif.noexist"));
 
 		}
-		
+
 	}
+
 	@Override
 	public Categoria saveOrUpdate(Categoria entity, boolean validate) throws ServicioException {
-		if(validate) {
+		if (validate) {
 			validate(entity);
 		}
 		return this.save(entity);
@@ -127,23 +111,19 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 		this.categoriaDao.delete(entity);
 	}
 
-
 	@Override
 	public void deleteRange(List<Categoria> entity) throws ServicioException {
-		throw new UnsupportedOperationException();		
+		throw new UnsupportedOperationException();
 	}
-
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
 		this.categoriaDao.delete(id);
-		
+
 	}
 
-
 	@Override
-	public List<Categoria> findCategoriasByUsuario(Usuario user) throws ServicioException {
-		// TODO Auto-generated method stub
-		return this.categoriaDao.findCategoriasByUsuario(user); 
+	public List<Categoria> findCategoriasByEmpresa(Empresa empresa) throws ServicioException {
+		return this.categoriaDao.findCategoriasByEmpresa(empresa);
 	}
 }

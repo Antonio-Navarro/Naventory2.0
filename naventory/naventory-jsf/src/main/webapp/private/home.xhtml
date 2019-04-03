@@ -116,7 +116,7 @@
 
 			<div class="col-lg-8 col-xs-12">
 				<p:panel id="panelClientesId"
-					header="Clientes diarios de #{homeBean.usuarioAuteticado.usuario.empresa}"
+					header="Clientes diarios de #{homeBean.usuarioAuteticado.usuario.empresa.nombre}"
 					toggleable="true" closable="true" toggleSpeed="500"
 					closeSpeed="500" widgetVar="panelClientes"
 					style="margin-bottom:20px">
@@ -138,7 +138,7 @@
 				</p:panel>
 
 				<p:panel id="panelVentasId"
-					header="Ventas mensuales de #{homeBean.usuarioAuteticado.usuario.empresa}"
+					header="Ventas mensuales de #{homeBean.usuarioAuteticado.usuario.empresa.nombre}"
 					toggleable="true" closable="true" toggleSpeed="500"
 					closeSpeed="500" widgetVar="panelVentas" style="margin-bottom:20px">
 					<h:panelGrid style="width:100%">

@@ -8,6 +8,7 @@ import com.antoniojnavarro.naventory.model.commons.filters.annotations.BetweenDa
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.EntityFilter;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.LikeMode;
+import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.LogicalOperatorBetweenNames;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.FieldWhere.OperatorLikeNoneEnum;
 import com.antoniojnavarro.naventory.model.entities.Compra;;
 
@@ -17,8 +18,9 @@ public class CompraSearchFilter implements SearchFilter {
 	private static final long serialVersionUID = 1L;
 	@FieldWhere(columns = "c.factura", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private String factura;
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
-	private String usuario;
+
+	@FieldWhere(columns = "c.empresa.cif", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
+	private String empresa;
 
 	@FieldWhere(columns = "c.idCompra", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private Integer idCompra;
@@ -69,12 +71,12 @@ public class CompraSearchFilter implements SearchFilter {
 		this.factura = factura;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 	public Integer getIdCompra() {

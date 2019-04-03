@@ -20,16 +20,11 @@ public class VentaSearchFilter implements SearchFilter {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
-
 	@FieldWhere(columns = "c.cantidad", likeMode = LikeMode.NONE)
 	private Integer cantidad;
-
-	@FieldWhere(columns = "c.usuario.email", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
-	private String usuario;
+	
+	@FieldWhere(columns = "c.empresa.cif", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS, logicalOperator = LogicalOperatorBetweenNames.AND)
+	private String empresa;
 
 	@FieldWhere(columns = "c.producto.nombre", likeMode = LikeMode.CONTAINS)
 	private String nombreProducto;
@@ -60,12 +55,12 @@ public class VentaSearchFilter implements SearchFilter {
 	@FieldWhere(columns = "c.total", operatorIfLikeNone = OperatorLikeNoneEnum.EQUALS)
 	private Float total;
 
-	public String getUsuario() {
-		return usuario;
+	public String getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 	public Integer getCantidad() {
@@ -147,5 +142,8 @@ public class VentaSearchFilter implements SearchFilter {
 	public void setTotal(Float total) {
 		this.total = total;
 	}
-
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
 }

@@ -28,4 +28,10 @@ public class CifrarClave {
 		return pwd;
 	}
 
+	public static String generarToken() {
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		String pwd = RandomStringUtils.random(15, characters);
+		return pwd;
+	}
+
 }

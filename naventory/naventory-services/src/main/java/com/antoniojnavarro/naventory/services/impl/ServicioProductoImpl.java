@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Producto;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.ProductoSearchFilter;
+import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
@@ -24,6 +24,8 @@ public class ServicioProductoImpl implements ServicioProducto {
 
 	@Autowired
 	private ServicioValidacion srvValidacion;
+	@Autowired
+	private ServicioEmpresa srvEmpresa;
 
 	@Autowired
 	private ServicioMensajesI18n srvMensajes;
@@ -38,14 +40,12 @@ public class ServicioProductoImpl implements ServicioProducto {
 
 	@Override
 	public List<Producto> findBySearchFilter(ProductoSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return productoDao.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Producto> findBySearchFilter(ProductoSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.productoDao.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
@@ -58,13 +58,11 @@ public class ServicioProductoImpl implements ServicioProducto {
 	@Override
 	public PaginationResult<Producto> findBySearchFilterPagination(ProductoSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.productoDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Producto> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<Producto>) this.productoDao.findAll();
 	}
 
@@ -90,9 +88,6 @@ public class ServicioProductoImpl implements ServicioProducto {
 		return this.productoDao.save(entity);
 	}
 
-	@Autowired
-	private ServicioUsuario srvUsuario;
-
 	@Override
 	public void validate(Producto entity) throws ServicioException {
 		this.srvValidacion.isNull("Producto", entity);
@@ -107,9 +102,8 @@ public class ServicioProductoImpl implements ServicioProducto {
 		this.srvValidacion.isNull("Precio de venta", entity.getPrecio());
 		this.srvValidacion.isNull("Stock", entity.getStock());
 		this.srvValidacion.isNull("Stock mínimo", entity.getStockMin());
-		this.srvValidacion.isNull("Únidad de medida", entity.getUnidad());
-		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+		if (!this.srvEmpresa.existsEmpresaByCif(entity.getEmpresa().getCif())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("cif.noexist"));
 
 		}
 
@@ -148,18 +142,17 @@ public class ServicioProductoImpl implements ServicioProducto {
 	}
 
 	@Override
-	public List<Producto> findProductosByUsuario(Usuario user) throws ServicioException {
-		// TODO Auto-generated method stub
-		return this.productoDao.findProductosByUsuario(user);
+	public List<Producto> findProductosByEmpresa(Empresa empresa) throws ServicioException {
+		return this.productoDao.findProductosByEmpresa(empresa);
 	}
 
 	@Override
-	public Float getTotalInventario(Usuario user) throws ServicioException {
-		return this.productoDao.getTotalInventario(user);
+	public Float getTotalInventario(Empresa empresa) throws ServicioException {
+		return this.productoDao.getTotalInventario(empresa);
 	}
 
 	@Override
-	public Long countByUsuario(Usuario usuario) {
-		return this.productoDao.countByUsuario(usuario);
+	public Long countByEmpresa(Empresa empresa) {
+		return this.productoDao.countByEmpresa(empresa);
 	}
 }

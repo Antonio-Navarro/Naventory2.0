@@ -73,7 +73,7 @@ public class ProveedoresBean extends MasterBean {
 
 	public void inicilizarAtributos() {
 		this.filtro = new ProveedorSearchFilter();
-		this.filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.listaProveedores = new ProveedorLazyDataModel(filtro, srvProveedor);
 		this.editing = false;
 		this.selectedProveedor = new Proveedor();
@@ -128,7 +128,7 @@ public class ProveedoresBean extends MasterBean {
 
 	public void guardarProveedor() {
 
-		selectedProveedor.setUsuario(usuarioAutenticado.getUsuario());
+		selectedProveedor.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		srvProveedor.saveOrUpdate(this.selectedProveedor, true);
 		super.closeDialog("proveedorDetailsDialog");
 		addInfo("proveedores.succesNew");

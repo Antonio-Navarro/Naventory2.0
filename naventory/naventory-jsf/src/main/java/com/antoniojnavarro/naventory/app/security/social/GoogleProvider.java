@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -26,13 +28,20 @@ public class GoogleProvider extends BaseProvider {
 	@Autowired
 	private Environment env;
 
+	private String appId;
+
+	@PostConstruct
+	public void initAppID() {
+		appId = env.getProperty("spring.social.google.appId");
+	}
+
 	public String login() {
 		NetHttpTransport transport;
 		try {
 			transport = GoogleNetHttpTransport.newTrustedTransport();
 			final JacksonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 			GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-					.setAudience(Collections.singletonList(env.getProperty("spring.social.google.appId"))).build();
+					.setAudience(Collections.singletonList(appId)).build();
 
 			final GoogleIdToken googleIdToken = verifier.verify(this.accessToken);
 			if (googleIdToken == null) {
@@ -45,12 +54,14 @@ public class GoogleProvider extends BaseProvider {
 			if (!emailVerified) {
 				return "error.login.google";
 			}
+			String id = (String) payload.get("sub");
+
 			String nombre = (String) payload.get("name");
 			String email = payload.getEmail();
 			String apellidos = (String) payload.get("family_name");
 			String fotoPerfil = (String) payload.get("picture");
 
-			return iniciarSesion(email, nombre, apellidos, fotoPerfil);
+			return iniciarSesion(id, email, nombre, apellidos, fotoPerfil);
 
 		} catch (GeneralSecurityException | IOException e1) {
 			e1.printStackTrace();
@@ -66,6 +77,14 @@ public class GoogleProvider extends BaseProvider {
 
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
+	}
+
+	public String getAppId() {
+		return appId;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
 	}
 
 }

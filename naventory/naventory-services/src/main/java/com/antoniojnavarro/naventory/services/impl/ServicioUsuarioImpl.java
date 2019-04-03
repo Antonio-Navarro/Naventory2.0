@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.UsuarioDao;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.UsuarioSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
@@ -116,6 +117,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public void validate(Usuario entity) throws ServicioException {
 		validateAndEmailOpcional(entity, true);
 	}
+
 	@Override
 	public void validateAndEmailOpcional(Usuario entity, boolean validarEmail) throws ServicioException {
 		this.srvValidacion.isNull("Usuario", entity);
@@ -142,10 +144,16 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 		return this.usuarioDao.findUsuarioByEmailAndPassword(email, pass);
 	}
+
 	@Override
 	public Usuario findUsuarioByEmailAndActivo(String email, String activo) throws ServicioException {
 
 		return this.usuarioDao.findUsuarioByEmailAndActivo(email, activo);
+	}
+
+	@Override
+	public List<Usuario> findUsuarioByEmpresa(Empresa empresa) throws ServicioException {
+		return (List<Usuario>) this.usuarioDao.findUsuarioByEmpresa(empresa);
 	}
 
 	public Object[] findUsersGrafica() {

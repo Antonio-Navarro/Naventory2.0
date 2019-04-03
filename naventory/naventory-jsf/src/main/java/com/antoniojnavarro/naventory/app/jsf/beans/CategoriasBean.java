@@ -59,7 +59,7 @@ public class CategoriasBean extends MasterBean {
 		this.selectedCategoria = new Categoria();
 		this.categoria = new Categoria();
 		this.filtro = new CategoriaSearchFilter();
-		this.filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		this.filtro.setCif(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.listaCategorias = new CategoriaLazyDataModel(filtro, srvCategoria);
 	}
 
@@ -87,7 +87,7 @@ public class CategoriasBean extends MasterBean {
 
 	public void guardarCategoria() {
 
-		selectedCategoria.setUsuario(usuarioAutenticado.getUsuario());
+		selectedCategoria.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		srvCategoria.saveOrUpdate(this.selectedCategoria, true);
 		super.closeDialog("categoriaDetailsDialog");
 		addInfo("categorias.succesNew");

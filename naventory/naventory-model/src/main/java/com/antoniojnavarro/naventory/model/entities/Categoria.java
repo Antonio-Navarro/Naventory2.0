@@ -1,5 +1,6 @@
 package com.antoniojnavarro.naventory.model.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,17 +27,17 @@ public class Categoria implements GenericEntity {
 	@Column(name = "idcat")
 	private Integer idCat;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "email")
-	private Usuario usuario;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "cif")
+	private Empresa empresa;
 
-	@Column(name = "nomcat", length = 255)
+	@Column(name = "nomcat", length = 255, nullable = false)
 	private String nomCat;
 
-	@Column(name = "descripcion",length = 255,nullable = true)
+	@Column(name = "descripcion", length = 255, nullable = true)
 	private String desc;
 
-	@Column(name = "obser",length = 255,nullable = true)
+	@Column(name = "obser", length = 255, nullable = true)
 	private String obser;
 
 	public Integer getIdCat() {
@@ -45,14 +46,6 @@ public class Categoria implements GenericEntity {
 
 	public void setIdCat(Integer idCat) {
 		this.idCat = idCat;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public String getNomCat() {
@@ -77,6 +70,14 @@ public class Categoria implements GenericEntity {
 
 	public void setObser(String obser) {
 		this.obser = obser;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override

@@ -82,7 +82,7 @@ public class ProductosBean extends MasterBean {
 		iniciarSelectedProducto();
 		this.producto = new Producto();
 		this.filtro = new ProductoSearchFilter();
-		filtro.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		listaProductos = new ProductoLazyDataModel(filtro, srvProducto);
 	}
 
@@ -125,15 +125,15 @@ public class ProductosBean extends MasterBean {
 		this.selectedProducto = new Producto();
 		this.selectedProducto.setProveedor(new Proveedor());
 		filtroProveedores = new ProveedorSearchFilter();
-		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 	}
 
 	public void cargarTotalInventario() {
-		this.totalInventario = srvProducto.getTotalInventario(this.usuarioAutenticado.getUsuario());
+		this.totalInventario = srvProducto.getTotalInventario(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void cargarCategorias() {
-		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
+		this.categorias = srvCategoria.findCategoriasByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void cargarProveedores() {
@@ -142,7 +142,7 @@ public class ProductosBean extends MasterBean {
 		@SuppressWarnings("rawtypes")
 		Map map = context.getExternalContext().getRequestParameterMap();
 		filtroProveedores.setNombre((String) map.get("myJSValue"));
-		filtroProveedores.setUsuario(this.usuarioAutenticado.getUsuario().getEmail());
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 		this.proveedores = new ProveedorLazyDataModel(filtroProveedores, srvProveedor);
 	}
 
@@ -156,7 +156,7 @@ public class ProductosBean extends MasterBean {
 
 	public void guardarProducto() {
 
-		selectedProducto.setUsuario(usuarioAutenticado.getUsuario());
+		selectedProducto.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		if (!editing) {
 			srvProducto.validateSKU(selectedProducto.getSku());
 		}

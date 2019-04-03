@@ -22,6 +22,7 @@ import com.antoniojnavarro.naventory.app.commons.PFScope;
 import com.antoniojnavarro.naventory.app.security.social.FacebookProvider;
 import com.antoniojnavarro.naventory.app.security.social.GoogleProvider;
 import com.antoniojnavarro.naventory.app.util.Constantes;
+import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 
 @Named("loginBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -44,6 +45,8 @@ public class LoginBean extends MasterBean {
 	// LISTAS
 
 	// SERVICIOS
+	@Autowired
+	private ServicioUsuario srvUsuario;
 
 	@PostConstruct
 	public void init() {
@@ -72,7 +75,11 @@ public class LoginBean extends MasterBean {
 			return Constantes.GO_TO_HOME;
 		} catch (AuthenticationException e) {
 			logger.info(e.getMessage(), e);
-			addError("login.userOrPasswordIncorrect");
+			if (srvUsuario.findUsuarioByEmailAndActivo(this.email, "N") != null) {
+				addError("login.lock");
+			} else {
+				addError("login.userOrPasswordIncorrect");
+			}
 			// Nunca se debe retornar "null". Si se retorna "null" la vista no
 			// se actualiza
 			return new String();
@@ -141,10 +148,27 @@ public class LoginBean extends MasterBean {
 
 		if (!result.equals(Constantes.GO_TO_HOME)) {
 			addError(result);
+
 			return new String();
 		}
 
 		return Constantes.GO_TO_HOME;
+	}
+
+	public FacebookProvider getFacebookProvider() {
+		return facebookProvider;
+	}
+
+	public void setFacebookProvider(FacebookProvider facebookProvider) {
+		this.facebookProvider = facebookProvider;
+	}
+
+	public GoogleProvider getGoogleProvider() {
+		return googleProvider;
+	}
+
+	public void setGoogleProvider(GoogleProvider googleProvider) {
+		this.googleProvider = googleProvider;
 	}
 
 }
