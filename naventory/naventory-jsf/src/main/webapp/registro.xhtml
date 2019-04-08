@@ -38,6 +38,15 @@
 					<h:form id="loginForm">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
+						<f:metadata>
+							<f:viewParam id="empresa" name="empresa"
+								value="#{registroBean.cif}" />
+							<f:viewParam id="token" name="token"
+								value="#{registroBean.token}" />
+							<f:viewParam id="email" name="email"
+								value="#{registroBean.email}" />
+							<f:viewAction action="#{registroBean.comprobarSiInvitacion}" />
+						</f:metadata>
 
 						<p:growl escape="false">
 							<p:autoUpdate />
@@ -51,7 +60,8 @@
 							style="z-index: 1002;">
 							<p:graphicImage library="images" name="loading.gif" width="65" />
 						</p:dialog>
-						<p:outputPanel rendered="#{registroBean.registroInvitacion == false}">
+						<p:outputPanel
+							rendered="#{registroBean.registroInvitacion == false}">
 							<p:wizard flowListener="#{registroBean.onFlowProcess}"
 								id="wizardRegistroEmpresa" nextLabel="Ir a datos del Usuario"
 								backLabel="Atras" showStepStatus="false">

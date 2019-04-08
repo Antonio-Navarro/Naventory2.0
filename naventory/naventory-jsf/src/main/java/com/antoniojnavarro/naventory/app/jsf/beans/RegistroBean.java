@@ -1,11 +1,8 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.event.FlowEvent;
@@ -63,13 +60,8 @@ public class RegistroBean extends MasterBean {
 	public void init() {
 		inicializarUsuario();
 		logger.info("LoginBean.init()");
-		Empresa empresa = comprobarSiInvitacion();
-		if (empresa != null) {
-			usuario.setEmpresa(empresa);
-			registroInvitacion = true;
-		} else if (invitacion == null || empresa == null) {
-			addError("registro.invitacion.error");
-		}
+//		Empresa empresa = comprobarSiInvitacion();
+
 	}
 
 	public void inicializarUsuario() {
@@ -79,26 +71,62 @@ public class RegistroBean extends MasterBean {
 		registroInvitacion = false;
 	}
 
-	public Empresa comprobarSiInvitacion() {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		@SuppressWarnings("rawtypes")
-		Map params = externalContext.getRequestParameterMap();
-		String cif = (String) params.get("empresa");
-		String email = (String) params.get("email");
-		String token = (String) params.get("token");
+	private String cif;
+	private String email;
+	private String token;
+
+	public String getCif() {
+		return cif;
+	}
+
+	public void setCif(String cif) {
+		this.cif = cif;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public void comprobarSiInvitacion() {
+//		FacesContext facesContext = FacesContext.getCurrentInstance();
+//		ExternalContext externalContext = facesContext.getExternalContext();
+//		@SuppressWarnings("rawtypes")
+//		Map params = externalContext.getRequestParameterMap();
+//		String cif = (String) params.get("empresa");
+//		String email = (String) params.get("email");
+//		String token = (String) params.get("token");
 
 		if (cif == null || cif.isEmpty() || email == null || email.isEmpty() || token == null || token.isEmpty()) {
-			return null;
-		}
 
-		invitacion = srvEmpresaInvitacion.findEmpresaInvitacionByCifAndEmailAndToken(cif, email, token);
-
-		if (invitacion != null && "S".equals(invitacion.getValido())) {
-			usuario.setEmail(email);
-			return srvEmpresa.findById(cif);
 		} else {
-			return null;
+
+			invitacion = srvEmpresaInvitacion.findEmpresaInvitacionByCifAndEmailAndToken(cif, email, token);
+
+			if (invitacion == null || "N".equals(invitacion.getValido())) {
+				addError("registro.invitacion.error");
+			} else {
+				usuario.setEmail(email);
+				Empresa empresa = srvEmpresa.findById(cif);
+				if (empresa != null) {
+					usuario.setEmpresa(empresa);
+					registroInvitacion = true;
+				} else if (empresa == null) {
+					addError("registro.invitacion.error");
+				}
+
+			}
 		}
 
 	}

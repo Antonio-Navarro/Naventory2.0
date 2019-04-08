@@ -54,12 +54,12 @@
 									<p:dataExporter type="xls" target="ventaTable"
 										fileName="ventas" />
 								</p:commandButton>
-								<p:commandButton value="PDF" immediate="true" ajax="false"
+								<p:commandButton value="PDF" immediate="true" ajax="false" actionListener="#{ventasBean.downloadFile}"
 									styleClass="btn-success" style="float:right; margin-left:5px "
 									icon="fa fa-file-pdf-o">
-									<p:dataExporter type="pdf" target="ventaTable"
-										fileName="ventas" options="#{ventasBean.pdfOpt}"
-										preProcessor="#{ventasBean.preProcesamientoPdf}" />
+<!-- 									<p:dataExporter type="pdf" target="ventaTable" -->
+<!-- 										fileName="ventas" options="#{ventasBean.pdfOpt}" -->
+<!-- 										preProcessor="#{ventasBean.preProcesamientoPdf}" /> -->
 								</p:commandButton>
 								<p:commandButton value="CSV" immediate="true" ajax="false"
 									styleClass="btn-success" style="float:right;  margin-left:5px"
