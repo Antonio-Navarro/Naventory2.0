@@ -14,7 +14,7 @@ import com.antoniojnavarro.naventory.model.commons.GenericEntity;
 import com.antoniojnavarro.naventory.model.entities.enums.RolEnum;
 
 @Entity
-@Table(name = "Rol")
+@Table(name = "rol")
 public class Role implements GenericEntity {
 
 	private static final long serialVersionUID = 1L;
