@@ -101,7 +101,6 @@ public class ProveedoresBean extends MasterBean {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("proveedorDetails.xhtml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -145,8 +144,8 @@ public class ProveedoresBean extends MasterBean {
 
 	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
 		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
 		pdf.open();
-		pdf.setPageSize(PageSize.A4);
 
 		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
 		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();

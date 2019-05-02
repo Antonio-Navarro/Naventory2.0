@@ -50,13 +50,15 @@
 					<!-- menu profile quick info -->
 					<div class="profile">
 						<div class="profile_pic">
-							<p:graphicImage rendered="#{templateAppBean.fotoPerfil==null}"
-								library="images" name="user.png"
-								styleClass="img-circle profile_img" />
+							<p:outputPanel id="miImagenTemplate">
+								<p:graphicImage rendered="#{templateAppBean.fotoPerfil==null}"
+									library="images" name="user.png"
+									styleClass="img-circle profile_img" />
 
-							<h:graphicImage rendered="#{templateAppBean.fotoPerfil!=null}"
-								id="miImagen" styleClass="img-circle profile_img"
-								value="data:image/jpg;base64,#{templateAppBean.fotoPerfil}" />
+								<h:graphicImage rendered="#{templateAppBean.fotoPerfil!=null}"
+									id="miImagen" styleClass="img-circle profile_img"
+									value="data:image/jpg;base64,#{templateAppBean.fotoPerfil}" />
+							</p:outputPanel>
 						</div>
 						<div class="profile_info">
 							<span><h:outputText value="#{msg['welcome']}" /></span>
@@ -196,12 +198,12 @@
 									<ul class="dropdown-menu dropdown-alerts">
 										<ui:repeat var="alerta" value="#{templateAppBean.alertas}">
 											<li style="padding: 5px"><i
-												class="fa fa-bell pull-left fa-fw"></i> <h:outputText
-													style="color:red" value="Alerta nivel bajo de stock en" />
-												<h:outputText style="color:darkred;font-weight: bold;"
+												class="fa fa-bell pull-left fa-fw" style="color:red"></i> <h:outputText
+													style="color:white" value="Alerta nivel bajo de stock en" />
+												<h:outputText style="color:red;font-weight: bold;"
 													value=" ${alerta.producto.nombre}" /> <h:outputText
-													style="color:red;font-weight: bold;" value=" quedan" /> <h:outputText
-													style="color:darkred;font-weight: bold;"
+													style="color:white;font-weight: bold;" value=" quedan" /> <h:outputText
+													style="color:red;font-weight: bold;"
 													value=" ${alerta.producto.stock} ${alerta.producto.unidad}" />
 
 

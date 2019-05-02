@@ -53,13 +53,13 @@
 								<p:commandButton value="XLS" immediate="true" ajax="false"
 									styleClass="btn-success" style="float:right; margin-left:5px"
 									icon="fa fa-file-excel-o">
-									<p:dataExporter type="xls" target="compraTable"
+									<p:dataExporter type="xls" target="compraTable" encoding="cp1250" 
 										fileName="compras" />
 								</p:commandButton>
 								<p:commandButton value="PDF" immediate="true" ajax="false"
 									styleClass="btn-success" style="float:right; margin-left:5px "
 									icon="fa fa-file-pdf-o">
-									<p:dataExporter type="pdf" target="compraTable"
+									<p:dataExporter type="pdf" target="compraTable" encoding="cp1250" 
 										fileName="compras" options="#{comprasBean.pdfOpt}"
 										preProcessor="#{comprasBean.preProcesamientoPdf}" />
 								</p:commandButton>
@@ -67,7 +67,7 @@
 									styleClass="btn-success" style="float:right;  margin-left:5px"
 									icon="fa fa-file-text-o">
 									<p:dataExporter type="csv" target="compraTable"
-										fileName="compras" encoding="UTF8" />
+										fileName="compras" encoding="cp1250" />
 								</p:commandButton>
 								<p:commandButton id="toggler" type="button" value="Columnas"
 									icon="ui-icon-calculator" />
@@ -79,11 +79,9 @@
 
 					</f:facet>
 					<f:facet name="footer">
-
 						<div class="text-left">
-							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{comprasBean.listaCompras.numResults}"></f:param>
-							</h:outputFormat>
+							<h:outputLabel
+								value="Se han encontrado un total de #{comprasBean.listaCompras.numResults} resultados"></h:outputLabel>
 						</div>
 					</f:facet>
 
@@ -139,7 +137,7 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column style="text-align:center"
+					<p:column style="text-align:center" exportable="false"
 						headerText="#{msg['users.datatable.header.opciones']}">
 
 						<p:commandLink id="fadeBorrar" process="@this"

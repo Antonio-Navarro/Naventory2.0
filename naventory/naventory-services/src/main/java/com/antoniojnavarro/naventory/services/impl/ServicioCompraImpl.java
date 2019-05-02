@@ -3,6 +3,7 @@ package com.antoniojnavarro.naventory.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
@@ -103,7 +104,7 @@ public class ServicioCompraImpl implements ServicioCompra {
 		this.srvValidacion.isNull("Producto", entity.getProducto());
 		this.srvValidacion.isNull("Factura", entity.getFactura());
 		this.srvValidacion.isNull("Cantidad", entity.getCantidad());
-		Compra compraExiste = this.compraDao.findByEmpresaAndFactura(entity.getEmpresa().getCif(), entity.getFactura());
+		Compra compraExiste = this.compraDao.findByEmpresaAndFactura(entity.getEmpresa(), entity.getFactura());
 
 		if (compraExiste != null && compraExiste.getFactura() != null && !compraExiste.getFactura().isEmpty()) {
 			throw new ServicioException(srvMensajes.getMensajeI18n("compra.factura.existe"));
@@ -174,8 +175,8 @@ public class ServicioCompraImpl implements ServicioCompra {
 	}
 
 	@Override
-	public List<GraficaGenericDto> getGastosMensualesGrafica(String email) {
-		return this.compraDao.getGastosMensualesGrafica(email);
+	public List<GraficaGenericDto> getGastosMensualesGrafica(Empresa empresa, int numMeses) {
+		return this.compraDao.getGastosMensualesGrafica(empresa, new PageRequest(0, numMeses));
 
 	}
 

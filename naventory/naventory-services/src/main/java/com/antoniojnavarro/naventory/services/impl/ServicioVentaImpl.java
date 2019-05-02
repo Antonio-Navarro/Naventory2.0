@@ -3,6 +3,7 @@ package com.antoniojnavarro.naventory.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
@@ -91,7 +92,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 	public Venta save(Venta entity) throws ServicioException {
 		return this.ventaDao.save(entity);
 	}
-	
+
 	@Override
 	public void validate(Venta entity) throws ServicioException {
 		this.srvValidacion.isNull("Venta", entity);
@@ -173,8 +174,8 @@ public class ServicioVentaImpl implements ServicioVenta {
 	}
 
 	@Override
-	public List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa) {
-		return this.ventaDao.getIngresosMensualesGrafica(empresa);
+	public List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa, Integer numMeses) {
+		return this.ventaDao.getIngresosMensualesGrafica(empresa, new PageRequest(0, numMeses));
 
 	}
 

@@ -2,6 +2,7 @@ package com.antoniojnavarro.naventory.dao.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import com.antoniojnavarro.naventory.dao.commons.api.Dao;
@@ -18,8 +19,8 @@ public interface VentaDao extends Dao<Venta, VentaSearchFilter, Integer> {
 	@Query("select new com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto(date_format(v.fecha,'%m-%Y') , count(*)) from Venta v where v.empresa=?1 group by date_format(v.fecha,'%m-%Y')")
 	List<GraficaGenericDto> getVentasMensualesGrafica(Empresa empresa);
 
-	@Query("select new com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto(date_format(v.fecha,'%m-%Y') , round(sum(v.total),2)) from Venta v where v.empresa= ?1 group by date_format(v.fecha,'%m-%Y') ")
-	List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa);
+	@Query("select new com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto(date_format(v.fecha,'%m-%Y') , round(sum(v.total),2)) from Venta v where v.empresa= ?1 group by date_format(v.fecha,'%m-%Y') order by date_format(v.fecha,'%m-%Y') desc ")
+	List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa, Pageable p);
 
 	Long countByEmpresa(Empresa empesa);
 

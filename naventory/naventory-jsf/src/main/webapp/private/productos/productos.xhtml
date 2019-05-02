@@ -31,7 +31,7 @@
 				<p:dataTable id="productoTable" var="producto"
 					widgetVar="productosWV" value="#{productosBean.listaProductos}"
 					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
-					paginatorPosition="bottom" lazy="true" resizableColumns="true"
+					paginatorPosition="bottom" lazy="true" 
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}">
 					<f:facet name="header">
@@ -58,7 +58,7 @@
 							</h:outputFormat>
 						</div>
 					</f:facet>
-					<p:column sortBy="#{producto.sku}" style="width:5%"
+					<p:column sortBy="#{producto.sku}" style="width:8%"
 						headerText="#{msg['productos.sku']}">
 						<h:outputText value="#{producto.sku}" />
 					</p:column>

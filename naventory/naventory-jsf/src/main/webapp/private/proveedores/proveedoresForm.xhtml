@@ -9,7 +9,8 @@
 
 	<p:dialog id="proveedorDetailsModal" widgetVar="proveedorDetailsDialog"
 		responsive="true" closable="true" resizable="false" modal="true"
-		maximizable="false" width="600" focus="nombreInput">
+		showEffect="fade" hideEffect="fade" maximizable="false" width="600"
+		focus="nombreInput">
 		<f:facet name="header">
 			<h:outputText rendered="#{proveedoresBean.editing}"
 				value="#{msg['proveedor.editarProveedor']}"></h:outputText>
@@ -17,67 +18,66 @@
 				value="#{msg['proveedor.titleNuevaProveedor']}"></h:outputText>
 
 		</f:facet>
-		<p:messages id="messages" escape="false"
-			closable="true" showSummary="true" showDetail="false"
-			globalOnly="true" ><p:autoUpdate /></p:messages>
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
-			<p:outputLabel for="nombreInput" styleClass="required"
+			<p:outputLabel for="nombreInput"
 				value="#{msg['proveedores.nombreProveedor']}" />
-			<p:inputText id="nombreInput" 
+			<p:inputText id="nombreInput" required="true"
+				requiredMessage="#{msg['proveedores.nombreProveedor.req']}"
 				value="#{proveedoresBean.selectedProveedor.nombre}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="nombreComInput" styleClass="required"
+			<p:outputLabel for="nombreComInput"
 				value="#{msg['proveedores.nombreComProveedor']}" />
-			<p:inputText id="nombreComInput"
+			<p:inputText id="nombreComInput" required="true"
+				requiredMessage="#{msg['proveedores.nombreComProveedor.req']}"
 				value="#{proveedoresBean.selectedProveedor.nombreCom}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder=""
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="direccionInput" styleClass="required"
+			<p:outputLabel for="direccionInput"
 				value="#{msg['proveedores.direccion']}" />
-			<p:inputText id="direccionInput"
+			<p:inputText id="direccionInput" required="true"
+				requiredMessage="#{msg['proveedores.direccion.req']}"
 				value="#{proveedoresBean.selectedProveedor.direccion}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="ciudadInput" styleClass="required"
-				value="#{msg['proveedores.ciudad']}" />
-			<p:inputText id="ciudadInput"
+			<p:outputLabel for="ciudadInput" value="#{msg['proveedores.ciudad']}" />
+			<p:inputText id="ciudadInput" required="true"
+				requiredMessage="#{msg['proveedores.ciudad.req']}"
 				value="#{proveedoresBean.selectedProveedor.ciudad}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="provinciaInput" styleClass="required"
+			<p:outputLabel for="provinciaInput"
 				value="#{msg['proveedores.provincia']}" />
-			<p:inputText id="provinciaInput"
+			<p:inputText id="provinciaInput" required="true"
+				requiredMessage="#{msg['proveedores.provincia.req']}"
 				value="#{proveedoresBean.selectedProveedor.provincia}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder=""
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
 
-			<p:outputLabel for="cpInput" value="#{msg['proveedores.cp']}"
-				styleClass="required" />
-			<p:inputText id="cpInput"
+			<p:outputLabel for="cpInput" value="#{msg['proveedores.cp']}" />
+			<p:inputText id="cpInput" required="true"
+				requiredMessage="#{msg['proveedores.cp.req']}"
 				value="#{proveedoresBean.selectedProveedor.cp}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
-				
-			<p:outputLabel for="paisInput" value="#{msg['proveedores.pais']}"
-				styleClass="required" />
-			<p:inputText id="paisInput"
+
+			<p:outputLabel for="paisInput" value="#{msg['proveedores.pais']}" />
+			<p:inputText id="paisInput" required="true"
+				requiredMessage="#{msg['proveedores.pais.req']}"
 				value="#{proveedoresBean.selectedProveedor.pais}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="tel1Input" value="#{msg['proveedores.tel1']}"
-				styleClass="required" />
-			<p:inputText id="tel1Input"
+			<p:outputLabel for="tel1Input" value="#{msg['proveedores.tel1']}" />
+			<p:inputText id="tel1Input" required="true"
+				requiredMessage="#{msg['proveedores.tel1.req']}"
 				value="#{proveedoresBean.selectedProveedor.tel1}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
@@ -89,9 +89,9 @@
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
 
-			<p:outputLabel for="emailInput" value="#{msg['email']}"
-				styleClass="required" />
-			<p:inputText id="emailInput"
+			<p:outputLabel for="emailInput" value="#{msg['email']}" />
+			<p:inputText id="emailInput" required="true"
+				requiredMessage="#{msg['proveedores.correo.req']}"
 				value="#{proveedoresBean.selectedProveedor.correo}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />

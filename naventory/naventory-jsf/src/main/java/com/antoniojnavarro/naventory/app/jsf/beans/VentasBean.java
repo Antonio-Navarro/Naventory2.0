@@ -1,24 +1,18 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
 import java.awt.Color;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.component.export.ExcelOptions;
 import org.primefaces.component.export.PDFOptions;
-import org.primefaces.model.StreamedContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +23,6 @@ import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ClienteLazyDataModel
 import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.VentaLazyDataModel;
 import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
 import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
-import com.antoniojnavarro.naventory.app.util.JasperReportUtil;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.FormaPago;
 import com.antoniojnavarro.naventory.model.entities.Producto;
@@ -204,9 +197,8 @@ public class VentasBean extends MasterBean {
 
 	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
 		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
 		pdf.open();
-		pdf.setPageSize(PageSize.A4);
-
 		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
 		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
 		Paragraph p1 = new Paragraph("Informe de ventas | " + d);
@@ -315,53 +307,6 @@ public class VentasBean extends MasterBean {
 
 	public void setFiltroClientes(ClienteSearchFilter filtroClientes) {
 		this.filtroClientes = filtroClientes;
-	}
-
-	// JASPERREPORT
-	private StreamedContent media;
-	private ByteArrayOutputStream outputStream;
-	private String number;
-
-	public void generateReport() {
-		try {
-			List ventas = listaVentas.getWrappedData();
-
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("fecha", Calendar.getInstance().getTime().toString());
-
-			outputStream = JasperReportUtil.getOutputStreamFromReport(ventas, map, getPathFileJasper());
-			media = JasperReportUtil.getStreamContentFromOutputStream(outputStream, "application/pdf",
-					getNameFilePdf());
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
-
-	public String getPathFileJasper() {
-		return ("/ventas.jasper");
-	}
-
-	public String getNameFilePdf() {
-		return "ventas.pdf";
-	}
-
-	public void downloadFile() {
-		try {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-
-			HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-			response.reset();
-			response.setContentType("application/pdf");
-			response.setHeader("Content-disposition", "attachment; filename=" + getNameFilePdf());
-			generateReport();
-			OutputStream output = response.getOutputStream();
-			output.write(outputStream.toByteArray());
-			output.close();
-
-			facesContext.responseComplete();
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
 	}
 
 }

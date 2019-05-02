@@ -60,8 +60,6 @@ public class RegistroBean extends MasterBean {
 	public void init() {
 		inicializarUsuario();
 		logger.info("LoginBean.init()");
-//		Empresa empresa = comprobarSiInvitacion();
-
 	}
 
 	public void inicializarUsuario() {
@@ -100,14 +98,6 @@ public class RegistroBean extends MasterBean {
 	}
 
 	public void comprobarSiInvitacion() {
-//		FacesContext facesContext = FacesContext.getCurrentInstance();
-//		ExternalContext externalContext = facesContext.getExternalContext();
-//		@SuppressWarnings("rawtypes")
-//		Map params = externalContext.getRequestParameterMap();
-//		String cif = (String) params.get("empresa");
-//		String email = (String) params.get("email");
-//		String token = (String) params.get("token");
-
 		if (cif == null || cif.isEmpty() || email == null || email.isEmpty() || token == null || token.isEmpty()) {
 
 		} else {
@@ -143,13 +133,13 @@ public class RegistroBean extends MasterBean {
 		ArrayList<Role> roles = new ArrayList<>();
 
 		if (!registroInvitacion) {
-			roles.add(srvRole.findById(2));
+			roles.add(srvRole.findById(1));
 			roles.add(srvRole.findById(3));
 			srvEmpresa.saveOrUpdate(usuario.getEmpresa());
 		} else {
 			invitacion.setValido("N");
 			srvEmpresaInvitacion.saveOrUpdate(invitacion);
-			roles.add(srvRole.findById(2));
+			roles.add(srvRole.findById(1));
 
 		}
 

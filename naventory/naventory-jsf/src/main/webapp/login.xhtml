@@ -51,7 +51,8 @@
 							onsuccess="PF('statusDialog').hide()" />
 
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-							closable="false" resizable="false" showHeader="false">
+							closable="false" resizable="false" showHeader="false"
+							style="z-index: 1002;">
 							<p:graphicImage library="images" name="loading2.gif" width="65" />
 						</p:dialog>
 
@@ -82,14 +83,14 @@
 
 
 							<div>
-								<p:commandButton icon="fa fa-sign-in"
+								<p:commandButton icon="fa fa-sign-in" id="btnLogin"
 									value="#{msg['login.button.login']}" style="width:100%"
 									styleClass="btn btn-success" action="#{loginBean.login}" />
 							</div>
 							<div>
 								<p:commandButton icon="fa fa-share-alt" immediate="true"
 									value="#{msg['login.button.registrar']}" style="width:100%"
-									action="#{loginBean.irARegistro}" />
+									action="#{loginBean.irARegistro}" id="btnRegistro" />
 							</div>
 							<div class="separator">
 								<div id="googleDiv" class="g-signin2" onclick="ClickLogin()"
@@ -119,10 +120,14 @@
 									&#160;
 									<h:outputText value="#{msg['aplicacion.version']}" />
 								</h1>
+
 								<p>
 									&#169;
 									<h:outputText value="#{msg['login.right.reserved']}" />
+
 								</p>
+								<span>Desarrollado por <b><a
+										href="mailto:anavarrodelamor@gmail.com">Antonio J Navarro</a></b></span>
 							</div>
 						</div>
 					</h:form>
@@ -130,8 +135,11 @@
 
 				</section>
 			</div>
+
 		</div>
+
 	</div>
+
 </h:body>
 <script>
 	function checkLoginState() {
@@ -193,8 +201,6 @@
 		
 	}
 </script>
-<script src="#{request.contextPath}/resources/js/platform.js">
-
-</script>
+<script src="https://apis.google.com/js/platform.js"></script>
 
 </html>

@@ -19,7 +19,7 @@ public interface ServicioVenta extends ServicioCrud<Venta, VentaSearchFilter, In
 
 	List<GraficaGenericDto> getVentasMensualesGrafica(Empresa empresa);
 
-	List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa);
+	List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa, Integer numMeses);
 
 	Long countByEmpresa(Empresa empresa);
 }

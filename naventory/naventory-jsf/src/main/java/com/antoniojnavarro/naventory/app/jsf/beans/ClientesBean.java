@@ -145,25 +145,31 @@ public class ClientesBean extends MasterBean {
 		pdfOpt.setFacetFontColor("#FFFFFF");
 		pdfOpt.setFacetFontStyle("BOLD");
 		pdfOpt.setCellFontSize("12");
+
 	}
 
 	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
 		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
 		pdf.open();
-		pdf.setPageSize(PageSize.A4);
 
 		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
 		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
 		Paragraph p1 = new Paragraph("Informe de clientes | " + d);
 		Font font = new Font(Font.TIMES_ROMAN, 18.0f, Font.BOLD, Color.RED);
 		p1.setFont(font);
-		Paragraph p2 = new Paragraph("Creado por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
+		Paragraph p2 = new Paragraph("Creádo por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
 				+ this.usuarioAutenticado.getUsuario().getEmail());
 		p2.setFont(font);
 
 		pdf.add(p1);
 		pdf.add(p2);
 		pdf.add(Chunk.NEWLINE);
+	}
+
+	public String exportTel(String tel) {
+
+		return tel;
 	}
 
 	public Cliente getCliente() {

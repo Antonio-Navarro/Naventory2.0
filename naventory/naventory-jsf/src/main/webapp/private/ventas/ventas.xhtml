@@ -52,20 +52,21 @@
 									styleClass="btn-success" style="float:right; margin-left:5px"
 									icon="fa fa-file-excel-o">
 									<p:dataExporter type="xls" target="ventaTable"
-										fileName="ventas" />
+										encoding="cp1250" fileName="ventas" />
 								</p:commandButton>
-								<p:commandButton value="PDF" immediate="true" ajax="false" actionListener="#{ventasBean.downloadFile}"
+								<p:commandButton value="PDF" immediate="true" ajax="false"
 									styleClass="btn-success" style="float:right; margin-left:5px "
 									icon="fa fa-file-pdf-o">
-<!-- 									<p:dataExporter type="pdf" target="ventaTable" -->
-<!-- 										fileName="ventas" options="#{ventasBean.pdfOpt}" -->
-<!-- 										preProcessor="#{ventasBean.preProcesamientoPdf}" /> -->
+									<p:dataExporter type="pdf" target="ventaTable"
+										encoding="cp1250" fileName="ventas"
+										options="#{ventasBean.pdfOpt}"
+										preProcessor="#{ventasBean.preProcesamientoPdf}" />
 								</p:commandButton>
 								<p:commandButton value="CSV" immediate="true" ajax="false"
 									styleClass="btn-success" style="float:right;  margin-left:5px"
 									icon="fa fa-file-text-o">
 									<p:dataExporter type="csv" target="ventaTable"
-										fileName="ventas" encoding="UTF8" />
+										fileName="ventas" encoding="cp1250" />
 								</p:commandButton>
 								<p:commandButton id="toggler" type="button" value="Columnas"
 									icon="ui-icon-calculator" />
@@ -74,12 +75,9 @@
 						</div>
 					</f:facet>
 					<f:facet name="footer">
-
 						<div class="text-left">
-							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{ventasBean.listaVentas.numResults}"></f:param>
-							</h:outputFormat>
-
+							<h:outputLabel
+								value="Se han encontrado un total de #{ventasBean.listaVentas.numResults} resultados"></h:outputLabel>
 						</div>
 					</f:facet>
 					<p:column sortBy="#{venta.cliente.nombre}"

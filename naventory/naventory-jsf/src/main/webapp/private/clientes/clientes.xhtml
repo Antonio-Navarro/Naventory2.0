@@ -32,18 +32,16 @@
 				<p:dataTable id="clienteTable" var="cliente" widgetVar="clientesWV"
 					value="#{clientesBean.listaClientes}" paginator="true"
 					rowHover="true" rows="#{defaultPaginatorRows}"
-					paginatorPosition="bottom" lazy="true" resizableColumns="true"
+					paginatorPosition="bottom" lazy="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}" selectionMode="single"
 					selection="#{clientesBean.cliente}" rowKey="#{cliente.idCliente}">
 					<p:ajax event="rowSelect" listener="#{clientesBean.onRowSelect}" />
-
 					<f:facet name="header">
 						<div class="text-left">
-
 							<p:commandButton value="#{msg['clientes.nuevaCliente']}"
 								icon="fa fa-street-view fa-fw" style="float:left"
-								styleClass="btn btn-lg btn-success"
+								styleClass="btn btn-lg btn-success" process="@this"
 								actionListener="#{clientesBean.newCliente}"
 								oncomplete="PF('clienteDetailsDialog').show();"
 								update="formApp:clienteDetailsModal" />
@@ -53,41 +51,35 @@
 								styleClass="btn-success" style="float:right; margin-left:5px"
 								icon="fa fa-file-excel-o">
 								<p:dataExporter type="xls" target="clienteTable"
-									fileName="clientes" />
+									encoding="cp1250" fileName="clientes" />
 							</p:commandButton>
 							<p:commandButton value="PDF" immediate="true" ajax="false"
-								encoding="ISO-8859-1" styleClass="btn-success"
-								style="float:right; margin-left:5px " icon="fa fa-file-pdf-o">
+								styleClass="btn-success" style="float:right; margin-left:5px "
+								icon="fa fa-file-pdf-o">
 								<p:dataExporter type="pdf" target="clienteTable"
-									fileName="clientes" options="#{clientesBean.pdfOpt}"
+									encoding="cp1250" fileName="clientes"
+									options="#{clientesBean.pdfOpt}"
 									preProcessor="#{clientesBean.preProcesamientoPdf}" />
 							</p:commandButton>
 							<p:commandButton value="CSV" immediate="true" ajax="false"
 								styleClass="btn-success" style="float:right;  margin-left:5px"
 								icon="fa fa-file-text-o">
 								<p:dataExporter type="csv" target="clienteTable"
-									fileName="clientes" encoding="UTF8" />
+									encoding="cp1250" fileName="clientes" />
 							</p:commandButton>
 							<p:commandButton id="toggler" type="button" value="Columnas"
 								icon="ui-icon-calculator" />
 							<p:columnToggler datasource="clienteTable" trigger="toggler" />
 						</div>
 					</f:facet>
-					<f:facet name="footer">
 
-						<div class="text-left">
-							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{clientesBean.listaClientes.numResults}"></f:param>
-							</h:outputFormat>
-						</div>
-					</f:facet>
 					<p:column sortBy="#{cliente.idCliente}" styleClass="tdNumber"
-						style="width:4%" headerText="#{msg['clientes.table.id']}">
+						headerText="#{msg['clientes.table.id']}" style="width:7%">
 						<h:outputText value="#{cliente.idCliente}" />
 					</p:column>
 					<p:column sortBy="#{cliente.nombre}" style="width:12%"
-						headerText="#{msg['users.datatable.header.nombre']}">
-						<h:outputText value="#{cliente.nombre}" />
+						headerText="#{msg['clientes.table.nombreCom']}">
+						<h:outputText value="#{cliente.nombreCom}" />
 					</p:column>
 					<p:column headerText="#{msg['clientes.direccion']}"
 						sortBy="#{cliente.direccion}">
@@ -97,15 +89,16 @@
 						sortBy="#{cliente.ciudad}">
 						<h:outputText value="#{cliente.ciudad}" />
 					</p:column>
-					<p:column headerText="#{msg['clientes.cp']}" style="width:5%"
+					<p:column headerText="#{msg['clientes.cp']}" style="width:8%"
 						styleClass="tdNumber" sortBy="#{cliente.cp}">
 						<h:outputText value="#{cliente.cp}" />
 					</p:column>
 					<p:column headerText="#{msg['clientes.tel']}" styleClass="tdNumber"
-						style="width:8%" sortBy="#{cliente.tel1}">
+						exportFunction="#{clientesBean.exportTel(cliente.tel1)}"
+						style="width:10%" sortBy="#{cliente.tel1}">
 						<a href="tel:#{cliente.tel1}" style="color: blue">#{cliente.tel1}</a>
 					</p:column>
-					<p:column headerText="#{msg['clientes.correo']}"
+					<p:column headerText="#{msg['clientes.correo']}" style="width:17%"
 						sortBy="#{cliente.correo}">
 						<h:outputText value="#{cliente.correo}" />
 					</p:column>
@@ -114,7 +107,7 @@
 						headerText="#{msg['users.datatable.header.opciones']}">
 
 						<p:commandLink id="fadeVer"
-							action="#{clientesBean.irADetalle(cliente)}">
+							action="#{clientesBean.irADetalle(cliente)}" process="@this">
 							<i class="fa fa-search-plus fa-fw " style="color: green;"></i>
 							<p:tooltip id="toolTipFadeVer" for="fadeVer" value="Ver más"
 								position="top" />
@@ -122,14 +115,14 @@
 
 						<p:commandLink id="fadeEditar" global="false"
 							actionListener="#{clientesBean.editarCliente(cliente)}"
-							oncomplete="PF('clienteDetailsDialog').show();"
+							process="@this" oncomplete="PF('clienteDetailsDialog').show();"
 							update="formApp:clienteDetailsModal">
 							<i class="fa fa-edit fa-fw " style="color: #337ab7;"></i>
 							<p:tooltip id="toolTipFade4" for="fadeEditar"
 								value="Editar cliente" position="top" />
 						</p:commandLink>
 
-						<p:commandLink id="fadeBorrar"
+						<p:commandLink id="fadeBorrar" process="@this" immediate="true"
 							actionListener="#{clientesBean.borrarCliente(cliente)}"
 							update="clienteTable">
 							<p:confirm header="#{msg['needConfirmation']}"
@@ -140,6 +133,12 @@
 						</p:commandLink>
 
 					</p:column>
+					<f:facet name="footer">
+						<div class="text-left">
+							<h:outputLabel
+								value="Se han encontrado un total de #{clientesBean.listaClientes.numResults} resultados"></h:outputLabel>
+						</div>
+					</f:facet>
 				</p:dataTable>
 			</div>
 		</div>

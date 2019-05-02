@@ -31,7 +31,7 @@ import com.antoniojnavarro.naventory.dao.commons.impl.JpaDao;
 
 @Configuration
 @ComponentScan(basePackages = { "com.antoniojnavarro.naventory.services.*", "com.antoniojnavarro.naventory.dao.*" })
-@PropertySources({ @PropertySource(value = "classpath:customproject-app.properties", ignoreResourceNotFound = false) })
+@PropertySources({ @PropertySource(value = "classpath:naventory-app.properties", ignoreResourceNotFound = false) })
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 /*

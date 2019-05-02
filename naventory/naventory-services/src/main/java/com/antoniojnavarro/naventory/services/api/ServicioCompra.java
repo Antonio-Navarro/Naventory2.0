@@ -15,7 +15,7 @@ public interface ServicioCompra extends ServicioCrud<Compra, CompraSearchFilter,
 
 	Compra saveNewOrUpdate(Compra entity, boolean validate, boolean nuevoProducto) throws ServicioException;
 
-	List<GraficaGenericDto> getGastosMensualesGrafica(String cif);
+	List<GraficaGenericDto> getGastosMensualesGrafica(Empresa empresa, int numMeses);
 
 	Long countByEmpresa(Empresa cif);
 }

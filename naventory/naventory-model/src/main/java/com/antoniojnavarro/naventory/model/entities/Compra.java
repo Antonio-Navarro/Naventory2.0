@@ -31,7 +31,7 @@ public class Compra implements GenericEntity {
 	@Column(name = "id_comp")
 	private Integer idCompra;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cif")
 	private Empresa empresa;
 
@@ -46,8 +46,6 @@ public class Compra implements GenericEntity {
 	@Column(name = "nombre_prod", length = 255, nullable = true)
 	private String nombreProd;
 
-	
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
 	private Date fecha;

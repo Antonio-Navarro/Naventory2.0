@@ -4144,7 +4144,6 @@ a.hiddenanchor {
 
 .login_content {
 	margin: 0 auto;
-	padding: 25px 0 0;
 	position: relative;
 	text-align: center;
 	text-shadow: 0 1px 0 #fff;
@@ -5259,9 +5258,53 @@ to {
 .abcRioButtonContents {
 	font-family: Helvetica, Arial, sans-serif !important;
 	letter-spacing: .25px !important;
-	font-size: 13px !important; 
+	font-size: 13px !important;
 	text-shadow: none;
 }
-#loginForm:wizardRegistroEmpresa .ui-wizard-nav-back{
-	margin-left:15px;
+
+#loginForm:wizardRegistroEmpresa .ui-wizard-nav-back {
+	margin-left: 15px;
+}
+
+.fa-android:hover {
+	color: #A4C639 !important;
+}
+
+#footc {
+	border-top: 1px solid #5CB85C;
+	background-color: #FDFDFD;
+	padding: .6em;
+	color: #333333;
+	overflow: hidden;
+	margin-top: 30px;
+	border-radius: 3px;
+	position: absolute;
+    bottom: 0;
+    height: 178px;
+}
+}
+
+.der {
+	float: right;
+	margin-right: 5.5%;
+}
+
+.izq {
+	float: left;
+}
+
+#footc>div {
+	margin-right: -18px;
+}
+
+#footc>div .col-md-12 {
+	margin-left: -9px;
+	margin-right: 5px;
+	padding-left: 23px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-top: 5px;
+	margin-bottom: -9px;
+	border-top: 1px solid white;
+	background-color: #E9E9E9 !important;
 }

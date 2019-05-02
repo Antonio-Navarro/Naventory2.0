@@ -21,8 +21,9 @@
 					</h3>
 				</div>
 				<div class="col-md-6"
-					style="margin-top: 15px; color: #232323; float: right;text-align:right">
-					<p:commandButton icon="fa fa-user-times fa-fw" style="background-color:black;border: 1px solid white"
+					style="margin-top: 15px; color: #232323; float: right; text-align: right">
+					<p:commandButton icon="fa fa-user-times fa-fw"
+						style="background-color:black;border: 1px solid white"
 						value="#{msg['perfil.darbaja']}" process="@this"
 						styleClass="btn btn-secondary btn-blcok text-right"
 						action="#{perfilBean.darBaja}" update="@this">
@@ -91,8 +92,7 @@
 						<p:outputLabel for="newPassword2"
 							value="#{msg['perfil.newpassword2']}" />
 						<p:password id="newPassword2" value="#{perfilBean.confPassword}"
-							maxlength="255" placeholder="#{msg['register.repeatPassword']}"
-							required="true"
+							maxlength="255" required="true"
 							requiredMessage="#{msg['register.repeatPassword.req']}" />
 
 						<p:commandButton icon="fa fa-check" value="#{msg['save']}"
@@ -106,26 +106,51 @@
 						<span class="label label-warning">Imagen usuario</span>
 					</h3>
 					<div class="separator" />
-					<div class="user-thumbnail col-md-12">
-						<p:lightBox styleClass="imagebox" id="lighbox1">
-							<h:outputLink
-								value="data:image/jpg;base64,#{perfilBean.fotoPerfil}"
-								title="Imagen de perfil">
-								<h:graphicImage id="miImagen2" styleClass="img-circle"
+					<p:outputPanel id="miImagen">
+						<div class="user-thumbnail col-md-12">
+							<a data-target="#image" data-toggle="modal"
+								style="cursor: pointer"> <p:graphicImage
+									rendered="#{perfilBean.usuarioSelected.fotoPerf==null}"
+									library="images" name="user.png"
+									style="width:100px;height:100px" styleClass="img-circle" /> <h:graphicImage
+									id="miImagen2" styleClass="img-circle"
+									rendered="#{perfilBean.usuarioSelected.fotoPerf!=null}"
 									style="width:100px;height:100px"
 									value="data:image/jpg;base64,#{perfilBean.fotoPerfil}" />
-							</h:outputLink>
-						</p:lightBox>
-						<p:fileUpload id="gestorArchivos" style="margin-top:15px"
-							label="Elegir"
-							fileUploadListener="#{perfilBean.gestorSubidaFicheros}"
-							invalidFileMessage="El tipo de archivo no es valido"
-							update="miImagen" mode="advanced" dragDropSupport="true"
-							invalidSizeMessage="Arhivos inferiores a 1 MB"
-							uploadLabel="Subir imagen" cancelLabel="Cancelar"
-							sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
-					</div>
+							</a>
+							<div id="image" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content" style="text-align: center">
+										<div class="modal-header">
+											<button type="button" class="btn btn-primary"
+												style="float: right" data-dismiss="modal">
+												Cerrar<i class="fa fa-times fa-fw"></i>
+											</button>
+										</div>
+										<p:graphicImage
+											rendered="#{perfilBean.usuarioSelected.fotoPerf==null}"
+											library="images" name="user.png" width="80%" height="80%" />
+										<h:graphicImage id="miImagen2PopUp"
+											rendered="#{perfilBean.usuarioSelected.fotoPerf!=null}"
+											width="80%" height="80%"
+											value="data:image/jpg;base64,#{perfilBean.fotoPerfil}" />
+
+									</div>
+								</div>
+							</div>
+							<p:fileUpload id="gestorArchivos" style="margin-top:15px"
+								label="Elegir"
+								fileUploadListener="#{perfilBean.gestorSubidaFicheros}"
+								invalidFileMessage="El tipo de archivo no es valido"
+								update="miImagen, miImagenTemplate" mode="advanced"
+								dragDropSupport="true"
+								invalidSizeMessage="Arhivos inferiores a 1 MB"
+								uploadLabel="Subir imagen" cancelLabel="Cancelar"
+								sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+						</div>
+					</p:outputPanel>
 
 				</div>
 				<div class="col-sm-6 col-md-6 col-lg-6"></div>
@@ -148,7 +173,6 @@
 							<p:ajax event="eventMove" listener="#{perfilBean.onEventMove}" />
 							<p:ajax event="eventResize"
 								listener="#{perfilBean.onEventResize}" />
-
 						</p:schedule>
 					</h:panelGrid>
 					<p:dialog widgetVar="eventDialog" header="Detalles: "

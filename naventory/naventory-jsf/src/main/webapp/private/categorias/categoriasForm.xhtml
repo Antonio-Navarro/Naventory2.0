@@ -21,9 +21,8 @@
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
-			<p:outputLabel for="nomCatInput">
-				<i class="fa fa-user fa-fw" /> #{msg['categorias.nombreCategoria']}
-			</p:outputLabel>
+			<p:outputLabel for="nomCatInput" 
+				value="#{msg['categorias.nombreCategoria']}" />
 			<p:inputText id="nomCatInput" required="true"
 				requiredMessage="#{msg['register.nombre.req']}"
 				value="#{categoriasBean.selectedCategoria.nomCat}"
@@ -31,18 +30,14 @@
 				placeholder="Nombre de la categoría..."
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="descInput">
-				<i class="fa fa-comment fa-fw" /> #{msg['categorias.desc']}
-			</p:outputLabel>
+			<p:outputLabel for="descInput" value="#{msg['categorias.desc']}" />
 			<p:inputText id="descInput"
 				value="#{categoriasBean.selectedCategoria.desc}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
 				placeholder="Brebe descripción..."
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="obserInput">
-				<i class="fa fa-info fa-fw" />#{msg['categorias.obser']}
-			</p:outputLabel>
+			<p:outputLabel for="obserInput" value="#{msg['categorias.obser']}" />
 			<p:inputTextarea id="obserInput"
 				value="#{categoriasBean.selectedCategoria.obser}" rows="3"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
