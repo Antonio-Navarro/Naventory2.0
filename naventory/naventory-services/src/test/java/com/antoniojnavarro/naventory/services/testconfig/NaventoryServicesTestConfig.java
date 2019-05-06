@@ -50,7 +50,7 @@ public class NaventoryServicesTestConfig {
 	@Bean(name = "emf")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-		emf.setPackagesToScan(packageEntitiesJPACustomProject().stream().toArray(String[]::new));
+		emf.setPackagesToScan(packageEntitiesJPANaventory().stream().toArray(String[]::new));
 		emf.setDataSource(this.dataSource);
 		JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 		emf.setJpaVendorAdapter(jpaVendorAdapter);
@@ -82,7 +82,7 @@ public class NaventoryServicesTestConfig {
 	}
 
 	@Bean
-	public List<String> packageEntitiesJPACustomProject() {
+	public List<String> packageEntitiesJPANaventory() {
 		return Collections.singletonList("com.antoniojnavarro.naventory.model.entities");
 	}
 

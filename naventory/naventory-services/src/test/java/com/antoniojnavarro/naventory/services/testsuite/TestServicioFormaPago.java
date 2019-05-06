@@ -1,17 +1,20 @@
 package com.antoniojnavarro.naventory.services.testsuite;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.antoniojnavarro.naventory.model.entities.Usuario;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
+import com.antoniojnavarro.naventory.model.entities.FormaPago;
+import com.antoniojnavarro.naventory.services.api.ServicioFormaPago;
 import com.antoniojnavarro.naventory.services.testconfig.NaventoryServicesTestConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,28 +23,16 @@ import com.antoniojnavarro.naventory.services.testconfig.NaventoryServicesTestCo
 				// transacción. En otro caso, la transacción hará commit en el Servicio
 @Rollback
 @ActiveProfiles("inside")
-public class TestServicioEjemplo {
+public class TestServicioFormaPago {
 
 	@Autowired
-	private ServicioUsuario srvUusuario;
+	private ServicioFormaPago srv;
 
 	@Test
-	public void test() {
-		Usuario user = srvUusuario.findById("anavarrodelamor@gmail.com");
-		if (user == null) {
-			user = new Usuario();
-			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(12);
-			String pass = bcrypt.encode("bender40");
-
-			user.setEmail("anavarrodelamor@gmail.com");
-			user.setNombre("Antonio Javier");
-			user.setApellido("Navarro");
-			user.setAdministrador("Y");
-			user.setPassword(pass);
-			user.setActivo("Y");
-
-			srvUusuario.saveOrUpdate(user, false);
-		}
+	public void testExistanFormasPago() {
+		List<FormaPago> list = srv.findAll();
+		//Nos aseguramos de que existan las 3 formas de pago creadas
+		assertEquals(list.size(), 3);
 	}
 
 }
