@@ -11,94 +11,82 @@
 		<title>Proveedores | Naventory</title>
 	</ui:define>
 	<ui:define name="body">
+
 		<div class="row">
-			<div class="col-md-12">
-				<h1>
-					<h:outputText value="#{msg['proveedores.title']}" />
-				</h1>
+			<div class="col-md-4" style="color: #232323">
+				<h3>
+					<p:outputLabel>
+						<i class="fa fa-truck fa-fw" /> #{msg['proveedores.title']}
+					</p:outputLabel>
+				</h3>
 			</div>
+		</div>
+		<div class="separator" />
+		<div class="row">
+			<ui:include src="proveedoresFilter.xhtml" />
 		</div>
 		<div class="clearfix"></div>
-		<div class="separator"></div>
-		<div class="row">
-			<div class="col-md-6 text-left">
-				<p:commandButton value="#{msg['proveedores.nuevaProveedor']}"
-					style="heig" icon="fa fa-truck fa-fw"
-					styleClass="btn btn-lg btn-success"
-					actionListener="#{proveedoresBean.newProveedor}"
-					oncomplete="PF('proveedorDetailsDialog').show();"
-					update="proveedorDetailsModal" />
-			</div>
-		</div>
-		<p:separator></p:separator>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
 				<p:dataTable id="proveedorTable" var="proveedor"
-					widgetVar="proveedoresWV" value="#{proveedoresBean.proveedores}"
-					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
-					rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
-					resizableColumns="true"
+					widgetVar="proveedoresWV"
+					value="#{proveedoresBean.listaProveedores}" paginator="true"
+					rowHover="true" rows="#{defaultPaginatorRows}"
+					paginatorPosition="bottom" lazy="true"
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
-					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{proveedoresBean.filteredProveedores}"
-					selectionMode="single" selection="#{proveedoresBean.proveedor}"
+					emptyMessage="#{msg['noresult']}" selectionMode="single"
+					selection="#{proveedoresBean.proveedor}"
 					rowKey="#{proveedor.idProv}">
 					<p:ajax event="rowSelect" listener="#{proveedoresBean.onRowSelect}" />
 
 					<f:facet name="header">
 						<div class="text-left">
-							<p:commandButton id="toggler" type="button" value="Columnas"
-								style="float:left" icon="ui-icon-calculator" />
-							<p:columnToggler datasource="proveedorTable" trigger="toggler" />
+							<p:commandButton value="#{msg['proveedores.nuevaProveedor']}"
+								icon="fa fa-truck fa-fw" style="float:left"
+								styleClass="btn btn-lg btn-success"
+								actionListener="#{proveedoresBean.newProveedor}" process="@this"
+								oncomplete="PF('proveedorDetailsDialog').show();"
+								update="formApp:proveedorDetailsModal" />
 						</div>
 						<div class="text-right">
-							<p:outputPanel>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('proveedoresWV').filter()" style="width:150px"
-									placeholder="#{msg['buscarTabla']}" />
-								<p:commandButton value="XLS" immediate="true" ajax="false"
-									styleClass="btn-success" style="float:right; margin-left:5px"
-									icon="fa fa-file-excel-o">
-									<p:dataExporter type="xls" target="proveedorTable"
-										fileName="proveedores" />
-								</p:commandButton>
-								<p:commandButton value="PDF" immediate="true" ajax="false"
-									styleClass="btn-success" style="float:right; margin-left:5px "
-									icon="fa fa-file-pdf-o">
-									<p:dataExporter type="pdf" target="proveedorTable"
-										fileName="proveedores" options="#{proveedoresBean.pdfOpt}"
-										preProcessor="#{proveedoresBean.preProcesamientoPdf}" />
-								</p:commandButton>
-								<p:commandButton value="CSV" immediate="true" ajax="false"
-									styleClass="btn-success" style="float:right;  margin-left:5px"
-									icon="fa fa-file-text-o">
-									<p:dataExporter type="csv" target="proveedorTable"
-										fileName="proveedores" encoding="UTF8" />
-								</p:commandButton>
-							</p:outputPanel>
+							<p:commandButton value="XLS" immediate="true" ajax="false"
+								styleClass="btn-success" style="float:right; margin-left:5px"
+								icon="fa fa-file-excel-o">
+								<p:dataExporter type="xls" target="proveedorTable"
+									encoding="cp1250" fileName="proveedores" />
+							</p:commandButton>
+							<p:commandButton value="PDF" immediate="true" ajax="false"
+								styleClass="btn-success" style="float:right; margin-left:5px "
+								icon="fa fa-file-pdf-o">
+								<p:dataExporter type="pdf" target="proveedorTable"
+									encoding="cp1250" fileName="proveedores"
+									options="#{proveedoresBean.pdfOpt}"
+									preProcessor="#{proveedoresBean.preProcesamientoPdf}" />
+							</p:commandButton>
+							<p:commandButton value="CSV" immediate="true" ajax="false"
+								styleClass="btn-success" style="float:right;  margin-left:5px"
+								icon="fa fa-file-text-o">
+								<p:dataExporter type="csv" target="proveedorTable"
+									fileName="proveedores" encoding="cp1250" />
+							</p:commandButton>
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								icon="ui-icon-calculator" />
+							<p:columnToggler datasource="proveedorTable" trigger="toggler" />
+
 						</div>
 
 					</f:facet>
 					<f:facet name="footer">
-
 						<div class="text-left">
-							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{fn:length(proveedoresBean.proveedores)}"></f:param>
-							</h:outputFormat>
+							<h:outputLabel
+								value="Se han encontrado un total de #{proveedoresBean.listaProveedores.numResults} resultados"></h:outputLabel>
 						</div>
 					</f:facet>
-					<p:column headerText="" style="width:5%;text-align:center">
-						<h:outputText value="#{(cont+1)}" />
-					</p:column>
-					<p:column sortBy="#{proveedor.idProv}"
-						filterBy="#{proveedor.idProv}" styleClass="tdNumber"
-						style="width:12%" filterMatchMode="contains"
-						headerText="#{msg['proveedores.table.id']}">
+					<p:column sortBy="#{proveedor.idProv}" styleClass="tdNumber"
+						width="7%" headerText="#{msg['proveedores.table.id']}">
 						<h:outputText value="#{proveedor.idProv}" />
 					</p:column>
-					<p:column sortBy="#{proveedor.nombre}"
-						filterBy="#{proveedor.nombre}" style="width:12%"
-						filterMatchMode="contains"
+					<p:column sortBy="#{proveedor.nombre}" width="15%"
 						headerText="#{msg['users.datatable.header.nombre']}">
 						<h:outputText value="#{proveedor.nombre}" />
 					</p:column>
@@ -106,15 +94,15 @@
 						sortBy="#{proveedor.direccion}">
 						<h:outputText value="#{proveedor.direccion}" />
 					</p:column>
-					<p:column headerText="#{msg['proveedores.ciudad']}"
+					<p:column headerText="#{msg['proveedores.ciudad']}" width="10%"
 						sortBy="#{proveedor.ciudad}">
 						<h:outputText value="#{proveedor.ciudad}" />
 					</p:column>
-					<p:column headerText="#{msg['proveedores.cp']}"
+					<p:column headerText="#{msg['proveedores.cp']}" width="7%"
 						styleClass="tdNumber" sortBy="#{proveedor.cp}">
 						<h:outputText value="#{proveedor.cp}" />
 					</p:column>
-					<p:column headerText="#{msg['proveedores.tel']}"
+					<p:column headerText="#{msg['proveedores.tel']}" width="10%"
 						styleClass="tdNumber" sortBy="#{proveedor.tel1}">
 						<h:outputText value="#{proveedor.tel1}" />
 					</p:column>
@@ -123,9 +111,9 @@
 						<h:outputText value="#{proveedor.correo}" />
 					</p:column>
 
-					<p:column width="15%" style="text-align:center" exportable="false"
+					<p:column width="12%" style="text-align:center" exportable="false"
 						headerText="#{msg['users.datatable.header.opciones']}">
-						<p:commandLink id="fadeVer"
+						<p:commandLink id="fadeVer" process="@this"
 							action="#{proveedoresBean.irADetalle(proveedor)}">
 							<i class="fa fa-search-plus fa-fw " style="color: green;"></i>
 							<p:tooltip id="toolTipFadeVer" for="fadeVer" value="Ver más"
@@ -133,14 +121,14 @@
 						</p:commandLink>
 						<p:commandLink id="fadeEditar" global="false"
 							actionListener="#{proveedoresBean.editarProveedor(proveedor)}"
-							oncomplete="PF('proveedorDetailsDialog').show();"
+							process="@this" oncomplete="PF('proveedorDetailsDialog').show();"
 							update="formApp:proveedorDetailsModal">
 							<i class="fa fa-edit fa-fw " style="color: #337ab7;"></i>
 							<p:tooltip id="toolTipFade4" for="fadeEditar"
 								value="Editar proveedor" position="top" />
 						</p:commandLink>
 
-						<p:commandLink id="fadeBorrar"
+						<p:commandLink id="fadeBorrar" process="@this" immediate="true"
 							actionListener="#{proveedoresBean.borrarProveedor(proveedor)}"
 							update="proveedorTable">
 							<p:confirm header="#{msg['needConfirmation']}"

@@ -2,6 +2,7 @@
 package com.antoniojnavarro.naventory.services.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -12,9 +13,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMail;
+import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 
 @Service
 public class ServicioMailImpl implements ServicioMail {
@@ -32,8 +37,14 @@ public class ServicioMailImpl implements ServicioMail {
 	 * @param subject
 	 * @param body
 	 */
+	@Autowired
+	private Environment env;
+
+	@Autowired
+	private ServicioMensajesI18n srvMensajes;
+
 	@Override
-	public void sendEmail(String toEmail, String subject, String body) {
+	public void sendEmail(List<String> emailList, String subject, String body) throws ServicioException {
 		try {
 			Session session = createSession();
 			MimeMessage msg = new MimeMessage(session);
@@ -52,20 +63,21 @@ public class ServicioMailImpl implements ServicioMail {
 			msg.setContent(body, "text/html");
 
 			msg.setSentDate(new Date());
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", emailList), false));
 
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
 			System.out.println("Message is ready");
 			Transport.send(msg);
 
 			System.out.println("EMail Sent Successfully!!");
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new ServicioException(srvMensajes.getMensajeI18n("email.noexist.error"));
 		}
 	}
 
-	public static Session createSession() {
-		final String fromEmail = "naventory@naventory.cerrajerianavarro.es";
-		final String password = "bender40";
+	public Session createSession() {
+		final String fromEmail = env.getProperty("sender.email");
+		final String password = env.getProperty("password.email");
 
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.1and1.es");
@@ -81,4 +93,5 @@ public class ServicioMailImpl implements ServicioMail {
 		Session session = Session.getInstance(props, auth);
 		return session;
 	}
+
 }

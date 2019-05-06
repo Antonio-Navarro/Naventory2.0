@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
+
 public class MasterBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -76,6 +77,7 @@ public class MasterBean implements Serializable {
 	 * 
 	 * @param dialog
 	 */
+	@SuppressWarnings("deprecation")
 	public void openDialog(String dialog) {
 		RequestContext.getCurrentInstance().execute("PF('" + dialog + "').show();");
 	}
@@ -85,6 +87,7 @@ public class MasterBean implements Serializable {
 	 * 
 	 * @param dialog
 	 */
+	@SuppressWarnings("deprecation")
 	public void closeDialog(String dialog) {
 		RequestContext.getCurrentInstance().execute("PF('" + dialog + "').hide();");
 	}
@@ -94,11 +97,9 @@ public class MasterBean implements Serializable {
 	 * 
 	 * @param component
 	 */
+	@SuppressWarnings("deprecation")
 	public void updateComponent(String... component) {
 		RequestContext.getCurrentInstance().update(Arrays.asList(component));
 	}
-	
 
-
-	
 }

@@ -1,6 +1,9 @@
 package com.antoniojnavarro.naventory.services.impl;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,11 +12,12 @@ import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.Pagination
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.AlertaStockDao;
 import com.antoniojnavarro.naventory.model.entities.AlertaStock;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.AlertaStockSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
+import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMail;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
@@ -33,6 +37,8 @@ public class ServicioAlertaStockImpl implements ServicioAlertaStock {
 	ServicioMail srvMail;
 	@Autowired
 	private AlertaStockDao alertaStockDao;
+	@Autowired
+	private ServicioEmpresa srvEmpresa;
 
 	@Override
 	public AlertaStock findById(Integer id) throws ServicioException {
@@ -41,14 +47,12 @@ public class ServicioAlertaStockImpl implements ServicioAlertaStock {
 
 	@Override
 	public List<AlertaStock> findBySearchFilter(AlertaStockSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return alertaStockDao.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<AlertaStock> findBySearchFilter(AlertaStockSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.alertaStockDao.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
@@ -62,13 +66,11 @@ public class ServicioAlertaStockImpl implements ServicioAlertaStock {
 	@Override
 	public PaginationResult<AlertaStock> findBySearchFilterPagination(AlertaStockSearchFilter searchFilter,
 			int pageNumber, int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.alertaStockDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<AlertaStock> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<AlertaStock>) this.alertaStockDao.findAll();
 	}
 
@@ -84,27 +86,21 @@ public class ServicioAlertaStockImpl implements ServicioAlertaStock {
 
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.existsById(id);
 	}
 
 	@Override
 	public AlertaStock save(AlertaStock entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.alertaStockDao.save(entity);
 	}
-
-	@Autowired
-	private ServicioUsuario srvUsuario;
 
 	@Override
 	public void validate(AlertaStock entity) throws ServicioException {
 		this.srvValidacion.isNull("AlertaStock", entity);
-		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+		if (!this.srvEmpresa.existsEmpresaByCif(entity.getEmpresa().getCif())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("cif.noexist"));
 
 		}
-
 	}
 
 	@Override
@@ -133,30 +129,31 @@ public class ServicioAlertaStockImpl implements ServicioAlertaStock {
 	}
 
 	@Override
-	public List<AlertaStock> findAlertasByUsuario(Usuario user) throws ServicioException {
-		// TODO Auto-generated method stub
-		return this.alertaStockDao.findAlertasByUsuario(user);
+	public List<AlertaStock> findAlertasByEmpresa(Empresa empresa) throws ServicioException {
+		return this.alertaStockDao.findAlertasByEmpresa(empresa);
 	}
 
 	@Override
 	public String comprobarAlerta(Producto entity) throws ServicioException {
-		AlertaStock a = this.alertaStockDao.findAlertaByUsuarioAndProducto(entity.getUsuario(), entity);
+		AlertaStock a = this.alertaStockDao.findAlertaByEmpresaAndProducto(entity.getEmpresa(), entity);
 		if (entity.getStock() <= entity.getStockMin()) {
 			if (a == null) {
 				a = new AlertaStock();
 				a.setProducto(entity);
-				a.setUsuario(entity.getUsuario());
+				a.setEmpresa(entity.getEmpresa());
 				this.save(a);
 			}
+			ExecutorService executor = Executors.newSingleThreadExecutor();
+			executor.submit(() -> {
+				String body = "";
+				body = "<center><img src='http://naventory.cerrajerianavarro.es/assets/img/logofinal.jpg'></center><hr/><br> Empresa  "
+						+ entity.getEmpresa().getNombre() + "<br>";
+				body += "<h3 style='color:red'>Producto con nivel de stock bajo </h3> <br><br>";
+				body += "Quedan <b>" + entity.getStock() + "</b> " + entity.getUnidad() + " del producto <b>"
+						+ entity.getNombre() + "</b><br><br>";
+				this.srvMail.sendEmail(entity.getEmpresa().getUsuarios().stream().map(Usuario::getEmail).collect(Collectors.toList()), "Alerta de inventario", body);
 
-			String body = "";
-			body = "<center><img src='http://naventory.cerrajerianavarro.es/assets/img/logofinal.jpg'></center><hr/><br> Hola "
-					+ entity.getUsuario().getNombre() + "<br>";
-			body += "<h3 style='color:red'>Producto con nivel de stock bajo </h3> <br><br>";
-			body += "Quedan <b>" + entity.getStock() + "</b> " + entity.getUnidad() + " del producto <b>"
-					+ entity.getNombre() + "</b><br><br>";
-
-			this.srvMail.sendEmail(entity.getUsuario().getEmail(), "Alerta de inventario", body);
+			});
 			return "venta.stockBajo";
 		} else if (a != null && entity.getStock() > entity.getStockMin()) {
 			this.alertaStockDao.delete(a);
@@ -166,14 +163,14 @@ public class ServicioAlertaStockImpl implements ServicioAlertaStock {
 
 	@Override
 	public void comprobarAlertaRecepcionProducto(Producto entity) throws ServicioException {
-		AlertaStock a = this.alertaStockDao.findAlertaByUsuarioAndProducto(entity.getUsuario(), entity);
+		AlertaStock a = this.alertaStockDao.findAlertaByEmpresaAndProducto(entity.getEmpresa(), entity);
 		if (entity.getStock() > entity.getStockMin() && a != null) {
 			this.alertaStockDao.delete(a);
 		}
 	}
 
 	@Override
-	public AlertaStock findAlertaByUsuarioAndProducto(Usuario user, Producto product) throws ServicioException {
-		return this.alertaStockDao.findAlertaByUsuarioAndProducto(user, product);
+	public AlertaStock findAlertaByEmpresaAndProducto(Empresa empresa, Producto product) throws ServicioException {
+		return this.alertaStockDao.findAlertaByEmpresaAndProducto(empresa, product);
 	}
 }

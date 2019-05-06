@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -19,8 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ClienteLazyDataModel;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
+import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Chunk;
@@ -48,21 +51,23 @@ public class ClientesBean extends MasterBean {
 	private Cliente cliente;
 
 	private Cliente selectedCliente;
-	@Autowired
 	private UsuarioAutenticado usuarioAutenticado;
+	private ClienteSearchFilter filtro;
+
 	// LISTAS
-	private List<Cliente> clientes;
-	private List<Cliente> filteredClientes;
+	private ClienteLazyDataModel listaClientes;
 	// SERVICIOS
 	@Autowired
 	private ServicioCliente srvCliente;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
+
 		logger.info("Clientes.init()");
 		inicilizarAtributos();
-		cargarClientes();
 		customizationOptions();
 
 	}
@@ -73,10 +78,16 @@ public class ClientesBean extends MasterBean {
 	}
 
 	public void inicilizarAtributos() {
-		this.clientes = null;
+		this.filtro = new ClienteSearchFilter();
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		this.listaClientes = new ClienteLazyDataModel(filtro, srvCliente);
 		this.editing = false;
 		this.selectedCliente = new Cliente();
 		this.cliente = new Cliente();
+	}
+
+	public void buscar() {
+		this.listaClientes = new ClienteLazyDataModel(filtro, srvCliente);
 	}
 
 	public void newCliente() {
@@ -114,23 +125,15 @@ public class ClientesBean extends MasterBean {
 		this.selectedCliente = null;
 	}
 
-	public void cargarClientes() {
-		this.clientes = srvCliente.findClientesByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
 	public void borrarCliente(Cliente cliente) {
 		srvCliente.delete(cliente);
-		this.clientes.remove(cliente);
 		addInfo("clientes.succesDelete");
 		this.editing = false;
 	}
 
 	public void guardarCliente() {
-		selectedCliente.setUsuario(usuarioAutenticado.getUsuario());
+		selectedCliente.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		srvCliente.saveOrUpdate(this.selectedCliente, true);
-		if (!editing) {
-			this.clientes.add(selectedCliente);
-		}
 		super.closeDialog("clienteDetailsDialog");
 		addInfo("clientes.succesNew");
 		editing = false;
@@ -142,25 +145,31 @@ public class ClientesBean extends MasterBean {
 		pdfOpt.setFacetFontColor("#FFFFFF");
 		pdfOpt.setFacetFontStyle("BOLD");
 		pdfOpt.setCellFontSize("12");
+
 	}
 
 	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
 		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
 		pdf.open();
-		pdf.setPageSize(PageSize.A4);
 
 		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
 		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
 		Paragraph p1 = new Paragraph("Informe de clientes | " + d);
 		Font font = new Font(Font.TIMES_ROMAN, 18.0f, Font.BOLD, Color.RED);
 		p1.setFont(font);
-		Paragraph p2 = new Paragraph("Creado por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
+		Paragraph p2 = new Paragraph("Creádo por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
 				+ this.usuarioAutenticado.getUsuario().getEmail());
 		p2.setFont(font);
 
 		pdf.add(p1);
 		pdf.add(p2);
 		pdf.add(Chunk.NEWLINE);
+	}
+
+	public String exportTel(String tel) {
+
+		return tel;
 	}
 
 	public Cliente getCliente() {
@@ -179,14 +188,6 @@ public class ClientesBean extends MasterBean {
 		this.selectedCliente = selectedCliente;
 	}
 
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
 	public boolean isEditing() {
 		return editing;
 	}
@@ -195,12 +196,20 @@ public class ClientesBean extends MasterBean {
 		this.editing = editing;
 	}
 
-	public List<Cliente> getFilteredClientes() {
-		return filteredClientes;
+	public ClienteSearchFilter getFiltro() {
+		return filtro;
 	}
 
-	public void setFilteredClientes(List<Cliente> filteredClientes) {
-		this.filteredClientes = filteredClientes;
+	public void setFiltro(ClienteSearchFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public ClienteLazyDataModel getListaClientes() {
+		return listaClientes;
+	}
+
+	public void setListaClientes(ClienteLazyDataModel listaClientes) {
+		this.listaClientes = listaClientes;
 	}
 
 	public ExcelOptions getExcelOpt() {

@@ -27,15 +27,9 @@
 	<h:outputStylesheet library="css" name="site.css" />
 
 	<!-- JavaScript files -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-		crossorigin="anonymous"></script>
+	<h:outputScript library="js" name="bootstrap.min.js" />
 	<h:outputScript library="js" name="custom.js" />
 
-	<!-- X-CSRF-TOKEN -->
-	<!-- 	<meta name="_csrf" content="${_csrf.token}" /> -->
-	<!-- 	<meta name="_csrf_header" content="${_csrf.headerName}" /> -->
 
 	<ui:insert name="head" />
 </h:head>
@@ -51,20 +45,26 @@
 									value="#{msg['aplicacion.nombre']}" /> &#160; <h:outputText
 									value="#{msg['aplicacion.version']}" /> </span></a>
 					</div>
-
 					<div class="clearfix"></div>
 
 					<!-- menu profile quick info -->
 					<div class="profile">
 						<div class="profile_pic">
-							<p:graphicImage library="images" name="user.png"
-								styleClass="img-circle profile_img" />
+							<p:outputPanel id="miImagenTemplate">
+								<p:graphicImage rendered="#{templateAppBean.fotoPerfil==null}"
+									library="images" name="user.png"
+									styleClass="img-circle profile_img" />
+
+								<h:graphicImage rendered="#{templateAppBean.fotoPerfil!=null}"
+									id="miImagen" styleClass="img-circle profile_img"
+									value="data:image/jpg;base64,#{templateAppBean.fotoPerfil}" />
+							</p:outputPanel>
 						</div>
 						<div class="profile_info">
 							<span><h:outputText value="#{msg['welcome']}" /></span>
 							<h2>
 								<h:outputText
-									value="#{homeBean.usuarioAuteticado.usuario.nombre}" />
+									value="#{templateAppBean.usuarioAutenticado.usuario.nombre}" />
 							</h2>
 						</div>
 					</div>
@@ -117,6 +117,7 @@
 										href="#{request.contextPath}/private/stock/stock.xhtml"><i
 											class="fa fa-bar-chart"></i> <h:outputText
 												value="#{msg['sidebar.menu.stock']}" /> </a></li>
+
 								</h:panelGroup>
 							</ul>
 						</div>
@@ -125,72 +126,84 @@
 				</div>
 			</div>
 			<!-- top navigation -->
-			<p:outputPanel id="panelTop" autoUpdate="true">
+			<p:outputPanel id="panelTop">
+				<p:autoUpdate />
 				<div class="top_nav">
-					<div class="nav_menu">
+					<div class="nav_menu ">
 						<nav>
 							<div class="nav toggle">
-								<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+								<a id="menu_toggle" style="color: white !important"><i
+									class="fa fa-bars"></i></a>
 
 							</div>
 							<ul class="nav navbar-nav navbar-left">
-								<li><h4 style="margin-top: 20px;">#{homeBean.usuarioAuteticado.usuario.empresa}</h4></li>
+								<li>
+									<h2 style="margin-top: 15px; color: white !important;">
+										<span><h:outputText
+												value="#{templateAppBean.usuarioAutenticado.usuario.empresa.nombre}" /></span>
+									</h2>
+								</li>
 							</ul>
 
 							<ul class="nav navbar-nav navbar-right">
-
-								<li class="dropdown"><a href="javascript:;"
+								<li class="dropdown"><a href="#"
 									class="user-profile dropdown-toggle" data-toggle="dropdown"
 									aria-expanded="false"
-									style="color: #4d647b !important; font-weight: bold;"> <i
+									style="color: white !important; font-weight: bold;"> <i
 										class="fa fa-user fa-fw"></i> <span class=" fa fa-angle-down"></span>
 								</a>
 									<ul class="dropdown-menu dropdown-usermenu pull-right">
-										<li><a href="javascript:;"><i
+										<li><a
+											href="#{request.contextPath}/private/perfil/perfil.xhtml"><i
 												class="fa fa-user pull-right"></i> <h:outputText
 													value="#{msg['navbar.profile']}" /> </a></li>
-										<h:panelGroup
-											rendered="#{usuarioAutenticadoBean.usuario.administrador eq 'Y'}">
+										<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_EMP')}">
+											<li><a
+												href="#{request.contextPath}/private/empresa/empresa.xhtml"><i
+													class="fa fa-industry pull-right"></i> <h:outputText
+														value="#{msg['navbar.empresa']}" /></a></li>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{sec:areAnyGranted('ROLE_ADMIN')}">
 											<li><a
 												href="#{request.contextPath}/private/administracion/administracion.xhtml"><i
 													class="fa fa-cogs pull-right"></i> <h:outputText
 														value="#{msg['navbar.administrator']}" /></a></li>
 										</h:panelGroup>
-										<li><h:form id="formLogout" style="width:90%">
-												<p:commandLink action="#{loginBean.logout}" global="false">
-													<i class="fa fa-sign-out pull-right"></i>
-													<h:outputText value="#{msg['navbar.logout']}" />
-												</p:commandLink>
-											</h:form></li>
+										<li style="margin-top: 5px;" class="hoverPersonalizado">
+											<p:commandLink action="#{templateAppBean.logout}" ajax="true"
+												onclick="cerrarSesiones()" immediate="true" process="@this">
+												<i class="fa fa-sign-out pull-right"></i>
+												<h:outputText value="#{msg['navbar.logout']}" />
+											</p:commandLink>
+										</li>
 									</ul></li>
 
-
 								<li class="dropdown "><a class="dropdown-toggle"
-									data-toggle="dropdown" href="#"><pe:switch
-											value="#{homeBean.exitenAlertas}">
+									data-toggle="dropdown" href="#"> <i
+										class="fa fa-bell fa-fw"></i> <pe:switch
+											value="#{templateAppBean.exitenAlertas}">
 											<pe:case value="#{true}">
-												<i class="fa fa-bell fa-fw" style="color: red"></i>
-												<i class="fa fa-caret-down"></i>
+												<span class="badge badge-notify">#{templateAppBean.alertas.size()}</span>
 											</pe:case>
+
 											<pe:case value="#{false}">
-												<i class="fa fa-bell fa-fw"></i>
-												<i class="fa fa-caret-down"></i>
+												<span class="badge badge-notify-zero">#{templateAppBean.alertas.size()}</span>
 											</pe:case>
 											<pe:defaultCase>
 												<i class="fa fa-bell fa-fw"></i>
-												<i class="fa fa-caret-down"></i>
 											</pe:defaultCase>
-										</pe:switch> </a>
+										</pe:switch> <i class="fa fa-caret-down" style="margin-left: -10px;"></i>
+								</a>
 
 									<ul class="dropdown-menu dropdown-alerts">
-										<ui:repeat var="alerta" value="#{homeBean.alertas}">
+										<ui:repeat var="alerta" value="#{templateAppBean.alertas}">
 											<li style="padding: 5px"><i
-												class="fa fa-bell pull-left fa-fw"></i> <h:outputText
-													style="color:red" value="Alerta nivel bajo de stock en" />
-												<h:outputText style="color:darkred;font-weight: bold;"
+												class="fa fa-bell pull-left fa-fw" style="color:red"></i> <h:outputText
+													style="color:white" value="Alerta nivel bajo de stock en" />
+												<h:outputText style="color:red;font-weight: bold;"
 													value=" ${alerta.producto.nombre}" /> <h:outputText
-													style="color:red;font-weight: bold;" value=" quedan" /> <h:outputText
-													style="color:darkred;font-weight: bold;"
+													style="color:white;font-weight: bold;" value=" quedan" /> <h:outputText
+													style="color:red;font-weight: bold;"
 													value=" ${alerta.producto.stock} ${alerta.producto.unidad}" />
 
 
@@ -215,7 +228,7 @@
 									<button type="button" class="close" data-dismiss="modal">Close</button>
 									<h4 class="modal-title">Nuevo mensaje</h4>
 								</div>
-								<div class="modal-body">sdfasd</div>
+								<div class="modal-body"></div>
 							</div>
 						</div>
 					</div>
@@ -225,23 +238,25 @@
 
 			<!-- page content -->
 			<div class="page-content right_col" role="main">
-				<div class="">
+				<div class="page-subcontent">
 					<h:form id="formApp">
 						<!-- Growl Messages -->
-						<p:growl autoUpdate="true" escape="false" />
+						<p:growl escape="false">
+							<p:autoUpdate />
+						</p:growl>
 						<!-- Ajax Status -->
 						<p:ajaxStatus onstart="PF('statusDialog').show()"
 							onsuccess="PF('statusDialog').hide()" />
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 							closable="false" resizable="false" showHeader="false">
-							<p:graphicImage library="images" name="loading.gif" width="65" />
+							<p:graphicImage library="images" name="loading2.gif" width="65" />
 						</p:dialog>
 
 						<ui:insert name="body" />
 
 						<!-- General Confirm Dialog -->
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-							style="text-align:center" width="600px">
+							width="400px">
 							<p:commandButton value="#{msg['yes']}" type="button"
 								styleClass="ui-confirmdialog-yes btn-success"
 								icon="fa fa-check-circle" />
@@ -277,4 +292,5 @@
 	</div>
 
 </h:body>
+
 </html>

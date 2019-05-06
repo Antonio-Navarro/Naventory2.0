@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 
 /**
  * Permitirá anotar una clase que herede de SearchFilter para indicar por que columnas se realizará la operación ORDER BY SQL 
- * @author José María Sola Durán
  *
  */
 @Documented

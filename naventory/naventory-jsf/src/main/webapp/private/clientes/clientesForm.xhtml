@@ -8,8 +8,9 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 	<p:dialog id="clienteDetailsModal" widgetVar="clienteDetailsDialog"
-		responsive="true" closable="true" resizable="false" modal="true"
-		maximizable="false" width="600" focus="nombreInput">
+		showEffect="fade" hideEffect="fade" responsive="true" closable="true"
+		resizable="false" modal="true" maximizable="false" width="600"
+		focus="nombreInput">
 		<f:facet name="header">
 			<h:outputText rendered="#{clientesBean.editing}"
 				value="#{msg['cliente.editarCliente']}"></h:outputText>
@@ -17,68 +18,66 @@
 				value="#{msg['cliente.titleNuevaCliente']}"></h:outputText>
 
 		</f:facet>
-		<p:messages id="messages" autoUpdate="true" escape="false"
-			closable="true" showSummary="true" showDetail="false"
-			globalOnly="true" />
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 
-			<p:outputLabel for="nombreInput" styleClass="required"
+			<p:outputLabel for="nombreInput"
 				value="#{msg['clientes.nombreCliente']}" />
-			<p:inputText id="nombreInput" 
+			<p:inputText id="nombreInput" required="true"
+				requiredMessage="#{msg['clientes.nombreCliente.req']}"
 				value="#{clientesBean.selectedCliente.nombre}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="nombreComInput" styleClass="required"
+			<p:outputLabel for="nombreComInput"
 				value="#{msg['clientes.nombreComCliente']}" />
-			<p:inputText id="nombreComInput"
+			<p:inputText id="nombreComInput" required="true"
+				requiredMessage="#{msg['clientes.nombreComCliente.req']}"
 				value="#{clientesBean.selectedCliente.nombreCom}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder=""
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="direccionInput" styleClass="required"
+			<p:outputLabel for="direccionInput"
 				value="#{msg['clientes.direccion']}" />
-			<p:inputText id="direccionInput"
+			<p:inputText id="direccionInput" required="true"
+				requiredMessage="#{msg['clientes.direccion.req']}"
 				value="#{clientesBean.selectedCliente.direccion}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="ciudadInput" styleClass="required"
-				value="#{msg['clientes.ciudad']}" />
-			<p:inputText id="ciudadInput"
+			<p:outputLabel for="ciudadInput" value="#{msg['clientes.ciudad']}" />
+			<p:inputText id="ciudadInput" required="true"
+				requiredMessage="#{msg['clientes.ciudad.req']}"
 				value="#{clientesBean.selectedCliente.ciudad}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="provinciaInput" styleClass="required"
+			<p:outputLabel for="provinciaInput"
 				value="#{msg['clientes.provincia']}" />
-			<p:inputText id="provinciaInput"
+			<p:inputText id="provinciaInput" required="true"
+				requiredMessage="#{msg['clientes.provincia.req']}"
 				value="#{clientesBean.selectedCliente.provincia}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder=""
-				style="font-family:Arial, FontAwesome; text-align:center" />
-
-
-			<p:outputLabel for="cpInput" value="#{msg['clientes.cp']}"
-				styleClass="required" />
-			<p:inputText id="cpInput"
-				value="#{clientesBean.selectedCliente.cp}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
-				
-			<p:outputLabel for="paisInput" value="#{msg['clientes.pais']}"
-				styleClass="required" />
-			<p:inputText id="paisInput"
+
+
+			<p:outputLabel for="cpInput" value="#{msg['clientes.cp']}" />
+			<p:inputText id="cpInput" value="#{clientesBean.selectedCliente.cp}"
+				required="true" requiredMessage="#{msg['clientes.cp.req']}"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
+				style="font-family:Arial, FontAwesome; text-align:center" />
+
+			<p:outputLabel for="paisInput" value="#{msg['clientes.pais']}" />
+			<p:inputText id="paisInput" required="true"
+				requiredMessage="#{msg['clientes.pais.req']}"
 				value="#{clientesBean.selectedCliente.pais}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
-			<p:outputLabel for="tel1Input" value="#{msg['clientes.tel1']}"
-				styleClass="required" />
-			<p:inputText id="tel1Input"
-				value="#{clientesBean.selectedCliente.tel1}"
+			<p:outputLabel for="tel1Input" value="#{msg['clientes.tel1']}" />
+			<p:inputText id="tel1Input" required="true"
+				requiredMessage="#{msg['clientes.tel1.req']}"
+				value="#{clientesBean.selectedCliente.tel1}" type="tel"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
@@ -89,9 +88,9 @@
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
 
-			<p:outputLabel for="emailInput" value="#{msg['email']}"
-				styleClass="required" />
-			<p:inputText id="emailInput"
+			<p:outputLabel for="emailInput" value="#{msg['email']}" />
+			<p:inputText id="emailInput" required="true"
+				requiredMessage="#{msg['clientes.correo.req']}"
 				value="#{clientesBean.selectedCliente.correo}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
 				style="font-family:Arial, FontAwesome; text-align:center" />
@@ -102,8 +101,7 @@
 				<div class="col-md-12 text-right margin-10">
 					<p:commandButton icon="fa fa-save"
 						styleClass="btn btn-lg btn-success btnAction"
-						title="#{msg['save']}"
-						value="#{msg['clientes.crearCliente']}"
+						title="#{msg['save']}" value="#{msg['clientes.crearCliente']}"
 						actionListener="#{clientesBean.guardarCliente}"
 						update="clienteTable" />
 				</div>

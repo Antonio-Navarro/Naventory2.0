@@ -25,22 +25,21 @@ public class ProveedorDetailsBean extends MasterBean {
 	ParamBean param;
 
 	private Proveedor proveedor;
-	@Autowired
-	private UsuarioAutenticado usuarioAutenticado;
+
 	// LISTAS
 	// SERVICIOS
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
 		this.proveedor = (Proveedor) param.getParam();
-		
+
 		logger.info("ProveedorDetail.init()");
-		
 
 	}
+
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
+
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
 	}

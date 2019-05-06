@@ -3,10 +3,8 @@ package com.antoniojnavarro.naventory.dao.commons.api;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
@@ -15,7 +13,7 @@ import com.antoniojnavarro.naventory.model.commons.filters.SearchFilter;
 
 @NoRepositoryBean
 public interface Dao<T extends GenericEntity, F extends SearchFilter, ID extends Serializable>
-		extends CrudRepository<T, ID>, PagingAndSortingRepository<T, ID>, JpaSpecificationExecutor<T> {
+		extends JpaRepository<T, ID> {
 
 	// Se añaden nuestro métodos compartidos por todos los Repository
 	

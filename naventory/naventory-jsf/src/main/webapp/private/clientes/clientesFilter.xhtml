@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<div class="col-md-12 col-sm-12">
+		<p:tabView styleClass="ui-icon-plus" id="panelFiltro" effect="fold">
+			<p:tab>
+				<f:facet name="title">
+					<p:outputLabel>
+						<i class="fa fa-filter fa-fw" />
+					</p:outputLabel>
+					<h:outputText value="Búsqueda" />
+				</f:facet>
+				<f:facet name="actions">
+					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+						style="float:right" immediate="true"
+						actionListener="#{clientesBean.inicilizarAtributos}"
+						process="panelFiltro" id="btnLimpiar" update="@form">
+						<p:resetInput target="panelFiltro" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-search" value="Buscar"
+						id="btnBuscar" style="float:right"
+						actionListener="#{clientesBean.buscar}"
+						update="formApp:clienteTable" process="panelFiltro" />
+				</f:facet>
+				<p:panelGrid styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel for="filtroID" value="ID" styleClass="lblForm" />
+							<p:inputText id="filtroID" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.idCliente}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroNombre" value="Nombre"
+								styleClass="lblForm" />
+							<p:inputText id="filtroNombre" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.nombre}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroDireccion" value="Dirección"
+								styleClass="lblForm" />
+							<p:inputText id="filtroDireccion" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.direccion}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroCiudad" value="Ciudad"
+								styleClass="lblForm" />
+							<p:inputText id="filtroCiudad" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.ciudad}" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+			</p:tab>
+			<p:tab>
+				<f:facet name="title">
+					<p:outputLabel>
+						<i class="fa fa-search-plus fa-fw" />
+					</p:outputLabel>
+					<h:outputText value="Búsqueda Avanzada" />
+				</f:facet>
+				<f:facet name="actions">
+					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+						style="float:right" immediate="true"
+						actionListener="#{clientesBean.inicilizarAtributos}"
+						process="panelFiltro" id="btnLimpiarAvanzada" update="@form">
+						<p:resetInput target="panelFiltro" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-search" value="Buscar"
+						id="btnBuscarAvanzada" style="float:right"
+						actionListener="#{clientesBean.buscar}"
+						update="formApp:clienteTable" process="panelFiltro" />
+				</f:facet>
+				<p:panelGrid styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel for="filtroNombreComercial"
+								value="Nombre comercial" styleClass="lblForm" />
+							<p:inputText id="filtroNombreComercial" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.nombreCom}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroProvincia" value="Provincia"
+								styleClass="lblForm" />
+							<p:inputText id="filtroProvincia" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.provincia}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroPais" value="País" styleClass="lblForm" />
+							<p:inputText id="filtroPais" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.pais}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroCp" value="C.P." styleClass="lblForm" />
+							<p:inputText id="filtroCp" value="#{clientesBean.filtro.cp}"
+								styleClass="inputFiltro" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel for="filtroTel1" value="Teléfono 1"
+								styleClass="lblForm" />
+							<p:inputText id="filtroTel1" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.tel1}" />
+						</p:column>
+
+						<p:column>
+							<p:outputLabel for="filtroCorreo" value="Correo"
+								styleClass="lblForm" />
+							<p:inputText id="filtroCorreo" styleClass="inputFiltro"
+								value="#{clientesBean.filtro.correo}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroDescuento" value="Descuento"
+								styleClass="lblForm" />
+							<p:inputNumber id="filtroDescuento"
+								value="#{clientesBean.filtro.descuento}" symbol="%"
+								symbolPosition="s" emptyValue="empty" styleClass="inputFiltro" />
+						</p:column>
+						<p:column>
+							<p:outputLabel for="filtroIva" value="I.V.A" styleClass="lblForm" />
+							<p:inputNumber id="filtroIva" value="#{clientesBean.filtro.iva}"
+								symbol="%" symbolPosition="s" emptyValue="empty"
+								styleClass="inputFiltro" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+			</p:tab>
+		</p:tabView>
+	</div>
+</ui:composition>

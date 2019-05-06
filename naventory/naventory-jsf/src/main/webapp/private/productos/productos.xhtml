@@ -11,92 +11,78 @@
 		<title>Productos | Naventory</title>
 	</ui:define>
 	<ui:define name="body">
+
 		<div class="row">
-			<div class="col-md-12">
-				<h1>
-					<h:outputText value="#{msg['productos.title']}" />
-				</h1>
+			<div class="col-md-4" style="color: #232323">
+				<h3>
+					<p:outputLabel>
+						<i class="fa fa-server fa-fw" /> #{msg['productos.title']}
+					</p:outputLabel>
+				</h3>
 			</div>
+		</div>
+		<div class="separator" />
+		<div class="row">
+			<ui:include src="productosFilter.xhtml" />
 		</div>
 		<div class="clearfix"></div>
-		<div class="separator"></div>
-		<div class="row">
-			<div class="col-md-6 text-left">
-				<p:commandButton value="#{msg['productos.nuevaProducto']}"
-					style="heig" icon="fa fa-tasks fa-fw" process="@this"
-					styleClass="btn btn-lg btn-success"
-					actionListener="#{productosBean.newProducto}"
-					oncomplete="PF('productoDetailsDialog').show();"
-					update="productoDetailsModal" />
-			</div>
-		</div>
-		<p:separator></p:separator>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
 				<p:dataTable id="productoTable" var="producto"
-					widgetVar="productosWV" value="#{productosBean.productos}"
+					widgetVar="productosWV" value="#{productosBean.listaProductos}"
 					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
-					rowIndexVar="cont" paginatorPosition="bottom" lazy="false"
-					resizableColumns="true"
+					paginatorPosition="bottom" lazy="true" 
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
-					emptyMessage="#{msg['noresult']}"
-					filteredValue="#{productosBean.filteredProductos}">
+					emptyMessage="#{msg['noresult']}">
 					<f:facet name="header">
 						<div class="text-left">
-							<p:commandButton id="toggler" type="button" value="Columnas"
-								style="float:left" icon="ui-icon-calculator" />
-							<p:columnToggler datasource="productoTable" trigger="toggler" />
+							<p:commandButton value="#{msg['productos.nuevaProducto']}"
+								icon="fa fa-tasks fa-fw" process="@this" style="float: left"
+								styleClass="btn btn-lg btn-success"
+								actionListener="#{productosBean.newProducto}"
+								oncomplete="PF('productoDetailsDialog').show();"
+								update="formApp:productoDetailsModal" />
 						</div>
 						<div class="text-right">
-							<p:outputPanel>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('productosWV').filter()" style="width:150px"
-									placeholder="#{msg['buscarTabla']}" />
-							</p:outputPanel>
-						</div>
+							<p:commandButton id="toggler" type="button" value="Columnas"
+								icon="ui-icon-calculator" />
+							<p:columnToggler datasource="productoTable" trigger="toggler" />
 
+						</div>
 					</f:facet>
 					<f:facet name="footer">
 
 						<div class="text-left">
 							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{fn:length(productosBean.productos)}"></f:param>
+								<f:param value="#{productosBean.listaProductos.numResults}"></f:param>
 							</h:outputFormat>
 						</div>
 					</f:facet>
-					<p:column headerText="" style="width:5%;text-align:center">
-						<h:outputText value="#{(cont+1)}" />
-					</p:column>
-					<p:column sortBy="#{producto.sku}" filterBy="#{producto.sku}"
-						style="width:12%" filterMatchMode="contains"
-						headerText="#{msg['productos.table.id']}">
+					<p:column sortBy="#{producto.sku}" style="width:8%"
+						headerText="#{msg['productos.sku']}">
 						<h:outputText value="#{producto.sku}" />
 					</p:column>
-					<p:column sortBy="#{producto.nombre}" filterBy="#{producto.nombre}"
-						style="width:12%" filterMatchMode="contains"
+					<p:column sortBy="#{producto.nombre}" style="width:12%"
 						headerText="#{msg['users.datatable.header.nombre']}">
 						<h:outputText value="#{producto.nombre}" />
 					</p:column>
-					<p:column sortBy="#{producto.categoria.nomCat}"
-						filterBy="#{producto.categoria.nomCat}" style="width:12%"
-						filterMatchMode="contains" headerText="#{msg['categoria']}">
+					<p:column sortBy="#{producto.categoria.nomCat}" style="width:12%"
+						headerText="#{msg['categoria']}">
 						<h:outputText value="#{producto.categoria.nomCat}" />
 					</p:column>
-					<p:column sortBy="#{producto.proveedor.nombre}"
-						filterBy="#{producto.proveedor.nombre}" style="width:12%"
-						filterMatchMode="contains" headerText="#{msg['proveedor']}">
+					<p:column sortBy="#{producto.proveedor.nombre}" style="width:12%"
+						headerText="#{msg['proveedor']}">
 						<h:outputText value="#{producto.proveedor.nombre}" />
 					</p:column>
-					<p:column sortBy="#{producto.coste}" filterBy="#{producto.coste}"
-						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
-						headerText="#{msg['productos.coste.table']}">
+					<p:column sortBy="#{producto.coste}" style="width:12%"
+						styleClass="tdNumber" headerText="#{msg['productos.coste.table']}">
 						<h:outputText value="#{producto.coste}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"
 								minIntegerDigits="2" />
 						</h:outputText>
 					</p:column>
-					<p:column sortBy="#{producto.precio}" filterBy="#{producto.precio}"
-						style="width:12%" filterMatchMode="contains" styleClass="tdNumber"
+					<p:column sortBy="#{producto.precio}" 
+						style="width:12%" styleClass="tdNumber"
 						headerText="#{msg['productos.precio.table']}">
 						<h:outputText value="#{producto.precio}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"
@@ -130,6 +116,6 @@
 		</div>
 		<ui:include src="productosForm.xhtml" />
 	</ui:define>
-
+	<div class="clearfix"></div>
 
 </ui:composition>

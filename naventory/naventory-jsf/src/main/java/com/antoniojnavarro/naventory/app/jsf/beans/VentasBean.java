@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.component.export.ExcelOptions;
@@ -17,10 +19,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ClienteLazyDataModel;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.VentaLazyDataModel;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.FormaPago;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Venta;
+import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
+import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 import com.antoniojnavarro.naventory.services.api.ServicioFormaPago;
@@ -46,19 +54,21 @@ public class VentasBean extends MasterBean {
 	private boolean editing;
 	private ExcelOptions excelOpt;
 	private PDFOptions pdfOpt;
+
 	// ENTITIES
 	@Autowired
 	ParamBean paramBean;
-	private Venta venta;
 	private Venta selectedVenta;
-	@Autowired
+	private VentaSearchFilter filtro;
+	private ClienteSearchFilter filtroClientes;
+
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Venta> ventas;
 	private List<Venta> filteredVentas;
-	private List<Cliente> clientes;
+	private ClienteLazyDataModel clientes;
 	private List<Producto> productos;
 	private List<FormaPago> formasPago;
+	private VentaLazyDataModel listaVentas;
 
 	// SERVICIOS
 	@Autowired
@@ -71,17 +81,110 @@ public class VentasBean extends MasterBean {
 	private ServicioFormaPago srvFormaPago;
 	@Autowired
 	private ServicioAlertaStock srvAlertaStock;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
-		cargarVentas();
 		cargarClientes();
 		cargarProductos();
 		cargarFormasPago();
 		customizationOptions();
+
+	}
+
+	public void inicilizarAtributos() {
+		this.editing = false;
+		iniciarSelectedVenta();
+		this.filtro = new VentaSearchFilter();
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		this.listaVentas = new VentaLazyDataModel(filtro, srvVenta);
+	}
+
+	public void buscar() {
+		this.listaVentas = new VentaLazyDataModel(filtro, srvVenta);
+	}
+
+	public void newVenta() {
+		this.editing = false;
+		iniciarSelectedVenta();
+	}
+
+	public void editarVenta(Venta venta) {
+		this.selectedVenta = null;
+		this.selectedVenta = venta;
+		this.editing = true;
+	}
+
+	public void iniciarSelectedVenta() {
+		this.selectedVenta = new Venta();
+		selectedVenta.setCliente(new Cliente());
+		filtroClientes = new ClienteSearchFilter();
+		filtroClientes.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+
+	}
+
+	public void cargarClientes() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		@SuppressWarnings("rawtypes")
+		Map map = context.getExternalContext().getRequestParameterMap();
+		filtroClientes.setNombre((String) map.get("myJSValue"));
+		filtroClientes.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		this.clientes = new ClienteLazyDataModel(filtroClientes, srvCliente);
+	}
+
+	public void cargarFormasPago() {
+		this.formasPago = srvFormaPago.findFormasPagoByUsuario();
+	}
+
+	public void cargarProductos() {
+		this.productos = srvProducto.findProductosByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
+	}
+
+	public void borrarVenta(Venta venta) {
+		if (venta.getIdVenta() != null && venta.getIdVenta() > 0) {
+			Producto p = srvVenta.findById(venta.getIdVenta()).getProducto();
+			if (p != null) {
+				p.setStock(p.getStock() + venta.getCantidad());
+				srvProducto.saveOrUpdate(p, true);
+				if (srvAlertaStock.findAlertaByEmpresaAndProducto(this.usuarioAutenticado.getUsuario().getEmpresa(),
+						p) != null && p.getStock() > p.getStockMin()) {
+					srvAlertaStock.delete(srvAlertaStock
+							.findAlertaByEmpresaAndProducto(this.usuarioAutenticado.getUsuario().getEmpresa(), p));
+				}
+			}
+		}
+		srvVenta.delete(venta);
+		addInfo("ventas.succesDelete");
+		this.editing = false;
+	}
+
+	public void guardarVenta() {
+
+		selectedVenta.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
+		if (editing && selectedVenta.getIdVenta() != null && selectedVenta.getIdVenta() > 0) {
+			Venta v = srvVenta.findById(selectedVenta.getIdVenta());
+			Producto p = selectedVenta.getProducto();
+			if (p != null) {
+				p.setStock(selectedVenta.getProducto().getStock() + v.getCantidad());
+				srvProducto.saveOrUpdate(selectedVenta.getProducto(), true);
+			}
+
+		}
+		selectedVenta = srvVenta.calcularVenta(selectedVenta);
+		selectedVenta = srvVenta.saveOrUpdate(selectedVenta, true);
+		selectedVenta = srvVenta.findById(selectedVenta.getIdVenta());
+		super.closeDialog("ventaDetailsDialog");
+		addInfo("ventas.succesNew");
+		String msjError = srvAlertaStock.comprobarAlerta(selectedVenta.getProducto());
+		if (msjError != null) {
+			addError(msjError, selectedVenta.getProducto().getNombre(),
+					selectedVenta.getProducto().getStock().toString(), selectedVenta.getProducto().getUnidad());
+		}
+		editing = false;
 	}
 
 	public void customizationOptions() {
@@ -94,9 +197,8 @@ public class VentasBean extends MasterBean {
 
 	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
 		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
 		pdf.open();
-		pdf.setPageSize(PageSize.A4);
-
 		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
 		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
 		Paragraph p1 = new Paragraph("Informe de ventas | " + d);
@@ -111,100 +213,12 @@ public class VentasBean extends MasterBean {
 		pdf.add(Chunk.NEWLINE);
 	}
 
-	public void inicilizarAtributos() {
-		this.ventas = null;
-		this.editing = false;
-		this.selectedVenta = new Venta();
-		this.venta = new Venta();
-	}
-
-	public void newVenta() {
-		this.editing = false;
-		this.selectedVenta = new Venta();
-	}
-
-	public void editarVenta(Venta venta) {
-		this.selectedVenta = null;
-		this.selectedVenta = venta;
-		this.editing = true;
-	}
-
-	public void iniciarSelectedVenta() {
-		this.selectedVenta = null;
-	}
-
-	public void cargarVentas() {
-		this.ventas = srvVenta.findVentasByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
-	public void cargarClientes() {
-		this.clientes = srvCliente.findClientesByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
-	public void cargarFormasPago() {
-		this.formasPago = srvFormaPago.findFormasPagoByUsuario();
-	}
-
-	public void cargarProductos() {
-		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
-	public void borrarVenta(Venta venta) {
-		if (venta.getIdVenta() != null && venta.getIdVenta() > 0) {
-			Producto p = srvVenta.findById(venta.getIdVenta()).getProducto();
-			p.setStock(p.getStock() + venta.getCantidad());
-			srvProducto.saveOrUpdate(p, true);
-			if (srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p) != null
-					&& p.getStock() > p.getStockMin()) {
-				srvAlertaStock
-						.delete(srvAlertaStock.findAlertaByUsuarioAndProducto(this.usuarioAutenticado.getUsuario(), p));
-			}
-		}
-		srvVenta.delete(venta);
-		this.ventas.remove(venta);
-		addInfo("ventas.succesDelete");
-		this.editing = false;
-	}
-
-	public void guardarVenta() {
-
-		selectedVenta.setUsuario(usuarioAutenticado.getUsuario());
-		if (editing && selectedVenta.getIdVenta() != null && selectedVenta.getIdVenta() > 0) {
-			Venta v = srvVenta.findById(selectedVenta.getIdVenta());
-			selectedVenta.getProducto().setStock(selectedVenta.getProducto().getStock() + v.getCantidad());
-			srvProducto.saveOrUpdate(selectedVenta.getProducto(), true);
-		}
-		selectedVenta = srvVenta.calcularVenta(selectedVenta);
-		selectedVenta = srvVenta.saveOrUpdate(selectedVenta, true);
-		selectedVenta = srvVenta.findById(selectedVenta.getIdVenta());
-		if (!editing) {
-			this.ventas.add(0, selectedVenta);
-		}
-		super.closeDialog("ventaDetailsDialog");
-		addInfo("ventas.succesNew");
-		String msjError = srvAlertaStock.comprobarAlerta(selectedVenta.getProducto());
-		if (msjError != null) {
-			updateComponent("panelTop");
-			addError(msjError, selectedVenta.getProducto().getNombre(),
-					selectedVenta.getProducto().getStock().toString(), selectedVenta.getProducto().getUnidad());
-		}
-		editing = false;
-	}
-
 	public boolean isEditing() {
 		return editing;
 	}
 
 	public void setEditing(boolean editing) {
 		this.editing = editing;
-	}
-
-	public Venta getVenta() {
-		return venta;
-	}
-
-	public void setVenta(Venta venta) {
-		this.venta = venta;
 	}
 
 	public Venta getSelectedVenta() {
@@ -223,14 +237,6 @@ public class VentasBean extends MasterBean {
 		this.usuarioAutenticado = usuarioAutenticado;
 	}
 
-	public List<Venta> getVentas() {
-		return ventas;
-	}
-
-	public void setVentas(List<Venta> ventas) {
-		this.ventas = ventas;
-	}
-
 	public List<Venta> getFilteredVentas() {
 		return filteredVentas;
 	}
@@ -239,11 +245,11 @@ public class VentasBean extends MasterBean {
 		this.filteredVentas = filteredVentas;
 	}
 
-	public List<Cliente> getClientes() {
+	public ClienteLazyDataModel getClientes() {
 		return clientes;
 	}
 
-	public void setClientes(List<Cliente> clientes) {
+	public void setClientes(ClienteLazyDataModel clientes) {
 		this.clientes = clientes;
 	}
 
@@ -277,6 +283,30 @@ public class VentasBean extends MasterBean {
 
 	public void setPdfOpt(PDFOptions pdfOpt) {
 		this.pdfOpt = pdfOpt;
+	}
+
+	public VentaSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(VentaSearchFilter ventaFilter) {
+		this.filtro = ventaFilter;
+	}
+
+	public VentaLazyDataModel getListaVentas() {
+		return listaVentas;
+	}
+
+	public void setListaVentas(VentaLazyDataModel listaVentas) {
+		this.listaVentas = listaVentas;
+	}
+
+	public ClienteSearchFilter getFiltroClientes() {
+		return filtroClientes;
+	}
+
+	public void setFiltroClientes(ClienteSearchFilter filtroClientes) {
+		this.filtroClientes = filtroClientes;
 	}
 
 }

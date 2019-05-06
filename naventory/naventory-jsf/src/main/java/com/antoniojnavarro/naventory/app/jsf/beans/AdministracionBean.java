@@ -29,8 +29,7 @@ public class AdministracionBean extends MasterBean {
 
 	// CAMPOS
 	// ENTITIES
-	@Autowired
-	private UsuarioAutenticado usuarioAutenticado;
+
 	// LISTAS
 	private List<Usuario> usuarios;
 	// Graficas
@@ -41,7 +40,7 @@ public class AdministracionBean extends MasterBean {
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+
 		logger.info("Administracion.init()");
 		cargarUsuarios();
 		crearGrafica();
@@ -55,7 +54,7 @@ public class AdministracionBean extends MasterBean {
 		graficaCrecimiento.getAxes().put(AxisType.X, new CategoryAxis("Años"));
 		Axis yAxis = graficaCrecimiento.getAxis(AxisType.Y);
 		yAxis.setLabel("Número de usuarios");
-		graficaCrecimiento.setAnimate(true);
+
 	}
 
 	private LineChartModel initGraficaModel() {
@@ -65,7 +64,7 @@ public class AdministracionBean extends MasterBean {
 
 		users.setLabel("Usuarios");
 		Object[] usersDB = this.srvUsuario.findUsersGrafica();
-		for (int i = 0; i <usersDB.length; i++) {
+		for (int i = 0; i < usersDB.length; i++) {
 			Object[] datos = (Object[]) usersDB[i];
 			users.set(datos[0].toString(), (Number) datos[1]);
 		}

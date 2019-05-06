@@ -7,7 +7,6 @@
 	<property name="logger.springframework.level" value="INFO" />
 	<property name="logger.hibernate.level" value="INFO" />
 	
-
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<Pattern>[%thread] %d{yyyy-MM-dd HH:mm:ss} %-5level %logger - %msg%n

@@ -1,5 +1,6 @@
 package com.antoniojnavarro.naventory.model.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,39 +26,39 @@ public class Proveedor implements GenericEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_prov")
 	private Integer idProv;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "email")
-	private Usuario usuario;
-
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "cif")
+	private Empresa empresa;
+	
 	@Column(name = "nombre", length = 255, nullable = true)
 	private String nombre;
 
-	@Column(name = "nombre_com", length = 255, nullable = true)
+	@Column(name = "nombre_com", length = 255, nullable = false)
 	private String nombreCom;
 
 	@Column(name = "direccion", length = 255, nullable = true)
 	private String direccion;
 
-	@Column(name = "ciudad", length = 255, nullable = true)
+	@Column(name = "ciudad", length = 255, nullable = false)
 	private String ciudad;
 
-	@Column(name = "provincia", length = 255, nullable = true)
+	@Column(name = "provincia", length = 255, nullable = false)
 	private String provincia;
 
-	@Column(name = "pais", length = 255, nullable = true)
+	@Column(name = "pais", length = 255, nullable = false)
 	private String pais;
 
-	@Column(name = "cp", nullable = true)
+	@Column(name = "cp", nullable = false)
 	private Integer cp;
-	
-	@Column(name = "tel1", nullable = true)
+
+	@Column(name = "tel1", nullable = false)
 	private Integer tel1;
-	
+
 	@Column(name = "tel2", nullable = true)
 	private Integer tel2;
-	
-	@Column(name = "correo", length = 255, nullable = true)
+
+	@Column(name = "correo", length = 255, nullable = false)
 	private String correo;
 
 	public Integer getIdProv() {
@@ -68,12 +69,12 @@ public class Proveedor implements GenericEntity {
 		this.idProv = idProv;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public String getNombre() {
@@ -240,6 +241,5 @@ public class Proveedor implements GenericEntity {
 			return false;
 		return true;
 	}
-
 
 }

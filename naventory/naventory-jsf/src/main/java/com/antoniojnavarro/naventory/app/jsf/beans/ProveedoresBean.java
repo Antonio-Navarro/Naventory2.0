@@ -19,8 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProveedorLazyDataModel;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
+import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Chunk;
@@ -46,31 +50,38 @@ public class ProveedoresBean extends MasterBean {
 	@Autowired
 	ParamBean paramBean;
 	private Proveedor proveedor;
-
 	private Proveedor selectedProveedor;
-	@Autowired
+	private ProveedorSearchFilter filtro;
 	private UsuarioAutenticado usuarioAutenticado;
+
 	// LISTAS
-	private List<Proveedor> proveedores;
+	private ProveedorLazyDataModel listaProveedores;
 	private List<Proveedor> filteredProveedores;
 	// SERVICIOS
 	@Autowired
 	private ServicioProveedor srvProveedor;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
-		cargarProveedores();
 		customizationOptions();
 	}
 
 	public void inicilizarAtributos() {
-		this.proveedores = null;
+		this.filtro = new ProveedorSearchFilter();
+		this.filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		this.listaProveedores = new ProveedorLazyDataModel(filtro, srvProveedor);
 		this.editing = false;
 		this.selectedProveedor = new Proveedor();
 		this.proveedor = new Proveedor();
+	}
+
+	public void buscar() {
+		this.listaProveedores = new ProveedorLazyDataModel(filtro, srvProveedor);
 	}
 
 	public void newProveedor() {
@@ -90,7 +101,6 @@ public class ProveedoresBean extends MasterBean {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("proveedorDetails.xhtml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -108,25 +118,17 @@ public class ProveedoresBean extends MasterBean {
 		this.selectedProveedor = null;
 	}
 
-	public void cargarProveedores() {
-		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
-	}
-
 	public void borrarProveedor(Proveedor proveedor) {
 
 		srvProveedor.delete(proveedor);
-		this.proveedores.remove(proveedor);
 		addInfo("proveedores.succesDelete");
 		this.editing = false;
 	}
 
 	public void guardarProveedor() {
 
-		selectedProveedor.setUsuario(usuarioAutenticado.getUsuario());
+		selectedProveedor.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		srvProveedor.saveOrUpdate(this.selectedProveedor, true);
-		if (!editing) {
-			this.proveedores.add(selectedProveedor);
-		}
 		super.closeDialog("proveedorDetailsDialog");
 		addInfo("proveedores.succesNew");
 		editing = false;
@@ -142,8 +144,8 @@ public class ProveedoresBean extends MasterBean {
 
 	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
 		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
 		pdf.open();
-		pdf.setPageSize(PageSize.A4);
 
 		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
 		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
@@ -167,20 +169,28 @@ public class ProveedoresBean extends MasterBean {
 		this.proveedor = proveedor;
 	}
 
+	public ProveedorSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(ProveedorSearchFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public ProveedorLazyDataModel getListaProveedores() {
+		return listaProveedores;
+	}
+
+	public void setListaProveedores(ProveedorLazyDataModel listaProveedores) {
+		this.listaProveedores = listaProveedores;
+	}
+
 	public Proveedor getSelectedProveedor() {
 		return selectedProveedor;
 	}
 
 	public void setSelectedProveedor(Proveedor selectedProveedor) {
 		this.selectedProveedor = selectedProveedor;
-	}
-
-	public List<Proveedor> getProveedores() {
-		return proveedores;
-	}
-
-	public void setProveedores(List<Proveedor> proveedores) {
-		this.proveedores = proveedores;
 	}
 
 	public boolean isEditing() {

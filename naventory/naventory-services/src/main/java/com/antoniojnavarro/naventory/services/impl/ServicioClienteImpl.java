@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.ClienteDao;
+import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
+import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
@@ -28,31 +29,26 @@ public class ServicioClienteImpl implements ServicioCliente {
 	@Autowired
 	private ServicioMensajesI18n srvMensajes;
 
-
 	@Autowired
 	private ClienteDao clienteDao;
-
+	@Autowired
+	private ServicioEmpresa srvEmpresa;
 
 	@Override
 	public Cliente findById(Integer id) throws ServicioException {
 		return this.clienteDao.findOne(id);
 	}
 
-
 	@Override
 	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return clienteDao.findBySearchFilter(searchFilter);
 	}
 
-
 	@Override
-	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter, String sortField,
-			SortOrderEnum sortOrder) throws ServicioException {
-		// TODO Auto-generated method stub
+	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
+			throws ServicioException {
 		return this.clienteDao.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
-
 
 	@Override
 	public PaginationResult<Cliente> findBySearchFilterPagination(ClienteSearchFilter searchFilter, int pageNumber,
@@ -60,21 +56,16 @@ public class ServicioClienteImpl implements ServicioCliente {
 		return this.clienteDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
-
 	@Override
 	public PaginationResult<Cliente> findBySearchFilterPagination(ClienteSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.clienteDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
-
 	@Override
 	public List<Cliente> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<Cliente>) this.clienteDao.findAll();
 	}
-
 
 	@Override
 	public boolean exists(Cliente entity) throws ServicioException {
@@ -86,23 +77,16 @@ public class ServicioClienteImpl implements ServicioCliente {
 		return existsById(entity.getIdCliente());
 	}
 
-
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.existsById(id);
 	}
 
-
 	@Override
 	public Cliente save(Cliente entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.clienteDao.save(entity);
 	}
 
-	@Autowired
-	private ServicioUsuario srvUsuario;
-	
 	@Override
 	public void validate(Cliente entity) throws ServicioException {
 		this.srvValidacion.isNull("Cliente", entity);
@@ -112,19 +96,19 @@ public class ServicioClienteImpl implements ServicioCliente {
 		this.srvValidacion.isNull("Ciudad", entity.getCiudad());
 		this.srvValidacion.isNull("Provincia", entity.getProvincia());
 		this.srvValidacion.isNull("País", entity.getPais());
-		this.srvValidacion.isNull("Código Postal",entity.getCp());
+		this.srvValidacion.isNull("Código Postal", entity.getCp());
 		this.srvValidacion.isNull("Télefono 1", entity.getTel1());
 		this.srvValidacion.isNull("Email", entity.getCorreo());
-
-		if(!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+		if (!this.srvEmpresa.existsEmpresaByCif(entity.getEmpresa().getCif())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("cif.noexist"));
 
 		}
-		
+
 	}
+
 	@Override
 	public Cliente saveOrUpdate(Cliente entity, boolean validate) throws ServicioException {
-		if(validate) {
+		if (validate) {
 			validate(entity);
 		}
 		return this.save(entity);
@@ -136,29 +120,25 @@ public class ServicioClienteImpl implements ServicioCliente {
 		this.clienteDao.delete(entity);
 	}
 
-
 	@Override
 	public void deleteRange(List<Cliente> entity) throws ServicioException {
-		throw new UnsupportedOperationException();		
+		throw new UnsupportedOperationException();
 	}
-
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
 		this.clienteDao.delete(id);
-		
+
 	}
 
+	@Override
+	public List<GraficaGenericDto> findClientesGrafica(String cif) {
+		return this.clienteDao.findClientesGrafica(cif);
+	}
 
 	@Override
-	public List<Cliente> findClientesByUsuario(Usuario user) throws ServicioException {
-		// TODO Auto-generated method stub
-		return this.clienteDao.findClientesByUsuario(user); 
+	public Long countByEmpresa(Empresa empresa) {
+		return this.clienteDao.countByEmpresa(empresa);
 	}
-	
-	@Override
-	public Object[]findClientesGrafica(String email){
-		return this.clienteDao.findClientesGrafica(email);
-	}
-	
+
 }

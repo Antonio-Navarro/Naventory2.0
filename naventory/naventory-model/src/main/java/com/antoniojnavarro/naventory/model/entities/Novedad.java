@@ -31,8 +31,8 @@ public class Novedad implements GenericEntity {
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "email")
-	private Usuario usuario;
+	@JoinColumn(name = "cif")
+	private Empresa empresa;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
@@ -49,12 +49,12 @@ public class Novedad implements GenericEntity {
 		this.id = id;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public Date getFecha() {

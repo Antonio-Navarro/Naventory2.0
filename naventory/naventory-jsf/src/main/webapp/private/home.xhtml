@@ -12,13 +12,16 @@
 	<ui:define name="head">
 	</ui:define>
 	<ui:define name="body">
+		<f:metadata>
+			<f:viewParam name="empresa" value="#{homeBean.empresa}" />
+		</f:metadata>
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Dashboard</h1>
 			</div>
 		</div>
 		<!-- top tiles -->
-		<div class="row top_tiles" id="panelTop">
+		<div class="row top_tiles">
 			<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 				<div class="panel panel-green">
 					<div class="panel-heading">
@@ -32,7 +35,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="/productos">
+					<a href="productos/productos.xhtml">
 						<div class="panel-footer">
 							<span class="pull-left">Ver detalles</span> <span
 								class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -54,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="/compras">
+					<a href="compras/compras.xhtml">
 						<div class="panel-footer">
 							<span class="pull-left">Ver detalles</span> <span
 								class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -76,7 +79,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="/ventas">
+					<a href="ventas/ventas.xhtml">
 						<div class="panel-footer">
 							<span class="pull-left">Ver detalles</span> <span
 								class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -98,7 +101,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="/clientes">
+					<a href="clientes/clientes.xhtml">
 						<div class="panel-footer">
 							<span class="pull-left">Ver detalles</span> <span
 								class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -113,7 +116,7 @@
 
 			<div class="col-lg-8 col-xs-12">
 				<p:panel id="panelClientesId"
-					header="Clientes diarios de #{homeBean.usuarioAuteticado.usuario.empresa}"
+					header="Clientes diarios de #{homeBean.usuarioAuteticado.usuario.empresa.nombre}"
 					toggleable="true" closable="true" toggleSpeed="500"
 					closeSpeed="500" widgetVar="panelClientes"
 					style="margin-bottom:20px">
@@ -135,7 +138,7 @@
 				</p:panel>
 
 				<p:panel id="panelVentasId"
-					header="Ventas mensuales de #{homeBean.usuarioAuteticado.usuario.empresa}"
+					header="Ventas mensuales de #{homeBean.usuarioAuteticado.usuario.empresa.nombre}"
 					toggleable="true" closable="true" toggleSpeed="500"
 					closeSpeed="500" widgetVar="panelVentas" style="margin-bottom:20px">
 					<h:panelGrid style="width:100%">
@@ -156,7 +159,7 @@
 				</p:panel>
 
 				<p:panel id="panelGastosIngresosId"
-					header="Ingresos y gastos mensuales - Beneficio actual: #{homeBean.beneficio} €"
+					header="Ingresos y gastos mensuales para #{homeBean.numMesesGastosIngresos} mes(es) - BENEFICIO: #{homeBean.beneficio} €"
 					toggleable="true" closable="true" toggleSpeed="500"
 					closeSpeed="500" widgetVar="panelGastosIngresos"
 					style="margin-bottom:20px">
@@ -168,8 +171,16 @@
 					<f:facet name="options">
 						<p:menu>
 							<p:submenu label="Acciones">
-								<p:menuitem value="Cambiar" url="#" icon="ui-icon-newwin"
-									onclick="PF('panelGastosIngresos').toggle()" />
+								<p:menuitem value="3 Meses" icon="fa fa-refresh"
+									update="panelGastosIngresosId"
+									actionListener="#{homeBean.actualizarBarGastosIngresos(3)}" />
+								<p:menuitem value="6 Meses" icon="fa fa-refresh"
+									update="panelGastosIngresosId"
+									actionListener="#{homeBean.actualizarBarGastosIngresos(6)}" />
+								<p:menuitem value="12 Meses" icon="fa fa-refresh"
+									update="panelGastosIngresosId"
+									actionListener="#{homeBean.actualizarBarGastosIngresos(12)}" />
+
 								<p:menuitem value="Eliminar" url="#" icon="ui-icon-close"
 									onclick="PF('panelGastosIngresos').close()" />
 							</p:submenu>
@@ -187,13 +198,12 @@
 					<div class="panel-body">
 						<div class="list-group">
 							<ui:repeat var="nov" value="#{homeBean.novedades}">
-								<a href="#" class="list-group-item"> <h:outputText
+								<a href="#" class="list-group-item tamNovedades"> <h:outputText
 										id="warningDose" escape="false" value="#{nov.novedad}"></h:outputText>
 
 								</a>
 							</ui:repeat>
 						</div>
-						<!-- 9/.list-group -->
 					</div>
 				</div>
 				<!-- /.panel-body -->
@@ -220,49 +230,6 @@
 					</f:facet>
 				</p:panel>
 
-			</div>
-			<div class="col-md-12">
-				<p:growl id="messages" showDetail="true" />
-
-				<h:panelGrid columnClasses="value">
-					<h3 style="margin-top: 0">Calendario</h3>
-					<p:schedule id="schedule" value="#{homeBean.eventModel}"
-						widgetVar="myschedule" >
-
-						<p:ajax event="dateSelect" listener="#{homeBean.onDateSelect}"
-							update="eventDetails" oncomplete="PF('eventDialog').show();" />
-						<p:ajax event="eventSelect" listener="#{homeBean.onEventSelect}"
-							update="eventDetails" oncomplete="PF('eventDialog').show();" />
-						<p:ajax event="eventMove" listener="#{homeBean.onEventMove}" />
-						<p:ajax event="eventResize" listener="#{homeBean.onEventResize}" />
-
-					</p:schedule>
-				</h:panelGrid>
-				<p:dialog widgetVar="eventDialog" header="Detalles: "
-					showEffect="clip" hideEffect="clip">
-					<h:panelGrid id="eventDetails" columns="2">
-						<p:outputLabel for="title" value="Título: " />
-						<p:inputText id="title" value="#{homeBean.event.title}"
-							required="true" />
-
-						<p:outputLabel for="from" value="Desde: " />
-						<p:calendar id="from" value="#{homeBean.event.startDate}"
-							pattern="dd/MM/yyyy HH:mm" />
-
-						<p:outputLabel for="to" value="Hasta:" />
-						<p:calendar id="to" value="#{homeBean.event.endDate}"
-							pattern="dd/MM/yyyy HH:mm" />
-
-						<p:outputLabel for="allDay" value="Todo el día:" />
-						<h:selectBooleanCheckbox id="allDay"
-							value="#{homeBean.event.allDay}" />
-
-						<p:commandButton type="reset" value="Reiniciar" />
-						<p:commandButton id="addButton" value="Guardar"
-							actionListener="#{homeBean.addEvent}"
-							oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-					</h:panelGrid>
-				</p:dialog>
 			</div>
 		</div>
 	</ui:define>

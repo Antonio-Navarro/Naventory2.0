@@ -15,26 +15,59 @@
 				value="#{msg['ventas.editarVenta']}"></h:outputText>
 			<h:outputText rendered="#{!ventasBean.editing}"
 				value="#{msg['ventas.titleNuevaVenta']}"></h:outputText>
-
 		</f:facet>
-		<p:messages id="messages" autoUpdate="true" escape="false"
-			closable="true" showSummary="true" showDetail="false"
-			globalOnly="true" />
-
 		<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
-			columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
+			id="panelGridVentas" columnClasses="ui-grid-col-3, ui-grid-col-9"
+			style="width: 100%;">
 
-
-			<p:outputLabel for="clienteSelect" value="#{msg['cliente']}" />
-			<p:selectOneMenu id="clienteSelect" filter="true" required="true"
-				converter="#{clienteConverter}"
-				requiredMessage="#{msg['ventas.cliente.required']}"
-				value="#{ventasBean.selectedVenta.cliente}"
-				style="min-width:100% !important;">
-				<f:selectItem itemLabel="Elige un cliente..." itemValue="#{null}" />
-				<f:selectItems value="#{ventasBean.clientes}" var="cliente"
-					itemLabel="#{cliente.nombre}" itemValue="#{cliente}" />
-			</p:selectOneMenu>
+			<p:outputLabel for="clienteSeleccionado" value="#{msg['cliente']}" />
+			<p:column style="display:inline-flex">
+				<div class="ui-inputgroup">
+					<p:inputText id="clienteSeleccionado" readonly="true"
+						required="true" style="height:30px;text-align:center"
+						requiredMessage="#{msg['ventas.cliente.required']}"
+						value="#{ventasBean.selectedVenta.cliente.nombre}" />
+					<p:commandButton id="buscarCliente" icon="fa fa-street-view"
+						styleClass="buttonOverlay" type="button" />
+					<h:inputHidden required="true" id="clienteSeleccionadoHidden"
+						requiredMessage="#{msg['ventas.cliente.required']}"
+						value="#{ventasBean.selectedVenta.cliente.nombre}">
+					</h:inputHidden>
+				</div>
+				<p:overlayPanel id="panelClientesOverlayId" for="buscarCliente"
+					onShow="PrimeFaces.focus('formApp:filtroNombre');"
+					hideEffect="fade" dismissable="true" showCloseIcon="true"
+					widgetVar="panelClientesOverlay" style="width:700px" modal="true">
+					<p:panel id="panelClienteFiltro">
+						<p:inputText id="filtroNombre" styleClass="inputFiltro"
+							placeholder="Nombre" value="#{ventasBean.filtroClientes.nombre}"
+							style="float:unset" />
+						<p:commandButton id="buscarTablaClientes" style="float:right"
+							onclick="pasarValorFiltro()" value="Buscar" immediate="true"
+							update="formApp:tablaClientesOverlay" />
+						<p:remoteCommand name="cargarClientesRC" immediate="true"
+							partialSubmit="panelClienteFiltro"
+							actionListener="#{ventasBean.cargarClientes}" />
+					</p:panel>
+					<p:dataTable var="cliente" id="tablaClientesOverlay"
+						style="margin-top:3px;" value="#{ventasBean.clientes}" rows="5"
+						lazy="true" paginator="true" paginatorPosition="top">
+						<f:facet name="header">Lista de Clientes</f:facet>
+						<p:column headerText="Nombre">
+							<h:outputText value="#{cliente.nombre}" />
+						</p:column>
+						<p:column style="text-align: center">
+							<p:commandButton update="formApp:clienteSeleccionado"
+								onblur="inyectaValorClienteEnHidden()" immediate="true"
+								oncomplete="PF('panelClientesOverlay').hide()"
+								icon="fa fa-hand-o-up" title="Seleccionar">
+								<f:setPropertyActionListener value="#{cliente}"
+									target="#{ventasBean.selectedVenta.cliente}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:overlayPanel>
+			</p:column>
 
 			<p:outputLabel for="productoSelect" value="#{msg['producto']}" />
 			<p:selectOneMenu id="productoSelect" filter="true" required="true"
@@ -47,20 +80,23 @@
 					itemLabel="#{producto.nombre}" itemValue="#{producto}" />
 			</p:selectOneMenu>
 
+
 			<p:outputLabel for="cantidadInput" value="#{msg['ventas.cantidad']}" />
-			<p:inputText id="cantidadInput" required="true"
+			<p:inputNumber id="cantidadInput" required="true"
+				inputStyle="text-align: center"
 				requiredMessage="#{msg['ventas.cantidad.required']}"
 				value="#{ventasBean.selectedVenta.cantidad}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" placeholder=""
-				style="font-family:Arial, FontAwesome; text-align:center"></p:inputText>
+				style="font-family:Arial, FontAwesome; text-align:center"></p:inputNumber>
 
 			<p:outputLabel for="ivaInput" value="#{msg['iva']}" />
-			<p:inputText id="ivaInput" value="#{ventasBean.selectedVenta.iva}"
-				maxlength="#{defaultMaxLengthDataBaseVarchar}"
+			<p:inputNumber id="ivaInput" value="#{ventasBean.selectedVenta.iva}"
+				inputStyle="text-align: center" symbol="%" symbolPosition="s"
+				maxlength="#{defaultMaxLengthDataBaseVarchar}" emptyValue="empty"
 				style="font-family:Arial, FontAwesome; text-align:center">
 				<p:watermark for="ivaInput" value="Por defecto se aplica el 21 %"
 					id="watermark" />
-			</p:inputText>
+			</p:inputNumber>
 			<p:outputLabel for="descInput" value="#{msg['ventas.desc']}" />
 			<p:inputText id="descInput"
 				value="#{ventasBean.selectedVenta.descripcion}"
@@ -69,23 +105,23 @@
 
 			<p:outputLabel for="descuentoInput"
 				value="#{msg['ventas.descuento']}" />
-			<p:inputText id="descuentoInput"
-				value="#{ventasBean.selectedVenta.descuento}"
+			<p:inputNumber id="descuentoInput" symbol="%" symbolPosition="s"
+				emptyValue="empty" value="#{ventasBean.selectedVenta.descuento}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
 				placeholder="Por defecto no se aplica ningún descuento. El descuento se realiza en porcentaje"
 				style="font-family:Arial, FontAwesome; text-align:center">
 				<p:watermark for="descuentoInput" style="font-size:10px"
 					value="El descuento se realiza en porcentaje" id="watermark2" />
-			</p:inputText>
+			</p:inputNumber>
 			<p:outputLabel for="formaPagoInput"
 				styleClass="label-warning formaPago" value="#{msg['formaDePago']}" />
-			<p:selectOneRadio id="formaPagoInput" required="true" requiredMessage="#{msg['ventas.formaPago.required']}"
+			<p:selectOneRadio id="formaPagoInput" required="true"
+				requiredMessage="#{msg['ventas.formaPago.required']}"
 				value="#{ventasBean.selectedVenta.formaPago}"
 				converter="#{formaPagoConverter}">
 				<f:selectItems value="#{ventasBean.formasPago}" var="formaPago"
 					itemLabel="#{formaPago.nombre}" itemValue="#{formaPago}" />
 			</p:selectOneRadio>
-
 		</p:panelGrid>
 		<f:facet name="footer">
 			<p:row>
@@ -93,10 +129,33 @@
 					<p:commandButton icon="fa fa-save"
 						styleClass="btn btn-lg btn-success btnAction"
 						title="#{msg['save']}" value="#{msg['ventas.crearVenta']}"
-						actionListener="#{ventasBean.guardarVenta}" update="formApp:ventaTable, panelTop" />
+						actionListener="#{ventasBean.guardarVenta}"
+						update="formApp:ventaTable, panelGridVentas" />
 				</div>
 			</p:row>
 		</f:facet>
 	</p:dialog>
-
+	<script type="text/javascript">
+		function inyectaValorClienteEnHidden() {
+			var valor = document.getElementById('formApp:clienteSeleccionado').value;
+			document.getElementById('formApp:clienteSeleccionadoHidden').value = valor;
+		}
+		function pasarValorFiltro() {
+			myJSValue = document.getElementById('formApp:filtroNombre').value;
+			console.log(myJSValue);
+			cargarClientesRC([ {
+				name : 'myJSValue',
+				value : myJSValue
+			} ]);
+		}
+		(function() {
+			document.getElementById('formApp:filtroNombre').value
+			var proxied = PrimeFaces.widget.OverlayPanel.prototype.applyFocus;
+			PrimeFaces.widget.OverlayPanel.prototype.applyFocus = function() {
+				if (this.id == "formApp:panelClientesOverlayId")
+					return;
+				return proxied.apply(this, arguments);
+			};
+		})();
+	</script>
 </ui:composition>

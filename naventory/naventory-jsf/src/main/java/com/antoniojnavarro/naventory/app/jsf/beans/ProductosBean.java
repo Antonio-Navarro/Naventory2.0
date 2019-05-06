@@ -2,6 +2,7 @@ package com.antoniojnavarro.naventory.app.jsf.beans;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -14,10 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProductoLazyDataModel;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProveedorLazyDataModel;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
+import com.antoniojnavarro.naventory.model.filters.ProductoSearchFilter;
+import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
@@ -37,15 +44,16 @@ public class ProductosBean extends MasterBean {
 	@Autowired
 	ParamBean paramBean;
 	private Producto producto;
-
+	private ProductoSearchFilter filtro;
 	private Producto selectedProducto;
-	@Autowired
+	private ProveedorSearchFilter filtroProveedores;
+
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Producto> productos;
-	private List<Producto> filteredProductos;
+	private ProductoLazyDataModel listaProductos;
+
 	private List<Categoria> categorias;
-	private List<Proveedor> proveedores;
+	private ProveedorLazyDataModel proveedores;
 
 	// SERVICIOS
 	@Autowired
@@ -54,28 +62,37 @@ public class ProductosBean extends MasterBean {
 	private ServicioCategoria srvCategoria;
 	@Autowired
 	private ServicioProveedor srvProveedor;
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
 
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
+
 		logger.info("Prooveedores.init()");
 		inicilizarAtributos();
-		cargarProductos();
 		cargarCategorias();
 		cargarProveedores();
 		cargarTotalInventario();
 	}
 
 	public void inicilizarAtributos() {
-		this.productos = null;
+
 		this.editing = false;
-		this.selectedProducto = new Producto();
+		iniciarSelectedProducto();
 		this.producto = new Producto();
+		this.filtro = new ProductoSearchFilter();
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		listaProductos = new ProductoLazyDataModel(filtro, srvProducto);
+	}
+
+	public void buscar() {
+		listaProductos = new ProductoLazyDataModel(filtro, srvProducto);
 	}
 
 	public void newProducto() {
 		this.editing = false;
-		this.selectedProducto = new Producto();
+		iniciarSelectedProducto();
 	}
 
 	public void editarProducto(Producto producto) {
@@ -105,29 +122,33 @@ public class ProductosBean extends MasterBean {
 	}
 
 	public void iniciarSelectedProducto() {
-		this.selectedProducto = null;
+		this.selectedProducto = new Producto();
+		this.selectedProducto.setProveedor(new Proveedor());
+		filtroProveedores = new ProveedorSearchFilter();
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 	}
 
 	public void cargarTotalInventario() {
-		this.totalInventario = srvProducto.getTotalInventario(this.usuarioAutenticado.getUsuario());
-	}
-
-	public void cargarProductos() {
-		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
+		this.totalInventario = srvProducto.getTotalInventario(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void cargarCategorias() {
-		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
+		this.categorias = srvCategoria.findCategoriasByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void cargarProveedores() {
-		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		@SuppressWarnings("rawtypes")
+		Map map = context.getExternalContext().getRequestParameterMap();
+		filtroProveedores.setNombre((String) map.get("myJSValue"));
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		this.proveedores = new ProveedorLazyDataModel(filtroProveedores, srvProveedor);
 	}
 
 	public void borrarProducto(Producto producto) {
 
 		srvProducto.delete(producto);
-		this.productos.remove(producto);
 		cargarTotalInventario();
 		addInfo("productos.succesDelete");
 		this.editing = false;
@@ -135,14 +156,11 @@ public class ProductosBean extends MasterBean {
 
 	public void guardarProducto() {
 
-		selectedProducto.setUsuario(usuarioAutenticado.getUsuario());
+		selectedProducto.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		if (!editing) {
 			srvProducto.validateSKU(selectedProducto.getSku());
 		}
 		srvProducto.saveOrUpdate(this.selectedProducto, true);
-		if (!editing) {
-			this.productos.add(selectedProducto);
-		}
 		cargarTotalInventario();
 		super.closeDialog("productoDetailsDialog");
 		addInfo("productos.succesNew");
@@ -165,28 +183,12 @@ public class ProductosBean extends MasterBean {
 		this.selectedProducto = selectedProducto;
 	}
 
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
-	}
-
 	public boolean isEditing() {
 		return editing;
 	}
 
 	public void setEditing(boolean editing) {
 		this.editing = editing;
-	}
-
-	public List<Producto> getFilteredProductos() {
-		return filteredProductos;
-	}
-
-	public void setFilteredProductos(List<Producto> filteredProductos) {
-		this.filteredProductos = filteredProductos;
 	}
 
 	public List<Categoria> getCategorias() {
@@ -197,11 +199,19 @@ public class ProductosBean extends MasterBean {
 		this.categorias = categorias;
 	}
 
-	public List<Proveedor> getProveedores() {
+	public ProveedorSearchFilter getFiltroProveedores() {
+		return filtroProveedores;
+	}
+
+	public void setFiltroProveedores(ProveedorSearchFilter filtroProveedores) {
+		this.filtroProveedores = filtroProveedores;
+	}
+
+	public ProveedorLazyDataModel getProveedores() {
 		return proveedores;
 	}
 
-	public void setProveedores(List<Proveedor> proveedores) {
+	public void setProveedores(ProveedorLazyDataModel proveedores) {
 		this.proveedores = proveedores;
 	}
 
@@ -211,6 +221,22 @@ public class ProductosBean extends MasterBean {
 
 	public void setTotalInventario(Float totalInventario) {
 		this.totalInventario = totalInventario;
+	}
+
+	public ProductoSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(ProductoSearchFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public ProductoLazyDataModel getListaProductos() {
+		return listaProductos;
+	}
+
+	public void setListaProductos(ProductoLazyDataModel listaProductos) {
+		this.listaProductos = listaProductos;
 	}
 
 }

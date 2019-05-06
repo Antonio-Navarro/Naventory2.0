@@ -208,6 +208,7 @@ function customExtender() {
 		background : '#FFF' // Set background to white
 	};
 }
+
 PrimeFaces.locales['es'] = {
 	closeText : 'Cerrar',
 	prevText : 'Anterior',
@@ -238,3 +239,12 @@ PrimeFaces.locales['es'] = {
 	day : 'Día',
 	allDayText : 'Todo el día'
 };
+function cerrarSesiones() {
+		deleteCookie("fblo_" + '1631200237143057'); // fblo_yourFBAppId.
+}
+
+function deleteCookie(name) {
+	document.cookie = name
+			+ '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	console.log("borrada");
+}

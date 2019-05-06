@@ -1,19 +1,30 @@
 package com.antoniojnavarro.naventory.model.entities;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.antoniojnavarro.naventory.model.commons.GenericEntity;
-
 
 @Entity
 @DynamicInsert
@@ -26,39 +37,45 @@ public class Usuario implements GenericEntity {
 	@Column(name = "email", length = 255, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 255, nullable = false)	
+	@Column(name = "password", length = 255, nullable = false)
 	private String password;
-	
+
 	@Column(name = "nombre", length = 255)
 	private String nombre;
 
 	@Column(name = "apellido", length = 255)
 	private String apellido;
-	
-	@Column(name = "empresa", length = 255)
-	private String empresa;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "fecha_alta", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable=false)
-	private Date fecha_alta;
 
-	@Column(name = "foto_perf", length = 255)
-	private String fotoPerf;
-	
-	@ColumnDefault("'Y'")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fecha_alta", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
+	private Date fechaAlta;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "foto_perf", length = 100000)
+	private byte[] fotoPerf;
+
 	@Column(name = "activo", length = 1)
 	private String activo;
-	
-	@ColumnDefault("'N'")
+
 	@Column(name = "administrador", length = 1)
 	private String administrador;
-	
+
 	@Column(name = "token", length = 255)
 	private String token;
-	
+
 	@Column(name = "token_pass", length = 255)
 	private String tokenPass;
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cif")
+	private Empresa empresa;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@Fetch(FetchMode.JOIN)
+	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "email"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private List<Role> roles;
+
 	public String getEmail() {
 		return email;
 	}
@@ -91,27 +108,12 @@ public class Usuario implements GenericEntity {
 		this.apellido = apellido;
 	}
 
-	public String getEmpresa() {
-		return empresa;
-	}
 
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
-	}
-
-	public Date getFecha_alta() {
-		return fecha_alta;
-	}
-
-	public void setFecha_alta(Date fecha_alta) {
-		this.fecha_alta = fecha_alta;
-	}
-
-	public String getFotoPerf() {
+	public byte[] getFotoPerf() {
 		return fotoPerf;
 	}
 
-	public void setFotoPerf(String fotoPerf) {
+	public void setFotoPerf(byte[] fotoPerf) {
 		this.fotoPerf = fotoPerf;
 	}
 
@@ -122,8 +124,6 @@ public class Usuario implements GenericEntity {
 	public void setActivo(String activo) {
 		this.activo = activo;
 	}
-
-
 
 	public String getAdministrador() {
 		return administrador;
@@ -153,6 +153,30 @@ public class Usuario implements GenericEntity {
 		return serialVersionUID;
 	}
 
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -161,11 +185,11 @@ public class Usuario implements GenericEntity {
 		result = prime * result + ((administrador == null) ? 0 : administrador.hashCode());
 		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((empresa == null) ? 0 : empresa.hashCode());
-		result = prime * result + ((fecha_alta == null) ? 0 : fecha_alta.hashCode());
-		result = prime * result + ((fotoPerf == null) ? 0 : fotoPerf.hashCode());
+		result = prime * result + ((fechaAlta == null) ? 0 : fechaAlta.hashCode());
+		result = prime * result + Arrays.hashCode(fotoPerf);
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
 		result = prime * result + ((tokenPass == null) ? 0 : tokenPass.hashCode());
 		return result;
@@ -200,20 +224,12 @@ public class Usuario implements GenericEntity {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (empresa == null) {
-			if (other.empresa != null)
+		if (fechaAlta == null) {
+			if (other.fechaAlta != null)
 				return false;
-		} else if (!empresa.equals(other.empresa))
+		} else if (!fechaAlta.equals(other.fechaAlta))
 			return false;
-		if (fecha_alta == null) {
-			if (other.fecha_alta != null)
-				return false;
-		} else if (!fecha_alta.equals(other.fecha_alta))
-			return false;
-		if (fotoPerf == null) {
-			if (other.fotoPerf != null)
-				return false;
-		} else if (!fotoPerf.equals(other.fotoPerf))
+		if (!Arrays.equals(fotoPerf, other.fotoPerf))
 			return false;
 		if (nombre == null) {
 			if (other.nombre != null)
@@ -224,6 +240,11 @@ public class Usuario implements GenericEntity {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
+			return false;
+		if (roles == null) {
+			if (other.roles != null)
+				return false;
+		} else if (!roles.equals(other.roles))
 			return false;
 		if (token == null) {
 			if (other.token != null)
@@ -237,7 +258,5 @@ public class Usuario implements GenericEntity {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

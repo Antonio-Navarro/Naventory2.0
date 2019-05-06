@@ -1,5 +1,8 @@
 package com.antoniojnavarro.naventory.services.api;
 
+import java.util.List;
+
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.UsuarioSearchFilter;
 import com.antoniojnavarro.naventory.services.commons.ServicioCrud;
@@ -16,4 +19,10 @@ public interface ServicioUsuario extends ServicioCrud<Usuario, UsuarioSearchFilt
 	Object[] findUsersGrafica();
 
 	void validateEmail(String email) throws ServicioException;
+
+	void validateAndEmailOpcional(Usuario entity, boolean validarEmail) throws ServicioException;
+
+	Usuario findUsuarioByEmailAndActivo(String email, String activo) throws ServicioException;
+
+	List<Usuario> findUsuarioByEmpresa(Empresa empresa) throws ServicioException;
 }

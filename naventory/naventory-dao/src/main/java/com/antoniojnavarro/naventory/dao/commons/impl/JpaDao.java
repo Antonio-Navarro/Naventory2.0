@@ -457,7 +457,7 @@ public class JpaDao<T extends GenericEntity, F extends SearchFilter, ID extends 
 							"El atributo jpqlWhereCondition de la anotacion @ManualWhere no puede ser una cadena vacia");
 				}
 				Method methodCheck = current.condition().getMethod(CHECK_METHOD_NAME, SearchFilter.class);
-				if ((boolean) methodCheck.invoke(current.condition().newInstance(), searchFilter)) {
+				if ((boolean) methodCheck.invoke(current.condition().getConstructor().newInstance(), searchFilter)) {
 					// De esta forma evitamos poner el WHERE 1=1
 					if (!addFirstWhere) {
 						queryString += " WHERE ";
@@ -493,7 +493,7 @@ public class JpaDao<T extends GenericEntity, F extends SearchFilter, ID extends 
 				// Si se cumple la condición se aplica el filtro IN
 				// hay que ejecutar el metodo correspondiente por reflexión
 				Method methodCheck = current.condition().getMethod(CHECK_METHOD_NAME, SearchFilter.class);
-				if ((boolean) methodCheck.invoke(current.condition().newInstance(), searchFilter)) {
+				if ((boolean) methodCheck.invoke(current.condition().getConstructor().newInstance(), searchFilter)) {
 					queryString += " AND ";
 					for (int j = 0; j < current.columns().length; ++j) {
 						currentNameColumn = current.columns()[j];

@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.component.export.ExcelOptions;
@@ -18,10 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.antoniojnavarro.naventory.app.commons.PFScope;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.CompraLazyDataModel;
+import com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProveedorLazyDataModel;
+import com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion;
+import com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
+import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
+import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioAlertaStock;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioCompra;
@@ -55,12 +63,14 @@ public class ComprasBean extends MasterBean {
 
 	private Compra selectedCompra;
 	private Producto selectedProducto;
-	@Autowired
+	private CompraSearchFilter filtro;
+	private ProveedorSearchFilter filtroProveedores;
+
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
-	private List<Compra> compras;
+	private CompraLazyDataModel listaCompras;
 	private List<Compra> filteredCompras;
-	private List<Proveedor> proveedores;
+	private ProveedorLazyDataModel proveedores;
 	private List<Producto> productos;
 	private List<Categoria> categorias;
 
@@ -76,12 +86,14 @@ public class ComprasBean extends MasterBean {
 	@Autowired
 	private ServicioAlertaStock srvAlertaStock;
 
+	@Autowired
+	private ServicioAutenticacion srvAutenticacion;
+
 	@PostConstruct
 	public void init() {
-		usuarioAutenticado.isLoged();
-		logger.info("Prooveedores.init()");
+		logger.info("Compras.init()");
+		this.usuarioAutenticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
 		inicilizarAtributos();
-		cargarCompras();
 		cargarProveedores();
 		cargarProductos();
 		cargarCategorias();
@@ -90,44 +102,53 @@ public class ComprasBean extends MasterBean {
 	}
 
 	public void inicilizarAtributos() {
-		this.compras = null;
 		this.editing = false;
-		this.selectedCompra = new Compra();
-		this.selectedProducto = new Producto();
+		this.filtro = new CompraSearchFilter();
+		filtro.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		this.listaCompras = new CompraLazyDataModel(filtro, srvCompra);
+		inicializarCompra();
 		this.compra = new Compra();
+	}
+
+	public void buscar() {
+		this.listaCompras = new CompraLazyDataModel(filtro, srvCompra);
+	}
+
+	public void inicializarCompra() {
+		this.selectedCompra = new Compra();
+		this.selectedCompra.setProveedor(new Proveedor());
+		this.selectedProducto = new Producto();
+		filtroProveedores = new ProveedorSearchFilter();
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
 	}
 
 	public void newCompra() {
 		this.editing = false;
-		this.selectedCompra = new Compra();
-		this.selectedProducto = new Producto();
-
+		inicializarCompra();
 	}
 
 	public void existeCompra() {
 		this.editing = false;
-		this.selectedCompra = new Compra();
+		inicializarCompra();
 
-	}
-
-	public void iniciarSelectedCompra() {
-		this.selectedCompra = null;
-	}
-
-	public void cargarCompras() {
-		this.compras = srvCompra.findComprasByUsuario(this.usuarioAutenticado.getUsuario());
 	}
 
 	public void cargarProveedores() {
-		this.proveedores = srvProveedor.findProveedoresByUsuario(this.usuarioAutenticado.getUsuario());
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		@SuppressWarnings("rawtypes")
+		Map map = context.getExternalContext().getRequestParameterMap();
+		filtroProveedores.setNombre((String) map.get("myJSValue"));
+		filtroProveedores.setEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa().getCif());
+		this.proveedores = new ProveedorLazyDataModel(filtroProveedores, srvProveedor);
 	}
 
 	public void cargarProductos() {
-		this.productos = srvProducto.findProductosByUsuario(this.usuarioAutenticado.getUsuario());
+		this.productos = srvProducto.findProductosByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void cargarCategorias() {
-		this.categorias = srvCategoria.findCategoriasByUsuario(this.usuarioAutenticado.getUsuario());
+		this.categorias = srvCategoria.findCategoriasByEmpresa(this.usuarioAutenticado.getUsuario().getEmpresa());
 	}
 
 	public void borrarCompra(Compra compra) {
@@ -141,18 +162,17 @@ public class ComprasBean extends MasterBean {
 
 		}
 		srvCompra.delete(compra);
-		this.compras.remove(compra);
 		addInfo("compras.succesDelete");
 		this.editing = false;
 	}
 
 	public void guardarCompra(Boolean nuevoProducto) {
 
-		selectedCompra.setUsuario(usuarioAutenticado.getUsuario());
+		selectedCompra.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 		if (nuevoProducto) {
 			selectedProducto.setProveedor(selectedCompra.getProveedor());
 			selectedProducto.setStock(selectedCompra.getCantidad());
-			selectedProducto.setUsuario(usuarioAutenticado.getUsuario());
+			selectedProducto.setEmpresa(usuarioAutenticado.getUsuario().getEmpresa());
 			selectedCompra.setProducto(selectedProducto);
 		}
 		if (selectedCompra.getIdCompra() != null && selectedCompra.getIdCompra() > 0) {
@@ -164,9 +184,6 @@ public class ComprasBean extends MasterBean {
 		selectedCompra = srvCompra.saveNewOrUpdate(selectedCompra, true, nuevoProducto);
 		selectedCompra = srvCompra.findById(selectedCompra.getIdCompra());
 
-		if (!editing) {
-			this.compras.add(0, selectedCompra);
-		}
 		if (!nuevoProducto)
 			super.closeDialog("compraExisteDetailsDialog");
 		else
@@ -180,7 +197,7 @@ public class ComprasBean extends MasterBean {
 
 	public String onFlowProcess(FlowEvent event) {
 		if (skip) {
-			skip = false; // reset in case user goes back
+			skip = false;
 			return "compraTab";
 		} else {
 			return event.getNewStep();
@@ -197,8 +214,8 @@ public class ComprasBean extends MasterBean {
 
 	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
 		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
 		pdf.open();
-		pdf.setPageSize(PageSize.A4);
 
 		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
 		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
@@ -238,22 +255,6 @@ public class ComprasBean extends MasterBean {
 		this.selectedCompra = selectedCompra;
 	}
 
-	public UsuarioAutenticado getUsuarioAutenticado() {
-		return usuarioAutenticado;
-	}
-
-	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
-		this.usuarioAutenticado = usuarioAutenticado;
-	}
-
-	public List<Compra> getCompras() {
-		return compras;
-	}
-
-	public void setCompras(List<Compra> compras) {
-		this.compras = compras;
-	}
-
 	public List<Compra> getFilteredCompras() {
 		return filteredCompras;
 	}
@@ -270,11 +271,19 @@ public class ComprasBean extends MasterBean {
 		this.productos = productos;
 	}
 
-	public List<Proveedor> getProveedores() {
+	public ProveedorSearchFilter getFiltroProveedores() {
+		return filtroProveedores;
+	}
+
+	public void setFiltroProveedores(ProveedorSearchFilter filtroProveedores) {
+		this.filtroProveedores = filtroProveedores;
+	}
+
+	public ProveedorLazyDataModel getProveedores() {
 		return proveedores;
 	}
 
-	public void setProveedores(List<Proveedor> proveedores) {
+	public void setProveedores(ProveedorLazyDataModel proveedores) {
 		this.proveedores = proveedores;
 	}
 
@@ -317,4 +326,29 @@ public class ComprasBean extends MasterBean {
 	public void setPdfOpt(PDFOptions pdfOpt) {
 		this.pdfOpt = pdfOpt;
 	}
+
+	public UsuarioAutenticado getUsuarioAutenticado() {
+		return usuarioAutenticado;
+	}
+
+	public void setUsuarioAutenticado(UsuarioAutenticado usuarioAutenticado) {
+		this.usuarioAutenticado = usuarioAutenticado;
+	}
+
+	public CompraSearchFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(CompraSearchFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public CompraLazyDataModel getListaCompras() {
+		return listaCompras;
+	}
+
+	public void setListaCompras(CompraLazyDataModel listaCompras) {
+		this.listaCompras = listaCompras;
+	}
+
 }

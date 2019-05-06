@@ -4,12 +4,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:fb="http://www.facebook.com/2008/fbml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="google-signin-client_id"
+		content="#{loginBean.googleProvider.appId}" />
 	<title>Naventory | Iniciar Sesión</title>
 	<link rel="icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/images/favicon.jpg" />
@@ -23,7 +26,7 @@
 	<meta name="_csrf_header" content="${_csrf.headerName}" />
 </h:head>
 
-<h:body styleClass="login">
+<h:body styleClass="login" onload="cambiarTextos()">
 	<div>
 		<a class="hiddenanchor" id="signup"></a><a class="hiddenanchor"
 			id="signin"></a>
@@ -35,11 +38,14 @@
 							styleClass="logon" />
 					</div>
 					<p:focus for="loginForm" />
+
 					<h:form id="loginForm">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-						<p:growl autoUpdate="true" escape="false" />
+						<p:growl escape="false">
+							<p:autoUpdate />
+						</p:growl>
 
 						<p:ajaxStatus onstart="PF('statusDialog').show()"
 							onsuccess="PF('statusDialog').hide()" />
@@ -47,7 +53,7 @@
 						<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 							closable="false" resizable="false" showHeader="false"
 							style="z-index: 1002;">
-							<p:graphicImage library="images" name="loading.gif" width="65" />
+							<p:graphicImage library="images" name="loading2.gif" width="65" />
 						</p:dialog>
 
 						<p:panel id="basic" header="#{msg['login.loginTitle']}">
@@ -77,14 +83,32 @@
 
 
 							<div>
-								<p:commandButton icon="fa fa-sign-in"
+								<p:commandButton icon="fa fa-sign-in" id="btnLogin"
 									value="#{msg['login.button.login']}" style="width:100%"
 									styleClass="btn btn-success" action="#{loginBean.login}" />
 							</div>
 							<div>
 								<p:commandButton icon="fa fa-share-alt" immediate="true"
 									value="#{msg['login.button.registrar']}" style="width:100%"
-									action="#{loginBean.irARegistro}" />
+									action="#{loginBean.irARegistro}" id="btnRegistro" />
+							</div>
+							<div class="separator">
+								<div id="googleDiv" class="g-signin2" onclick="ClickLogin()"
+									style="width: auto; height: 24px; visibility: hidden"
+									data-onsuccess="onSignIn" data-value="Iniciar"
+									data-longtitle="true" data-theme="dark"></div>
+								<p:remoteCommand name="passToJSFGoogle" process="@this"
+									partialSubmit="true" action="#{loginBean.loginGoogle}" />
+
+							</div>
+							<div style="margin-top: 3px">
+								<p:remoteCommand name="passToJSFacebook" process="@this"
+									partialSubmit="true" action="#{loginBean.loginFacebook}" />
+								<fb:login-button scope="public_profile,email" data-width="320px"
+									data-button-type="continue_with" style="width: 321px;"
+									onlogin="checkLoginState();" data-size="medium"
+									data-use-continue-as="true"></fb:login-button>
+
 							</div>
 						</p:panel>
 						<div class="clearfix"></div>
@@ -96,17 +120,87 @@
 									&#160;
 									<h:outputText value="#{msg['aplicacion.version']}" />
 								</h1>
+
 								<p>
 									&#169;
 									<h:outputText value="#{msg['login.right.reserved']}" />
+
 								</p>
+								<span>Desarrollado por <b><a
+										href="mailto:anavarrodelamor@gmail.com">Antonio J Navarro</a></b></span>
 							</div>
 						</div>
 					</h:form>
+
+
 				</section>
 			</div>
+
 		</div>
+
 	</div>
 
 </h:body>
+<script>
+	function checkLoginState() {
+		console.log('checkLoginState');
+
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	}
+	function statusChangeCallback(response) {
+		console.log(response);
+		passToJSFacebook([ {
+			name : 'respuestaFacebook',
+			value : response.authResponse.accessToken
+		} ]);
+	}
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : #{loginBean.facebookProvider.appId},
+			cookie : false,
+			xfbml : true,
+			version : 'v3.1'
+		});
+
+		FB.AppEvents.logPageView();
+
+	};
+
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {
+			return;
+		}
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "https://connect.facebook.net/es_ES/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+	//IMPLEMENTACIÓN LOGIN GOOGLE
+	var clicked = false;//Global Variable
+	function ClickLogin() {
+		clicked = true;
+	}
+	function onSignIn(googleUser) {
+		if (clicked) {
+			var id_token = googleUser.getAuthResponse().id_token;
+			passToJSFGoogle([ {
+				name : 'respuestaGoogle',
+				value : id_token
+			} ]);
+		}
+	}
+	function cambiarTextos(){
+		$("*[id^=connected]")[0].innerText = "Continuar con Google";
+		$("*[id^=not_signed_]")[0].innerText = "Iniciar con Google";
+		$("*[id^=not_signed_]")[0].innerText = "Iniciar con Google";
+		$("#googleDiv").css("visibility","visible")
+		
+	}
+</script>
+<script src="https://apis.google.com/js/platform.js"></script>
+
 </html>

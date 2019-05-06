@@ -3,16 +3,17 @@ package com.antoniojnavarro.naventory.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.NovedadDao;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Novedad;
-import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.NovedadSearchFilter;
+import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioNovedad;
-import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMail;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
@@ -32,6 +33,8 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 	ServicioMail srvMail;
 	@Autowired
 	private NovedadDao novedadDao;
+	@Autowired
+	private ServicioEmpresa srvEmpresa;
 
 	@Override
 	public Novedad findById(Integer id) throws ServicioException {
@@ -92,14 +95,11 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 		return this.novedadDao.save(entity);
 	}
 
-	@Autowired
-	private ServicioUsuario srvUsuario;
-
 	@Override
 	public void validate(Novedad entity) throws ServicioException {
 		this.srvValidacion.isNull("Novedad", entity);
-		if (!this.srvUsuario.existsUsuarioByEmail(entity.getUsuario().getEmail())) {
-			throw new ServicioException(srvMensajes.getMensajeI18n("categorias.email.exist"));
+		if (!this.srvEmpresa.existsEmpresaByCif(entity.getEmpresa().getCif())) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("cif.noexist"));
 
 		}
 
@@ -131,11 +131,10 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 	}
 
 	@Override
-	public List<Novedad> findNovedadesByUsuario(Usuario user, Integer limit) throws ServicioException {
-		// TODO Auto-generated method stub
-		List<Novedad> lista = this.novedadDao.findNovedadesByUsuario(user);
+	public List<Novedad> findNovedadesByEmpresa(Empresa empresa, Integer limit) throws ServicioException {
+		List<Novedad> lista = this.novedadDao.findNovedadesByEmpresa(empresa, new PageRequest(0, limit));
 
-		return lista.subList(0, (lista.size() <= limit) ? lista.size() : limit);
+		return lista;
 	}
 
 }

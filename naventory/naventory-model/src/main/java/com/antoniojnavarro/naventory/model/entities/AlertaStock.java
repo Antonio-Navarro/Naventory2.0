@@ -1,5 +1,6 @@
 package com.antoniojnavarro.naventory.model.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,9 +27,10 @@ public class AlertaStock implements GenericEntity {
 	@Column(name = "id_alerta")
 	private Integer idAlerta;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "email")
-	private Usuario usuario;
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@JoinColumn(name = "cif")
+	private Empresa empresa;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sku")
@@ -42,12 +44,13 @@ public class AlertaStock implements GenericEntity {
 		this.idAlerta = idAlerta;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public Producto getProducto() {

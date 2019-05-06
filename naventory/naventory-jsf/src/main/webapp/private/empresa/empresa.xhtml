@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="../../WEB-INF/templates/templateApp.xhtml">
+	<ui:define name="title">
+		<title>Empresa | Naventory</title>
+	</ui:define>
+	<ui:define name="body">
+		<div class="row">
+			<div class="col-md-4" style="color: #232323">
+				<h3>
+					<p:outputLabel id="idEmptyLabel">
+						<i class="fa fa-industry fa-fw" />		#{msg['empresa.title']} - #{templateAppBean.usuarioAutenticado.usuario.empresa.nombre}
+		</p:outputLabel>
+				</h3>
+			</div>
+		</div>
+		<div class="separator"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12">
+						<p:commandButton value="#{msg['empresa.invitacion']}"
+							actionListener="#{empresaBean.newCorreo}" type="button"
+							update="formApp:dialogInvitacion"
+							onclick="PF('nuevoUser').show();" />
+
+						<p:dialog header="#{msg['empresa.invitacion.nuevo']}"
+							id="dialogInvitacion" widgetVar="nuevoUser" showEffect="fade"
+							hideEffect="fade" height="150px" modal="true" width="300px">
+							<div class="ui-inputgroup inputUser">
+								<span class="ui-inputgroup-addon iconForm"><i
+									class="fa fa-envelope-o"></i></span>
+								<p:inputText value="#{empresaBean.emailInvitacion}"
+									styleClass="form-control" placeholder="#{msg['e-mail']}"
+									style="text-align:center" required="true"
+									requiredMessage="#{msg['empresa.email.req']}" maxlength="255"
+									validatorMessage="El email no es correcto">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</p:inputText>
+							</div>
+							<hr />
+							<p:commandButton icon="fa fa-paper-plane-o"
+								value="#{msg['empresa.enviar']}" style="width:100%"
+								styleClass="btn btn-success" resetValues="true"
+								oncomplete="PF('nuevoUser').hide();" update="dialogInvitacion"
+								action="#{empresaBean.enviarCorreo}" />
+						</p:dialog>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 1%;">
+					<div class="col-md-12">
+						<p:dataTable id="userTable" var="user"
+							value="#{empresaBean.usuarios}" paginator="true" rowHover="true"
+							rows="#{defaultPaginatorRows}" reflow="true" rowIndexVar="cont"
+							paginatorPosition="bottom" lazy="false"
+							rowsPerPageTemplate="#{defaultRowsPerTemplate}"
+							emptyMessage="#{msg['noresult']}">
+
+							<f:facet name="footer">
+								<div class="text-left">
+									<h:outputFormat value="#{msg['numResult']}">
+										<f:param value="#{fn:length(empresaBean.usuarios)}"></f:param>
+									</h:outputFormat>
+								</div>
+							</f:facet>
+							<p:column headerText="" style="width:5%;text-align:center">
+								<h:outputText value="#{cont}" />
+							</p:column>
+							<p:column sortBy="#{user.nombre}" filterBy="#{user.nombre}"
+								style="width:12%" filterMatchMode="contains"
+								headerText="#{msg['users.datatable.header.nombre']}">
+								<h:outputText value="#{user.nombre}" />
+							</p:column>
+							<p:column sortBy="#{user.apellido}" filterBy="#{user.apellido}"
+								filterMatchMode="contains" style="width:16%"
+								headerText="#{msg['users.datatable.header.apellidos']}">
+								<h:outputText value="#{user.apellido}" />
+							</p:column>
+							<p:column sortBy="#{user.email}" filterBy="#{user.email}"
+								filterMatchMode="contains" style="width:20%"
+								headerText="#{msg['users.datatable.header.email']}">
+								<h:outputText value="#{user.email}" />
+							</p:column>
+							<p:column sortBy="#{user.activo}"
+								style="width:10%;text-align:center"
+								headerText="#{msg['users.datatable.header.activo']}">
+								<p:outputLabel value="Sí" rendered="#{user.activo eq 'Y'}"></p:outputLabel>
+								<p:outputLabel value="No"
+									rendered="#{user.activo eq 'N' || user.activo eq null }"></p:outputLabel>
+							</p:column>
+							<p:column width="15%" style="text-align:center"
+								headerText="#{msg['users.datatable.header.opciones']}">
+								<p:commandLink title="Bloquear" styleClass="bloquear"
+									id="fadeBloquear"
+									actionListener="#{empresaBean.cambiarEstadoActivo(user)}"
+									update="userTable" rendered="#{user.activo eq 'Y'}">
+									<i class="fa fa-unlock fa-fw " style="color: grey;"></i>
+									<p:tooltip id="toolTipFade" for="fadeBloquear"
+										value="Bloquear usuario" position="top" />
+								</p:commandLink>
+								<p:commandLink title="Bloquear" styleClass="bloquear"
+									actionListener="#{empresaBean.cambiarEstadoActivo(user)}"
+									id="fadeDesbloquear" update="userTable"
+									rendered="#{user.activo eq 'N' || user.activo eq null}">
+									<i class="fa fa-lock fa-fw " style="color: grey;"></i>
+									<p:tooltip id="toolTipFade2" for="fadeDesbloquear"
+										value="Desbloquear usuario" position="top" />
+								</p:commandLink>
+
+								<p:commandLink styleClass="bloquear" id="fadeBorrar"
+									actionListener="#{empresaBean.borrarUsuario(user)}"
+									update="userTable">
+									<p:confirm header="#{msg['needConfirmation']}"
+										message="#{msg['areyousure']}" icon="fa fa-warning" />
+									<i class="fa fa-trash fa-fw " style="color: red;"></i>
+									<p:tooltip id="toolTipFade5" for="fadeBorrar"
+										value="Borrar usuario" position="top" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

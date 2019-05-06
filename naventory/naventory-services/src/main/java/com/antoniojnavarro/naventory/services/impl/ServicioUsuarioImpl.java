@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.dao.repositories.UsuarioDao;
+import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.UsuarioSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
@@ -25,7 +26,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	@Autowired
 	private ServicioMensajesI18n srvMensajes;
-
 
 	@Autowired
 	private UsuarioDao usuarioDao;
@@ -85,7 +85,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		return this.usuarioDao.save(entity);
 	}
 
-
 	@Override
 	public void delete(Usuario entity) throws ServicioException {
 		this.usuarioDao.delete(entity);
@@ -113,21 +112,28 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public boolean existsUsuarioByEmail(String email) throws ServicioException {
 		return this.usuarioDao.existsUsuarioByEmail(email);
 	}
-	
+
 	@Override
 	public void validate(Usuario entity) throws ServicioException {
+		validateAndEmailOpcional(entity, true);
+	}
+
+	@Override
+	public void validateAndEmailOpcional(Usuario entity, boolean validarEmail) throws ServicioException {
 		this.srvValidacion.isNull("Usuario", entity);
 		this.srvValidacion.isNull("Nombre", entity.getNombre());
 		this.srvValidacion.isNull("Apellidos", entity.getApellido());
 		this.srvValidacion.isNull("Email", entity.getEmail());
 		this.srvValidacion.isNull("Contraseña", entity.getPassword());
 		this.srvValidacion.isNull("Empresa", entity.getEmpresa());
-		validateEmail(entity.getEmail());
+		if (validarEmail) {
+			validateEmail(entity.getEmail());
+		}
 	}
 
 	@Override
 	public Usuario saveOrUpdate(Usuario entity, boolean validate) throws ServicioException {
-		if(validate) {
+		if (validate) {
 			validate(entity);
 		}
 		return this.save(entity);
@@ -136,18 +142,28 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public Usuario findUsuarioByEmailAndPassword(String email, String pass) throws ServicioException {
 
-		return this.usuarioDao.findUsuarioByEmailAndPassword(email,pass);
+		return this.usuarioDao.findUsuarioByEmailAndPassword(email, pass);
 	}
-	
-	public Object[]findUsersGrafica(){
+
+	@Override
+	public Usuario findUsuarioByEmailAndActivo(String email, String activo) throws ServicioException {
+
+		return this.usuarioDao.findUsuarioByEmailAndActivo(email, activo);
+	}
+
+	@Override
+	public List<Usuario> findUsuarioByEmpresa(Empresa empresa) throws ServicioException {
+		return (List<Usuario>) this.usuarioDao.findUsuarioByEmpresa(empresa);
+	}
+
+	public Object[] findUsersGrafica() {
 		return this.usuarioDao.findUsersGrafica();
 	}
+
 	@Override
-	public void validateEmail(String email)  throws ServicioException {
-		if(existsUsuarioByEmail(email)){			
-			throw new ServicioException(srvMensajes.getMensajeI18n("register.email.exist"));			
+	public void validateEmail(String email) throws ServicioException {
+		if (existsUsuarioByEmail(email)) {
+			throw new ServicioException(srvMensajes.getMensajeI18n("register.email.exist"));
 		}
 	}
-
-
 }
