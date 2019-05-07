@@ -41,9 +41,6 @@ import com.antoniojnavarro.naventory.services.commons.ServicioMail;
 @Service
 public class BaseProvider implements Serializable {
 
-	/**
-		 * 
-		 */
 	private static final long serialVersionUID = 1L;
 
 	private String passwordGenerada;
@@ -97,9 +94,7 @@ public class BaseProvider implements Serializable {
 			String body = "";
 			body = "<center><img src='http://naventory.cerrajerianavarro.es/assets/img/logofinal.jpg'></center><hr/><br> Hola "
 					+ this.usuario.getNombre() + ", te damos la bienvenida a Naventory!!<br>";
-			body += "<h3 style='color:red'>Se ha registrado correctamente en Naventory V2</h3> <br><br>";
-			body += "Su contraseña para acceder a través del formulario de inicio de sesión es: <b>" + passwordGenerada
-					+ "<br/>Válida hasta el próximo inicio de sesión con una red social. </b>";
+			body += "<h3 style='color:red'>Se ha iniciado sesión correctamente en Naventory V2</h3>";
 			ArrayList<String> usuarios = new ArrayList<String>();
 			usuarios.add(usuario.getEmail());
 			this.srvMail.sendEmail(usuarios, "Registro de usuario", body);
