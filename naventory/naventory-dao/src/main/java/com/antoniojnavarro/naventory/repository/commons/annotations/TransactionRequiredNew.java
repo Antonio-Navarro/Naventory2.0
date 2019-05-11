@@ -1,4 +1,4 @@
-package com.antoniojnavarro.naventory.dao.commons.annotations;
+package com.antoniojnavarro.naventory.repository.commons.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD })
-public @interface TransactionNever {
+public @interface TransactionRequiredNew {
 
 }

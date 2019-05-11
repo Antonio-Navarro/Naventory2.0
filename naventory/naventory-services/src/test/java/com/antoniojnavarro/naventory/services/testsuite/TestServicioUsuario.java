@@ -14,9 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.antoniojnavarro.naventory.dao.repositories.UsuarioDao;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
+import com.antoniojnavarro.naventory.repository.repositories.UsuarioRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.impl.ServicioUsuarioImpl;
 
@@ -27,7 +27,7 @@ public class TestServicioUsuario {
 	ServicioUsuario srvUsuario = new ServicioUsuarioImpl();
 
 	@Mock
-	UsuarioDao dao;
+	UsuarioRepository repo;
 
 	@Test
 	public void findAllTest() {
@@ -56,13 +56,13 @@ public class TestServicioUsuario {
 		list.add(u1);
 		list.add(u2);
 
-		when(dao.findAll()).thenReturn(list);
+		when(repo.findAll()).thenReturn(list);
 
 		// test
 		List<Usuario> usuarioList = srvUsuario.findAll();
 
 		assertEquals(2, usuarioList.size());
-		verify(dao, times(1)).findAll();
+		verify(repo, times(1)).findAll();
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class TestServicioUsuario {
 		u1.setPassword("testing");
 		
 		srvUsuario.saveOrUpdate(u1, false);
-		verify(dao, times(1)).save(u1);
+		verify(repo, times(1)).save(u1);
 	}
 
 }

@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.CategoriaDao;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.CategoriaSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.CategoriaRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
@@ -31,39 +31,39 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 	private ServicioMensajesI18n srvMensajes;
 
 	@Autowired
-	private CategoriaDao categoriaDao;
+	private CategoriaRepository categoriaRepository;
 
 	@Override
 	public Categoria findById(Integer id) throws ServicioException {
-		return this.categoriaDao.findOne(id);
+		return this.categoriaRepository.findOne(id);
 	}
 
 	@Override
 	public List<Categoria> findBySearchFilter(CategoriaSearchFilter searchFilter) throws ServicioException {
-		return categoriaDao.findBySearchFilter(searchFilter);
+		return categoriaRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Categoria> findBySearchFilter(CategoriaSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
-		return this.categoriaDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.categoriaRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Categoria> findBySearchFilterPagination(CategoriaSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.categoriaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.categoriaRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Categoria> findBySearchFilterPagination(CategoriaSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		return this.categoriaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.categoriaRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Categoria> findAll() throws ServicioException {
-		return (List<Categoria>) this.categoriaDao.findAll();
+		return (List<Categoria>) this.categoriaRepository.findAll();
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 
 	@Override
 	public Categoria save(Categoria entity) throws ServicioException {
-		return this.categoriaDao.save(entity);
+		return this.categoriaRepository.save(entity);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 	@Override
 	public void delete(Categoria entity) throws ServicioException {
 
-		this.categoriaDao.delete(entity);
+		this.categoriaRepository.delete(entity);
 	}
 
 	@Override
@@ -118,12 +118,12 @@ public class ServicioCategoriaImpl implements ServicioCategoria {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.categoriaDao.delete(id);
+		this.categoriaRepository.delete(id);
 
 	}
 
 	@Override
 	public List<Categoria> findCategoriasByEmpresa(Empresa empresa) throws ServicioException {
-		return this.categoriaDao.findCategoriasByEmpresa(empresa);
+		return this.categoriaRepository.findCategoriasByEmpresa(empresa);
 	}
 }

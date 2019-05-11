@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.ProveedorDao;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Proveedor;
 import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.ProveedorRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
@@ -30,43 +30,43 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 	private ServicioMensajesI18n srvMensajes;
 
 	@Autowired
-	private ProveedorDao proveedorDao;
+	private ProveedorRepository proveedorRepository;
 
 	@Override
 	public Proveedor findById(Integer id) throws ServicioException {
-		return this.proveedorDao.findOne(id);
+		return this.proveedorRepository.findOne(id);
 	}
 
 	@Override
 	public List<Proveedor> findBySearchFilter(ProveedorSearchFilter searchFilter) throws ServicioException {
 		// TODO Auto-generated method stub
-		return proveedorDao.findBySearchFilter(searchFilter);
+		return proveedorRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Proveedor> findBySearchFilter(ProveedorSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.proveedorDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.proveedorRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Proveedor> findBySearchFilterPagination(ProveedorSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.proveedorDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.proveedorRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Proveedor> findBySearchFilterPagination(ProveedorSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.proveedorDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.proveedorRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Proveedor> findAll() throws ServicioException {
 		// TODO Auto-generated method stub
-		return (List<Proveedor>) this.proveedorDao.findAll();
+		return (List<Proveedor>) this.proveedorRepository.findAll();
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 	@Override
 	public Proveedor save(Proveedor entity) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.proveedorDao.save(entity);
+		return this.proveedorRepository.save(entity);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 	@Override
 	public void delete(Proveedor entity) throws ServicioException {
 
-		this.proveedorDao.delete(entity);
+		this.proveedorRepository.delete(entity);
 	}
 
 	@Override
@@ -131,12 +131,12 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.proveedorDao.delete(id);
+		this.proveedorRepository.delete(id);
 
 	}
 
 	@Override
 	public List<Proveedor> findProveedoresByEmpresa(Empresa empresa) throws ServicioException {
-		return this.proveedorDao.findProveedoresByEmpresa(empresa);
+		return this.proveedorRepository.findProveedoresByEmpresa(empresa);
 	}
 }

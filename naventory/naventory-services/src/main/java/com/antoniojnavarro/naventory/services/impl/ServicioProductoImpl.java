@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Producto;
 import com.antoniojnavarro.naventory.model.filters.ProductoSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.ProductoRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
@@ -31,39 +31,39 @@ public class ServicioProductoImpl implements ServicioProducto {
 	private ServicioMensajesI18n srvMensajes;
 
 	@Autowired
-	private ProductoDao productoDao;
+	private ProductoRepository productoRepository;
 
 	@Override
 	public Producto findById(String id) throws ServicioException {
-		return this.productoDao.findOne(id);
+		return this.productoRepository.findOne(id);
 	}
 
 	@Override
 	public List<Producto> findBySearchFilter(ProductoSearchFilter searchFilter) throws ServicioException {
-		return productoDao.findBySearchFilter(searchFilter);
+		return productoRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Producto> findBySearchFilter(ProductoSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
-		return this.productoDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.productoRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Producto> findBySearchFilterPagination(ProductoSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.productoDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.productoRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Producto> findBySearchFilterPagination(ProductoSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		return this.productoDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.productoRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Producto> findAll() throws ServicioException {
-		return (List<Producto>) this.productoDao.findAll();
+		return (List<Producto>) this.productoRepository.findAll();
 	}
 
 	@Override
@@ -79,13 +79,13 @@ public class ServicioProductoImpl implements ServicioProducto {
 	@Override
 	public boolean existsById(String id) throws ServicioException {
 		// TODO Auto-generated method stub
-		return productoDao.exists(id);
+		return productoRepository.exists(id);
 	}
 
 	@Override
 	public Producto save(Producto entity) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.productoDao.save(entity);
+		return this.productoRepository.save(entity);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class ServicioProductoImpl implements ServicioProducto {
 	@Override
 	public void delete(Producto entity) throws ServicioException {
 
-		this.productoDao.delete(entity);
+		this.productoRepository.delete(entity);
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class ServicioProductoImpl implements ServicioProducto {
 
 	@Override
 	public void deleteById(String id) throws ServicioException {
-		this.productoDao.delete(id);
+		this.productoRepository.delete(id);
 
 	}
 
@@ -143,16 +143,16 @@ public class ServicioProductoImpl implements ServicioProducto {
 
 	@Override
 	public List<Producto> findProductosByEmpresa(Empresa empresa) throws ServicioException {
-		return this.productoDao.findProductosByEmpresa(empresa);
+		return this.productoRepository.findProductosByEmpresa(empresa);
 	}
 
 	@Override
 	public Float getTotalInventario(Empresa empresa) throws ServicioException {
-		return this.productoDao.getTotalInventario(empresa);
+		return this.productoRepository.getTotalInventario(empresa);
 	}
 
 	@Override
 	public Long countByEmpresa(Empresa empresa) {
-		return this.productoDao.countByEmpresa(empresa);
+		return this.productoRepository.countByEmpresa(empresa);
 	}
 }

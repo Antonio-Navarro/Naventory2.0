@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.FormaPagoDao;
 import com.antoniojnavarro.naventory.model.entities.FormaPago;
 import com.antoniojnavarro.naventory.model.filters.FormaPagoSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.FormaPagoRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioFormaPago;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
@@ -23,19 +23,19 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 	private ServicioValidacion srvValidacion;
 
 	@Autowired
-	private FormaPagoDao formaPagoDao;
+	private FormaPagoRepository formaPagoRepository;
 
 
 	@Override
 	public FormaPago findById(Integer id) throws ServicioException {
-		return this.formaPagoDao.findOne(id);
+		return this.formaPagoRepository.findOne(id);
 	}
 
 
 	@Override
 	public List<FormaPago> findBySearchFilter(FormaPagoSearchFilter searchFilter) throws ServicioException {
 		// TODO Auto-generated method stub
-		return formaPagoDao.findBySearchFilter(searchFilter);
+		return formaPagoRepository.findBySearchFilter(searchFilter);
 	}
 
 
@@ -43,14 +43,14 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 	public List<FormaPago> findBySearchFilter(FormaPagoSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.formaPagoDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.formaPagoRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 
 	@Override
 	public PaginationResult<FormaPago> findBySearchFilterPagination(FormaPagoSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.formaPagoDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.formaPagoRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 
@@ -58,14 +58,14 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 	public PaginationResult<FormaPago> findBySearchFilterPagination(FormaPagoSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.formaPagoDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.formaPagoRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 
 	@Override
 	public List<FormaPago> findAll() throws ServicioException {
 		// TODO Auto-generated method stub
-		return (List<FormaPago>) this.formaPagoDao.findAll();
+		return (List<FormaPago>) this.formaPagoRepository.findAll();
 	}
 
 
@@ -90,7 +90,7 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 	@Override
 	public FormaPago save(FormaPago entity) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.formaPagoDao.save(entity);
+		return this.formaPagoRepository.save(entity);
 	}
 
 	
@@ -110,7 +110,7 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 	@Override
 	public void delete(FormaPago entity) throws ServicioException {
 
-		this.formaPagoDao.delete(entity);
+		this.formaPagoRepository.delete(entity);
 	}
 
 
@@ -122,7 +122,7 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.formaPagoDao.delete(id);
+		this.formaPagoRepository.delete(id);
 		
 	}
 
@@ -130,6 +130,6 @@ public class ServicioFormaPagoImpl implements ServicioFormaPago {
 	@Override
 	public List<FormaPago> findFormasPagoByUsuario() throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.formaPagoDao.findFormasPagoByUsuario(); 
+		return this.formaPagoRepository.findFormasPagoByUsuario(); 
 	}
 }

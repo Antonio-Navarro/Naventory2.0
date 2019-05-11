@@ -14,9 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.antoniojnavarro.naventory.dao.repositories.ClienteDao;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
+import com.antoniojnavarro.naventory.repository.repositories.ClienteRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 import com.antoniojnavarro.naventory.services.impl.ServicioClienteImpl;
 
@@ -27,7 +27,7 @@ public class TestServicioCliente {
 	ServicioCliente srvCliente = new ServicioClienteImpl();
 
 	@Mock
-	ClienteDao dao;
+	ClienteRepository repo;
 
 	@Test
 	public void findAllTest() {
@@ -80,13 +80,13 @@ public class TestServicioCliente {
 		list.add(c2);
 		list.add(c3);
 
-		when(dao.findAll()).thenReturn(list);
+		when(repo.findAll()).thenReturn(list);
 
 		// test
 		List<Cliente> clienteList = srvCliente.findAll();
 
 		assertEquals(3, clienteList.size());
-		verify(dao, times(1)).findAll();
+		verify(repo, times(1)).findAll();
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class TestServicioCliente {
 		c1.setProvincia("Murcia");
 		c1.setTel1(123123123);
 		srvCliente.saveOrUpdate(c1, false);
-		verify(dao, times(1)).save(c1);
+		verify(repo, times(1)).save(c1);
 	}
 
 }

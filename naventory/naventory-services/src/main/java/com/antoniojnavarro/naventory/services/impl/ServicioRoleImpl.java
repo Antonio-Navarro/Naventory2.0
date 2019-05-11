@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.RoleDao;
 import com.antoniojnavarro.naventory.model.entities.Role;
 import com.antoniojnavarro.naventory.model.filters.RoleSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.RoleRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioRole;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioValidacion;
@@ -23,43 +23,43 @@ public class ServicioRoleImpl implements ServicioRole {
 	private ServicioValidacion srvValidacion;
 
 	@Autowired
-	private RoleDao roleDao;
+	private RoleRepository rolRepository;
 
 	@Override
 	public Role findById(Integer id) throws ServicioException {
-		return this.roleDao.findOne(id);
+		return this.rolRepository.findOne(id);
 	}
 
 	@Override
 	public List<Role> findBySearchFilter(RoleSearchFilter searchFilter) throws ServicioException {
 		// TODO Auto-generated method stub
-		return roleDao.findBySearchFilter(searchFilter);
+		return rolRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Role> findBySearchFilter(RoleSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.roleDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.rolRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Role> findBySearchFilterPagination(RoleSearchFilter searchFilter,
 			int pageNumber, int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.roleDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.rolRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Role> findBySearchFilterPagination(RoleSearchFilter searchFilter,
 			int pageNumber, int pageSize) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.roleDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.rolRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Role> findAll() throws ServicioException {
 		// TODO Auto-generated method stub
-		return (List<Role>) this.roleDao.findAll();
+		return (List<Role>) this.rolRepository.findAll();
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class ServicioRoleImpl implements ServicioRole {
 	@Override
 	public Role save(Role entity) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.roleDao.save(entity);
+		return this.rolRepository.save(entity);
 	}
 	@Override
 	public void validate(Role entity) throws ServicioException {
@@ -100,7 +100,7 @@ public class ServicioRoleImpl implements ServicioRole {
 	@Override
 	public void delete(Role entity) throws ServicioException {
 
-		this.roleDao.delete(entity);
+		this.rolRepository.delete(entity);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class ServicioRoleImpl implements ServicioRole {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.roleDao.delete(id);
+		this.rolRepository.delete(id);
 
 	}
 

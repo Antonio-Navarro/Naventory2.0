@@ -14,9 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Producto;
+import com.antoniojnavarro.naventory.repository.repositories.ProductoRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.impl.ServicioProductoImpl;
 
@@ -27,7 +27,7 @@ public class TestServicioProducto {
 	ServicioProducto srvProducto = new ServicioProductoImpl();
 
 	@Mock
-	ProductoDao dao;
+	ProductoRepository repo;
 
 	@Test
 	public void findAllTest() {
@@ -53,13 +53,13 @@ public class TestServicioProducto {
 		list.add(p);
 		list.add(p1);
 
-		when(dao.findAll()).thenReturn(list);
+		when(repo.findAll()).thenReturn(list);
 
 		// test
 		List<Producto> productoList = srvProducto.findAll();
 
 		assertEquals(2, productoList.size());
-		verify(dao, times(1)).findAll();
+		verify(repo, times(1)).findAll();
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class TestServicioProducto {
 		p.setNombre("categoria test");
 		p.setEmpresa(empresa);
 		srvProducto.saveOrUpdate(p, false);
-		verify(dao, times(1)).save(p);
+		verify(repo, times(1)).save(p);
 	}
 
 }

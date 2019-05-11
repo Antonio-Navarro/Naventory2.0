@@ -1,13 +1,13 @@
-package com.antoniojnavarro.naventory.dao.repositories;
+package com.antoniojnavarro.naventory.repository.repositories;
 
 import java.util.List;
 
-import com.antoniojnavarro.naventory.dao.commons.api.Dao;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.CategoriaSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.api.BaseRepository;
 
-public interface CategoriaDao extends Dao<Categoria, CategoriaSearchFilter, Integer> {
+public interface CategoriaRepository extends BaseRepository<Categoria, CategoriaSearchFilter, Integer> {
 
 	List<Categoria> findCategoriasByEmpresa(Empresa empresa); 
 

@@ -1,4 +1,4 @@
-package com.antoniojnavarro.naventory.dao.commons.dto.paginationresult;
+package com.antoniojnavarro.naventory.repository.commons.dto.paginationresult;
 
 import java.io.Serializable;
 import java.util.List;

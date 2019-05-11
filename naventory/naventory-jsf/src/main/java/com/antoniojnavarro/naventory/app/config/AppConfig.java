@@ -127,7 +127,8 @@ public class AppConfig {
 		jpaProps.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 		jpaProps.setProperty("hibernate.hbm2ddl.auto", "validate");
 
-		// Se añade esta propiedad, que es utilizada en JpaDao.java, para modificar el
+		// Se añade esta propiedad, que es utilizada en JpaBaseRepository.java, para
+		// modificar el
 		// comportamiento del merge.
 		// Si la entidad a la que hacer merge no existe, entonces lanzará una excepción
 		// si es 'true' esta propiedad

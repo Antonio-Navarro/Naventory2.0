@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.NovedadDao;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Novedad;
 import com.antoniojnavarro.naventory.model.filters.NovedadSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.NovedadRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioNovedad;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
@@ -32,45 +32,45 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 	@Autowired
 	ServicioMail srvMail;
 	@Autowired
-	private NovedadDao novedadDao;
+	private NovedadRepository novedadRepository;
 	@Autowired
 	private ServicioEmpresa srvEmpresa;
 
 	@Override
 	public Novedad findById(Integer id) throws ServicioException {
-		return this.novedadDao.findOne(id);
+		return this.novedadRepository.findOne(id);
 	}
 
 	@Override
 	public List<Novedad> findBySearchFilter(NovedadSearchFilter searchFilter) throws ServicioException {
 		// TODO Auto-generated method stub
-		return novedadDao.findBySearchFilter(searchFilter);
+		return novedadRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Novedad> findBySearchFilter(NovedadSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.novedadDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.novedadRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Novedad> findBySearchFilterPagination(NovedadSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.novedadDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.novedadRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Novedad> findBySearchFilterPagination(NovedadSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.novedadDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.novedadRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Novedad> findAll() throws ServicioException {
 		// TODO Auto-generated method stub
-		return (List<Novedad>) this.novedadDao.findAll();
+		return (List<Novedad>) this.novedadRepository.findAll();
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 	@Override
 	public Novedad save(Novedad entity) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.novedadDao.save(entity);
+		return this.novedadRepository.save(entity);
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 	@Override
 	public void delete(Novedad entity) throws ServicioException {
 
-		this.novedadDao.delete(entity);
+		this.novedadRepository.delete(entity);
 	}
 
 	@Override
@@ -126,13 +126,13 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.novedadDao.delete(id);
+		this.novedadRepository.delete(id);
 
 	}
 
 	@Override
 	public List<Novedad> findNovedadesByEmpresa(Empresa empresa, Integer limit) throws ServicioException {
-		List<Novedad> lista = this.novedadDao.findNovedadesByEmpresa(empresa, new PageRequest(0, limit));
+		List<Novedad> lista = this.novedadRepository.findNovedadesByEmpresa(empresa, new PageRequest(0, limit));
 
 		return lista;
 	}

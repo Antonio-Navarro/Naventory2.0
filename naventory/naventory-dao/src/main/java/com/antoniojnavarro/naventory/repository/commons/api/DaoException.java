@@ -1,4 +1,4 @@
-package com.antoniojnavarro.naventory.dao.commons.api;
+package com.antoniojnavarro.naventory.repository.commons.api;
 
 public class DaoException extends RuntimeException {
 	

@@ -35,16 +35,16 @@
 	<aop:config>
 
 		<aop:pointcut id="serviceAnnotatedClassDefaultTransactionalBehavior"
-			expression="@within(org.springframework.stereotype.Service) &amp;&amp; !@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever) 
-				&amp;&amp; !@annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever)
-				&amp;&amp; !@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew) 
-								&amp;&amp; !@annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew)" />
+			expression="@within(org.springframework.stereotype.Service) &amp;&amp; !@within(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionNever) 
+				&amp;&amp; !@annotation(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionNever)
+				&amp;&amp; !@within(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionRequiredNew) 
+								&amp;&amp; !@annotation(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionRequiredNew)" />
 
 		<aop:pointcut id="serviceAnnotatedClassTransactionalRequiredNew"
-			expression="@within(org.springframework.stereotype.Service) &amp;&amp; !@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever) 
-				&amp;&amp; !@annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionNever) 
-				&amp;&amp; (@within(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew) 
-								|| @annotation(com.antoniojnavarro.naventory.dao.commons.annotations.TransactionRequiredNew))" />
+			expression="@within(org.springframework.stereotype.Service) &amp;&amp; !@within(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionNever) 
+				&amp;&amp; !@annotation(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionNever) 
+				&amp;&amp; (@within(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionRequiredNew) 
+								|| @annotation(com.antoniojnavarro.naventory.repository.commons.annotations.TransactionRequiredNew))" />
 
 		<aop:advisor id="managerTxDefaultTransactionalBehavior"
 			advice-ref="txAdviceDefaultTransactionalBehavior" pointcut-ref="serviceAnnotatedClassDefaultTransactionalBehavior" />

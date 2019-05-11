@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.CompraDao;
-import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.CompraRepository;
+import com.antoniojnavarro.naventory.repository.repositories.ProductoRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioCompra;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
@@ -36,45 +36,45 @@ public class ServicioCompraImpl implements ServicioCompra {
 	private ServicioProducto srvProducto;
 	
 	@Autowired
-	private CompraDao compraDao;
+	private CompraRepository compraRepository;
 
 	@Autowired
-	private ProductoDao productoDao;
+	private ProductoRepository productoRepository;
 
 	@Autowired
 	private ServicioEmpresa srvEmpresa;
 
 	@Override
 	public Compra findById(Integer id) throws ServicioException {
-		return this.compraDao.findOne(id);
+		return this.compraRepository.findOne(id);
 	}
 
 	@Override
 	public List<Compra> findBySearchFilter(CompraSearchFilter searchFilter) throws ServicioException {
-		return compraDao.findBySearchFilter(searchFilter);
+		return compraRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Compra> findBySearchFilter(CompraSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
-		return this.compraDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.compraRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Compra> findBySearchFilterPagination(CompraSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.compraDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.compraRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Compra> findBySearchFilterPagination(CompraSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		return this.compraDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.compraRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Compra> findAll() throws ServicioException {
-		return (List<Compra>) this.compraDao.findAll();
+		return (List<Compra>) this.compraRepository.findAll();
 	}
 
 	@Override
@@ -89,12 +89,12 @@ public class ServicioCompraImpl implements ServicioCompra {
 
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		return compraDao.exists(id);
+		return compraRepository.exists(id);
 	}
 
 	@Override
 	public Compra save(Compra entity) throws ServicioException {
-		return this.compraDao.save(entity);
+		return this.compraRepository.save(entity);
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class ServicioCompraImpl implements ServicioCompra {
 		this.srvValidacion.isNull("Producto", entity.getProducto());
 		this.srvValidacion.isNull("Factura", entity.getFactura());
 		this.srvValidacion.isNull("Cantidad", entity.getCantidad());
-		Compra compraExiste = this.compraDao.findByEmpresaAndFactura(entity.getEmpresa(), entity.getFactura());
+		Compra compraExiste = this.compraRepository.findByEmpresaAndFactura(entity.getEmpresa(), entity.getFactura());
 
 		if (compraExiste != null && compraExiste.getFactura() != null && !compraExiste.getFactura().isEmpty()) {
 			throw new ServicioException(srvMensajes.getMensajeI18n("compra.factura.existe"));
@@ -132,14 +132,14 @@ public class ServicioCompraImpl implements ServicioCompra {
 		if (!nuevoProducto) {
 			entity.getProducto().setStock(entity.getProducto().getStock() + entity.getCantidad());
 		}
-		productoDao.save(entity.getProducto());
+		productoRepository.save(entity.getProducto());
 		return this.save(entity);
 	}
 
 	@Override
 	public void delete(Compra entity) throws ServicioException {
 
-		this.compraDao.delete(entity);
+		this.compraRepository.delete(entity);
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class ServicioCompraImpl implements ServicioCompra {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.compraDao.delete(id);
+		this.compraRepository.delete(id);
 
 	}
 
@@ -176,13 +176,13 @@ public class ServicioCompraImpl implements ServicioCompra {
 
 	@Override
 	public List<GraficaGenericDto> getGastosMensualesGrafica(Empresa empresa, int numMeses) {
-		return this.compraDao.getGastosMensualesGrafica(empresa, new PageRequest(0, numMeses));
+		return this.compraRepository.getGastosMensualesGrafica(empresa, new PageRequest(0, numMeses));
 
 	}
 
 	@Override
 	public Long countByEmpresa(Empresa empresa) {
-		return this.compraDao.countByEmpresa(empresa);
+		return this.compraRepository.countByEmpresa(empresa);
 
 	}
 

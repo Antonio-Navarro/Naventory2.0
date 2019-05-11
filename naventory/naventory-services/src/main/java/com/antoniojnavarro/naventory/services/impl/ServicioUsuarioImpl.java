@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.UsuarioDao;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.UsuarioSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.UsuarioRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
@@ -28,40 +28,40 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	private ServicioMensajesI18n srvMensajes;
 
 	@Autowired
-	private UsuarioDao usuarioDao;
+	private UsuarioRepository usuarioRepository;
 
 	@Override
 	public Usuario findById(String id) throws ServicioException {
-		return this.usuarioDao.findOne(id);
+		return this.usuarioRepository.findOne(id);
 	}
 
 	@Override
 	public List<Usuario> findBySearchFilter(UsuarioSearchFilter searchFilter) throws ServicioException {
-		return this.usuarioDao.findBySearchFilter(searchFilter);
+		return this.usuarioRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Usuario> findBySearchFilter(UsuarioSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
-		return this.usuarioDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.usuarioRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 
 	}
 
 	@Override
 	public PaginationResult<Usuario> findBySearchFilterPagination(UsuarioSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.usuarioDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.usuarioRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Usuario> findBySearchFilterPagination(UsuarioSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		return this.usuarioDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.usuarioRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Usuario> findAll() throws ServicioException {
-		return (List<Usuario>) this.usuarioDao.findAll();
+		return (List<Usuario>) this.usuarioRepository.findAll();
 	}
 
 	@Override
@@ -76,18 +76,18 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	@Override
 	public boolean existsById(String id) throws ServicioException {
-		return this.usuarioDao.exists(id);
+		return this.usuarioRepository.exists(id);
 
 	}
 
 	@Override
 	public Usuario save(Usuario entity) throws ServicioException {
-		return this.usuarioDao.save(entity);
+		return this.usuarioRepository.save(entity);
 	}
 
 	@Override
 	public void delete(Usuario entity) throws ServicioException {
-		this.usuarioDao.delete(entity);
+		this.usuarioRepository.delete(entity);
 
 	}
 
@@ -99,18 +99,18 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	@Override
 	public void deleteById(String id) throws ServicioException {
-		this.usuarioDao.delete(id);
+		this.usuarioRepository.delete(id);
 
 	}
 
 	@Override
 	public Usuario findUsuarioByEmail(String email) throws ServicioException {
-		return this.usuarioDao.findUsuarioByEmail(email);
+		return this.usuarioRepository.findUsuarioByEmail(email);
 	}
 
 	@Override
 	public boolean existsUsuarioByEmail(String email) throws ServicioException {
-		return this.usuarioDao.existsUsuarioByEmail(email);
+		return this.usuarioRepository.existsUsuarioByEmail(email);
 	}
 
 	@Override
@@ -142,22 +142,22 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public Usuario findUsuarioByEmailAndPassword(String email, String pass) throws ServicioException {
 
-		return this.usuarioDao.findUsuarioByEmailAndPassword(email, pass);
+		return this.usuarioRepository.findUsuarioByEmailAndPassword(email, pass);
 	}
 
 	@Override
 	public Usuario findUsuarioByEmailAndActivo(String email, String activo) throws ServicioException {
 
-		return this.usuarioDao.findUsuarioByEmailAndActivo(email, activo);
+		return this.usuarioRepository.findUsuarioByEmailAndActivo(email, activo);
 	}
 
 	@Override
 	public List<Usuario> findUsuarioByEmpresa(Empresa empresa) throws ServicioException {
-		return (List<Usuario>) this.usuarioDao.findUsuarioByEmpresa(empresa);
+		return (List<Usuario>) this.usuarioRepository.findUsuarioByEmpresa(empresa);
 	}
 
 	public Object[] findUsersGrafica() {
-		return this.usuarioDao.findUsersGrafica();
+		return this.usuarioRepository.findUsersGrafica();
 	}
 
 	@Override

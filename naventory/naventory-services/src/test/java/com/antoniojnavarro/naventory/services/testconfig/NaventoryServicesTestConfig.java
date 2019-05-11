@@ -27,10 +27,10 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.antoniojnavarro.naventory.dao.commons.impl.JpaDao;
+import com.antoniojnavarro.naventory.repository.commons.impl.JpaBaseRepository;
 
 @Configuration
-@ComponentScan(basePackages = { "com.antoniojnavarro.naventory.services.*", "com.antoniojnavarro.naventory.dao.*" })
+@ComponentScan(basePackages = { "com.antoniojnavarro.naventory.services.*", "com.antoniojnavarro.naventory.repository.*" })
 @PropertySources({ @PropertySource(value = "classpath:naventory-app.properties", ignoreResourceNotFound = false) })
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
@@ -39,7 +39,7 @@ import com.antoniojnavarro.naventory.dao.commons.impl.JpaDao;
  * EnableJpaRepositories se puede poner los paquetes con .*, no funciona y lo
  * sobreentiende ya.
  */
-@EnableJpaRepositories(basePackages = "com.antoniojnavarro.naventory.dao.repositories", entityManagerFactoryRef = "emf", transactionManagerRef = "transactionManager", repositoryBaseClass = JpaDao.class)
+@EnableJpaRepositories(basePackages = "com.antoniojnavarro.naventory.repository.repositories", entityManagerFactoryRef = "emf", transactionManagerRef = "transactionManager", repositoryBaseClass = JpaBaseRepository.class)
 @Import({ DataSourceInsideConfig.class, DataSourceOutsideConfig.class })
 @ImportResource(value = { "classpath:config/aop-config.xml" })
 public class NaventoryServicesTestConfig {

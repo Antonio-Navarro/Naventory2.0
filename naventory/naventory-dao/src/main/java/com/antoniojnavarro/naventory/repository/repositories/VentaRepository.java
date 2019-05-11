@@ -1,17 +1,17 @@
-package com.antoniojnavarro.naventory.dao.repositories;
+package com.antoniojnavarro.naventory.repository.repositories;
 
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
-import com.antoniojnavarro.naventory.dao.commons.api.Dao;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Venta;
 import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.api.BaseRepository;
 
-public interface VentaDao extends Dao<Venta, VentaSearchFilter, Integer> {
+public interface VentaRepository extends BaseRepository<Venta, VentaSearchFilter, Integer> {
 
 	@Query("select new com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto(f.nombre, count(*)) from Venta v, FormaPago f where v.empresa = ?1 and v.formaPago=f.idPago group by v.formaPago")
 	List<GraficaGenericDto> findFormasPagoGrafica(Empresa empresa);

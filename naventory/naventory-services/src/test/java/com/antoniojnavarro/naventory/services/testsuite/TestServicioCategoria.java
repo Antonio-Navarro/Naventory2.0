@@ -14,9 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.antoniojnavarro.naventory.dao.repositories.CategoriaDao;
 import com.antoniojnavarro.naventory.model.entities.Categoria;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
+import com.antoniojnavarro.naventory.repository.repositories.CategoriaRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.impl.ServicioCategoriaImpl;
 
@@ -27,7 +27,7 @@ public class TestServicioCategoria {
 	ServicioCategoria srvCategoria = new ServicioCategoriaImpl();
 
 	@Mock
-	CategoriaDao dao;
+	CategoriaRepository repo;
 
 	@Test
 	public void findAllTest() {
@@ -52,13 +52,13 @@ public class TestServicioCategoria {
 		list.add(c1);
 		list.add(c);
 
-		when(dao.findAll()).thenReturn(list);
+		when(repo.findAll()).thenReturn(list);
 
 		// test
 		List<Categoria> categoriaList = srvCategoria.findAll();
 
 		assertEquals(2, categoriaList.size());
-		verify(dao, times(1)).findAll();
+		verify(repo, times(1)).findAll();
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class TestServicioCategoria {
 		c.setIdCat(123);
 		c.setDesc("test de categorias");
 		srvCategoria.saveOrUpdate(c, false);
-		verify(dao, times(1)).save(c);
+		verify(repo, times(1)).save(c);
 	}
 
 }

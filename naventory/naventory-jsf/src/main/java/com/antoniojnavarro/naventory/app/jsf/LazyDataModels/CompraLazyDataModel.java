@@ -8,9 +8,9 @@ import org.primefaces.model.SortOrder;
 
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.app.util.SortOrderParseUtil;
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.model.entities.Compra;
 import com.antoniojnavarro.naventory.model.filters.CompraSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.services.api.ServicioCompra;
 
 public class CompraLazyDataModel extends LazyDataModel<Compra> {

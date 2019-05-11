@@ -3,10 +3,10 @@ package com.antoniojnavarro.naventory.services.commons;
 import java.io.Serializable;
 import java.util.List;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.model.commons.GenericEntity;
 import com.antoniojnavarro.naventory.model.commons.filters.SearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
 
 public interface ServicioCrud<T extends GenericEntity, F extends SearchFilter, ID extends Serializable>
 		extends Serializable {

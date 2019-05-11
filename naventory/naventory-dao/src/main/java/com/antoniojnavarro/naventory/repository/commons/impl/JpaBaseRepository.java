@@ -1,4 +1,4 @@
-package com.antoniojnavarro.naventory.dao.commons.impl;
+package com.antoniojnavarro.naventory.repository.commons.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -25,11 +25,6 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.antoniojnavarro.naventory.dao.commons.api.Dao;
-import com.antoniojnavarro.naventory.dao.commons.api.DaoException;
-import com.antoniojnavarro.naventory.dao.commons.api.ValueField;
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.model.commons.GenericEntity;
 import com.antoniojnavarro.naventory.model.commons.filters.SearchFilter;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.BetweenDate;
@@ -44,15 +39,20 @@ import com.antoniojnavarro.naventory.model.commons.filters.annotations.OrderByCo
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.OrderByMultipleColumns;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.RelationshipJoin;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.RelationshipJoin.LogicalOperatorAssociateField;
+import com.antoniojnavarro.naventory.repository.commons.api.BaseRepository;
+import com.antoniojnavarro.naventory.repository.commons.api.DaoException;
+import com.antoniojnavarro.naventory.repository.commons.api.ValueField;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.RelationshipJoins;
 import com.antoniojnavarro.naventory.model.commons.filters.annotations.SelectConfiguration;
 
-public class JpaDao<T extends GenericEntity, F extends SearchFilter, ID extends Serializable>
-		extends SimpleJpaRepository<T, ID> implements Dao<T, F, ID> {
+public class JpaBaseRepository<T extends GenericEntity, F extends SearchFilter, ID extends Serializable>
+		extends SimpleJpaRepository<T, ID> implements BaseRepository<T, F, ID> {
 
 	private static final String CHECK_METHOD_NAME = "check";
 
-	private static Logger logger = LoggerFactory.getLogger(JpaDao.class);
+	private static Logger logger = LoggerFactory.getLogger(JpaBaseRepository.class);
 
 	private final EntityManager em;
 	private final boolean dialectOracleOrPostgreSQL;
@@ -60,7 +60,7 @@ public class JpaDao<T extends GenericEntity, F extends SearchFilter, ID extends 
 
 	private final boolean exceptionInMergeIfEntityNotExist;
 
-	public JpaDao(JpaEntityInformation<T, ?> entityInformation, EntityManager em) {
+	public JpaBaseRepository(JpaEntityInformation<T, ?> entityInformation, EntityManager em) {
 		super(entityInformation, em);
 		this.em = em;
 		this.entityInformation = entityInformation;
