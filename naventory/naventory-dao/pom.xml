@@ -5,9 +5,9 @@
 	<parent>
 		<groupId>com.antoniojnavarro</groupId>
 		<artifactId>naventory</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.1</version>		
 	</parent>
-	<artifactId>naventory-repository</artifactId>
+	<artifactId>naventory-dao</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>

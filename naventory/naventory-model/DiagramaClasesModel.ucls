@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="com.antoniojnavarro.naventory.model.filters.UsuarioSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/UsuarioSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="254" x="1426" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.antoniojnavarro.naventory.model.entities.Proveedor" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Proveedor.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="767" width="212" x="4947" y="2110"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="3" language="java" name="com.antoniojnavarro.naventory.model.entities.enums.RolEnum" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/enums/RolEnum.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3636" y="3104"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="4" language="java" name="com.antoniojnavarro.naventory.model.entities.Novedad" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Novedad.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="335" width="212" x="4653" y="2110"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/ClienteSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1037" width="204" x="1720" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.antoniojnavarro.naventory.model.filters.AlertaStockSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/AlertaStockSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="214" x="1964" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.antoniojnavarro.naventory.model.filters.EmpresaSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/EmpresaSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="204" x="2218" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.antoniojnavarro.naventory.model.filters.CategoriaSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/CategoriaSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="371" width="204" x="2462" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.antoniojnavarro.naventory.model.entities.Role" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Role.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3620" y="2729"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.antoniojnavarro.naventory.model.entities.FormaPago" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/FormaPago.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="245" width="212" x="5556" y="1339"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.antoniojnavarro.naventory.model.entities.AlertaStock" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/AlertaStock.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="263" width="212" x="4928" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="com.antoniojnavarro.naventory.model.entities.Producto" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Producto.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5294" y="1680"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="com.antoniojnavarro.naventory.model.filters.ProductoSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/ProductoSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="767" width="204" x="2706" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="com.antoniojnavarro.naventory.model.entities.EmpresaInvitacion" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/EmpresaInvitacion.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3893" y="2783"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.antoniojnavarro.naventory.model.filters.NovedadSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/NovedadSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="204" x="2950" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.antoniojnavarro.naventory.model.filters.RoleSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/RoleSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="204" x="3194" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.antoniojnavarro.naventory.model.entities.Evento" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Evento.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="443" width="212" x="3186" y="1339"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="com.antoniojnavarro.naventory.model.entities.Cliente" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Cliente.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1037" width="212" x="5514" y="2110"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="com.antoniojnavarro.naventory.model.filters.EmpresaInvitacionSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/EmpresaInvitacionSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="230" x="3438" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/dtos/GraficaGenericDto.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="191" width="211" x="1175" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="21" language="java" name="com.antoniojnavarro.naventory.model.commons.GenericEntity" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/commons/GenericEntity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="65" width="223" x="5140" y="3652"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="22" language="java" name="com.antoniojnavarro.naventory.model.filters.VentaSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/VentaSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="713" width="204" x="3708" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="com.antoniojnavarro.naventory.model.entities.Categoria" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Categoria.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="389" width="212" x="5220" y="2110"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="24" language="java" name="com.antoniojnavarro.naventory.model.commons.filters.SearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/commons/filters/SearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3463" y="28"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="25" language="java" name="com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/ProveedorSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="767" width="204" x="3952" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="com.antoniojnavarro.naventory.model.filters.FormaPagoSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/FormaPagoSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="204" x="4196" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="com.antoniojnavarro.naventory.model.entities.Empresa" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Empresa.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4665" y="1548"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="com.antoniojnavarro.naventory.model.entities.Compra" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Compra.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="839" width="212" x="5180" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="com.antoniojnavarro.naventory.model.filters.CompraSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/CompraSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="929" width="204" x="4440" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="com.antoniojnavarro.naventory.model.filters.EventoSearchFilter" 
+    project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/filters/EventoSearchFilter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="204" x="4684" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="com.antoniojnavarro.naventory.model.entities.Usuario" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Usuario.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="767" width="212" x="4319" y="2110"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="com.antoniojnavarro.naventory.model.entities.Venta" project="naventory-model" 
+    file="/naventory-model/src/main/java/com/antoniojnavarro/naventory/model/entities/Venta.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="857" width="212" x="5516" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="33">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="34" name="usuario"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="36">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="37" name="proveedor"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="39">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="40" name="producto"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="42">    
+    <bendpoint x="4622" y="1339"/>    
+    <bendpoint x="4622" y="2110"/>    
+    <bendpoint x="4622" y="3187"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="43">    
+    <bendpoint x="5483" y="2110"/>    
+    <bendpoint x="5483" y="3187"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="44">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="45">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <association id="46">    
+    <bendpoint x="4895" y="1339"/>    
+    <bendpoint x="4895" y="2110"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="47" name="empresa"/>      
+      <multiplicity id="48" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="49">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <association id="50">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="51" name="empresa"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="53">    
+    <bendpoint x="5504" y="3187"/>    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="54">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="55" name="producto"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="57">    
+    <bendpoint x="4601" y="2110"/>    
+    <bendpoint x="4601" y="3187"/>    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="58">    
+    <bendpoint x="5525" y="1339"/>    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="59" name="cliente"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="61">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="62">    
+    <bendpoint x="5073" y="1339"/>    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="63" name="proveedor"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="65">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="66">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="67">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <association id="68">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="69" name="empresa"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="71">    
+    <bendpoint x="4328" y="3187"/>    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="72">    
+    <bendpoint x="5189" y="2110"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="73" name="empresa"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="75">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="76">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="77">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="78">    
+    <bendpoint x="5504" y="1339"/>    
+    <bendpoint x="5756" y="2110"/>    
+    <bendpoint x="5756" y="3187"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="79">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="80">    
+    <bendpoint x="5149" y="3187"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="81">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="82" name="roles"/>      
+      <multiplicity id="83" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="84">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="85" name="producto"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="88" name="empresa"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="90">    
+    <bendpoint x="5189" y="3187"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="91">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <association id="92">    
+    <bendpoint x="4916" y="1339"/>    
+    <bendpoint x="4916" y="2110"/>    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="93" name="empresa"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="96" name="usuarios"/>      
+      <multiplicity id="97" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="98">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="99" name="categoria"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="101">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <association id="102">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="103" name="usuarios"/>      
+      <multiplicity id="104" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="105">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="106" name="formaPago"/>      
+      <multiplicity id="107" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="108">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="109">    
+    <bendpoint x="4876" y="3187"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="110">    
+    <bendpoint x="5798" y="1339"/>    
+    <bendpoint x="5798" y="2110"/>    
+    <bendpoint x="5798" y="3187"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="111">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="112" name="empresa"/>      
+      <multiplicity id="113" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="114">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="115" name="rol"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="117">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <association id="118">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="119" name="empresa"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="121">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="122">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <realization id="123">    
+    <bendpoint x="5777" y="2110"/>    
+    <bendpoint x="5777" y="3187"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="124">    
+    <bendpoint x="5462" y="1339"/>    
+    <bendpoint x="5462" y="2110"/>    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="125" name="empresa"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

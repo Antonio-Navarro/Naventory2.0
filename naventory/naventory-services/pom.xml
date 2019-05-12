@@ -96,7 +96,7 @@
 
 		<dependency>
 			<groupId>com.antoniojnavarro</groupId>
-			<artifactId>naventory-repository</artifactId>
+			<artifactId>naventory-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

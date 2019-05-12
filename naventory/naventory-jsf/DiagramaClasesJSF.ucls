@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ProductoDetailsBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ProductoDetailsBean.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="209" x="6227" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.antoniojnavarro.naventory.app.jsf.LazyDataModels.CompraLazyDataModel" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/LazyDataModels/CompraLazyDataModel.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="371" width="365" x="4577" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="3" language="java" 
+    name="com.antoniojnavarro.naventory.app.security.services.api.ServicioSeguridadUsuario" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/services/api/ServicioSeguridadUsuario.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="259" x="405" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="4" language="java" name="com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProductoLazyDataModel" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/LazyDataModels/ProductoLazyDataModel.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="372" x="5416" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.antoniojnavarro.naventory.app.config.AppConfig" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/config/AppConfig.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="245" width="454" x="796" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.RegistroBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/RegistroBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="731" width="289" x="1494" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.antoniojnavarro.naventory.app.util.SortOrderParseUtil" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/util/SortOrderParseUtil.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="101" width="405" x="1342" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.antoniojnavarro.naventory.app.security.social.GoogleProvider" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/social/GoogleProvider.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="263" width="231" x="1805" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.PerfilBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/PerfilBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="911" width="286" x="3288" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ThemeSwitcherBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ThemeSwitcherBean.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="209" x="1823" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ClientesBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ClientesBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="749" width="265" x="5597" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" 
+    name="com.antoniojnavarro.naventory.app.security.services.impl.ServicioSeguridadUsuarioImpl" project="naventory-jsf" 
+    
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/services/impl/ServicioSeguridadUsuarioImpl.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="173" width="300" x="405" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="13" language="java" 
+    name="com.antoniojnavarro.naventory.app.security.services.api.ServicioAutenticacion" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/services/api/ServicioAutenticacion.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="403" x="3683" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="14" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ProveedoresBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ProveedoresBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="767" width="308" x="4587" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.antoniojnavarro.naventory.app.security.social.BaseProvider" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/social/BaseProvider.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="353" width="307" x="704" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.LoginBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/LoginBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="443" width="278" x="2635" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.AdministracionBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/AdministracionBean.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="389" width="263" x="2072" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.CategoriasBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/CategoriasBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="695" width="295" x="2953" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ComprasBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ComprasBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1217" width="291" x="4935" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="com.antoniojnavarro.naventory.app.commons.ViewScope" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/commons/ViewScope.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="191" width="293" x="1840" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" 
+    name="com.antoniojnavarro.naventory.app.security.services.impl.ServicioAutenticacionImpl" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/services/impl/ServicioAutenticacionImpl.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="403" x="1051" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ClienteDetailsBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ClienteDetailsBean.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="209" x="6476" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="com.antoniojnavarro.naventory.app.util.CifrarClave" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/util/CifrarClave.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="155" width="228" x="2237" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.HomeBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/HomeBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1073" width="279" x="3943" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="com.antoniojnavarro.naventory.app.security.social.FacebookProvider" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/social/FacebookProvider.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="263" width="231" x="1534" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ParamBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ParamBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="155" width="209" x="6227" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.VentasBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/VentasBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1037" width="285" x="5902" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="com.antoniojnavarro.naventory.app.security.config.SpringSecurityConfig" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/config/SpringSecurityConfig.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="305" x="2560" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ErrorPageBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ErrorPageBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="227" width="220" x="2375" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.MasterBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/MasterBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="371" width="259" x="4120" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.EmpresaBean" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/EmpresaBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="407" width="289" x="3614" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ClienteLazyDataModel" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/LazyDataModels/ClienteLazyDataModel.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="353" width="359" x="5828" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="com.antoniojnavarro.naventory.app.security.services.impl.UserDetailsServiceImpl" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/services/impl/UserDetailsServiceImpl.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="264" x="2961" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ProductosBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ProductosBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="857" width="291" x="5266" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="35" language="java" name="com.antoniojnavarro.naventory.app.security" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="52" width="319" x="3322" y="9"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="36" language="java" name="com.antoniojnavarro.naventory.app.jsf.LazyDataModels.CategoriaLazyDataModel" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/LazyDataModels/CategoriaLazyDataModel.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="384" x="2953" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="com.antoniojnavarro.naventory.app.jsf.LazyDataModels.VentaLazyDataModel" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/LazyDataModels/VentaLazyDataModel.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="371" width="353" x="6476" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="com.antoniojnavarro.naventory.app.jsf.LazyDataModels.ProveedorLazyDataModel" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/LazyDataModels/ProveedorLazyDataModel.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="394" x="4982" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.ProveedorDetailsBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/ProveedorDetailsBean.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="209" x="6725" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="com.antoniojnavarro.naventory.app.util.Constantes" project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/util/Constantes.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="245" width="284" x="3738" y="9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="com.antoniojnavarro.naventory.app.jsf.beans.TemplateAppBean" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/jsf/beans/TemplateAppBean.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="317" width="285" x="4262" y="420"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="com.antoniojnavarro.naventory.app.security.services.dto.UsuarioAutenticado" 
+    project="naventory-jsf" 
+    file="/naventory-jsf/src/main/java/com/antoniojnavarro/naventory/app/security/services/dto/UsuarioAutenticado.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="317" width="411" x="4126" y="1677"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="43">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="44" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="45" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="47" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="48" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="50" name="usuarioAuteticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="53">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="54" name="listaCategorias">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="56">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="57" name="proveedores">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="58" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="59">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="60" name="paramBean">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="61" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="62">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="63">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="64">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="65" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="66" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="67">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="68">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="69">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="70" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="71" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="72">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="73" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="74" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="75">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="78">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="79">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="80">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="81" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="82" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="84" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="85" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="86">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="87">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="88" name="listaVentas">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="89" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="90">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="91" name="facebookProvider">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="92" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="94" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="95" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="97" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="98" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="99">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="100" name="clientes">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="101" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="102">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="103" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="104" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="105">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="106" name="paramBean">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="107" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="108">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <realization id="109">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
+  <association id="110">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="111" name="googleProvider">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="112" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="113">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="114" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="115" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="116">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="117" name="param">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="118" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="119">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="120" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="121" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="122">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="123" name="proveedores">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="124" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="125">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="126" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="127" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="128">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="129">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="130" name="paramBean">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="131" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="132">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="133">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="134" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="135" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="136">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="137">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="138" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="139" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="140">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="141">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="142" name="paramBean">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="143" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="144">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="145" name="listaProductos">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="146" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="147">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="148" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="149" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="150">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="151" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="152" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="153">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="154">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="155">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="156" name="usuarioAutenticado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="157" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="158">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="159">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="160" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="161" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="162">    
+    <end type="SOURCE" refId="39" navigable="false">      
+      <attribute id="163" name="param">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="164" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="165">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="166" name="paramBean">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="167" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="168">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="169" name="listaProveedores">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="170" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="171">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="172" name="listaClientes">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="173" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="174">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="175" name="srvAutenticacion">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="176" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="177">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="178" name="param">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="179" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="180">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <association id="181">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="182" name="listaCompras">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="183" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="184">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
