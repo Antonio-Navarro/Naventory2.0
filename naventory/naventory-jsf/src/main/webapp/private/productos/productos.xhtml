@@ -28,7 +28,7 @@
 		<div class="clearfix"></div>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-md-12">
-				<p:dataTable id="productoTable" var="producto"
+				<p:dataTable id="productoTable" var="producto" reflow="true"
 					widgetVar="productosWV" value="#{productosBean.listaProductos}"
 					paginator="true" rowHover="true" rows="#{defaultPaginatorRows}"
 					paginatorPosition="bottom" lazy="true" 
@@ -58,23 +58,23 @@
 							</h:outputFormat>
 						</div>
 					</f:facet>
-					<p:column sortBy="#{producto.sku}" style="width:8%"
+					<p:column sortBy="#{producto.sku}" 
 						headerText="#{msg['productos.sku']}">
 						<h:outputText value="#{producto.sku}" />
 					</p:column>
-					<p:column sortBy="#{producto.nombre}" style="width:12%"
+					<p:column sortBy="#{producto.nombre}"
 						headerText="#{msg['users.datatable.header.nombre']}">
 						<h:outputText value="#{producto.nombre}" />
 					</p:column>
-					<p:column sortBy="#{producto.categoria.nomCat}" style="width:12%"
+					<p:column sortBy="#{producto.categoria.nomCat}"
 						headerText="#{msg['categoria']}">
 						<h:outputText value="#{producto.categoria.nomCat}" />
 					</p:column>
-					<p:column sortBy="#{producto.proveedor.nombre}" style="width:12%"
+					<p:column sortBy="#{producto.proveedor.nombre}" 
 						headerText="#{msg['proveedor']}">
 						<h:outputText value="#{producto.proveedor.nombre}" />
 					</p:column>
-					<p:column sortBy="#{producto.coste}" style="width:12%"
+					<p:column sortBy="#{producto.coste}"
 						styleClass="tdNumber" headerText="#{msg['productos.coste.table']}">
 						<h:outputText value="#{producto.coste}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"
@@ -82,14 +82,14 @@
 						</h:outputText>
 					</p:column>
 					<p:column sortBy="#{producto.precio}" 
-						style="width:12%" styleClass="tdNumber"
+						 styleClass="tdNumber"
 						headerText="#{msg['productos.precio.table']}">
 						<h:outputText value="#{producto.precio}">
 							<f:convertNumber type="currency" currencySymbol="€" locale="es"
 								minIntegerDigits="2" />
 						</h:outputText>
 					</p:column>
-					<p:column width="15%" style="text-align:center"
+					<p:column style="text-align:center"
 						headerText="#{msg['users.datatable.header.opciones']}">
 						<p:commandLink id="fadeEditar" global="false" process="@this"
 							actionListener="#{productosBean.editarProducto(producto)}"

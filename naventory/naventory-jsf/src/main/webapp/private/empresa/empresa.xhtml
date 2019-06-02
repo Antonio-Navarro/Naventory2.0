@@ -114,7 +114,7 @@
 										value="Desbloquear usuario" position="top" />
 								</p:commandLink>
 
-								<p:commandLink styleClass="bloquear" id="fadeBorrar"
+								<p:commandLink styleClass="bloquear" id="fadeBorrar" process="@this"
 									actionListener="#{empresaBean.borrarUsuario(user)}"
 									update="userTable">
 									<p:confirm header="#{msg['needConfirmation']}"

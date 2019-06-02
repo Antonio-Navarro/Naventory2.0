@@ -155,4 +155,9 @@ public class ServicioProductoImpl implements ServicioProducto {
 	public Long countByEmpresa(Empresa empresa) {
 		return this.productoRepository.countByEmpresa(empresa);
 	}
+
+	@Override
+	public List<Producto> findProductosStockBajo(String empresa) {
+		return this.productoRepository.findProductosStockBajo(empresa);
+	}
 }

@@ -105,9 +105,10 @@
 								<p:remoteCommand name="passToJSFacebook" process="@this"
 									partialSubmit="true" action="#{loginBean.loginFacebook}" />
 								<fb:login-button scope="public_profile,email" data-width="320px"
-									data-button-type="continue_with" style="width: 321px;"
-									onlogin="checkLoginState();" data-size="medium"
-									data-use-continue-as="true"></fb:login-button>
+									class="fb-login-button" data-size="medium"
+									data-button-type="login_with" data-auto-logout-link="false"
+									data-use-continue-as="true" style="width: 321px;"
+									onlogin="checkLoginState();"></fb:login-button>
 
 							</div>
 						</p:panel>
@@ -195,8 +196,7 @@
 	}
 	function cambiarTextos(){
 		$("*[id^=connected]")[0].innerText = "Continuar con Google";
-		$("*[id^=not_signed_]")[0].innerText = "Iniciar con Google";
-		$("*[id^=not_signed_]")[0].innerText = "Iniciar con Google";
+		$("*[id^=not_signed_]")[0].innerText = "Iniciar sesión con Google";
 		$("#googleDiv").css("visibility","visible")
 		
 	}

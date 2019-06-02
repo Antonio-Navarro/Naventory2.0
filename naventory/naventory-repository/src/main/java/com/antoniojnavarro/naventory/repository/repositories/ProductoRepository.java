@@ -16,6 +16,9 @@ public interface ProductoRepository extends BaseRepository<Producto, ProductoSea
 	@Query("SELECT sum(p.precio * p.stock) FROM Producto p where p.empresa = ?1")
 	Float getTotalInventario(Empresa empresa);
 
+	@Query("SELECT p FROM Producto p where p.stock < p.stockMin and p.empresa.cif = ?1")
+	List<Producto> findProductosStockBajo(String empresa);
+
 	Long countByEmpresa(Empresa empresa);
 
 }

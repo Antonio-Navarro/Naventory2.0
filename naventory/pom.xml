@@ -156,6 +156,6 @@
 		<module>naventory-jsf</module>
 		<module>naventory-services</module>
 		<module>naventory-model</module>
-		<module>naventory-dao</module>
+		<module>naventory-repository</module>
 	</modules>
 </project>

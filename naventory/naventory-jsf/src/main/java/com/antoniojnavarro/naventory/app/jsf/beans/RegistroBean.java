@@ -98,10 +98,7 @@ public class RegistroBean extends MasterBean {
 	}
 
 	public void comprobarSiInvitacion() {
-		if (cif == null || cif.isEmpty() || email == null || email.isEmpty() || token == null || token.isEmpty()) {
-
-		} else {
-
+		if (cif != null && !cif.isEmpty() && email != null && !email.isEmpty() && token != null && !token.isEmpty()) {
 			invitacion = srvEmpresaInvitacion.findEmpresaInvitacionByCifAndEmailAndToken(cif, email, token);
 
 			if (invitacion == null || "N".equals(invitacion.getValido())) {

@@ -7,7 +7,7 @@
 		<artifactId>naventory</artifactId>
 		<version>0.0.1</version>		
 	</parent>
-	<artifactId>naventory-dao</artifactId>
+	<artifactId>naventory-repository</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
