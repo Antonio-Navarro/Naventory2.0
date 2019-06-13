@@ -63,8 +63,8 @@
 						<p:outputPanel
 							rendered="#{registroBean.registroInvitacion == false}">
 							<p:wizard flowListener="#{registroBean.onFlowProcess}"
-								id="wizardRegistroEmpresa" nextLabel="Ir a datos del Usuario"
-								backLabel="Atras" showStepStatus="false">
+								id="wizardRegistroEmpresa" nextLabel="#{msg['registro.nextLabel']}"
+								backLabel="#{msg['registro.backLabel']}" showStepStatus="false">
 								<p:tab id="empresaTab">
 									<p:panel id="empresaPanel"
 										header="#{msg['register.title.empresa']}">
@@ -106,8 +106,6 @@
 										<div class="ui-inputgroup inputUser">
 											<span class="ui-inputgroup-addon iconForm"><i
 												class="fa fa-phone"></i></span>
-											<p:outputLabel for="telEmpresa" value="Teléfono"
-												style="display:none" />
 											<p:inputText value="#{registroBean.usuario.empresa.telefono}"
 												styleClass="form-control" maxlength="2555" id="telEmpresa"
 												placeholder="#{msg['register.empresa.telefono']}"

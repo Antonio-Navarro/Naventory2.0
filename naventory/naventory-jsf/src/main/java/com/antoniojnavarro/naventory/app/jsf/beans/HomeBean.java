@@ -30,6 +30,7 @@ import com.antoniojnavarro.naventory.services.api.ServicioCompra;
 import com.antoniojnavarro.naventory.services.api.ServicioNovedad;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.api.ServicioVenta;
+import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 
 @Named("homeBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -44,7 +45,8 @@ public class HomeBean extends MasterBean {
 	private ServicioProducto srvProducto;
 	@Autowired
 	private ServicioCompra srvCompra;
-
+	@Autowired
+	private ServicioMensajesI18n srvMensajes;
 	@Autowired
 	private ServicioVenta srvVenta;
 	@Autowired
@@ -70,9 +72,7 @@ public class HomeBean extends MasterBean {
 
 	@PostConstruct
 	public void init() {
-		logger.debug("Pasando por el init de home");
 		this.usuarioAuteticado = srvAutenticacion.getUserDetailsCurrentUserLogged();
-		logger.info("Usuario autenticado: " + usuarioAuteticado.getUsername());
 		cargarNovedades();
 		this.numProductos = srvProducto.countByEmpresa(this.usuarioAuteticado.getUsuario().getEmpresa());
 		this.numCompras = srvCompra.countByEmpresa(this.usuarioAuteticado.getUsuario().getEmpresa());
@@ -94,7 +94,7 @@ public class HomeBean extends MasterBean {
 		List<GraficaGenericDto> datosGraficaVentas = srvVenta
 				.findFormasPagoGrafica(this.usuarioAuteticado.getUsuario().getEmpresa());
 		if (datosGraficaVentas == null || datosGraficaVentas.size() == 0) {
-			donut.put("Sin datos", 0);
+			donut.put(srvMensajes.getMensajeI18n("sindatos"), 0);
 		} else {
 			for (GraficaGenericDto registro : datosGraficaVentas) {
 				donut.put(registro.getEtiqueta(), registro.getCantidad());
@@ -126,12 +126,12 @@ public class HomeBean extends MasterBean {
 		Double totasGastos = 0.0;
 
 		ChartSeries ingresos = new ChartSeries();
-		ingresos.setLabel("Ingresos");
+		ingresos.setLabel(srvMensajes.getMensajeI18n("ingresos"));
 
 		List<GraficaGenericDto> datosGraficaIngresos = srvVenta
 				.getIngresosMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa(), numMesesGastosIngresos);
 		if (datosGraficaIngresos == null || datosGraficaIngresos.size() == 0) {
-			ingresos.set("Sin datos", 0);
+			ingresos.set(srvMensajes.getMensajeI18n("sindatos"), 0);
 
 		} else {
 			for (GraficaGenericDto registro : datosGraficaIngresos) {
@@ -141,11 +141,11 @@ public class HomeBean extends MasterBean {
 		}
 
 		ChartSeries gastos = new ChartSeries();
-		gastos.setLabel("Gastos");
+		gastos.setLabel(srvMensajes.getMensajeI18n("gastos"));
 		List<GraficaGenericDto> datosGraficaGastos = srvCompra
 				.getGastosMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa(), numMesesGastosIngresos);
 		if (datosGraficaGastos == null || datosGraficaGastos.size() == 0) {
-			gastos.set("Sin datos", 0);
+			gastos.set(srvMensajes.getMensajeI18n("sindatos"), 0);
 
 		} else {
 			for (GraficaGenericDto registro : datosGraficaGastos) {
@@ -174,12 +174,12 @@ public class HomeBean extends MasterBean {
 		barGastosIngresos.setLegendPosition("ne");
 
 		Axis xAxis = barGastosIngresos.getAxis(AxisType.X);
-		xAxis.setLabel("Meses");
+		xAxis.setLabel(srvMensajes.getMensajeI18n("meses"));
 		barGastosIngresos.setShowPointLabels(true);
 		barGastosIngresos.setSeriesColors("5cb85c,f0ad4e");
 
 		Axis yAxis = barGastosIngresos.getAxis(AxisType.Y);
-		yAxis.setLabel("Totales");
+		yAxis.setLabel(translateI18NProperty("totales"));
 		yAxis.setMin(0);
 	}
 
@@ -188,12 +188,12 @@ public class HomeBean extends MasterBean {
 
 		LineChartSeries clientes = new LineChartSeries();
 		clientes.setFill(true);
-		clientes.setLabel("Clientes");
+		clientes.setLabel(srvMensajes.getMensajeI18n("sidebar.menu.clientes"));
 
 		List<GraficaGenericDto> datosGraficaClientes = srvCliente
 				.findClientesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa().getCif());
 		if (datosGraficaClientes == null || datosGraficaClientes.size() == 0) {
-			clientes.set("Sin datos", 0);
+			clientes.set(srvMensajes.getMensajeI18n("sindatos"), 0);
 		} else {
 			for (GraficaGenericDto registro : datosGraficaClientes) {
 				clientes.set(registro.getEtiqueta(), registro.getCantidad());
@@ -208,11 +208,11 @@ public class HomeBean extends MasterBean {
 		areaClientes.setZoom(true);
 		areaClientes.setExtender("customExtender");
 		areaClientes.setAnimate(true);
-		Axis xAxis = new CategoryAxis("Fecha");
+		Axis xAxis = new CategoryAxis(srvMensajes.getMensajeI18n("fecha"));
 		xAxis.setTickAngle(0);
 		areaClientes.getAxes().put(AxisType.X, xAxis);
 		Axis yAxis = areaClientes.getAxis(AxisType.Y);
-		yAxis.setLabel("Cantidad");
+		yAxis.setLabel(srvMensajes.getMensajeI18n("ventas.cantidad"));
 		yAxis.setMin(0);
 		yAxis.setMax(this.numClientes + 1);
 	}
@@ -222,12 +222,12 @@ public class HomeBean extends MasterBean {
 
 		LineChartSeries ventas = new LineChartSeries();
 		ventas.setFill(true);
-		ventas.setLabel("Ventas");
+		ventas.setLabel(srvMensajes.getMensajeI18n("sidebar.menu.ventas"));
 
 		List<GraficaGenericDto> datosGraficaVentas = srvVenta
 				.getVentasMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa());
 		if (datosGraficaVentas == null || datosGraficaVentas.size() == 0) {
-			ventas.set("Sin datos", 0);
+			ventas.set(srvMensajes.getMensajeI18n("sindatos"), 0);
 		} else {
 			for (GraficaGenericDto registro : datosGraficaVentas) {
 				ventas.set(registro.getEtiqueta(), registro.getCantidad());
@@ -242,11 +242,11 @@ public class HomeBean extends MasterBean {
 		areaVentas.setExtender("customExtender");
 		areaVentas.setZoom(true);
 		areaVentas.setAnimate(true);
-		Axis xAxis = new CategoryAxis("Meses");
+		Axis xAxis = new CategoryAxis(srvMensajes.getMensajeI18n("meses"));
 		xAxis.setTickAngle(0);
 		areaVentas.getAxes().put(AxisType.X, xAxis);
 		Axis yAxis = areaVentas.getAxis(AxisType.Y);
-		yAxis.setLabel("Cantidad");
+		yAxis.setLabel(srvMensajes.getMensajeI18n("ventas.cantidad"));
 		yAxis.setMin(0);
 		yAxis.setMax(this.numVentas + 1);
 	}

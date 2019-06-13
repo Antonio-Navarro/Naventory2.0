@@ -198,12 +198,12 @@
 									<ul class="dropdown-menu dropdown-alerts">
 										<ui:repeat var="alerta" value="#{templateAppBean.alertas}">
 											<li style="padding: 5px"><i
-												class="fa fa-bell pull-left fa-fw" style="color:red"></i> <h:outputText
+												class="fa fa-bell pull-left fa-fw" style="color: red"></i> <h:outputText
 													style="color:white" value="Alerta nivel bajo de stock en" />
 												<h:outputText style="color:red;font-weight: bold;"
 													value=" ${alerta.producto.nombre}" /> <h:outputText
-													style="color:white;font-weight: bold;" value=" quedan" /> <h:outputText
-													style="color:red;font-weight: bold;"
+													style="color:white;font-weight: bold;" value=" quedan" />
+												<h:outputText style="color:red;font-weight: bold;"
 													value=" ${alerta.producto.stock} ${alerta.producto.unidad}" />
 
 
@@ -267,8 +267,6 @@
 					</h:form>
 				</div>
 			</div>
-			<!-- /page content -->
-			<!-- footer content -->
 			<footer>
 				<div class="pull-right" style="margin-right: 5%">
 					<h:outputText value="#{msg['aplicacion.nombre']}" />
@@ -277,11 +275,22 @@
 				</div>
 				<div class="pull-right" style="margin-right: 6px;">
 					<h:form id="formThemeSwitcher">
-						<p:themeSwitcher id="basic" style="width:165px">
+						<f:view locale="#{themeSwitcherBean.locale}">
+							<p:selectOneMenu id="lenguaje" onchange="submit()"
+								valueChangeListener="#{themeSwitcherBean.cambiarIdiomaChanged}"
+								value="#{themeSwitcherBean.localeStr}" style="width:125px">
+								<f:selectItem itemLabel="#{msg['espanol']}" itemValue="es" />
+								<f:selectItem itemLabel="#{msg['ingles']}" itemValue="en" />
+
+							</p:selectOneMenu>
+						</f:view>
+						<p:themeSwitcher id="basic" style="width:165px"
+							value="#{themeSwitcherBean.theme}">
 							<f:selectItem itemLabel="#{msg['themeswitcher.choose']}"
 								itemValue="" noSelectionOption="true" />
 							<f:selectItems value="#{themeSwitcherBean.themes}" var="theme"
 								itemLabel="#{theme}" itemValue="#{theme}" />
+							<p:ajax listener="#{themeSwitcherBean.cambiarTheme}" />
 						</p:themeSwitcher>
 					</h:form>
 				</div>
