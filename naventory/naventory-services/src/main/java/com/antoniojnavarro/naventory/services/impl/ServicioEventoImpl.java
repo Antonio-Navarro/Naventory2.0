@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.EventoDao;
 import com.antoniojnavarro.naventory.model.entities.Evento;
 import com.antoniojnavarro.naventory.model.entities.Usuario;
 import com.antoniojnavarro.naventory.model.filters.EventoSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.EventoRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioEvento;
 import com.antoniojnavarro.naventory.services.api.ServicioUsuario;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
@@ -29,43 +29,43 @@ public class ServicioEventoImpl implements ServicioEvento {
 	private ServicioMensajesI18n srvMensajes;
 
 	@Autowired
-	private EventoDao eventoDao;
+	private EventoRepository eventoRepository;
 
 	@Override
 	public Evento findById(String id) throws ServicioException {
-		return this.eventoDao.findOne(id);
+		return this.eventoRepository.findOne(id);
 	}
 
 	@Override
 	public List<Evento> findBySearchFilter(EventoSearchFilter searchFilter) throws ServicioException {
 		// TODO Auto-generated method stub
-		return eventoDao.findBySearchFilter(searchFilter);
+		return eventoRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Evento> findBySearchFilter(EventoSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.eventoDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.eventoRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Evento> findBySearchFilterPagination(EventoSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.eventoDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.eventoRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Evento> findBySearchFilterPagination(EventoSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.eventoDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.eventoRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Evento> findAll() throws ServicioException {
 		// TODO Auto-generated method stub
-		return (List<Evento>) this.eventoDao.findAll();
+		return (List<Evento>) this.eventoRepository.findAll();
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class ServicioEventoImpl implements ServicioEvento {
 	@Override
 	public Evento save(Evento entity) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.eventoDao.save(entity);
+		return this.eventoRepository.save(entity);
 	}
 
 	@Autowired
@@ -116,7 +116,7 @@ public class ServicioEventoImpl implements ServicioEvento {
 	@Override
 	public void delete(Evento entity) throws ServicioException {
 
-		this.eventoDao.delete(entity);
+		this.eventoRepository.delete(entity);
 	}
 
 	@Override
@@ -126,14 +126,14 @@ public class ServicioEventoImpl implements ServicioEvento {
 
 	@Override
 	public void deleteById(String id) throws ServicioException {
-		this.eventoDao.delete(id);
+		this.eventoRepository.delete(id);
 
 	}
 
 	@Override
 	public List<Evento> findEventosByUsuario(Usuario user) throws ServicioException {
 		// TODO Auto-generated method stub
-		return this.eventoDao.findEventosByUsuario(user);
+		return this.eventoRepository.findEventosByUsuario(user);
 	}
 
 }

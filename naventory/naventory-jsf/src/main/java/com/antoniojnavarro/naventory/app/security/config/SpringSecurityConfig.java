@@ -36,7 +36,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasAuthority(RolEnum.ROLE_ADMIN.name()).and().authorizeRequests().antMatchers("/private/empresa/**")
 				.hasAuthority(RolEnum.ROLE_EMP.name()).anyRequest().authenticated().and().csrf().disable()
 				.exceptionHandling().and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true)
-				.expiredUrl("/too-many-sessionse.xhtml");
+				.expiredUrl("/too-many-sessions.xhtml");
 		http.authorizeRequests();
 	}
 

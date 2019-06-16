@@ -48,12 +48,12 @@ public class AdministracionBean extends MasterBean {
 
 	private void crearGrafica() {
 		graficaCrecimiento = initGraficaModel();
-		graficaCrecimiento.setTitle("Crecimiento de usuarios");
+		graficaCrecimiento.setTitle(translateI18NProperty("label.grafica.administracion"));
 		graficaCrecimiento.setLegendPosition("e");
 		graficaCrecimiento.setShowPointLabels(true);
-		graficaCrecimiento.getAxes().put(AxisType.X, new CategoryAxis("Años"));
+		graficaCrecimiento.getAxes().put(AxisType.X, new CategoryAxis(translateI18NProperty("anos")));
 		Axis yAxis = graficaCrecimiento.getAxis(AxisType.Y);
-		yAxis.setLabel("Número de usuarios");
+		yAxis.setLabel(translateI18NProperty("numero.usuarios"));
 
 	}
 
@@ -62,7 +62,7 @@ public class AdministracionBean extends MasterBean {
 
 		ChartSeries users = new ChartSeries();
 
-		users.setLabel("Usuarios");
+		users.setLabel(translateI18NProperty("usuarios"));
 		Object[] usersDB = this.srvUsuario.findUsersGrafica();
 		for (int i = 0; i < usersDB.length; i++) {
 			Object[] datos = (Object[]) usersDB[i];

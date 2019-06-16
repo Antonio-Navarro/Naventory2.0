@@ -12,14 +12,26 @@
 	</ui:define>
 	<ui:define name="body">
 		<div class="row">
-			<div class="col-md-12" style="color: #232323">
+			<div class="col-md-8" style="color: #232323">
 				<h3>
 					<p:outputLabel>
 						<i class="fa fa-bar-chart fa-fw" />#{msg['stock.title']} 
 					</p:outputLabel>
 
 				</h3>
+				
 			</div>
+			<div class="col-md-4" >
+					<h4>
+						<span class="label label-primary">#{msg['valor.total']} <p:outputLabel
+								value="${productosBean.totalInventario}">
+								<f:convertNumber type="currency" currencySymbol="€" locale="es"
+									minIntegerDigits="2" />
+							</p:outputLabel>
+						</span>
+					</h4>
+
+				</div>
 		</div>
 		<div class="separator" />
 
@@ -38,25 +50,28 @@
 					rowsPerPageTemplate="#{defaultRowsPerTemplate}"
 					emptyMessage="#{msg['noresult']}">
 					<f:facet name="header">
-						<div>
-							<h4>
-								<span class="label label-primary">Valor total del
-									inventario: <p:outputLabel
-										value="${productosBean.totalInventario}">
-										<f:convertNumber type="currency" currencySymbol="€"
-											locale="es" minIntegerDigits="2" />
-									</p:outputLabel>
-								</span>
-							</h4>
 
+						<div class="text-right">
+							<p:commandButton value="#{msg['productos.stock.bajo']}"
+								immediate="true" ajax="true" styleClass="btn-danger"
+								process="@this" update="productoTable"
+								style="float:right; margin-left:5px"
+								actionListener="#{productosBean.cargarProductosStockBajo}">
+							</p:commandButton>
+							<p:commandButton value="PDF" immediate="true" ajax="false"
+								styleClass="btn-success" style="margin-left:5px"
+								icon="fa fa-file-pdf-o">
+								<p:dataExporter type="pdf" target="productoTable"
+									encoding="cp1250" fileName="stockBajo"
+									options="#{productosBean.pdfOpt}"
+									preProcessor="#{productosBean.preProcesamientoPdf}" />
+							</p:commandButton>
 						</div>
 					</f:facet>
 					<f:facet name="footer">
-
 						<div class="text-left">
-							<h:outputFormat value="#{msg['numResult']}">
-								<f:param value="#{productosBean.listaProductos.numResults}"></f:param>
-							</h:outputFormat>
+							<h:outputLabel
+								value="#{msg['total.encontrado']} #{productosBean.listaProductos.numResults} #{msg['resultados']}"></h:outputLabel>
 						</div>
 					</f:facet>
 					<p:column sortBy="#{producto.sku}" style="width:7%"

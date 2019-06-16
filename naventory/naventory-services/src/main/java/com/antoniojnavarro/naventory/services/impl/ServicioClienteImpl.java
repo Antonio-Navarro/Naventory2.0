@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.ClienteDao;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.ClienteRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
@@ -30,41 +30,41 @@ public class ServicioClienteImpl implements ServicioCliente {
 	private ServicioMensajesI18n srvMensajes;
 
 	@Autowired
-	private ClienteDao clienteDao;
+	private ClienteRepository clienteRepository;
 	@Autowired
 	private ServicioEmpresa srvEmpresa;
 
 	@Override
 	public Cliente findById(Integer id) throws ServicioException {
-		return this.clienteDao.findOne(id);
+		return this.clienteRepository.findOne(id);
 	}
 
 	@Override
 	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter) throws ServicioException {
-		return clienteDao.findBySearchFilter(searchFilter);
+		return clienteRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Cliente> findBySearchFilter(ClienteSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
-		return this.clienteDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.clienteRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Cliente> findBySearchFilterPagination(ClienteSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.clienteDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.clienteRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Cliente> findBySearchFilterPagination(ClienteSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		return this.clienteDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.clienteRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Cliente> findAll() throws ServicioException {
-		return (List<Cliente>) this.clienteDao.findAll();
+		return (List<Cliente>) this.clienteRepository.findAll();
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class ServicioClienteImpl implements ServicioCliente {
 
 	@Override
 	public Cliente save(Cliente entity) throws ServicioException {
-		return this.clienteDao.save(entity);
+		return this.clienteRepository.save(entity);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class ServicioClienteImpl implements ServicioCliente {
 	@Override
 	public void delete(Cliente entity) throws ServicioException {
 
-		this.clienteDao.delete(entity);
+		this.clienteRepository.delete(entity);
 	}
 
 	@Override
@@ -127,18 +127,18 @@ public class ServicioClienteImpl implements ServicioCliente {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.clienteDao.delete(id);
+		this.clienteRepository.delete(id);
 
 	}
 
 	@Override
 	public List<GraficaGenericDto> findClientesGrafica(String cif) {
-		return this.clienteDao.findClientesGrafica(cif);
+		return this.clienteRepository.findClientesGrafica(cif);
 	}
 
 	@Override
 	public Long countByEmpresa(Empresa empresa) {
-		return this.clienteDao.countByEmpresa(empresa);
+		return this.clienteRepository.countByEmpresa(empresa);
 	}
 
 }

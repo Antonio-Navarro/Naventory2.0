@@ -13,16 +13,16 @@
 					<p:outputLabel>
 						<i class="fa fa-filter fa-fw" />
 					</p:outputLabel>
-					<h:outputText value="Búsqueda" />
+					<h:outputText value="#{msg['busqueda']}" />
 				</f:facet>
 				<f:facet name="actions">
-					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+					<p:commandButton icon="ui-icon-refresh" value="#{msg['limpiar']}"
 						style="float:right" immediate="true"
 						actionListener="#{comprasBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiar" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-search" value="Buscar"
+					<p:commandButton icon="ui-icon-search" value="#{msg['buscar']}"
 						id="btnBuscar" style="float:right"
 						actionListener="#{comprasBean.buscar}"
 						update="formApp:compraTable" process="panelFiltro" />
@@ -30,27 +30,27 @@
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="facturaFiltro" value="Factura"
+							<p:outputLabel for="facturaFiltro" value="#{msg['factura']}"
 								styleClass="lblForm" />
 							<p:inputText id="facturaFiltro" styleClass="inputFiltro"
 								value="#{comprasBean.filtro.factura}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroProducto" value="Producto "
+							<p:outputLabel for="filtroProducto" value="#{msg['producto']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroProducto" styleClass="inputFiltro"
 								value="#{comprasBean.filtro.nombreProd}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroProveedor" value="Proveedor"
+							<p:outputLabel for="filtroProveedor" value="#{msg['proveedor']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroProveedor" styleClass="inputFiltro"
 								value="#{comprasBean.filtro.proveedor}" />
 						</p:column>
 						<p:column>
-							<p:calendar id="filtroFechaHasta" placeholder="Fecha desde"
+							<p:calendar id="filtroFechaHasta" placeholder="#{msg['fecha.desde']}"
 								value="#{comprasBean.filtro.fechaFin}" pattern="dd/MM/yyyy" />  -  	
-							<p:calendar id="filtroFecha" placeholder="Fecha hasta"
+							<p:calendar id="filtroFecha" placeholder="#{msg['fecha.hasta']}"
 								style="margin-left:3px" value="#{comprasBean.filtro.fechaIni}"
 								pattern="dd/MM/yyyy" />
 
@@ -65,16 +65,16 @@
 					<p:outputLabel>
 						<i class="fa fa-search-plus fa-fw" />
 					</p:outputLabel>
-					<h:outputText value="Búsqueda Avanzada" />
+					<h:outputText value="#{msg['busqueda.avanzada']}" />
 				</f:facet>
 				<f:facet name="actions">
-					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+					<p:commandButton icon="ui-icon-refresh" value="#{msg['limpiar']}"
 						style="float:right" immediate="true"
 						actionListener="#{comprasBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiarAvanzada" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-search" value="Buscar"
+					<p:commandButton icon="ui-icon-search" value="#{msg['buscar']}"
 						id="btnBuscarAvanzada" style="float:right"
 						actionListener="#{comprasBean.buscar}"
 						update="formApp:compraTable" process="panelFiltro" />
@@ -82,13 +82,13 @@
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroCantidad" value="Cantidad"
+							<p:outputLabel for="filtroCantidad" value="#{msg['ventas.cantidad']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroCantidad" styleClass="inputFiltro"
 								value="#{comprasBean.filtro.cantidad}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroPrecio" value="Precio"
+							<p:outputLabel for="filtroPrecio" value="#{msg['productos.precio.table']}"
 								styleClass="lblForm" />
 							<p:inputNumber id="filtroPrecio"
 								value="#{comprasBean.filtro.precio}" symbol="€"
@@ -96,7 +96,7 @@
 
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroDescuento" value="Descuento"
+							<p:outputLabel for="filtroDescuento" value="#{msg['clientes.descuento']}"
 								styleClass="lblForm" />
 							<p:inputNumber id="filtroDescuento"
 								value="#{comprasBean.filtro.descuento}" symbol="%"

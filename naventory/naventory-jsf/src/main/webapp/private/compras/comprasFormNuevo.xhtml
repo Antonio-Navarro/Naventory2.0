@@ -17,25 +17,19 @@
 				value="#{msg['compras.titleNuevaCompra']}"></h:outputText>
 		</f:facet>
 		<p:wizard flowListener="#{comprasBean.onFlowProcess}"
-			backLabel="Atras" nextLabel="Siguiente">
+			backLabel="#{msg['atras']}" nextLabel="#{msg['siguiente']}">
 
-			<p:tab id="compraTab" title="Compra">
-				<p:panel header="Detalles de la compra">
+			<p:tab id="compraTab" title="#{msg['compra']}">
+				<p:panel header="#{msg['compra.detalle']}">
 					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 						columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
-
-
-
-
-
-
 						<p:outputLabel for="proveedorSelectNuevo"
 							value="#{msg['proveedor']}" />
 						<p:column style="display:inline-flex">
 							<div class="ui-inputgroup">
 								<p:inputText id="proveedorSelectNuevo" readonly="true"
 									required="true" style="height:30px;text-align:center"
-									placeholder="Elije un proveedor de la lista de valores..."
+									placeholder="#{msg['elige.proveedor']}"
 									requiredMessage="#{msg['compras.proveedor.required']}"
 									value="#{comprasBean.selectedCompra.proveedor.nombre}" />
 								<p:commandButton id="buscarProveedorNuevo" icon="fa fa-truck"
@@ -53,12 +47,12 @@
 								modal="true">
 								<p:panel id="panelProveedorFiltroNuevo">
 									<p:inputText id="filtroNombreNuevo" styleClass="inputFiltro"
-										placeholder="Nombre"
+										placeholder="#{msg['nombre']}"
 										value="#{comprasBean.filtroProveedores.nombre}"
 										style="float:unset" />
 									<p:commandButton id="buscarTablaProveedoresNuevo"
 										style="float:right" onclick="pasarValorFiltroNuevo()"
-										value="Buscar" immediate="true"
+										value="#{msg['buscar']}" immediate="true"
 										update="formApp:tablaProveedoresOverlayNuevo" />
 									<p:remoteCommand name="cargarProveedoresRCNuevo"
 										immediate="true" partialSubmit="panelProveedorFiltroNuevo"
@@ -67,8 +61,8 @@
 								<p:dataTable var="prov" id="tablaProveedoresOverlayNuevo"
 									style="margin-top:3px;" value="#{comprasBean.proveedores}"
 									rows="5" lazy="true" paginator="true" paginatorPosition="top">
-									<f:facet name="header">Lista de Proveedores</f:facet>
-									<p:column headerText="Nombre">
+									<f:facet name="header">#{msg['lista.proveedores']}</f:facet>
+									<p:column headerText="#{msg['nombre']}">
 										<h:outputText value="#{prov.nombre}" />
 									</p:column>
 									<p:column style="text-align: center">
@@ -76,7 +70,7 @@
 											onblur="inyectaValorProveedorEnHiddenNuevo()"
 											immediate="true"
 											oncomplete="PF('panelProveedoresOverlayNuevo').hide()"
-											icon="fa fa-hand-o-up" title="Seleccionar">
+											icon="fa fa-hand-o-up" title="#{msg['producto']}">
 											<f:setPropertyActionListener value="#{prov}"
 												target="#{comprasBean.selectedCompra.proveedor}" />
 										</p:commandButton>
@@ -104,8 +98,8 @@
 							value="#{comprasBean.selectedCompra.iva}"
 							maxlength="#{defaultMaxLengthDataBaseVarchar}"
 							style="font-family:Arial, FontAwesome; text-align:center">
-							<p:watermark for="ivaInputNuevo"
-								value="Por defecto se aplica el 21 %" id="watermark3" />
+							<p:watermark for="ivaInputNuevo" value="#{msg['defecto.21']}"
+								id="watermark3" />
 						</p:inputText>
 						<p:outputLabel for="descInputNuevo" value="#{msg['compras.desc']}" />
 						<p:inputText id="descInputNuevo"
@@ -118,17 +112,16 @@
 						<p:inputText id="descuentoInputNuevo"
 							value="#{comprasBean.selectedCompra.descuento}"
 							maxlength="#{defaultMaxLengthDataBaseVarchar}"
-							placeholder="Por defecto no se aplica ningún descuento. El descuento se realiza en porcentaje"
 							style="font-family:Arial, FontAwesome; text-align:center">
 							<p:watermark for="descuentoInputNuevo" style="font-size:10px"
-								value="El descuento se realiza en porcentaje" id="watermark4" />
+								value="#{msg['descuento.porcentaje']}" id="watermark4" />
 						</p:inputText>
 
 					</p:panelGrid>
 				</p:panel>
 			</p:tab>
-			<p:tab id="productoTab" title="Producto">
-				<p:panel header="Detalle ">
+			<p:tab id="productoTab" title="#{msg['producto']}">
+				<p:panel header="#{msg['compra.detalle']} ">
 					<p:panelGrid columns="2" layout="grid" styleClass="panelgrid-white"
 						columnClasses="ui-grid-col-3, ui-grid-col-9" style="width: 100%;">
 						<p:outputLabel for="skuInputNuevo"
@@ -146,7 +139,7 @@
 							requiredMessage="#{msg['productos.categoria.required']}"
 							value="#{comprasBean.selectedProducto.categoria}"
 							style="min-width:100% !important;">
-							<f:selectItem itemLabel="Elige una categoría..."
+							<f:selectItem itemLabel="#{msg['elige.categoria']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{comprasBean.categorias}" var="categoria"
 								itemLabel="#{categoria.nomCat}" itemValue="#{categoria}" />

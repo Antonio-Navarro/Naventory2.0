@@ -108,10 +108,11 @@ public class EmpresaBean extends MasterBean {
 		addInfo("users.succesUpdate");
 	}
 
-	public void cambiarEstadoAdmin(Usuario user) {
-		user.setAdministrador(("Y".equals(user.getAdministrador())) ? "N" : "Y");
-		srvUsuario.saveOrUpdate(user, false);
-		addInfo("users.succesUpdate");
+	public void borrarUsuario(Usuario user) {
+
+		srvUsuario.delete(user);
+		this.usuarios.remove(user);
+		addInfo("users.succesDelete");
 	}
 
 	public List<Usuario> getUsuarios() {

@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
+import org.primefaces.PrimeFaces;
 
 public class MasterBean implements Serializable {
 
@@ -77,9 +77,8 @@ public class MasterBean implements Serializable {
 	 * 
 	 * @param dialog
 	 */
-	@SuppressWarnings("deprecation")
 	public void openDialog(String dialog) {
-		RequestContext.getCurrentInstance().execute("PF('" + dialog + "').show();");
+		PrimeFaces.current().executeScript("PF('" + dialog + "').show();");
 	}
 
 	/**
@@ -87,9 +86,8 @@ public class MasterBean implements Serializable {
 	 * 
 	 * @param dialog
 	 */
-	@SuppressWarnings("deprecation")
 	public void closeDialog(String dialog) {
-		RequestContext.getCurrentInstance().execute("PF('" + dialog + "').hide();");
+		PrimeFaces.current().executeScript("PF('" + dialog + "').hide();");
 	}
 
 	/**
@@ -97,9 +95,8 @@ public class MasterBean implements Serializable {
 	 * 
 	 * @param component
 	 */
-	@SuppressWarnings("deprecation")
 	public void updateComponent(String... component) {
-		RequestContext.getCurrentInstance().update(Arrays.asList(component));
+		PrimeFaces.current().ajax().update(Arrays.asList(component));
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.antoniojnavarro.naventory.app.jsf.beans;
 
+import java.awt.Color;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.component.export.PDFOptions;
 import org.primefaces.event.SelectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +32,13 @@ import com.antoniojnavarro.naventory.model.filters.ProveedorSearchFilter;
 import com.antoniojnavarro.naventory.services.api.ServicioCategoria;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.api.ServicioProveedor;
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
 
 @Named("productosBean")
 @Scope(value = PFScope.VIEW_SCOPED)
@@ -47,6 +58,7 @@ public class ProductosBean extends MasterBean {
 	private ProductoSearchFilter filtro;
 	private Producto selectedProducto;
 	private ProveedorSearchFilter filtroProveedores;
+	private PDFOptions pdfOpt;
 
 	private UsuarioAutenticado usuarioAutenticado;
 	// LISTAS
@@ -74,6 +86,8 @@ public class ProductosBean extends MasterBean {
 		cargarCategorias();
 		cargarProveedores();
 		cargarTotalInventario();
+		customizationOptions();
+
 	}
 
 	public void inicilizarAtributos() {
@@ -167,6 +181,37 @@ public class ProductosBean extends MasterBean {
 		editing = false;
 	}
 
+	public void customizationOptions() {
+		pdfOpt = new PDFOptions();
+		pdfOpt.setFacetBgColor("#58ACFA");
+		pdfOpt.setFacetFontColor("#FFFFFF");
+		pdfOpt.setFacetFontStyle("BOLD");
+		pdfOpt.setCellFontSize("12");
+	}
+
+	public void cargarProductosStockBajo() {
+		this.listaProductos = new ProductoLazyDataModel(filtro, srvProducto, true);
+	}
+
+	public void preProcesamientoPdf(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A4.rotate());
+		pdf.open();
+
+		pdf.addAuthor(this.usuarioAutenticado.getUsuario().getEmail());
+		String d = new SimpleDateFormat("dd/mm/YYYY").format(new Date()).toString();
+		Paragraph p1 = new Paragraph("Informe de productos con stock bajo | " + d);
+		Font font = new Font(Font.TIMES_ROMAN, 18.0f, Font.BOLD, Color.RED);
+		p1.setFont(font);
+		Paragraph p2 = new Paragraph("Creado por el usuario " + this.usuarioAutenticado.getUsuario().getNombre() + " - "
+				+ this.usuarioAutenticado.getUsuario().getEmail());
+		p2.setFont(font);
+
+		pdf.add(p1);
+		pdf.add(p2);
+		pdf.add(Chunk.NEWLINE);
+	}
+
 	public Producto getProducto() {
 		return producto;
 	}
@@ -237,6 +282,14 @@ public class ProductosBean extends MasterBean {
 
 	public void setListaProductos(ProductoLazyDataModel listaProductos) {
 		this.listaProductos = listaProductos;
+	}
+
+	public PDFOptions getPdfOpt() {
+		return pdfOpt;
+	}
+
+	public void setPdfOpt(PDFOptions pdfOpt) {
+		this.pdfOpt = pdfOpt;
 	}
 
 }

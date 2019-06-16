@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.ProductoDao;
-import com.antoniojnavarro.naventory.dao.repositories.VentaDao;
 import com.antoniojnavarro.naventory.model.dtos.GraficaGenericDto;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.entities.Venta;
 import com.antoniojnavarro.naventory.model.filters.VentaSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.ProductoRepository;
+import com.antoniojnavarro.naventory.repository.repositories.VentaRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.api.ServicioVenta;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
@@ -35,42 +35,42 @@ public class ServicioVentaImpl implements ServicioVenta {
 	private ServicioEmpresa srvEmpresa;
 
 	@Autowired
-	private VentaDao ventaDao;
+	private VentaRepository ventaRepository;
 
 	@Autowired
-	private ProductoDao productoDao;
+	private ProductoRepository productoRepository;
 
 	@Override
 	public Venta findById(Integer id) throws ServicioException {
-		return this.ventaDao.findOne(id);
+		return this.ventaRepository.findOne(id);
 	}
 
 	@Override
 	public List<Venta> findBySearchFilter(VentaSearchFilter searchFilter) throws ServicioException {
-		return ventaDao.findBySearchFilter(searchFilter);
+		return ventaRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Venta> findBySearchFilter(VentaSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
-		return this.ventaDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.ventaRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Venta> findBySearchFilterPagination(VentaSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.ventaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.ventaRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Venta> findBySearchFilterPagination(VentaSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		return this.ventaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.ventaRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Venta> findAll() throws ServicioException {
-		return ventaDao.findAll();
+		return ventaRepository.findAll();
 	}
 
 	@Override
@@ -85,12 +85,12 @@ public class ServicioVentaImpl implements ServicioVenta {
 
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		return ventaDao.exists(id);
+		return ventaRepository.exists(id);
 	}
 
 	@Override
 	public Venta save(Venta entity) throws ServicioException {
-		return this.ventaDao.save(entity);
+		return this.ventaRepository.save(entity);
 	}
 
 	@Override
@@ -121,14 +121,14 @@ public class ServicioVentaImpl implements ServicioVenta {
 			validate(entity);
 		}
 		entity.getProducto().setStock(entity.getProducto().getStock() - entity.getCantidad());
-		productoDao.save(entity.getProducto());
+		productoRepository.save(entity.getProducto());
 		return this.save(entity);
 	}
 
 	@Override
 	public void delete(Venta entity) throws ServicioException {
 
-		this.ventaDao.delete(entity);
+		this.ventaRepository.delete(entity);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class ServicioVentaImpl implements ServicioVenta {
 
 	@Override
 	public void deleteById(Integer id) throws ServicioException {
-		this.ventaDao.delete(id);
+		this.ventaRepository.delete(id);
 
 	}
 
@@ -165,22 +165,22 @@ public class ServicioVentaImpl implements ServicioVenta {
 
 	@Override
 	public List<GraficaGenericDto> findFormasPagoGrafica(Empresa empresa) {
-		return this.ventaDao.findFormasPagoGrafica(empresa);
+		return this.ventaRepository.findFormasPagoGrafica(empresa);
 	}
 
 	@Override
 	public List<GraficaGenericDto> getVentasMensualesGrafica(Empresa empresa) {
-		return this.ventaDao.getVentasMensualesGrafica(empresa);
+		return this.ventaRepository.getVentasMensualesGrafica(empresa);
 	}
 
 	@Override
 	public List<GraficaGenericDto> getIngresosMensualesGrafica(Empresa empresa, Integer numMeses) {
-		return this.ventaDao.getIngresosMensualesGrafica(empresa, new PageRequest(0, numMeses));
+		return this.ventaRepository.getIngresosMensualesGrafica(empresa, new PageRequest(0, numMeses));
 
 	}
 
 	@Override
 	public Long countByEmpresa(Empresa empresa) {
-		return this.ventaDao.countByEmpresa(empresa);
+		return this.ventaRepository.countByEmpresa(empresa);
 	}
 }

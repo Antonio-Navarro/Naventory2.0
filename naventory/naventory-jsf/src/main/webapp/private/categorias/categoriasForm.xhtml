@@ -27,21 +27,18 @@
 				requiredMessage="#{msg['register.nombre.req']}"
 				value="#{categoriasBean.selectedCategoria.nomCat}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="Nombre de la categoría..."
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
 			<p:outputLabel for="descInput" value="#{msg['categorias.desc']}" />
 			<p:inputText id="descInput"
 				value="#{categoriasBean.selectedCategoria.desc}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="Brebe descripción..."
 				style="font-family:Arial, FontAwesome; text-align:center" />
 
 			<p:outputLabel for="obserInput" value="#{msg['categorias.obser']}" />
 			<p:inputTextarea id="obserInput"
 				value="#{categoriasBean.selectedCategoria.obser}" rows="3"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="Información opcional..."
 				style="width:100%;font-family:Arial, FontAwesome; text-align:center" />
 
 		</p:panelGrid>

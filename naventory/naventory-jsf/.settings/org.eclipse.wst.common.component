@@ -1,46 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                
+                                
+    
+    
+    
+    
     
     
     <wb-module deploy-name="naventory">
-                                
+                                                                
+        
+        
+        
+        
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                
+                                                                
+        
+        
+        
+        
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-                                
+                                                                
+        
+        
+        
+        
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-                                
+                                                                
+        
+        
+        
+        
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <dependent-module archiveName="naventory-services-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/naventory-services/naventory-services">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="naventory-dao-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/naventory-dao/naventory-dao">
+        <dependent-module archiveName="naventory-repository-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/naventory-repository/naventory-repository">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="naventory-model-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/naventory-model/naventory-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-                                
+                                                                
+        
+        
+        
+        
         
         
         <property name="java-output-path" value="/naventory-jsf/target/classes"/>
-                                
+                                                                
+        
+        
+        
+        
         
         
         <property name="context-root" value="naventory"/>
-                            
+                                                            
+    
+    
+    
+    
     
     
     </wb-module>
-            
+                            
+
+
+
+
 
 
 </project-modules>

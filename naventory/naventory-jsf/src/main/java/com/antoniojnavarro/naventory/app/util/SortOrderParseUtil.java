@@ -2,7 +2,7 @@ package com.antoniojnavarro.naventory.app.util;
 
 import org.primefaces.model.SortOrder;
 
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
 
 public class SortOrderParseUtil {
 

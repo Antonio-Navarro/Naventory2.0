@@ -156,6 +156,7 @@ public class PerfilBean extends MasterBean {
 		try {
 			is = event.getFile().getInputstream();
 			buffer = new byte[(int) file.getSize()]; // creamos el buffer
+			@SuppressWarnings("unused")
 			int readers = is.read(buffer); // leemos el archivo al buffer
 
 		} catch (IOException e) {

@@ -17,4 +17,6 @@ public interface ServicioProducto extends ServicioCrud<Producto, ProductoSearchF
 	Float getTotalInventario(Empresa empresa) throws ServicioException;
 
 	Long countByEmpresa(Empresa empresa);
+
+	List<Producto> findProductosStockBajo(String empresa);
 }

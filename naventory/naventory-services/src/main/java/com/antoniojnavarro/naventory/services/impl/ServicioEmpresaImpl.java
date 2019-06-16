@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
-import com.antoniojnavarro.naventory.dao.commons.enums.SortOrderEnum;
-import com.antoniojnavarro.naventory.dao.repositories.EmpresaDao;
 import com.antoniojnavarro.naventory.model.entities.Empresa;
 import com.antoniojnavarro.naventory.model.filters.EmpresaSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
+import com.antoniojnavarro.naventory.repository.commons.enums.SortOrderEnum;
+import com.antoniojnavarro.naventory.repository.repositories.EmpresaRepository;
 import com.antoniojnavarro.naventory.services.api.ServicioEmpresa;
 import com.antoniojnavarro.naventory.services.commons.ServicioException;
 import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
@@ -26,40 +26,40 @@ public class ServicioEmpresaImpl implements ServicioEmpresa {
 	@Autowired
 	private ServicioMensajesI18n srvMensajes;
 	@Autowired
-	private EmpresaDao empresaDao;
+	private EmpresaRepository empresaRepository;
 
 	@Override
 	public Empresa findById(String id) throws ServicioException {
-		return this.empresaDao.findOne(id);
+		return this.empresaRepository.findOne(id);
 	}
 
 	@Override
 	public List<Empresa> findBySearchFilter(EmpresaSearchFilter searchFilter) throws ServicioException {
-		return this.empresaDao.findBySearchFilter(searchFilter);
+		return this.empresaRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Empresa> findBySearchFilter(EmpresaSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
-		return this.empresaDao.findBySearchFilter(searchFilter, sortField, sortOrder);
+		return this.empresaRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 
 	}
 
 	@Override
 	public PaginationResult<Empresa> findBySearchFilterPagination(EmpresaSearchFilter searchFilter, int pageNumber,
 			int pageSize, String sortField, SortOrderEnum sortOrder) throws ServicioException {
-		return this.empresaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
+		return this.empresaRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize, sortField, sortOrder);
 	}
 
 	@Override
 	public PaginationResult<Empresa> findBySearchFilterPagination(EmpresaSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		return this.empresaDao.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
+		return this.empresaRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Empresa> findAll() throws ServicioException {
-		return (List<Empresa>) this.empresaDao.findAll();
+		return (List<Empresa>) this.empresaRepository.findAll();
 	}
 
 	@Override
@@ -74,18 +74,18 @@ public class ServicioEmpresaImpl implements ServicioEmpresa {
 
 	@Override
 	public boolean existsById(String id) throws ServicioException {
-		return this.empresaDao.exists(id);
+		return this.empresaRepository.exists(id);
 
 	}
 
 	@Override
 	public Empresa save(Empresa entity) throws ServicioException {
-		return this.empresaDao.save(entity);
+		return this.empresaRepository.save(entity);
 	}
 
 	@Override
 	public void delete(Empresa entity) throws ServicioException {
-		this.empresaDao.delete(entity);
+		this.empresaRepository.delete(entity);
 
 	}
 
@@ -97,13 +97,13 @@ public class ServicioEmpresaImpl implements ServicioEmpresa {
 
 	@Override
 	public void deleteById(String id) throws ServicioException {
-		this.empresaDao.delete(id);
+		this.empresaRepository.delete(id);
 
 	}
 
 	@Override
 	public boolean existsEmpresaByCif(String cif) throws ServicioException {
-		return this.empresaDao.existsEmpresaByCif(cif);
+		return this.empresaRepository.existsEmpresaByCif(cif);
 	}
 
 	@Override

@@ -8,9 +8,9 @@ import org.primefaces.model.SortOrder;
 
 import com.antoniojnavarro.naventory.app.util.Constantes;
 import com.antoniojnavarro.naventory.app.util.SortOrderParseUtil;
-import com.antoniojnavarro.naventory.dao.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.model.entities.Cliente;
 import com.antoniojnavarro.naventory.model.filters.ClienteSearchFilter;
+import com.antoniojnavarro.naventory.repository.commons.dto.paginationresult.PaginationResult;
 import com.antoniojnavarro.naventory.services.api.ServicioCliente;
 
 public class ClienteLazyDataModel extends LazyDataModel<Cliente> {

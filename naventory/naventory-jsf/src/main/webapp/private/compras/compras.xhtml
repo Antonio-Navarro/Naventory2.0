@@ -69,7 +69,7 @@
 									<p:dataExporter type="csv" target="compraTable"
 										fileName="compras" encoding="cp1250" />
 								</p:commandButton>
-								<p:commandButton id="toggler" type="button" value="Columnas"
+								<p:commandButton id="toggler" type="button" value="#{msg['columnas']}"
 									icon="ui-icon-calculator" />
 								<p:columnToggler datasource="compraTable" trigger="toggler" />
 
@@ -81,7 +81,7 @@
 					<f:facet name="footer">
 						<div class="text-left">
 							<h:outputLabel
-								value="Se han encontrado un total de #{comprasBean.listaCompras.numResults} resultados"></h:outputLabel>
+								value="#{msg['total.encontrado']} #{comprasBean.listaCompras.numResults} #{msg['resultados']}"></h:outputLabel>
 						</div>
 					</f:facet>
 

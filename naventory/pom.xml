@@ -15,8 +15,8 @@
 		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
 		<!-- JSF & Primefaces version -->
 		<jsf.version>2.2.13</jsf.version>
-		<primefaces.version>6.2</primefaces.version>
-		<primefaces.extensions.version>6.1.1</primefaces.extensions.version>
+		<primefaces.version>7.0</primefaces.version>
+		<primefaces.extensions.version>7.0</primefaces.extensions.version>
 		<primefaces.themes.version>1.0.8</primefaces.themes.version>
 		<!-- JSP versions -->
 		<jsp.version>2.3.1</jsp.version>
@@ -155,7 +155,7 @@
 	<modules>
 		<module>naventory-jsf</module>
 		<module>naventory-services</module>
-		<module>naventory-dao</module>
 		<module>naventory-model</module>
+		<module>naventory-repository</module>
 	</modules>
 </project>
