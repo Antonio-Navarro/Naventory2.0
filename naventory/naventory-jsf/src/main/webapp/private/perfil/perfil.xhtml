@@ -37,7 +37,7 @@
 			<div class="col-md-12">
 				<div class="col-md-6">
 					<h3 style="font-family: sans-serif;">
-						<span class="label label-info">Mis datos</span>
+						<span class="label label-info">#{msg['misdatos']}</span>
 					</h3>
 					<div class="separator" />
 					<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-white"
@@ -70,7 +70,7 @@
 				</div>
 				<div class="col-md-6">
 					<h3 style="font-family: sans-serif;">
-						<span class="label label-warning">Cambiar Contraseña</span>
+						<span class="label label-warning">#{msg['cambiar.contrasena']}</span>
 					</h3>
 					<div class="separator" />
 					<p:panelGrid columns="1" layout="grid" styleClass="panelgrid-white"
@@ -103,7 +103,7 @@
 
 				<div class="col-sm-6 col-md-6 col-lg-6">
 					<h3 style="font-family: sans-serif;">
-						<span class="label label-warning">Imagen usuario</span>
+						<span class="label label-warning">#{msg['imagen.usuario']}</span>
 					</h3>
 					<div class="separator" />
 					<p:outputPanel id="miImagen">
@@ -125,7 +125,7 @@
 										<div class="modal-header">
 											<button type="button" class="btn btn-primary"
 												style="float: right" data-dismiss="modal">
-												Cerrar<i class="fa fa-times fa-fw"></i>
+												#{msg['cerrar']}<i class="fa fa-times fa-fw"></i>
 											</button>
 										</div>
 										<p:graphicImage
@@ -140,13 +140,13 @@
 								</div>
 							</div>
 							<p:fileUpload id="gestorArchivos" style="margin-top:15px"
-								label="Elegir"
+								label="#{msg['elegir']}"
 								fileUploadListener="#{perfilBean.gestorSubidaFicheros}"
-								invalidFileMessage="El tipo de archivo no es valido"
+								invalidFileMessage="#{msg['archivo.error']}"
 								update="miImagen, miImagenTemplate" mode="advanced"
 								dragDropSupport="true"
-								invalidSizeMessage="Arhivos inferiores a 1 MB"
-								uploadLabel="Subir imagen" cancelLabel="Cancelar"
+								invalidSizeMessage="#{msg['archivo.inferiores']}"
+								uploadLabel="#{msg['subir']}" cancelLabel="#{msg['cancel']}"
 								sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
 						</div>
@@ -159,7 +159,7 @@
 					<p:growl id="messages" showDetail="true" />
 
 					<h:panelGrid columnClasses="value">
-						<h3 style="margin-top: 0">Calendario</h3>
+						<h3 style="margin-top: 0">#{msg['calendario']}</h3>
 						<p:schedule id="schedule" value="#{perfilBean.eventModel}"
 							widgetVar="myschedule">
 
@@ -202,12 +202,6 @@
 						</h:panelGrid>
 					</p:dialog>
 				</div>
-
-				<!-- 				<div class="row" style="margin-top:20px;"> -->
-				<!-- 					<div class="col-sm-6 col-md-6 col-lg-6"> -->
-
-				<!-- 					</div> -->
-				<!-- 				</div> -->
 
 			</div>
 

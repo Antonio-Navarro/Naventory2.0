@@ -13,16 +13,16 @@
 					<p:outputLabel>
 						<i class="fa fa-filter fa-fw" />
 					</p:outputLabel>
-					<h:outputText value="Búsqueda" />
+					<h:outputText value="#{msg['busqueda']}" />
 				</f:facet>
 				<f:facet name="actions">
-					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+					<p:commandButton icon="ui-icon-refresh" value="#{msg['limpiar']}"
 						style="float:right" immediate="true"
 						actionListener="#{proveedoresBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiar" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-search" value="Buscar"
+					<p:commandButton icon="ui-icon-search" value="#{msg['buscar']}"
 						id="btnBuscar" style="float:right"
 						actionListener="#{proveedoresBean.buscar}"
 						update="formApp:proveedorTable" process="panelFiltro" />
@@ -35,19 +35,19 @@
 								value="#{proveedoresBean.filtro.idProv}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroNombre" value="Nombre"
+							<p:outputLabel for="filtroNombre" value="#{msg['nombre']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroNombre" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.nombre}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroDireccion" value="Dirección"
+							<p:outputLabel for="filtroDireccion" value="#{msg['proveedores.direccion']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroDireccion" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.direccion}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroCiudad" value="Ciudad"
+							<p:outputLabel for="filtroCiudad" value="#{msg['proveedores.ciudad']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroCiudad" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.ciudad}" />
@@ -61,16 +61,16 @@
 					<p:outputLabel>
 						<i class="fa fa-search-plus fa-fw" />
 					</p:outputLabel>
-					<h:outputText value="Búsqueda Avanzada" />
+					<h:outputText value="#{msg['busqueda.avanzada']}" />
 				</f:facet>
 				<f:facet name="actions">
-					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+					<p:commandButton icon="ui-icon-refresh" value="#{msg['limpiar']}"
 						style="float:right" immediate="true"
 						actionListener="#{proveedoresBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiarAvanzada" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-search" value="Buscar"
+					<p:commandButton icon="ui-icon-search" value="#{msg['buscar']}"
 						id="btnBuscarAvanzada" style="float:right"
 						actionListener="#{proveedoresBean.buscar}"
 						update="formApp:proveedorTable" process="panelFiltro" />
@@ -79,18 +79,18 @@
 					<p:row>
 						<p:column>
 							<p:outputLabel for="filtroNombreComercial"
-								value="Nombre comercial" styleClass="lblForm" />
+								value="#{msg['proveedores.nombreComProveedor']}" styleClass="lblForm" />
 							<p:inputText id="filtroNombreComercial" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.nombreCom}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroProvincia" value="Provincia"
+							<p:outputLabel for="filtroProvincia" value="#{msg['proveedores.provincia']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroProvincia" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.provincia}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroPais" value="País" styleClass="lblForm" />
+							<p:outputLabel for="filtroPais" value="#{msg['proveedores.pais']}" styleClass="lblForm" />
 							<p:inputText id="filtroPais" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.pais}" />
 						</p:column>
@@ -102,14 +102,14 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroTel1" value="Teléfono 1"
+							<p:outputLabel for="filtroTel1" value="#{msg['proveedores.tel1']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroTel1" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.tel1}" />
 						</p:column>
 
 						<p:column>
-							<p:outputLabel for="filtroCorreo" value="Correo"
+							<p:outputLabel for="filtroCorreo" value="#{msg['proveedores.correo']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroCorreo" styleClass="inputFiltro"
 								value="#{proveedoresBean.filtro.correo}" />

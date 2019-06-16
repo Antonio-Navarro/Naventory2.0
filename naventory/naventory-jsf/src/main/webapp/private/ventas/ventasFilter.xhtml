@@ -13,16 +13,16 @@
 					<p:outputLabel>
 						<i class="fa fa-filter fa-fw" />
 					</p:outputLabel>
-					<h:outputText value="Búsqueda" />
+					<h:outputText value="#{msg['busqueda']}" />
 				</f:facet>
 				<f:facet name="actions">
-					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+					<p:commandButton icon="ui-icon-refresh" value="#{msg['limpiar']}"
 						style="float:right" immediate="true"
 						actionListener="#{ventasBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiar" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-search" value="Buscar"
+					<p:commandButton icon="ui-icon-search" value="#{msg['buscar']}"
 						id="btnBuscar" style="float:right"
 						actionListener="#{ventasBean.buscar}" update="formApp:ventaTable"
 						process="panelFiltro" />
@@ -30,13 +30,13 @@
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="clienteFiltro" value="Cliente"
+							<p:outputLabel for="clienteFiltro" value="#{msg['cliente']}"
 								styleClass="lblForm" />
 							<p:inputText id="clienteFiltro" styleClass="inputFiltro"
 								value="#{ventasBean.filtro.nombreCliente}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroProducto" value="Producto "
+							<p:outputLabel for="filtroProducto" value="#{msg['producto']}"
 								styleClass="lblForm" />
 							<p:inputText id="filtroProducto" styleClass="inputFiltro"
 								value="#{ventasBean.filtro.nombreProducto}" />
@@ -44,9 +44,9 @@
 
 						<p:column>
 
-							<p:calendar id="filtroFechaHasta" placeholder="Fecha desde"
+							<p:calendar id="filtroFechaHasta" placeholder="#{msg['fecha.desde']}"
 								value="#{ventasBean.filtro.fechaFin}" pattern="dd/MM/yyyy" />  -  	
-							<p:calendar id="filtroFecha" placeholder="Fecha hasta"
+							<p:calendar id="filtroFecha" placeholder="#{msg['fecha.hasta']}"
 								style="margin-left:3px" value="#{ventasBean.filtro.fechaIni}"
 								pattern="dd/MM/yyyy" />
 						</p:column>
@@ -59,16 +59,16 @@
 					<p:outputLabel>
 						<i class="fa fa-search-plus fa-fw" />
 					</p:outputLabel>
-					<h:outputText value="Búsqueda Avanzada" />
+					<h:outputText value="#{msg['busqueda.avanzada']}" />
 				</f:facet>
 				<f:facet name="actions">
-					<p:commandButton icon="ui-icon-refresh" value="Limpiar"
+					<p:commandButton icon="ui-icon-refresh" value="#{msg['limpiar']}"
 						style="float:right" immediate="true"
 						actionListener="#{ventasBean.inicilizarAtributos}"
 						process="panelFiltro" id="btnLimpiarAvanzada" update="@form">
 						<p:resetInput target="panelFiltro" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-search" value="Buscar"
+					<p:commandButton icon="ui-icon-search" value="#{msg['buscar']}"
 						id="btnBuscarAvanzada" style="float:right"
 						actionListener="#{ventasBean.buscar}" update="formApp:ventaTable"
 						process="panelFiltro" />
@@ -76,7 +76,7 @@
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="filtroPrecio" value="Precio"
+							<p:outputLabel for="filtroPrecio" value="#{msg['ventas.precio.table']}"
 								styleClass="lblForm" />
 							<p:inputNumber id="filtroPrecio"
 								value="#{ventasBean.filtro.precio}" symbol="€"
@@ -84,7 +84,7 @@
 
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroDescuento" value="Descuento"
+							<p:outputLabel for="filtroDescuento" value="#{msg['clientes.descuento']}"
 								styleClass="lblForm" />
 							<p:inputNumber id="filtroDescuento"
 								value="#{ventasBean.filtro.descuento}" symbol="%"
@@ -97,7 +97,7 @@
 								styleClass="inputFiltro" />
 						</p:column>
 						<p:column>
-							<p:outputLabel for="filtroTotal" value="Total"
+							<p:outputLabel for="filtroTotal" value="#{msg['total']}"
 								styleClass="lblForm" />
 							<p:inputNumber id="filtroTotal"
 								value="#{ventasBean.filtro.total}" symbol="€" symbolPosition="s"
@@ -107,13 +107,13 @@
 					</p:row>
 					<p:row>
 						<p:column colspan="4">
-							<p:outputLabel for="filtroFF" value="Forma Pago"
+							<p:outputLabel for="filtroFF" value="#{msg['formapago']}"
 								styleClass="lblForm" />
 							<p:selectOneButton id="filtroFF"
 								value="#{ventasBean.filtro.formaPago}">
-								<f:selectItem itemLabel="Transferencia" itemValue="1" />
-								<f:selectItem itemLabel="Contado" itemValue="2" />
-								<f:selectItem itemLabel="Tarjeta de crédito" itemValue="3" />
+								<f:selectItem itemLabel="#{msg['transferencia']}" itemValue="1" />
+								<f:selectItem itemLabel="#{msg['contado']}" itemValue="2" />
+								<f:selectItem itemLabel="#{msg['tarjeta']}" itemValue="3" />
 								<f:convertNumber integerOnly="true" />
 							</p:selectOneButton>
 						</p:column>

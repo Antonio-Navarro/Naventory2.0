@@ -23,8 +23,7 @@
 			</div>
 			<div class="col-md-4" >
 					<h4>
-						<span class="label label-primary">Valor total del
-							inventario: <p:outputLabel
+						<span class="label label-primary">#{msg['valor.total']} <p:outputLabel
 								value="${productosBean.totalInventario}">
 								<f:convertNumber type="currency" currencySymbol="€" locale="es"
 									minIntegerDigits="2" />
@@ -53,7 +52,7 @@
 					<f:facet name="header">
 
 						<div class="text-right">
-							<p:commandButton value="Productos con bajo stock"
+							<p:commandButton value="#{msg['productos.stock.bajo']}"
 								immediate="true" ajax="true" styleClass="btn-danger"
 								process="@this" update="productoTable"
 								style="float:right; margin-left:5px"
@@ -72,7 +71,7 @@
 					<f:facet name="footer">
 						<div class="text-left">
 							<h:outputLabel
-								value="Se han encontrado un total de #{productosBean.listaProductos.numResults} resultados"></h:outputLabel>
+								value="#{msg['total.encontrado']} #{productosBean.listaProductos.numResults} #{msg['resultados']}"></h:outputLabel>
 						</div>
 					</f:facet>
 					<p:column sortBy="#{producto.sku}" style="width:7%"

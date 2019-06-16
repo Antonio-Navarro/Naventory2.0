@@ -43,14 +43,12 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 
 	@Override
 	public List<Novedad> findBySearchFilter(NovedadSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return novedadRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Novedad> findBySearchFilter(NovedadSearchFilter searchFilter, String sortField, SortOrderEnum sortOrder)
 			throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.novedadRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
@@ -63,13 +61,11 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 	@Override
 	public PaginationResult<Novedad> findBySearchFilterPagination(NovedadSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.novedadRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Novedad> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<Novedad>) this.novedadRepository.findAll();
 	}
 
@@ -85,13 +81,11 @@ public class ServicioNovedadImpl implements ServicioNovedad {
 
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.existsById(id);
 	}
 
 	@Override
 	public Novedad save(Novedad entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.novedadRepository.save(entity);
 	}
 

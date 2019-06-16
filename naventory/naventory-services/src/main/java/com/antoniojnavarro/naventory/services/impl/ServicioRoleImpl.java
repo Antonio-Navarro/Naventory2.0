@@ -32,14 +32,12 @@ public class ServicioRoleImpl implements ServicioRole {
 
 	@Override
 	public List<Role> findBySearchFilter(RoleSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return rolRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Role> findBySearchFilter(RoleSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.rolRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
@@ -52,13 +50,11 @@ public class ServicioRoleImpl implements ServicioRole {
 	@Override
 	public PaginationResult<Role> findBySearchFilterPagination(RoleSearchFilter searchFilter,
 			int pageNumber, int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.rolRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Role> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<Role>) this.rolRepository.findAll();
 	}
 
@@ -74,13 +70,11 @@ public class ServicioRoleImpl implements ServicioRole {
 
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.existsById(id);
 	}
 
 	@Override
 	public Role save(Role entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.rolRepository.save(entity);
 	}
 	@Override

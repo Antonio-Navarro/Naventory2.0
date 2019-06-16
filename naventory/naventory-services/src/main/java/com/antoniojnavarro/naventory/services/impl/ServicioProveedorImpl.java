@@ -39,14 +39,12 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 
 	@Override
 	public List<Proveedor> findBySearchFilter(ProveedorSearchFilter searchFilter) throws ServicioException {
-		// TODO Auto-generated method stub
 		return proveedorRepository.findBySearchFilter(searchFilter);
 	}
 
 	@Override
 	public List<Proveedor> findBySearchFilter(ProveedorSearchFilter searchFilter, String sortField,
 			SortOrderEnum sortOrder) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.proveedorRepository.findBySearchFilter(searchFilter, sortField, sortOrder);
 	}
 
@@ -59,13 +57,11 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 	@Override
 	public PaginationResult<Proveedor> findBySearchFilterPagination(ProveedorSearchFilter searchFilter, int pageNumber,
 			int pageSize) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.proveedorRepository.findBySearchFilterPagination(searchFilter, pageNumber, pageSize);
 	}
 
 	@Override
 	public List<Proveedor> findAll() throws ServicioException {
-		// TODO Auto-generated method stub
 		return (List<Proveedor>) this.proveedorRepository.findAll();
 	}
 
@@ -81,13 +77,11 @@ public class ServicioProveedorImpl implements ServicioProveedor {
 
 	@Override
 	public boolean existsById(Integer id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.existsById(id);
 	}
 
 	@Override
 	public Proveedor save(Proveedor entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.proveedorRepository.save(entity);
 	}
 

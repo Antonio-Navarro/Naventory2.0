@@ -34,7 +34,7 @@
 				requiredMessage="#{msg['productos.categoria.required']}"
 				value="#{productosBean.selectedProducto.categoria}"
 				style="min-width:100% !important;">
-				<f:selectItem itemLabel="Elige una categoría..." itemValue="#{null}" />
+				<f:selectItem itemLabel="#{msg['elige.categoria']}" itemValue="#{null}" />
 				<f:selectItems value="#{productosBean.categorias}" var="categoria"
 					itemLabel="#{categoria.nomCat}" itemValue="#{categoria}" />
 			</p:selectOneMenu>
@@ -44,7 +44,7 @@
 				<div class="ui-inputgroup">
 					<p:inputText id="proveedorSelect" readonly="true" required="true"
 						style="height:30px;text-align:center"
-						placeholder="Elije un proveedor de la lista de valores..."
+						placeholder="#{msg['elige.proveedor']}"
 						requiredMessage="#{msg['productos.proveedor.required']}"
 						value="#{productosBean.selectedProducto.proveedor.nombre}" />
 					<p:commandButton id="buscarProveedor" icon="fa fa-truck"
@@ -61,11 +61,11 @@
 					modal="true">
 					<p:panel id="panelProveedorFiltro">
 						<p:inputText id="filtroNombre" styleClass="inputFiltro"
-							placeholder="Nombre"
+							placeholder="#{msg['nombre']}"
 							value="#{productosBean.filtroProveedores.nombre}"
 							style="float:unset" />
 						<p:commandButton id="buscarTablaProveedores" style="float:right"
-							onclick="pasarValorFiltro()" value="Buscar" immediate="true"
+							onclick="pasarValorFiltro()" value="#{msg['buscar']}" immediate="true"
 							update="formApp:tablaProveedoresOverlay" />
 						<p:remoteCommand name="cargarProveedoresRC" immediate="true"
 							partialSubmit="panelProveedorFiltro"
@@ -74,7 +74,7 @@
 					<p:dataTable var="prov" id="tablaProveedoresOverlay"
 						style="margin-top:3px;" value="#{productosBean.proveedores}"
 						rows="5" lazy="true" paginator="true" paginatorPosition="top">
-						<f:facet name="header">Lista de Proveedores</f:facet>
+						<f:facet name="header">#{msg['lista.proveedores']}</f:facet>
 						<p:column headerText="Nombre">
 							<h:outputText value="#{prov.nombre}" />
 						</p:column>

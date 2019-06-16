@@ -25,6 +25,7 @@
 				<div class="ui-inputgroup">
 					<p:inputText id="clienteSeleccionado" readonly="true"
 						required="true" style="height:30px;text-align:center"
+						placeholder="#{msg['elige.cliente']}"
 						requiredMessage="#{msg['ventas.cliente.required']}"
 						value="#{ventasBean.selectedVenta.cliente.nombre}" />
 					<p:commandButton id="buscarCliente" icon="fa fa-street-view"
@@ -40,10 +41,10 @@
 					widgetVar="panelClientesOverlay" style="width:700px" modal="true">
 					<p:panel id="panelClienteFiltro">
 						<p:inputText id="filtroNombre" styleClass="inputFiltro"
-							placeholder="Nombre" value="#{ventasBean.filtroClientes.nombre}"
+							placeholder="#{msg['nombre']}" value="#{ventasBean.filtroClientes.nombre}"
 							style="float:unset" />
 						<p:commandButton id="buscarTablaClientes" style="float:right"
-							onclick="pasarValorFiltro()" value="Buscar" immediate="true"
+							onclick="pasarValorFiltro()" value="#{msg['buscar']}" immediate="true"
 							update="formApp:tablaClientesOverlay" />
 						<p:remoteCommand name="cargarClientesRC" immediate="true"
 							partialSubmit="panelClienteFiltro"
@@ -52,8 +53,8 @@
 					<p:dataTable var="cliente" id="tablaClientesOverlay"
 						style="margin-top:3px;" value="#{ventasBean.clientes}" rows="5"
 						lazy="true" paginator="true" paginatorPosition="top">
-						<f:facet name="header">Lista de Clientes</f:facet>
-						<p:column headerText="Nombre">
+						<f:facet name="header">#{msg['lista.clientes']}</f:facet>
+						<p:column headerText="#{msg['nombre']}">
 							<h:outputText value="#{cliente.nombre}" />
 						</p:column>
 						<p:column style="text-align: center">
@@ -75,7 +76,7 @@
 				requiredMessage="#{msg['ventas.producto.required']}"
 				value="#{ventasBean.selectedVenta.producto}"
 				style="min-width:100% !important;">
-				<f:selectItem itemLabel="Elige un producto..." itemValue="#{null}" />
+				<f:selectItem itemLabel="#{msg['elige.producto']}" itemValue="#{null}" />
 				<f:selectItems value="#{ventasBean.productos}" var="producto"
 					itemLabel="#{producto.nombre}" itemValue="#{producto}" />
 			</p:selectOneMenu>
@@ -94,7 +95,7 @@
 				inputStyle="text-align: center" symbol="%" symbolPosition="s"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}" emptyValue="empty"
 				style="font-family:Arial, FontAwesome; text-align:center">
-				<p:watermark for="ivaInput" value="Por defecto se aplica el 21 %"
+				<p:watermark for="ivaInput" value="#{msg['defecto.21']}"
 					id="watermark" />
 			</p:inputNumber>
 			<p:outputLabel for="descInput" value="#{msg['ventas.desc']}" />
@@ -108,10 +109,9 @@
 			<p:inputNumber id="descuentoInput" symbol="%" symbolPosition="s"
 				emptyValue="empty" value="#{ventasBean.selectedVenta.descuento}"
 				maxlength="#{defaultMaxLengthDataBaseVarchar}"
-				placeholder="Por defecto no se aplica ningún descuento. El descuento se realiza en porcentaje"
 				style="font-family:Arial, FontAwesome; text-align:center">
 				<p:watermark for="descuentoInput" style="font-size:10px"
-					value="El descuento se realiza en porcentaje" id="watermark2" />
+					value="#{msg['descuento.porcentaje']}" id="watermark2" />
 			</p:inputNumber>
 			<p:outputLabel for="formaPagoInput"
 				styleClass="label-warning formaPago" value="#{msg['formaDePago']}" />

@@ -15,8 +15,6 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DonutChartModel;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -30,12 +28,10 @@ import com.antoniojnavarro.naventory.services.api.ServicioCompra;
 import com.antoniojnavarro.naventory.services.api.ServicioNovedad;
 import com.antoniojnavarro.naventory.services.api.ServicioProducto;
 import com.antoniojnavarro.naventory.services.api.ServicioVenta;
-import com.antoniojnavarro.naventory.services.commons.ServicioMensajesI18n;
 
 @Named("homeBean")
 @Scope(value = PFScope.VIEW_SCOPED)
 public class HomeBean extends MasterBean {
-	private static final Logger logger = LoggerFactory.getLogger(HomeBean.class);
 	private static final long serialVersionUID = 1L;
 	private static final Integer LIMIT_NOVEDADES = 10;
 
@@ -45,8 +41,7 @@ public class HomeBean extends MasterBean {
 	private ServicioProducto srvProducto;
 	@Autowired
 	private ServicioCompra srvCompra;
-	@Autowired
-	private ServicioMensajesI18n srvMensajes;
+
 	@Autowired
 	private ServicioVenta srvVenta;
 	@Autowired
@@ -94,7 +89,7 @@ public class HomeBean extends MasterBean {
 		List<GraficaGenericDto> datosGraficaVentas = srvVenta
 				.findFormasPagoGrafica(this.usuarioAuteticado.getUsuario().getEmpresa());
 		if (datosGraficaVentas == null || datosGraficaVentas.size() == 0) {
-			donut.put(srvMensajes.getMensajeI18n("sindatos"), 0);
+			donut.put(translateI18NProperty("sindatos"), 0);
 		} else {
 			for (GraficaGenericDto registro : datosGraficaVentas) {
 				donut.put(registro.getEtiqueta(), registro.getCantidad());
@@ -126,12 +121,12 @@ public class HomeBean extends MasterBean {
 		Double totasGastos = 0.0;
 
 		ChartSeries ingresos = new ChartSeries();
-		ingresos.setLabel(srvMensajes.getMensajeI18n("ingresos"));
+		ingresos.setLabel(translateI18NProperty("ingresos"));
 
 		List<GraficaGenericDto> datosGraficaIngresos = srvVenta
 				.getIngresosMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa(), numMesesGastosIngresos);
 		if (datosGraficaIngresos == null || datosGraficaIngresos.size() == 0) {
-			ingresos.set(srvMensajes.getMensajeI18n("sindatos"), 0);
+			ingresos.set(translateI18NProperty("sindatos"), 0);
 
 		} else {
 			for (GraficaGenericDto registro : datosGraficaIngresos) {
@@ -141,11 +136,11 @@ public class HomeBean extends MasterBean {
 		}
 
 		ChartSeries gastos = new ChartSeries();
-		gastos.setLabel(srvMensajes.getMensajeI18n("gastos"));
+		gastos.setLabel(translateI18NProperty("gastos"));
 		List<GraficaGenericDto> datosGraficaGastos = srvCompra
 				.getGastosMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa(), numMesesGastosIngresos);
 		if (datosGraficaGastos == null || datosGraficaGastos.size() == 0) {
-			gastos.set(srvMensajes.getMensajeI18n("sindatos"), 0);
+			gastos.set(translateI18NProperty("sindatos"), 0);
 
 		} else {
 			for (GraficaGenericDto registro : datosGraficaGastos) {
@@ -174,7 +169,7 @@ public class HomeBean extends MasterBean {
 		barGastosIngresos.setLegendPosition("ne");
 
 		Axis xAxis = barGastosIngresos.getAxis(AxisType.X);
-		xAxis.setLabel(srvMensajes.getMensajeI18n("meses"));
+		xAxis.setLabel(translateI18NProperty("meses"));
 		barGastosIngresos.setShowPointLabels(true);
 		barGastosIngresos.setSeriesColors("5cb85c,f0ad4e");
 
@@ -188,12 +183,12 @@ public class HomeBean extends MasterBean {
 
 		LineChartSeries clientes = new LineChartSeries();
 		clientes.setFill(true);
-		clientes.setLabel(srvMensajes.getMensajeI18n("sidebar.menu.clientes"));
+		clientes.setLabel(translateI18NProperty("sidebar.menu.clientes"));
 
 		List<GraficaGenericDto> datosGraficaClientes = srvCliente
 				.findClientesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa().getCif());
 		if (datosGraficaClientes == null || datosGraficaClientes.size() == 0) {
-			clientes.set(srvMensajes.getMensajeI18n("sindatos"), 0);
+			clientes.set(translateI18NProperty("sindatos"), 0);
 		} else {
 			for (GraficaGenericDto registro : datosGraficaClientes) {
 				clientes.set(registro.getEtiqueta(), registro.getCantidad());
@@ -208,11 +203,11 @@ public class HomeBean extends MasterBean {
 		areaClientes.setZoom(true);
 		areaClientes.setExtender("customExtender");
 		areaClientes.setAnimate(true);
-		Axis xAxis = new CategoryAxis(srvMensajes.getMensajeI18n("fecha"));
+		Axis xAxis = new CategoryAxis(translateI18NProperty("fecha"));
 		xAxis.setTickAngle(0);
 		areaClientes.getAxes().put(AxisType.X, xAxis);
 		Axis yAxis = areaClientes.getAxis(AxisType.Y);
-		yAxis.setLabel(srvMensajes.getMensajeI18n("ventas.cantidad"));
+		yAxis.setLabel(translateI18NProperty("ventas.cantidad"));
 		yAxis.setMin(0);
 		yAxis.setMax(this.numClientes + 1);
 	}
@@ -222,12 +217,12 @@ public class HomeBean extends MasterBean {
 
 		LineChartSeries ventas = new LineChartSeries();
 		ventas.setFill(true);
-		ventas.setLabel(srvMensajes.getMensajeI18n("sidebar.menu.ventas"));
+		ventas.setLabel(translateI18NProperty("sidebar.menu.ventas"));
 
 		List<GraficaGenericDto> datosGraficaVentas = srvVenta
 				.getVentasMensualesGrafica(this.usuarioAuteticado.getUsuario().getEmpresa());
 		if (datosGraficaVentas == null || datosGraficaVentas.size() == 0) {
-			ventas.set(srvMensajes.getMensajeI18n("sindatos"), 0);
+			ventas.set(translateI18NProperty("sindatos"), 0);
 		} else {
 			for (GraficaGenericDto registro : datosGraficaVentas) {
 				ventas.set(registro.getEtiqueta(), registro.getCantidad());
@@ -242,11 +237,11 @@ public class HomeBean extends MasterBean {
 		areaVentas.setExtender("customExtender");
 		areaVentas.setZoom(true);
 		areaVentas.setAnimate(true);
-		Axis xAxis = new CategoryAxis(srvMensajes.getMensajeI18n("meses"));
+		Axis xAxis = new CategoryAxis(translateI18NProperty("meses"));
 		xAxis.setTickAngle(0);
 		areaVentas.getAxes().put(AxisType.X, xAxis);
 		Axis yAxis = areaVentas.getAxis(AxisType.Y);
-		yAxis.setLabel(srvMensajes.getMensajeI18n("ventas.cantidad"));
+		yAxis.setLabel(translateI18NProperty("ventas.cantidad"));
 		yAxis.setMin(0);
 		yAxis.setMax(this.numVentas + 1);
 	}

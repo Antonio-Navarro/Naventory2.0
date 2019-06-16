@@ -78,13 +78,11 @@ public class ServicioProductoImpl implements ServicioProducto {
 
 	@Override
 	public boolean existsById(String id) throws ServicioException {
-		// TODO Auto-generated method stub
 		return productoRepository.exists(id);
 	}
 
 	@Override
 	public Producto save(Producto entity) throws ServicioException {
-		// TODO Auto-generated method stub
 		return this.productoRepository.save(entity);
 	}
 
