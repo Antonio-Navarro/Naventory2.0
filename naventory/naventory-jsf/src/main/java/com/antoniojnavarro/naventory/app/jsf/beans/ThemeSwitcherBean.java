@@ -34,8 +34,7 @@ public class ThemeSwitcherBean extends MasterBean {
 		locale = LocaleContextHolder.getLocale();
 		localeStr = locale.getLanguage();
 
-		themes = Arrays.asList(new String[] { "nova-light", "nova-dark", "nova-colored", "luna-blue", "luna-amber",
-				"luna-green", "luna-pink", "afterdark", "afternoon", "afterwork", "aristo", "black-tie", "blitzer",
+		themes = Arrays.asList(new String[] { "afterdark", "afternoon", "afterwork", "aristo", "black-tie", "blitzer",
 				"bluesky", "bootstrap", "casablanca", "cupertino", "cruze", "dark-hive", "dot-luv", "eggplant",
 				"excite-bike", "flick", "glass-x", "home", "hot-sneaks", "humanity", "le-frog", "midnight", "mint-choc",
 				"omega", "overcast", "pepper-grinder", "redmond", "rocket", "sam", "smoothness", "south-street",
